@@ -11,34 +11,17 @@ public class GroupMovementLogic : MonoBehaviour
 {
     public Button Button;
     public GameObject Trigger;
-    private List<GameObject> foundedNodes;
+    public NearestNodeFinder NearestNodeFinder;
     private bool isWaitingCord;
+    private bool isWaitingTarget;
+    private GameObject TargetNode;
     void Start()
     {
-        foundedNodes = new List<GameObject>();
+        NearestNodeFinder.Trigger = Trigger;
         Button.onClick.AddListener(OnButtonClick);
         InputAggregator.OnTurnEndEvent += OnTurnEnd;
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Node")
-        {
-            Debug.Log("Enter");
-            if(!foundedNodes.Contains(other.GameObject()))
-                foundedNodes.Add(other.gameObject);
-        }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Node")
-        {
-            Debug.Log("Exit");
-            if (foundedNodes.Contains(other.GameObject()))
-                foundedNodes.Remove(other.gameObject);
-        }
-    }
 
     // Update is called once per frame
     void Update()
@@ -51,11 +34,21 @@ public class GroupMovementLogic : MonoBehaviour
                 clickPosition = hitInfo.point;
                 Trigger.transform.position = clickPosition;
                 isWaitingCord = false;
+                isWaitingTarget = true;
+                NearestNodeFinder.isNeedToFindNode = true;
             }
         }
-        Debug.Log(foundedNodes.Count);
-    }
 
+        var nearestNode = NearestNodeFinder.GetNearestNode();
+
+        if (isWaitingTarget && nearestNode != null)
+        {
+            isWaitingTarget = false;
+            TargetNode = nearestNode;
+            TargetNode.gameObject.transform.position = Vector3.zero;
+            Debug.Log(TargetNode);
+        }
+    }
 
     private void OnButtonClick()
     {
@@ -66,19 +59,5 @@ public class GroupMovementLogic : MonoBehaviour
     private void OnTurnEnd()
     {
         Button.enabled = true;
-    }
-
-    private void FindNearestNode()
-    {
-        var mindistance = float.PositiveInfinity;
-        foreach (var node in foundedNodes)
-        {
-            var currentDistance = Vector3.Distance(node.GetComponent<Transform>().position, Trigger.transform.position);
-            if (mindistance > currentDistance)
-            {
-                mindistance = currentDistance;
-                nearestNode = node;
-            }
-        }
     }
 }
