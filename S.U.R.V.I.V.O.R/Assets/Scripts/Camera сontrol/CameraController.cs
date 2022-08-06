@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,6 +18,11 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float zoomDampening = 7.5f;
     [SerializeField] private float zoomMinHeight = 5f;
     [SerializeField] private float zoomMaxHeight = 50f;
+
+    [SerializeField] private float leftLimit;
+    [SerializeField] private float rightLimit;
+    [SerializeField] private float upperLimit;
+    [SerializeField] private float bottomLimit;
 
     private Vector3 targetPosition;
 
@@ -63,9 +69,9 @@ public class CameraController : MonoBehaviour
         var receivedValue = movement.ReadValue<Vector2>();
         var inputValue = receivedValue.x * GetCameraRight()
                          + receivedValue.y * GetCameraUp();
-        
+
         inputValue = inputValue.normalized;
-        
+
         if (inputValue.sqrMagnitude > 0.1f)
             targetPosition += inputValue;
     }
@@ -75,7 +81,11 @@ public class CameraController : MonoBehaviour
         if (targetPosition.sqrMagnitude > 0.1f)
         {
             speed = Mathf.Lerp(speed, maxSpeed, Time.deltaTime * acceleration);
-            transform.position += targetPosition * (speed * Time.deltaTime);
+            var position = transform.position;
+            position += targetPosition * (speed * Time.deltaTime);
+            position = new Vector3(Math.Clamp(position.x, leftLimit, rightLimit),
+                0, Math.Clamp(position.z, bottomLimit, upperLimit));
+            transform.position = position;
         }
         else
         {
