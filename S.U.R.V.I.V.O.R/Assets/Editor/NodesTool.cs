@@ -1,103 +1,117 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Assets.Scripts;
+using System.IO;
+using System.Linq;
+using Graph_and_Map;
 using Unity.VisualScripting;
-using UnityEngine;
 using UnityEditor;
 using UnityEditor.EditorTools;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
+using UnityEngine;
+using UnityEngine.Serialization;
 
-[EditorTool ("NodesEditor")]
-public class NodesTool : EditorTool
+namespace Editor
 {
-    public Texture2D icon;
-    public GameObject NodePrefab;
-    public DotGraph Graph;
-    private List<Tuple<Vector3, Vector3>> Lines = new List<Tuple<Vector3, Vector3>>();
-
-    public override GUIContent toolbarIcon
+    [EditorTool ("NodesEditor")]
+    public class NodesTool : EditorTool
     {
-        get 
-        {
-            return new GUIContent
+        public Texture2D icon;
+        public Node nodePrefab;
+        private List<Node> graph = new();
+        private Vector3 mousePosition;
+        private string pathToGraph;
+        public override GUIContent toolbarIcon =>
+            new()
             {
                 image = icon,
                 text = "Nodes Tool",
                 tooltip = "Create, change nodes"
             };
-        }
-    }
-
-    public override void OnToolGUI(EditorWindow window)
-    {
-        foreach (var tuple in Lines)
+        
+        public override void OnActivated()
         {
-            Debug.DrawLine(tuple.Item1, tuple.Item2);
+            foreach (var node in FindObjectsOfType<Node>())
+                graph.Add(node);
+            base.OnActivated();
         }
 
-        if (Event.current.Equals(Event.KeyboardEvent("k")))
+        public override void OnToolGUI(EditorWindow window)
         {
-            switch (Selection.objects.Length)
+            graph.RemoveAll(n => n == null);
+            foreach (var node in graph)
+            foreach (var (start,end) in node)
+                Debug.DrawLine(start.transform.position,end.transform.position);
+            
+            if(target is GameObject activeObj)
             {
-                case 0:
-                    CreateNode();
-                    break;
-                case 1:
-                    ConnectOrDisconnectNodes(Selection.activeObject.GetComponent<Node>(),CreateNode().GetComponent<Node>());
-                    break;
-                case 2:
-                    ConnectOrDisconnectNodes(Selection.objects[0].GetComponent<Node>(), Selection.objects[1].GetComponent<Node>());
-                    break;
-                case > 2:
-                    Debug.Log("Нельзя провести соединение, слишком много выделенных объектов");
-                    break;
-            }
-        }
-
-        if (Event.current.Equals(Event.KeyboardEvent("j")))
-        {
-            Lines.Clear();
-            var objectsForLook = GameObject.FindGameObjectsWithTag("Node");
-            foreach (var obj in objectsForLook)
-            {
-                var node = obj.GetComponent<Node>();
-                foreach (var nodeNeighborhood in node.Neighborhoods)
+                EditorGUI.BeginChangeCheck();
+                var oldPos = activeObj.transform.position;
+                var newPos = Handles.PositionHandle(oldPos, Quaternion.identity);
+                var offset = newPos - oldPos;
+                if (EditorGUI.EndChangeCheck())
                 {
-                    Lines.Add(Tuple.Create(node.GetComponentInParent<Transform>().position, nodeNeighborhood.GetComponentInParent<Transform>().position));
+                    foreach (var obj in targets.Select(o => (GameObject)o))
+                    {
+                        Undo.RecordObject(obj.transform, "Move Node");
+                        obj.transform.position+=offset;
+                    }
                 }
             }
+            if (Event.current.Equals(Event.KeyboardEvent("k")))
+            {
+                var activeNodes = Selection.gameObjects
+                    .Select(o => o.GetComponent<Node>())
+                    .ToArray();
+                switch (activeNodes.Length)
+                {
+                    case 0:
+                        CreateNode();
+                        break;
+                    case 1:
+                        ConnectOrDisconnectNodes(CreateNode(),activeNodes[0]);
+                        break;
+                    case 2:
+                        ConnectOrDisconnectNodes(activeNodes[0],activeNodes[1]);
+                        break;
+                    case > 2:
+                        Debug.Log("Too many nodes");
+                        break;
+                }
+            }
+            
+            base.OnToolGUI(window);
         }
-    }
 
-    private GameObject CreateNode()
-    {
-        var obj = Instantiate(NodePrefab);
-        var mouseX = Event.current.mousePosition.x;
-        var mouseY = Camera.current.pixelHeight - Event.current.mousePosition.y;
-        var myRay = Camera.current.ScreenPointToRay(new Vector3(mouseX, mouseY, 0));
-        if (Physics.Raycast(myRay, out var hitInfo, 100))
+        private Node CreateNode()
         {
-            obj.transform.position = hitInfo.point;
+            var node = Instantiate(nodePrefab);
+            node.transform.position = GetMousePosition();
+            Selection.activeObject = node;
+            graph.Add(node);
+            Undo.RegisterCreatedObjectUndo(node.gameObject,"Create Node");
+            return node;
         }
-        if(Selection.activeObject != null)
-            Selection.activeObject = obj;
-        return obj;
-    }
+        
+        private void ConnectOrDisconnectNodes(Node firstNode, Node secondNode)
+        {
+            if (firstNode.neighborhoods.Contains(secondNode))
+            {
+                firstNode.neighborhoods.Remove(secondNode);
+                secondNode.neighborhoods.Remove(firstNode);
+            }
+            else
+            {
+                firstNode.neighborhoods.Add(secondNode);
+                secondNode.neighborhoods.Add(firstNode);
+            }
+        }
 
-    private void ConnectOrDisconnectNodes(Node firstNode, Node secondNode)
-    {
-        if (firstNode.Neighborhoods.Contains(secondNode))
+        private Vector3 GetMousePosition()
         {
-            firstNode.Neighborhoods.Remove(secondNode);
-            secondNode.Neighborhoods.Remove(firstNode);
-        }
-        else
-        {
-            firstNode.Neighborhoods.Add(secondNode);
-            secondNode.Neighborhoods.Add(firstNode);
-            Lines.Add(new Tuple<Vector3, Vector3>(firstNode.GetComponentInParent<Transform>().position, secondNode.GetComponentInParent<Transform>().position));
+            var mousePos = Event.current.mousePosition;
+            var mouseX = mousePos.x;
+            var mouseY = Camera.current.pixelHeight - mousePos.y;
+            var myRay = Camera.current.ScreenPointToRay(new Vector3(mouseX, mouseY, 0));
+            return Physics.Raycast(myRay, out var hitInfo) ? hitInfo.point : default(Vector2);
         }
     }
 }
