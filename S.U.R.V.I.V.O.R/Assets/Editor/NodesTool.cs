@@ -1,13 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Graph_and_Map;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.EditorTools;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Editor
 {
@@ -18,7 +15,7 @@ namespace Editor
         public Node nodePrefab;
         private List<Node> graph = new();
         private Vector3 mousePosition;
-        private string pathToGraph;
+        private Transform parent;
         public override GUIContent toolbarIcon =>
             new()
             {
@@ -29,18 +26,43 @@ namespace Editor
         
         public override void OnActivated()
         {
-            foreach (var node in FindObjectsOfType<Node>())
+            parent = FindObjectOfType<DotGraph>().transform;
+            var nodes = FindObjectsOfType<Node>();
+            foreach (var node in nodes)
                 graph.Add(node);
-            base.OnActivated();
         }
 
         public override void OnToolGUI(EditorWindow window)
         {
-            graph.RemoveAll(n => n == null);
-            foreach (var node in graph)
-            foreach (var (start,end) in node)
-                Debug.DrawLine(start.transform.position,end.transform.position);
-            
+            DrawEdges();
+            UsePositionHandle();
+            if (Event.current.Equals(Event.KeyboardEvent("k")))
+                PutNodeInMousePosition();
+        }
+
+        private void PutNodeInMousePosition()
+        {
+            var activeNodes = Selection.gameObjects
+                .Select(o => o.GetComponent<Node>())
+                .ToArray();
+            switch (activeNodes.Length)
+            {
+                case 0:
+                    CreateNode();
+                    break;
+                case 1:
+                    ConnectOrDisconnectNodes(CreateNode(),activeNodes[0]);
+                    break;
+                case 2:
+                    ConnectOrDisconnectNodes(activeNodes[0],activeNodes[1]);
+                    break;
+                case > 2:
+                    Debug.Log("Too many nodes");
+                    break;
+            }
+        }
+        private void UsePositionHandle()
+        {
             if(target is GameObject activeObj)
             {
                 EditorGUI.BeginChangeCheck();
@@ -56,37 +78,22 @@ namespace Editor
                     }
                 }
             }
-            if (Event.current.Equals(Event.KeyboardEvent("k")))
-            {
-                var activeNodes = Selection.gameObjects
-                    .Select(o => o.GetComponent<Node>())
-                    .ToArray();
-                switch (activeNodes.Length)
-                {
-                    case 0:
-                        CreateNode();
-                        break;
-                    case 1:
-                        ConnectOrDisconnectNodes(CreateNode(),activeNodes[0]);
-                        break;
-                    case 2:
-                        ConnectOrDisconnectNodes(activeNodes[0],activeNodes[1]);
-                        break;
-                    case > 2:
-                        Debug.Log("Too many nodes");
-                        break;
-                }
-            }
-            
-            base.OnToolGUI(window);
         }
-
+        private void DrawEdges()
+        {
+            graph.RemoveAll(n => n == null);
+            foreach (var node in graph)
+            foreach (var (start, end) in node)
+                Debug.DrawLine(start.transform.position, end.transform.position);
+        }
         private Node CreateNode()
         {
             var node = Instantiate(nodePrefab);
             node.transform.position = GetMousePosition();
             Selection.activeObject = node;
             graph.Add(node);
+            if(parent != null)
+                node.transform.SetParent(parent);
             Undo.RegisterCreatedObjectUndo(node.gameObject,"Create Node");
             return node;
         }
