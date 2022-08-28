@@ -10,7 +10,7 @@ namespace Graph_and_Map
     public class DotGraph:MonoBehaviour
     {
         public static DotGraph instance;
-        public List<Node> nodes = new();
+        public readonly List<Node> nodes = new();
         public readonly KdTree kdTree = new();
         private Camera mainCamera;
         private Vector3 mPos;
@@ -41,10 +41,8 @@ namespace Graph_and_Map
             var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var rayHit))
                 mPos = rayHit.point;
-            nearestNode = kdTree.GetNeighbour(ConvertTo2D(mPos));
+            nearestNode = kdTree.GetNeighbour(new Vector2(mPos.x, mPos.z));
             line.SetPositions(new[]{mPos,nearestNode.transform.position});
         }
-        
-        private Vector2 ConvertTo2D(Vector3 v3) => new(v3.x, v3.z);
     }
 }
