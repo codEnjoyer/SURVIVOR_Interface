@@ -17,8 +17,9 @@ namespace Player
             MovingFromAToB
         }
 
-        public int MovementSpeed;
+        private float MovementSpeed = 0.1f;
 
+        public DotGraph graph;
         public Stage CurrentStage;
         public Node CurrentNode;
         public Vector3 Position;
@@ -26,69 +27,83 @@ namespace Player
         private Node TargetNode;
 
         private float delta = 0.1f;//Дистанция до ноды, при которой группа считиает, что достигла её и переходит к следующему ребру пути
+        private float progress;//Текущий прогресс на отрезке пути между нодами
         private Queue<Node> Way; //Текущий маршрут
-        public Group(IPlayer[] groupMembers, Node currentNode)
+        public Group(IPlayer[] groupMembers)
         {
             this.groupMembers = new IPlayer[4];
             for (var i = 0; i < 4; i++)
             {
                 this.groupMembers[i] = groupMembers[i];
             }
-            CurrentNode = currentNode;
         }
-
+        public void Start()
+        {
+            Way = new Queue<Node>();
+            transform.position = CurrentNode.transform.position;
+            TargetNode = CurrentNode;
+            //InputAggregator.OnTurnEndEvent += OnTurnEnd;
+        }
         public void Update()
         {
             switch (CurrentStage)
             {
                 case Stage.Sleeping:
-
                     break;
                 case Stage.WaitingTarget:
                     if (Input.GetMouseButtonDown(0))
                     {
-                        Vector3 clickPosition;
                         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out var hitInfo, 200f))
                         {
-                            clickPosition = hitInfo.point;
-                        }
-                        //Применить метод нахождения ближайшей ноды к clickPosition
-                        Node nearestNode;
-                        //Построить маршрут до этой ноды от CurrentNode
-                        Way = new Queue<Node>();
-                        CurrentStage = Stage.MovingFromAToB;
+                            var list = PathFinder.FindShortestWay(CurrentNode, graph.GetNearestNode());
+                            foreach (var node in list)
+                            {
+                                Way.Enqueue(node);
+                            }
 
-
-                        SubtractEnergy();
-                    }
-                    break;
-                case Stage.MovingFromAToB:
-                    if (Vector3.Distance(CurrentNode.transform.position,TargetNode.transform.position) <= delta)
-                    {
-                        transform.position = TargetNode.transform.position;
-                        CurrentNode = TargetNode;
-                        if (Way.Count == 0)
-                        {
-                            CurrentStage = Stage.Sleeping;
-                            break;
+                            Way.Dequeue();
+                            CurrentStage = Stage.MovingFromAToB;
                         }
-                        TargetNode = Way.Dequeue();
-                        break;
                     }
-                    Vector3.Lerp(CurrentNode.transform.position, TargetNode.transform.position, MovementSpeed);
                     break;
             }
         }
 
-        public void Start()
+        public void FixedUpdate()
         {
-            InputAggregator.OnTurnEndEvent += OnTurnEnd;
+            if (CurrentStage == Stage.MovingFromAToB)
+            {
+                
+                if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(TargetNode.transform.position.x, TargetNode.transform.position.z)) <= delta)
+                {
+                    Debug.Log("True");
+                    CurrentNode = TargetNode;
+                    progress = 0;
+                    if (Way.Count == 0)
+                    {
+                        CurrentStage = Stage.Sleeping;
+                    }
+                    else
+                    {
+                        TargetNode = Way.Dequeue();
+                        Debug.Log(TargetNode.transform.position);
+                        Debug.Log(Vector3.Distance(transform.position, TargetNode.transform.position));
+                    }
+                }
+                else
+                {
+                    Debug.Log("False");
+                }
+                transform.position = Vector3.Lerp(CurrentNode.transform.position, TargetNode.transform.position, progress);
+                progress += 0.02f;
+            }
         }
+
 
         private void OnTurnEnd()
         {
-            SubtractWater();
-            SubtractSatiety();
+            //SubtractWater();
+            //SubtractSatiety();
         }
 
         private void SubtractEnergy()

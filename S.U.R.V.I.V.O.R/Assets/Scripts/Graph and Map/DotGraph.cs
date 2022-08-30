@@ -17,6 +17,11 @@ namespace Graph_and_Map
         private Node nearestNode;
         private LineRenderer line;
 
+        public Node GetNearestNode()
+        {
+            return nearestNode;
+        }
+
         void Awake()
         {
             if (instance == null)
