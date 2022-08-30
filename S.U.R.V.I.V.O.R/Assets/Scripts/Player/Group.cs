@@ -14,14 +14,12 @@ namespace Player
         {
             Sleeping,
             WaitingTarget,
-            MovingFromAToB,
+            MovingFromAToB
         }
         //Игровые характеристики
         public int MaxGroupEndurance;
         private int CurrentGroupEndurance;
         private IPlayer[] groupMembers;
-
-
 
         //Характеристики движения по маршруту
         public GameObject objToSpawn;
@@ -82,12 +80,11 @@ namespace Player
         {
             if (CurrentStage == Stage.MovingFromAToB)
             {
-                
                 if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(TargetNode.transform.position.x, TargetNode.transform.position.z)) <= delta)
                 {
                     CurrentNode = TargetNode;
                     progress = 0;
-                    if (Way.Count == 0)
+                    if (Way.Count == 0 || CurrentGroupEndurance == 0)
                     {
                         CurrentStage = Stage.Sleeping;
                         GetComponent<LineRenderer>().positionCount = 0;
@@ -95,13 +92,6 @@ namespace Player
                     }
                     else
                     {
-                        if (CurrentGroupEndurance == 0)
-                        {
-                            CurrentStage = Stage.Sleeping;
-                            GetComponent<LineRenderer>().positionCount = 0;
-                            objToSpawn.transform.position = new Vector3(0, -10, 0);
-                            return;
-                        }
                         TargetNode = Way.Dequeue();
                         CurrentGroupEndurance -= 1;
                     }
