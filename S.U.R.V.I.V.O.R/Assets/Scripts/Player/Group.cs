@@ -14,16 +14,21 @@ namespace Player
         {
             Sleeping,
             WaitingTarget,
-            MovingFromAToB
+            MovingFromAToB,
         }
+        //Игровые характеристики
+        public int MaxGroupEndurance;
+        private int CurrentGroupEndurance;
+        private IPlayer[] groupMembers;
 
-        private float MovementSpeed = 0.1f;
 
+
+        //Характеристики движения по маршруту
+        public GameObject objToSpawn;
         public DotGraph graph;
         public Stage CurrentStage;
         public Node CurrentNode;
         public Vector3 Position;
-        private IPlayer[] groupMembers;
         private Node TargetNode;
 
         private float delta = 0.1f;//Дистанция до ноды, при которой группа считиает, что достигла её и переходит к следующему ребру пути
@@ -39,28 +44,32 @@ namespace Player
         }
         public void Start()
         {
+            GetComponent<LineRenderer>().positionCount = 0;
             Way = new Queue<Node>();
             transform.position = CurrentNode.transform.position;
             TargetNode = CurrentNode;
-            //InputAggregator.OnTurnEndEvent += OnTurnEnd;
+            InputAggregator.OnTurnEndEvent += OnTurnEnd;
+            CurrentGroupEndurance = MaxGroupEndurance;
         }
         public void Update()
         {
+            Debug.Log(CurrentGroupEndurance);
             switch (CurrentStage)
             {
                 case Stage.Sleeping:
                     break;
                 case Stage.WaitingTarget:
+                    var list = PathFinder.FindShortestWay(CurrentNode, graph.GetNearestNode());
+                    DrawWay(list);
                     if (Input.GetMouseButtonDown(0))
                     {
                         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out var hitInfo, 200f))
                         {
-                            var list = PathFinder.FindShortestWay(CurrentNode, graph.GetNearestNode());
+                            Way.Clear();
                             foreach (var node in list)
                             {
                                 Way.Enqueue(node);
                             }
-
                             Way.Dequeue();
                             CurrentStage = Stage.MovingFromAToB;
                         }
@@ -76,32 +85,49 @@ namespace Player
                 
                 if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(TargetNode.transform.position.x, TargetNode.transform.position.z)) <= delta)
                 {
-                    Debug.Log("True");
                     CurrentNode = TargetNode;
                     progress = 0;
                     if (Way.Count == 0)
                     {
                         CurrentStage = Stage.Sleeping;
+                        GetComponent<LineRenderer>().positionCount = 0;
+                        objToSpawn.transform.position = new Vector3(0, -10, 0);
                     }
                     else
                     {
+                        if (CurrentGroupEndurance == 0)
+                        {
+                            CurrentStage = Stage.Sleeping;
+                            GetComponent<LineRenderer>().positionCount = 0;
+                            objToSpawn.transform.position = new Vector3(0, -10, 0);
+                            return;
+                        }
                         TargetNode = Way.Dequeue();
-                        Debug.Log(TargetNode.transform.position);
-                        Debug.Log(Vector3.Distance(transform.position, TargetNode.transform.position));
+                        CurrentGroupEndurance -= 1;
                     }
                 }
-                else
-                {
-                    Debug.Log("False");
-                }
                 transform.position = Vector3.Lerp(CurrentNode.transform.position, TargetNode.transform.position, progress);
-                progress += 0.02f;
+                progress += 0.05f;
             }
         }
 
+        private void DrawWay(List<Node> list)
+        {
+            var lr = GetComponent<LineRenderer>();
+            lr.positionCount = list.Count;
+            lr.SetPositions(list.Select(x => x.transform.position + new Vector3(0, 0.5f, 0)).ToArray());
+            for (var nodeNumber = 0; nodeNumber < list.Count; nodeNumber++)
+            {
+                if (nodeNumber <= CurrentGroupEndurance)
+                {
+                    objToSpawn.transform.position = list[nodeNumber].transform.position;
+                }
+            }
+        }
 
         private void OnTurnEnd()
         {
+            CurrentGroupEndurance = MaxGroupEndurance;
             //SubtractWater();
             //SubtractSatiety();
         }
