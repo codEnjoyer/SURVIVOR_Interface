@@ -3,10 +3,10 @@ using UnityEngine.UI;
 
 namespace Player
 {
-    public class GroupMovementLogic : MonoBehaviour
+    public class GroupsMovementController : MonoBehaviour
     {
         public Button GroupMoveButton;
-        public Group ChosenGroup;
+        public GroupMovementLogic ChosenGroup;
 
         public void Awake()
         {
@@ -15,7 +15,7 @@ namespace Player
 
         private void OnButtonClick()
         {
-            ChosenGroup.CurrentStage = Group.Stage.WaitingTarget;
+            ChosenGroup.CurrentStage = GroupMovementLogic.Stage.WaitingTarget;
         }
     }
 }

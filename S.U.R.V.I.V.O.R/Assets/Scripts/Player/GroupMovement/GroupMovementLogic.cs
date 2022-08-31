@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Player
 {
-    public class Group : MonoBehaviour
+    public class GroupMovementLogic : MonoBehaviour
     {
         public enum Stage
         {
@@ -16,39 +16,38 @@ namespace Player
             WaitingTarget,
             MovingFromAToB
         }
-        //Игровые характеристики
-        public int MaxGroupEndurance;
-        private int CurrentGroupEndurance;
-        private IPlayer[] groupMembers;
 
-        //Характеристики движения по маршруту
-        public GameObject objToSpawn;
-        public DotGraph graph;
+
+        public GameObject ObjToSpawn;
+        public DotGraph Graph;
+
         public Stage CurrentStage;
         public Node CurrentNode;
-        public Vector3 Position;
         private Node TargetNode;
+        private int CurrentGroupEndurance;
+        private LineRenderer LineRenderer;
+        private GroupGameLogic GroupGameLogic;
 
         private float delta = 0.1f;//Дистанция до ноды, при которой группа считиает, что достигла её и переходит к следующему ребру пути
         private float progress;//Текущий прогресс на отрезке пути между нодами
         private Queue<Node> Way; //Текущий маршрут
-        public Group(IPlayer[] groupMembers)
+
+        public void Awake()
         {
-            this.groupMembers = new IPlayer[4];
-            for (var i = 0; i < 4; i++)
-            {
-                this.groupMembers[i] = groupMembers[i];
-            }
+            GroupGameLogic = GetComponent<GroupGameLogic>();
+            CurrentGroupEndurance = GroupGameLogic.MaxGroupEndurance;
+            LineRenderer = GetComponent<LineRenderer>();
+            LineRenderer.positionCount = 0;
         }
+        
         public void Start()
         {
-            GetComponent<LineRenderer>().positionCount = 0;
             Way = new Queue<Node>();
             transform.position = CurrentNode.transform.position;
             TargetNode = CurrentNode;
             InputAggregator.OnTurnEndEvent += OnTurnEnd;
-            CurrentGroupEndurance = MaxGroupEndurance;
         }
+
         public void Update()
         {
             Debug.Log(CurrentGroupEndurance);
@@ -57,7 +56,7 @@ namespace Player
                 case Stage.Sleeping:
                     break;
                 case Stage.WaitingTarget:
-                    var list = PathFinder.FindShortestWay(CurrentNode, graph.GetNearestNode());
+                    var list = PathFinder.FindShortestWay(CurrentNode, Graph.GetNearestNode());
                     DrawWay(list);
                     if (Input.GetMouseButtonDown(0))
                     {
@@ -87,8 +86,8 @@ namespace Player
                     if (Way.Count == 0 || CurrentGroupEndurance == 0)
                     {
                         CurrentStage = Stage.Sleeping;
-                        GetComponent<LineRenderer>().positionCount = 0;
-                        objToSpawn.transform.position = new Vector3(0, -10, 0);
+                        LineRenderer.positionCount = 0;
+                        ObjToSpawn.transform.position = new Vector3(0, -10, 0);
                     }
                     else
                     {
@@ -103,47 +102,20 @@ namespace Player
 
         private void DrawWay(List<Node> list)
         {
-            var lr = GetComponent<LineRenderer>();
-            lr.positionCount = list.Count;
-            lr.SetPositions(list.Select(x => x.transform.position + new Vector3(0, 0.5f, 0)).ToArray());
+            LineRenderer.positionCount = list.Count;
+            LineRenderer.SetPositions(list.Select(x => x.transform.position + new Vector3(0, 0.5f, 0)).ToArray());
             for (var nodeNumber = 0; nodeNumber < list.Count; nodeNumber++)
             {
                 if (nodeNumber <= CurrentGroupEndurance)
                 {
-                    objToSpawn.transform.position = list[nodeNumber].transform.position;
+                    ObjToSpawn.transform.position = list[nodeNumber].transform.position;
                 }
             }
         }
 
         private void OnTurnEnd()
         {
-            CurrentGroupEndurance = MaxGroupEndurance;
-            //SubtractWater();
-            //SubtractSatiety();
-        }
-
-        private void SubtractEnergy()
-        {
-            foreach (var groupMember in groupMembers)
-            {
-                groupMember.Energy--;
-            }
-        }
-
-        private void SubtractWater()
-        {
-            foreach (var groupMember in groupMembers)
-            {
-                groupMember.Water--;
-            }
-        }
-
-        private void SubtractSatiety()
-        {
-            foreach (var groupMember in groupMembers)
-            {
-                groupMember.Satiety--;
-            }
+            CurrentGroupEndurance = GetComponent<GroupGameLogic>().MaxGroupEndurance;
         }
     }
 }
