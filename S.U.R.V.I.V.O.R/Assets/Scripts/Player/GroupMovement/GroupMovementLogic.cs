@@ -30,7 +30,6 @@ namespace Player
         public Stage CurrentStage;
         public Node CurrentNode;
         private Node TargetNode;
-        private int CurrentGroupEndurance;
         private LineRenderer LineRenderer;
         private GroupGameLogic GroupGameLogic;
 
@@ -41,7 +40,6 @@ namespace Player
         public void Awake()
         {
             GroupGameLogic = GetComponent<GroupGameLogic>();
-            CurrentGroupEndurance = GroupGameLogic.MaxGroupEndurance;
             LineRenderer = GetComponent<LineRenderer>();
             LineRenderer.positionCount = 0;
             FirstTurnObjectLineRenderer = FirstTurnObject.GetComponent<LineRenderer>();
@@ -54,12 +52,10 @@ namespace Player
             Way = new Queue<Node>();
             transform.position = CurrentNode.transform.position;
             TargetNode = CurrentNode;
-            InputAggregator.OnTurnEndEvent += OnTurnEnd;
         }
 
         public void Update()
         {
-            Debug.Log(CurrentGroupEndurance);
             switch (CurrentStage)
             {
                 case Stage.Sleeping:
@@ -92,14 +88,14 @@ namespace Player
                 {
                     CurrentNode = TargetNode;
                     progress = 0;
-                    if (Way.Count == 0 || CurrentGroupEndurance == 0)
+                    if (Way.Count == 0 || GroupGameLogic.CurrentGroupEndurance == 0)
                     {
                         ClearWay();
                     }
                     else
                     {
                         TargetNode = Way.Dequeue();
-                        CurrentGroupEndurance -= 1;
+                        GroupGameLogic.CurrentGroupEndurance -= 1;
                     }
                 }
                 transform.position = Vector3.Lerp(CurrentNode.transform.position, TargetNode.transform.position, progress);
@@ -116,29 +112,29 @@ namespace Player
             for (var i = 0; i < list.Count; i++)
             {
                 var element = list[i].transform.position;
-                if (i < CurrentGroupEndurance)
+                if (i < GroupGameLogic.CurrentGroupEndurance)
                 {
                     firstList.Add(element);
                 }
-                else if(i == CurrentGroupEndurance)
+                else if(i == GroupGameLogic.CurrentGroupEndurance)
                 {
                     firstList.Add(element);
                     secondList.Add(element);
                 }
-                else if (i < CurrentGroupEndurance + GroupGameLogic.MaxGroupEndurance)
+                else if (i < GroupGameLogic.CurrentGroupEndurance + GroupGameLogic.MaxGroupEndurance)
                 {
                     secondList.Add(element);
                 }
-                else if (i == CurrentGroupEndurance + GroupGameLogic.MaxGroupEndurance)
+                else if (i == GroupGameLogic.CurrentGroupEndurance + GroupGameLogic.MaxGroupEndurance)
                 {
                     thirdList.Add(element);
                     secondList.Add(element);
                 }
-                else if (i < CurrentGroupEndurance + 2 * GroupGameLogic.MaxGroupEndurance)
+                else if (i < GroupGameLogic.CurrentGroupEndurance + 2 * GroupGameLogic.MaxGroupEndurance)
                 {
                     thirdList.Add(element);
                 }
-                else if (i == CurrentGroupEndurance + 2 * GroupGameLogic.MaxGroupEndurance)
+                else if (i == GroupGameLogic.CurrentGroupEndurance + 2 * GroupGameLogic.MaxGroupEndurance)
                 {
                     thirdList.Add(element);
                     lastList.Add(element);
@@ -194,10 +190,6 @@ namespace Player
             FirstTurnObject.transform.position = new Vector3(0, -10, 0);
             SecondTurnObject.transform.position = new Vector3(0, -10, 0);
             ThirdTurnObjectLineRenderer.transform.position = new Vector3(0, -10, 0);
-        }
-        private void OnTurnEnd()
-        {
-            CurrentGroupEndurance = GetComponent<GroupGameLogic>().MaxGroupEndurance;
         }
     }
 }

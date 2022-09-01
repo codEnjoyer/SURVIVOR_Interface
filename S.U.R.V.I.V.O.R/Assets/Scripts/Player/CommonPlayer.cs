@@ -3,7 +3,7 @@ using Graph_and_Map;
 using UnityEngine;
 namespace Player
 {
-    public class CommonPlayer: MonoBehaviour, IPlayer
+    public class CommonPlayer: IPlayer
     {
         public int MaxHp => 100;
         private int hp;
@@ -23,7 +23,7 @@ namespace Player
                     hp = value;
             }
         }
-        public int MaxEnergy => 100;
+        public int MaxEnergy => 10;
         private int energy;
         public int Energy
         {
@@ -89,18 +89,5 @@ namespace Player
             
         }
 
-        private void Start()
-        {
-            position = FindObjectOfType<Node>();
-            Hp = MaxHp;
-            Energy = MaxEnergy;
-            Satiety = MaxSatiety;
-            Water = MaxWater;
-        }
-
-        private void Update()
-        {
-            
-        }
     }
 }
