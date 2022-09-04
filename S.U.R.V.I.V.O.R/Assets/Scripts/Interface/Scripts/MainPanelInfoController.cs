@@ -15,7 +15,7 @@ public class MainPanelInfoController : MonoBehaviour
 
     private void Awake()
     {
-        ChosenGroup = GroupToFirstGroupPanel;// Это будет нужно, чтобы панель игроков могла показывать не только одну группу, а переключаться между ними, а пока можно так.
+        ChosenGroup = GroupToFirstGroupPanel;// Р­С‚Рѕ Р±СѓРґРµС‚ РЅСѓР¶РЅРѕ, С‡С‚РѕР±С‹ РїР°РЅРµР»СЊ РёРіСЂРѕРєРѕРІ РјРѕРіР»Р° РїРѕРєР°Р·С‹РІР°С‚СЊ РЅРµ С‚РѕР»СЊРєРѕ РѕРґРЅСѓ РіСЂСѓРїРїСѓ, Р° РїРµСЂРµРєР»СЋС‡Р°С‚СЊСЃСЏ РјРµР¶РґСѓ РЅРёРјРё, Р° РїРѕРєР° РјРѕР¶РЅРѕ С‚Р°Рє.
         GroupToFirstGroupPanel = PlayerInfoController.MainGroup;
         ChosenGroupInfoButtonController = transform.Find("GroupInfoButton").GetComponent<GroupInfoButtonController>();
         ChosenGroupInfoButtonController.ChosenGroup = GroupToFirstGroupPanel;
