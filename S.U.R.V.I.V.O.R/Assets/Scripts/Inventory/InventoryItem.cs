@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class InventoryItem : MonoBehaviour
 {
     public ItemData itemData;
-    
+
     public int onGridPositionX;
     public int onGridPositionY;
 
@@ -19,7 +19,7 @@ public class InventoryItem : MonoBehaviour
             return itemData.width;
         }
     }
-    
+
     public int Width
     {
         get
@@ -31,15 +31,17 @@ public class InventoryItem : MonoBehaviour
     }
 
     public bool rotated;
-    
-    
+
+
     public void Set(ItemData itemData)
     {
         this.itemData = itemData;
 
         GetComponent<Image>().sprite = itemData.itemIcon;
+        var scaleFactor = GetComponentInParent<Canvas>().scaleFactor;
 
-        var size = new Vector2(itemData.width * ItemGrid.TileSizeWidth, itemData.height * ItemGrid.TileSizeHeight);
+        var size = new Vector2(itemData.width * ItemGrid.TileSize * scaleFactor,
+            itemData.height * ItemGrid.TileSize * scaleFactor);
         GetComponent<RectTransform>().sizeDelta = size;
     }
 

@@ -142,8 +142,8 @@ public class InventoryController : MonoBehaviour
         var mousePosition = Input.mousePosition;
         if (selectedItem != null)
         {
-            mousePosition.x -= (selectedItem.Width - 1) * ItemGrid.TileSizeWidth / 2;
-            mousePosition.y += (selectedItem.Height - 1) * ItemGrid.TileSizeHeight / 2;
+            mousePosition.x -= (selectedItem.Width - 1) * ItemGrid.TileSize / 2;
+            mousePosition.y += (selectedItem.Height - 1) * ItemGrid.TileSize / 2;
         }
 
         return selectedItemGrid.GetTileGridPosition(mousePosition);
@@ -161,7 +161,11 @@ public class InventoryController : MonoBehaviour
     private void InsertItem(InventoryItem itemToInsert)
     {
         var positionOnGrid = selectedItemGrid.FindSpaceForObject(itemToInsert);
-        if(positionOnGrid == null) return;
+        if(positionOnGrid == null)
+        {
+            Destroy(itemToInsert.gameObject);
+            return;
+        }
         selectedItemGrid.PlaceItem(itemToInsert, positionOnGrid.Value.x, positionOnGrid.Value.y);
     }
 

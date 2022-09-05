@@ -1,14 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.PlayerLoop;
+using UnityEngine.UI;
 
 public class ItemGrid : MonoBehaviour
 {
-    public const float TileSizeWidth = 32;
-    public const float TileSizeHeight = 32;
+    private Canvas canvas;
+    
+    public const float TileSize = 50;
 
     private Vector2 positionOnGrid;
     private Vector2Int tileGridPosition;
@@ -17,11 +20,15 @@ public class ItemGrid : MonoBehaviour
 
     private RectTransform rectTransform;
 
-    [SerializeField] private int gridSizeWidth = 15;
+    [SerializeField] private int gridSizeWidth = 10;
     [SerializeField] private int gridSizeHeight = 10;
+
+    public int GridSizeWidth => gridSizeWidth;
+    public int GridSizeHeight => gridSizeHeight;
 
     private void Start()
     {
+        canvas = GetComponentInParent<Canvas>();
         rectTransform = GetComponent<RectTransform>();
         Init(gridSizeWidth, gridSizeHeight);
     }
@@ -29,8 +36,21 @@ public class ItemGrid : MonoBehaviour
     private void Init(int width, int height)
     {
         inventoryItemSlot = new InventoryItem[width, height];
-        var size = new Vector2(width * TileSizeWidth, height * TileSizeHeight);
+        var size = new Vector2(width * TileSize, height * TileSize);
         rectTransform.sizeDelta = size;
+        /*var slot = transform.Find("Slot");
+        slot.gameObject.SetActive(false);
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                var singleSlot = Instantiate(slot, transform);
+                singleSlot.gameObject.SetActive(true);
+            }
+        }
+        GetComponent<GridLayoutGroup>().cellSize = new Vector2(TileSize, TileSize);
+        GetComponent<RectTransform>().sizeDelta = new Vector2(width, height) * TileSize;
+        GetComponent<RectTransform>().anchoredPosition = rectTransform.anchoredPosition;*/
     }
 
     public Vector2Int GetTileGridPosition(Vector2 mousePosition)
@@ -39,8 +59,9 @@ public class ItemGrid : MonoBehaviour
         positionOnGrid.x = mousePosition.x - position.x;
         positionOnGrid.y = position.y - mousePosition.y;
 
-        tileGridPosition.x = (int) (positionOnGrid.x / TileSizeWidth);
-        tileGridPosition.y = (int) (positionOnGrid.y / TileSizeHeight);
+        var scaleFactor = canvas.scaleFactor;
+        tileGridPosition.x = (int) ((positionOnGrid.x / TileSize) / scaleFactor);
+        tileGridPosition.y = (int) ((positionOnGrid.y / TileSize) / scaleFactor);
 
         return tileGridPosition;
     }
@@ -87,8 +108,8 @@ public class ItemGrid : MonoBehaviour
     public Vector2 GetPositionOnGrid(InventoryItem item, int posX, int posY)
     {
         var position = new Vector2();
-        position.x = posX * TileSizeWidth + TileSizeWidth * item.Width / 2;
-        position.y = -(posY * TileSizeHeight + TileSizeHeight * item.Height / 2);
+        position.x = posX * TileSize + TileSize * item.Width / 2;
+        position.y = -(posY * TileSize + TileSize * item.Height / 2);
         return position;
     }
 
