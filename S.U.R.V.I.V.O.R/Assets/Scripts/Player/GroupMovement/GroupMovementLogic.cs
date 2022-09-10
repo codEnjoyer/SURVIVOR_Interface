@@ -99,7 +99,7 @@ namespace Player
                     }
                 }
                 transform.position = Vector3.Lerp(CurrentNode.transform.position, TargetNode.transform.position, progress);
-                progress += 0.05f;
+                progress += 0.050f;
             }
         }
 
