@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
+using Assets.Scripts.Model;
 using UnityEngine;
 
 public class MainPanelInfoController : MonoBehaviour
@@ -10,8 +10,8 @@ public class MainPanelInfoController : MonoBehaviour
     private GroupInfoButtonController ChosenGroupInfoButtonController;
     private GameObject GroupMembersPanel;
 
-    private GroupGameLogic GroupToFirstGroupPanel;
-    private GroupGameLogic ChosenGroup;
+    private Group GroupToFirstGroupPanel;
+    private Group ChosenGroup;
 
     private void Awake()
     {

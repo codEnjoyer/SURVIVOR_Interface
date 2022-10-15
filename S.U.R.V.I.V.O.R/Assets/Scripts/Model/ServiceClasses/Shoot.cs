@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Model.ServiceClasses
+﻿namespace Assets.Scripts.Model
 {
     public class Shoot
     {

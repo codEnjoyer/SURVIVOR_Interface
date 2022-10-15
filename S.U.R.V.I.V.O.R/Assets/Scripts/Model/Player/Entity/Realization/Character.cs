@@ -1,12 +1,16 @@
-﻿
-using Assets.Scripts.Model.Player.Body;
+﻿using global::System;
 
-namespace Assets.Scripts.Model.Player.Entity.Realization
-{
+namespace Assets.Scripts.Model{
     public class Character : Entity
     {
+        public readonly Skills Skills;
+
         public readonly ManBody Body;
-        public readonly Skills skills;
-        public int Mobility;//Скорость передвижения на глобальной карте
+        public int Mobility => throw new NotImplementedException(); //Скорость передвижения на глобальной карте
+
+        public Character()
+        {
+            Body = new ManBody();
+        }
     }
 }

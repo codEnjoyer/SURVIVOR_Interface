@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44323984, g: 0.4924798, b: 0.57215095, a: 1}
+  m_IndirectSpecularColor: {r: 0.44324037, g: 0.49248022, b: 0.57215136, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -981,7 +981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59ba3a0849faf464295049c95979b5f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChosenGroup: {fileID: 0}
+  ChosenGroup: {fileID: 154339909}
 --- !u!114 &34056575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2281,8 +2281,8 @@ GameObject:
   - component: {fileID: 154339903}
   - component: {fileID: 154339902}
   - component: {fileID: 154339907}
-  - component: {fileID: 154339908}
   - component: {fileID: 154339909}
+  - component: {fileID: 154339910}
   m_Layer: 0
   m_Name: Group
   m_TagString: Untagged
@@ -2468,7 +2468,7 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!114 &154339908
+--- !u!114 &154339909
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2477,12 +2477,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 154339900}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18acc0d4df2140d42ac2cbc624ad7996, type: 3}
+  m_Script: {fileID: 11500000, guid: fc365e50704050649a7f3cdc97592230, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxGroupEndurance: 8
-  CurrentGroupEndurance: 0
---- !u!114 &154339909
+  MaxOnGlobalMapGroupEndurance: 10
+  CurrentOnGlobalMapGroupEndurance: 10
+--- !u!114 &154339910
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4266,7 +4266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GroupMoveButton: {fileID: 713397768}
-  ChosenGroup: {fileID: 154339909}
+  ChosenGroup: {fileID: 154339910}
 --- !u!1 &281512710
 GameObject:
   m_ObjectHideFlags: 0
@@ -11781,7 +11781,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a29117295d2408b41afec8dcc7d0a244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainGroup: {fileID: 154339908}
+  MainGroup: {fileID: 154339909}
 --- !u!1 &883632871
 GameObject:
   m_ObjectHideFlags: 0

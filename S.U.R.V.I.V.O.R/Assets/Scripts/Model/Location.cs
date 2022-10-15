@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Model.Items;
-
-namespace Assets.Scripts.Model
+﻿namespace Assets.Scripts.Model
 {
     public abstract class Location
     {

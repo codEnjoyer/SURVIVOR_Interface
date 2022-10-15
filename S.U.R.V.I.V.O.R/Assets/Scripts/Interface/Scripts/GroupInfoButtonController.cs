@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Assets.Scripts.Model;
 using Player;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GroupInfoButtonController : MonoBehaviour
 {
-    public GroupGameLogic ChosenGroup;
+    public Group ChosenGroup;
 
     private Text EnergyText;
     private Text WaterText;
@@ -29,11 +30,11 @@ public class GroupInfoButtonController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        EnergyText.text = ChosenGroup.GroupMembers.Average(x => x.Energy).ToString(CultureInfo.InvariantCulture);
-        WaterText.text = ChosenGroup.GroupMembers.Average(x => x.Water).ToString(CultureInfo.InvariantCulture);
-        HealthText.text = ChosenGroup.GroupMembers.Average(x => x.Hp).ToString(CultureInfo.InvariantCulture);
-        HungerText.text = ChosenGroup.GroupMembers.Average(x => x.Satiety).ToString(CultureInfo.InvariantCulture);
-        GroupMemberCountText.text = ChosenGroup.GroupMembers.Length.ToString();
+        EnergyText.text = ChosenGroup.currentGroupMembers.Average(x => x.Body.Energy).ToString(CultureInfo.InvariantCulture);
+        WaterText.text = ChosenGroup.currentGroupMembers.Average(x => x.Body.Water).ToString(CultureInfo.InvariantCulture);
+        HealthText.text = ChosenGroup.currentGroupMembers.Average(x => x.Body.TotalHp).ToString(CultureInfo.InvariantCulture);
+        HungerText.text = ChosenGroup.currentGroupMembers.Average(x => x.Body.Food).ToString(CultureInfo.InvariantCulture);
+        GroupMemberCountText.text = ChosenGroup.currentGroupMembers.Count.ToString();
         LocationText.text = ChosenGroup.GetComponentInParent<GroupMovementLogic>().CurrentNode.location.ToString();
     }
 

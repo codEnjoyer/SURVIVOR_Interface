@@ -1,17 +1,18 @@
-﻿using Assets.Scripts.Model.Items.Weapons;
+﻿using global::System;
 
-namespace Assets.Scripts.Model.Player.Entity
+namespace Assets.Scripts.Model
 {
     public abstract class Entity
     {
-        public readonly Body.Body Body;
-        private Weapon primaryGun;
-        private Weapon secondaryGun;
-        private Weapon meleeWeapon;
-        private Weapon chosenWeapon;
-        public void Attack(Weapon weapon, Body.Body target)
+        public Body Body { get; protected set; }
+        protected Weapon PrimaryGun;
+        protected Weapon SecondaryGun;
+        protected Weapon MeleeWeapon;
+        protected Weapon ChosenWeapon;
+        public void Attack(Weapon weapon, Body target)
         {
-            //Стрельба из gun по target вызывает у gun метод стрельбы, который формирует служебный класс Shoot
+            //TODO Реализовать метод стрельбы из weapon по target вызывает у gun метод стрельбы, который формирует служебный класс Shoot
+            throw new NotImplementedException();
         }
 
     }

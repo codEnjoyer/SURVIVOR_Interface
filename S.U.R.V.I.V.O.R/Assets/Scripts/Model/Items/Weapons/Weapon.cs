@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Model.Items.Weapons
+﻿namespace Assets.Scripts.Model
 {
     public class Weapon : Item
     {

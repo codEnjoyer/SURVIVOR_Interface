@@ -1,6 +1,7 @@
 ﻿namespace Assets.Scripts.Model
 {
-    internal class MeleeWeapon : Weapon
+    public class ManLeg : BodyPart
     {
+
     }
 }

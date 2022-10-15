@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Model;
 using UnityEngine;
 
 public class PlayerInfoController : MonoBehaviour
 {
-    public GroupGameLogic MainGroup;
+    public Group MainGroup;
 }

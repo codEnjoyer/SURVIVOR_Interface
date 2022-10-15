@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Model;
 using Graph_and_Map;
 using UnityEngine;
 
@@ -31,7 +32,7 @@ namespace Player
         public Node CurrentNode;
         private Node TargetNode;
         private LineRenderer LineRenderer;
-        private GroupGameLogic GroupGameLogic;
+        private Group Group;
 
         private float delta = 0.1f;//Дистанция до ноды, при которой группа считиает, что достигла её и переходит к следующему ребру пути
         private float progress;//Текущий прогресс на отрезке пути между нодами
@@ -39,7 +40,7 @@ namespace Player
 
         public void Awake()
         {
-            GroupGameLogic = GetComponent<GroupGameLogic>();
+            Group = GetComponent<Group>();
             LineRenderer = GetComponent<LineRenderer>();
             LineRenderer.positionCount = 0;
             FirstTurnObjectLineRenderer = FirstTurnObject.GetComponent<LineRenderer>();
@@ -88,14 +89,14 @@ namespace Player
                 {
                     CurrentNode = TargetNode;
                     progress = 0;
-                    if (Way.Count == 0 || GroupGameLogic.CurrentGroupEndurance == 0)
+                    if (Way.Count == 0 || Group.CurrentOnGlobalMapGroupEndurance == 0)
                     {
                         ClearWay();
                     }
                     else
                     {
                         TargetNode = Way.Dequeue();
-                        GroupGameLogic.CurrentGroupEndurance -= 1;
+                        Group.CurrentOnGlobalMapGroupEndurance -= 1;
                     }
                 }
                 transform.position = Vector3.Lerp(CurrentNode.transform.position, TargetNode.transform.position, progress);
@@ -112,29 +113,29 @@ namespace Player
             for (var i = 0; i < list.Count; i++)
             {
                 var element = list[i].transform.position;
-                if (i < GroupGameLogic.CurrentGroupEndurance)
+                if (i < Group.CurrentOnGlobalMapGroupEndurance)
                 {
                     firstList.Add(element);
                 }
-                else if(i == GroupGameLogic.CurrentGroupEndurance)
+                else if(i == Group.CurrentOnGlobalMapGroupEndurance)
                 {
                     firstList.Add(element);
                     secondList.Add(element);
                 }
-                else if (i < GroupGameLogic.CurrentGroupEndurance + GroupGameLogic.MaxGroupEndurance)
+                else if (i < Group.CurrentOnGlobalMapGroupEndurance + Group.MaxOnGlobalMapGroupEndurance)
                 {
                     secondList.Add(element);
                 }
-                else if (i == GroupGameLogic.CurrentGroupEndurance + GroupGameLogic.MaxGroupEndurance)
+                else if (i == Group.CurrentOnGlobalMapGroupEndurance + Group.MaxOnGlobalMapGroupEndurance)
                 {
                     thirdList.Add(element);
                     secondList.Add(element);
                 }
-                else if (i < GroupGameLogic.CurrentGroupEndurance + 2 * GroupGameLogic.MaxGroupEndurance)
+                else if (i < Group.CurrentOnGlobalMapGroupEndurance + 2 * Group.MaxOnGlobalMapGroupEndurance)
                 {
                     thirdList.Add(element);
                 }
-                else if (i == GroupGameLogic.CurrentGroupEndurance + 2 * GroupGameLogic.MaxGroupEndurance)
+                else if (i == Group.CurrentOnGlobalMapGroupEndurance + 2 * Group.MaxOnGlobalMapGroupEndurance)
                 {
                     thirdList.Add(element);
                     lastList.Add(element);
