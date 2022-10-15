@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Model.Items.Weapons.Ammo
 {
-    internal class Ammo
-    {
+    internal abstract class Ammo
+    { 
+
     }
 }
