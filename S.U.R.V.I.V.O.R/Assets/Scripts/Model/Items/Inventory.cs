@@ -1,16 +1,6 @@
-﻿using global::System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Assets.Scripts.Model
+public class Inventory
 {
-    public class Inventory
-    {
-        public readonly Size InventorySize;
-        public readonly List<Item> Items;
-
-        public Inventory(Size size)
-        {
-            InventorySize = size;
-            Items = new List<Item>();
-        }
-    }
+    public readonly List<Item> items  = new();
 }

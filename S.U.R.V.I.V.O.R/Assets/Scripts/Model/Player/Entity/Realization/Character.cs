@@ -1,16 +1,14 @@
-﻿using global::System;
+﻿using System;
 
-namespace Assets.Scripts.Model{
-    public class Character : Entity
+public class Character : Entity
+{
+    public readonly Skills Skills;
+
+    public readonly ManBody Body;
+    public int Mobility => throw new NotImplementedException(); //Скорость передвижения на глобальной карте
+
+    public Character()
     {
-        public readonly Skills Skills;
-
-        public readonly ManBody Body;
-        public int Mobility => throw new NotImplementedException(); //Скорость передвижения на глобальной карте
-
-        public Character()
-        {
-            Body = new ManBody();
-        }
+        Body = new ManBody();
     }
 }

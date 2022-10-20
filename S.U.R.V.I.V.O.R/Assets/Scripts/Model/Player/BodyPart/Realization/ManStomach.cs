@@ -1,7 +1,3 @@
-﻿namespace Assets.Scripts.Model
+﻿public class ManStomach : BodyPart
 {
-    public class ManStomach : BodyPart
-    {
-
-    }
 }

@@ -1,7 +1,5 @@
-﻿namespace Assets.Scripts.Model
+﻿
+public class Weapon : Item
 {
-    public class Weapon : Item
-    {
-        
-    }
+    
 }

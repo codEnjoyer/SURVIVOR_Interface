@@ -1,6 +1,7 @@
-﻿namespace Assets.Scripts.Model
+﻿using UnityEngine;
+
+internal class MeleeWeapon : Weapon
 {
-    internal class MeleeWeapon : Weapon
-    {
-    }
+    
 }
+

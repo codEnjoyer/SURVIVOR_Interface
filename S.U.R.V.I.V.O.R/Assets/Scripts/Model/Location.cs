@@ -1,10 +1,10 @@
-﻿namespace Assets.Scripts.Model
+﻿using UnityEngine;
+
+public abstract class Location 
 {
-    public abstract class Location
+    
+    public Item GetLoot()
     {
-        public Item GetLoot()
-        {
-            return default;
-        }
+        return default;
     }
 }

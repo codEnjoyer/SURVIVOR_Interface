@@ -7,19 +7,16 @@ namespace Graph_and_Map
 {
     public class KdTree: IEnumerable<Node>
     {
-        public bool IsLeaf => left is null && right is null;
-        public KdTree parent;
-        public KdTree left;
-        public KdTree right;
-        public Node value;
+        public Node value { get; private set; }
         public readonly bool splitX;
-        public int count = 0;
-        public bool isEmpty => count == 0;
-
+        public int count { get; private set; }
+        
+        private KdTree left;
+        private KdTree right;
+        private bool isEmpty => count == 0;
         private KdTree(Node value, KdTree parent)
         {
             this.value = value;
-            this.parent = parent;
             splitX = !parent.splitX;
             count = 1;
         }

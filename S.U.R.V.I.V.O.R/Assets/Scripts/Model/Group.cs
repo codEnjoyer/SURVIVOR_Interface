@@ -1,75 +1,66 @@
 ﻿using System.Collections.Generic;
-using global::System.Linq;
-using UnityEngine;
+using System.Linq;
 
-namespace Assets.Scripts.Model
+
+public class Group
 {
-    public class Group : MonoBehaviour
+    public int MaxOnGlobalMapGroupEndurance;
+    public int CurrentOnGlobalMapGroupEndurance;
+
+    public readonly List<Character> currentGroupMembers;
+    private int maxGroupMembers;
+
+
+    public readonly Location location;
+
+    public Item Loot()
     {
-        public int MaxOnGlobalMapGroupEndurance;
-        public int CurrentOnGlobalMapGroupEndurance;
+        return location.GetLoot();
+    }
 
-        public List<Character> currentGroupMembers {get; private set;}
-        private int maxGroupMembers;
+    public void SubstracOnMove()
+    {
+        //Вычесть характеристике всех игрков группы при перемещении по карте
+    }
 
-        public readonly Location location;
+    public void OnTurnEnd()
+    {
+        currentGroupMembers.Select(character => character.Body.Energy--);
+        //Вычислить все характеристки при окончании хода
+    }
 
-        public void Awake()
+    private void SubtractEnergy()
+    {
+        foreach (var groupMember in currentGroupMembers)
         {
-            currentGroupMembers = new List<Character> { new Character()};
-            InputAggregator.OnTurnEndEvent += OnTurnEnd;
+            groupMember.Body.Food--;
         }
+    }
 
-        public Item Loot()
+    private void SubtractWater()
+    {
+        foreach (var groupMember in currentGroupMembers)
         {
-            return location.GetLoot();
+            groupMember.Body.Water--;
         }
+    }
 
-        public void SubstracOnMove()
+    private void SubtractSatiety()
+    {
+        foreach (var groupMember in currentGroupMembers)
         {
-            //Вычесть характеристике всех игрков группы при перемещении по карте
+            groupMember.Body.Food--;
         }
+    }
 
-        private void SubtractEnergy()
+    private void AddExtraEnergy()
+    {
+        foreach (var groupMember in currentGroupMembers)
         {
-            foreach (var groupMember in currentGroupMembers)
-            {
-                groupMember.Body.Food--;
-            }
-        }
-
-        private void SubtractWater()
-        {
-            foreach (var groupMember in currentGroupMembers)
-            {
-                groupMember.Body.Water--;
-            }
-        }
-
-        private void SubtractSatiety()
-        {
-            foreach (var groupMember in currentGroupMembers)
-            {
-                groupMember.Body.Food--;
-            }
-        }
-
-        private void AddExtraEnergy()
-        {
-            foreach (var groupMember in currentGroupMembers)
-            {
-                if (groupMember.Body.Food >= 8)
-                    groupMember.Body.Energy++;
-                if (groupMember.Body.Water >= 8)
-                    groupMember.Body.Energy++;
-            }
-        }
-
-        public void OnTurnEnd()
-        {
-            currentGroupMembers.Select(character => character.Body.Energy--);
-            CurrentOnGlobalMapGroupEndurance = MaxOnGlobalMapGroupEndurance;
-            //Вычислить все характеристки при окончании хода
+            if (groupMember.Body.Food >= 8)
+                groupMember.Body.Energy++;
+            if (groupMember.Body.Water >= 8)
+                groupMember.Body.Energy++;
         }
     }
 }

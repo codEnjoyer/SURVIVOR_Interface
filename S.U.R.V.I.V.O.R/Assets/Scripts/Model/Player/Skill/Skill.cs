@@ -1,7 +1,3 @@
-﻿namespace Assets.Scripts.Model
+﻿public abstract class Skill
 {
-    public abstract class Skill
-    {
-        
-    }
 }

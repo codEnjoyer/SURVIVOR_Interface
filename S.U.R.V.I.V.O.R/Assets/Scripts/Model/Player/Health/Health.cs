@@ -1,21 +1,37 @@
-﻿using global::System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Assets.Scripts.Model
+public class Health
 {
-
-    public class Health
+    private Body body;
+    private float radiation;
+    private List<HealthProperty> healthProperties = new();
+    public float Radiation
     {
-        private readonly float Radiation;
-        private readonly List<HealthProperties> HealthProperties;
-
-        public void AddProperty(HealthProperties healthProperty)
+        get => radiation;
+        set
         {
-            HealthProperties.Add(healthProperty);//TODO добавлять только если такого свойства нет
+            if (value >= 0)
+                radiation = value;
         }
+    }
 
-        public void DeletePropery(HealthProperties healthProperty)
-        {
-            HealthProperties.Remove(healthProperty);
-        }
+    public Health(Body body)
+    {
+        this.body = body;
+    }
+
+    public void AddProperty(HealthProperty healthProperty)
+    {
+        healthProperties.Add(healthProperty); //TODO добавлять только если такого свойства нет
+    }
+
+    public void DeleteProperty(HealthProperty healthProperty)
+    {
+        healthProperties.Remove(healthProperty);
+    }
+
+    public void OnTurnEnd()
+    {
+        
     }
 }

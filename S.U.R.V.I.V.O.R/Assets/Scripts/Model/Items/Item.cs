@@ -1,11 +1,7 @@
 ﻿using System;
+using UnityEngine;
 
-namespace Assets.Scripts.Model
+public class Item: MonoBehaviour
 {
-    public class Item
-    {
-        public string Name { get; protected set; }
-        public float Weight { get; protected set; }
-        public Size InventorySize;
-    }
+    public ItemData itemData;
 }

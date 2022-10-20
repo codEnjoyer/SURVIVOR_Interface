@@ -1,7 +1,5 @@
-﻿namespace Assets.Scripts.Model
+﻿
+public class Shoot
 {
-    public class Shoot
-    {
-        
-    }
+    
 }

@@ -1,12 +1,6 @@
-﻿namespace Assets.Scripts.Model
+﻿using UnityEngine;
+
+public class GunModule : Item
 {
-    public abstract class GunModule : Item
-    {
-        protected float DeltaRecoil;
-        protected float DeltaAccuracy;
-        protected float DeltaNoise;
-        protected float DeltaAverageDistance;
-        protected float DeltaDamage;
-        protected float DeltaErgonomics;
-    }
+    [SerializeField] private GunModuleData gunModuleData;
 }

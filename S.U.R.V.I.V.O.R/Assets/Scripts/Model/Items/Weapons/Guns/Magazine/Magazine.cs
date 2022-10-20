@@ -1,28 +1,24 @@
-﻿using global::System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace Assets.Scripts.Model
+public class Magazine: Item 
 {
-    public class Magazine<TCaliber> : Item where TCaliber : Caliber
+    private Stack<Bullet> ammo;
+    [SerializeField] private Bullet bullet;
+    [SerializeField] private int capacity;
+    public Bullet DeLoad() => ammo.Pop();
+    public void Load()
     {
-        public Magazine(int capacity) 
-        {
-            Capacity = capacity;
-        }
+        if (CurrentNumberAmmo < capacity)
+            ammo.Push(ScriptableObject.CreateInstance<Bullet>());
+    }
+    
+    public int CurrentNumberAmmo => ammo.Count;
+    public bool isEmpty => ammo.Count == 0;
 
-        protected Stack<TCaliber> AmmoStack;
-        protected int Capacity; //TODO Нельзя загрузить больше патронов чем Capacity
-
-        public bool IsEmpty => AmmoStack.Count == 0;
-
-        public Caliber DeLoad()
-        {
-            return AmmoStack.Pop();
-        }
-
-        public void Reload(List<TCaliber> ammoList)
-        {
-            foreach (var ammo in ammoList)
-                AmmoStack.Push(ammo);
-        }
+    private void Awake()
+    {
+        ammo = new Stack<Bullet>(capacity);
     }
 }
