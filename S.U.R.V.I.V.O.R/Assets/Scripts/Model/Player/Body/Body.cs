@@ -16,10 +16,25 @@ public abstract class Body
         Health = new Health(this);
     }
 
-    public void GetDamage(Shoot shoot)
+    public void TakeDamage(Shoot shoot)
     {
         //TODO Реализовать метод распределения урона от класса Shoot по частям тела
+        throw new NotImplementedException();
         if (TotalHp <= 0)
             Died?.Invoke();
+    }
+
+    public void TakeDamage(float damage)
+    {
+        //TODO Реализовать метод распределения урона по частям тела
+        throw new NotImplementedException();
+        if (TotalHp <= 0)
+            Died?.Invoke();
+    }
+    
+    public void Healing(float heal)
+    {
+        //TODO Реализовать метод распределения лечения по частям тела
+        throw new NotImplementedException();
     }
 }

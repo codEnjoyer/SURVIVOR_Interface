@@ -4,7 +4,7 @@ public class Health
 {
     private Body body;
     private float radiation;
-    private List<HealthProperty> healthProperties = new();
+    private readonly List<IHealthProperty> healthProperties = new();
     public float Radiation
     {
         get => radiation;
@@ -20,18 +20,22 @@ public class Health
         this.body = body;
     }
 
-    public void AddProperty(HealthProperty healthProperty)
+    public void AddProperty(IHealthProperty property)
     {
-        healthProperties.Add(healthProperty); //TODO добавлять только если такого свойства нет
+        healthProperties.Add(property); 
+        //TODO добавлять только если такого свойства нет
+        property.InitialAction(this);
     }
 
-    public void DeleteProperty(HealthProperty healthProperty)
+    public void DeleteProperty(IHealthProperty property)
     {
-        healthProperties.Remove(healthProperty);
+        healthProperties.Remove(property);
+        property.FinalAction(this);
     }
 
     public void OnTurnEnd()
     {
-        
+        foreach (var healthProperty in healthProperties)
+            healthProperty.OnTurnEnd(this);
     }
 }

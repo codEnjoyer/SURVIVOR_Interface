@@ -38,4 +38,20 @@ public abstract class BodyPart
         if (Hp <= 0)
             OnZeroHp?.Invoke();
     }
+
+    public void TakeDamage(float damage)
+    {
+        if (damage < 0)
+            throw new ArgumentException();
+        Hp -= damage;
+        if (Hp <= 0)
+            OnZeroHp?.Invoke();
+    }
+
+    public void Healing(float heal)
+    {
+        if (heal < 0)
+            throw new ArgumentException();
+        Hp += heal;
+    }
 }
