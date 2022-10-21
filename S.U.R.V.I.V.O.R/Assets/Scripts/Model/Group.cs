@@ -1,39 +1,37 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
+using UnityEngine;
 
 
-public class Group
+public class Group : MonoBehaviour
 {
     public int MaxOnGlobalMapGroupEndurance;
     public int CurrentOnGlobalMapGroupEndurance;
 
-    public readonly List<Character> currentGroupMembers;
+    public readonly List<Character> currentGroupMembers = new ();
     private int maxGroupMembers;
 
 
     public readonly Location location;
 
+    void Start()
+    {
+        InputAggregator.OnTurnEndEvent += OnTurnEnd;
+        currentGroupMembers.Add(new Character());
+    }
+
     public Item Loot()
     {
-        return location.GetLoot();
-    }
-
-    public void SubstracOnMove()
-    {
-        //Вычесть характеристике всех игрков группы при перемещении по карте
-    }
-
-    public void OnTurnEnd()
-    {
-        currentGroupMembers.Select(character => character.Body.Energy--);
-        //Вычислить все характеристки при окончании хода
+        throw new NotImplementedException();
     }
 
     private void SubtractEnergy()
     {
         foreach (var groupMember in currentGroupMembers)
         {
-            groupMember.Body.Food--;
+            groupMember.Body.Energy--;
         }
     }
 
@@ -62,5 +60,22 @@ public class Group
             if (groupMember.Body.Water >= 8)
                 groupMember.Body.Energy++;
         }
+    }
+
+    private void ResetAllTurnCharacteristics()
+    {
+        CurrentOnGlobalMapGroupEndurance = MaxOnGlobalMapGroupEndurance;
+    }
+
+    public void OnTurnEnd()
+    {
+        SubtractEnergy();
+        if (CurrentOnGlobalMapGroupEndurance != MaxOnGlobalMapGroupEndurance)
+            SubtractEnergy();
+        SubtractSatiety();
+        SubtractWater();
+        AddExtraEnergy();
+        ResetAllTurnCharacteristics();
+        //Вычислить все характеристки при окончании хода
     }
 }
