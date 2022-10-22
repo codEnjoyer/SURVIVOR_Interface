@@ -11,7 +11,7 @@ namespace Graph_and_Map
     {
         public static DotGraph instance;
         public readonly List<Node> nodes = new();
-        public readonly KdTree kdTree = new();
+        private readonly KdTree kdTree = new();
         private Camera mainCamera;
         private Vector3 mPos;
         private Node nearestNode;

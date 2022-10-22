@@ -88,14 +88,14 @@ namespace Player
                 {
                     CurrentNode = TargetNode;
                     progress = 0;
-                    if (Way.Count == 0 || Group.CurrentOnGlobalMapGroupEndurance == 0)
+                    if (Way.Count == 0 || Group.currentOnGlobalMapGroupEndurance == 0)
                     {
                         ClearWay();
                     }
                     else
                     {
                         TargetNode = Way.Dequeue();
-                        Group.CurrentOnGlobalMapGroupEndurance -= 1;
+                        Group.currentOnGlobalMapGroupEndurance -= 1;
                     }
                 }
                 transform.position = Vector3.Lerp(CurrentNode.transform.position, TargetNode.transform.position, progress);
@@ -112,29 +112,29 @@ namespace Player
             for (var i = 0; i < list.Count; i++)
             {
                 var element = list[i].transform.position;
-                if (i < Group.CurrentOnGlobalMapGroupEndurance)
+                if (i < Group.currentOnGlobalMapGroupEndurance)
                 {
                     firstList.Add(element);
                 }
-                else if(i == Group.CurrentOnGlobalMapGroupEndurance)
+                else if(i == Group.currentOnGlobalMapGroupEndurance)
                 {
                     firstList.Add(element);
                     secondList.Add(element);
                 }
-                else if (i < Group.CurrentOnGlobalMapGroupEndurance + Group.MaxOnGlobalMapGroupEndurance)
+                else if (i < Group.currentOnGlobalMapGroupEndurance + Group.maxOnGlobalMapGroupEndurance)
                 {
                     secondList.Add(element);
                 }
-                else if (i == Group.CurrentOnGlobalMapGroupEndurance + Group.MaxOnGlobalMapGroupEndurance)
+                else if (i == Group.currentOnGlobalMapGroupEndurance + Group.maxOnGlobalMapGroupEndurance)
                 {
                     thirdList.Add(element);
                     secondList.Add(element);
                 }
-                else if (i < Group.CurrentOnGlobalMapGroupEndurance + 2 * Group.MaxOnGlobalMapGroupEndurance)
+                else if (i < Group.currentOnGlobalMapGroupEndurance + 2 * Group.maxOnGlobalMapGroupEndurance)
                 {
                     thirdList.Add(element);
                 }
-                else if (i == Group.CurrentOnGlobalMapGroupEndurance + 2 * Group.MaxOnGlobalMapGroupEndurance)
+                else if (i == Group.currentOnGlobalMapGroupEndurance + 2 * Group.maxOnGlobalMapGroupEndurance)
                 {
                     thirdList.Add(element);
                     lastList.Add(element);

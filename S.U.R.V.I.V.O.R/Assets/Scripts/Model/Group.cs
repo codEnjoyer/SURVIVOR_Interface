@@ -7,8 +7,8 @@ using UnityEngine;
 
 public class Group : MonoBehaviour
 {
-    public int MaxOnGlobalMapGroupEndurance;
-    public int CurrentOnGlobalMapGroupEndurance;
+    public int maxOnGlobalMapGroupEndurance = 10;
+    public int currentOnGlobalMapGroupEndurance = 10;
 
     public readonly List<Character> currentGroupMembers = new ();
     private int maxGroupMembers;
@@ -64,13 +64,13 @@ public class Group : MonoBehaviour
 
     private void ResetAllTurnCharacteristics()
     {
-        CurrentOnGlobalMapGroupEndurance = MaxOnGlobalMapGroupEndurance;
+        currentOnGlobalMapGroupEndurance = maxOnGlobalMapGroupEndurance;
     }
 
     public void OnTurnEnd()
     {
         SubtractEnergy();
-        if (CurrentOnGlobalMapGroupEndurance != MaxOnGlobalMapGroupEndurance)
+        if (currentOnGlobalMapGroupEndurance != maxOnGlobalMapGroupEndurance)
             SubtractEnergy();
         SubtractSatiety();
         SubtractWater();

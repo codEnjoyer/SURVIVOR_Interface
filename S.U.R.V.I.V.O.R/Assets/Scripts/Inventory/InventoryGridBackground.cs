@@ -1,12 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InventoryGridBackground : MonoBehaviour
 {
-    [SerializeField]private ItemGrid itemGrid;
+    [SerializeField] private ItemGrid itemGrid;
     private void Start()
     {
         var slot = transform.Find("Slot");

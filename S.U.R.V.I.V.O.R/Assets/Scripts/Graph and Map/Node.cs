@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using Assets.Scripts;
 using UnityEngine;
 
 namespace Graph_and_Map
 {
     public class Node : MonoBehaviour, IEnumerable<(Node start, Node end)>
     {
-        public List<Node> neighborhoods;
-        public Location location;
+        public List<Node> neighborhoods { get; private set; }
+        [SerializeField] private Location location;
         private LineRenderer line;
         public Vector2 positionIn2D => new(transform.position.x,transform.position.z);
         public IEnumerator<(Node start, Node end)> GetEnumerator()
@@ -21,6 +20,7 @@ namespace Graph_and_Map
 
         private void Awake()
         {
+            neighborhoods = new List<Node>();
             var index = 0;
             line = GetComponent<LineRenderer>(); 
             neighborhoods.RemoveAll(node => node == null);

@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Assets.Scripts
+﻿
+public enum LocationType
 {
-    public enum LocationType
-    {
-        House1,
-        House2,
-        House3,
-        House4
-    }
+    House1,
+    House2,
+    House3,
+    House4
 }
+

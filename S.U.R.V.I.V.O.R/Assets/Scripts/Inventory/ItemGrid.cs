@@ -17,7 +17,7 @@ public class ItemGrid : MonoBehaviour
     private Vector2Int tileGridPosition;
 
     private Item[,] inventoryItemSlot;
-    [SerializeField] private List<Item> storedItems;
+    public List<Item> storedItems;
 
     private RectTransform rectTransform;
 

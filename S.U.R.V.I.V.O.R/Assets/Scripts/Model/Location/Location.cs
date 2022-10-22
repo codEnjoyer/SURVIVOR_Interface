@@ -13,7 +13,7 @@ public class Location: MonoBehaviour
     private void Awake()
     {
         foreach (var itemChance in data.chancesList)
-            for (var i = 0; i < itemChance.weigthChance; i++)
+            for (var i = 0; i < itemChance.chanceWeight; i++)
                 chancesList.Add(itemChance.item);
     }
     
