@@ -18,8 +18,8 @@ public class InventoryController : MonoBehaviour
         }
     }
 
-    private InventoryItem selectedItem;
-    private InventoryItem overlapItem;
+    private Item selectedItem;
+    private Item overlapItem;
     private RectTransform rectTransform;
 
     [SerializeField] private List<ItemData> items;
@@ -27,7 +27,7 @@ public class InventoryController : MonoBehaviour
     [SerializeField] private Transform canvasTransform;
 
     private InventoryHighlight inventoryHighlight;
-    private InventoryItem itemToHighlight;
+    private Item itemToHighlight;
     private Vector2Int? previousPosition;
 
     private void Awake()
@@ -158,7 +158,7 @@ public class InventoryController : MonoBehaviour
         InsertItem(itemToInsert);
     }
 
-    private void InsertItem(InventoryItem itemToInsert)
+    private void InsertItem(Item itemToInsert)
     {
         var positionOnGrid = selectedItemGrid.FindSpaceForObject(itemToInsert);
         if(positionOnGrid == null)
@@ -171,7 +171,7 @@ public class InventoryController : MonoBehaviour
 
     private void CreateRandomItem()
     {
-        var inventoryItem = Instantiate(itemPrefab).GetComponent<InventoryItem>();
+        var inventoryItem = Instantiate(itemPrefab).GetComponent<Item>();
         selectedItem = inventoryItem;
         rectTransform = inventoryItem.GetComponent<RectTransform>();
         rectTransform.SetParent(canvasTransform);
