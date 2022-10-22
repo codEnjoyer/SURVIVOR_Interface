@@ -5,6 +5,12 @@ using UnityEngine;
 
 public class InterfaceController : MonoBehaviour
 {
+    // [SerializeField] private StateMachine interfaceSm;
+    // public GroupLayerActive groupLayerActive;
+    // public PlayerLayerActive playerLayerActive;
+    // public CharacterPanelActive characterPanelActive;
+    // public NothingActive nothingActive;
+    
     enum InterfaceState
     {
         GroupLayerActive,
@@ -12,22 +18,22 @@ public class InterfaceController : MonoBehaviour
         CharacterPanelActive,
         NothingActive
     }
-    [SerializeField]
-    private GameObject MainInfoPanelLayer;
-    [SerializeField]
-    private GameObject GroupButtonsLayer;
-    [SerializeField]
-    private GameObject GroupInfoLayer;
-    [SerializeField]
-    private GameObject CharactersButtonsLayer;
-    [SerializeField]
-    private GameObject FirstPlayerLayer;
-    [SerializeField]
-    private GameObject SecondPlayerLayer;
-    [SerializeField]
-    private GameObject ThirdPlayerLayer;
-    [SerializeField]
-    private GameObject FourthPlayerLayer;
+
+    public GameObject MainInfoPanelLayer;
+
+    public GameObject GroupButtonsLayer;
+
+    public GameObject GroupInfoLayer;
+
+    public GameObject CharactersButtonsLayer;
+
+    public GameObject FirstPlayerLayer;
+
+    public GameObject SecondPlayerLayer;
+
+    public GameObject ThirdPlayerLayer;
+
+    public GameObject FourthPlayerLayer;
 
     private GameObject activePlayerLayer;
 
@@ -37,6 +43,18 @@ public class InterfaceController : MonoBehaviour
 
     void Awake()
     {
+        //StateMachine
+        // interfaceSm = new StateMachine();
+        //
+        // groupLayerActive = new GroupLayerActive(this, interfaceSm);
+        // playerLayerActive = new PlayerLayerActive(this, interfaceSm);
+        // characterPanelActive = new CharacterPanelActive(this, interfaceSm);
+        // nothingActive = new NothingActive(this, interfaceSm);
+        //
+        // interfaceSm.Initialize(nothingActive);
+        //
+        
+        
         FirstPlayerLayer.SetActive(false);
         SecondPlayerLayer.SetActive(false);
         ThirdPlayerLayer.SetActive(false);
@@ -45,9 +63,9 @@ public class InterfaceController : MonoBehaviour
         GroupButtonsLayer.SetActive(true);
         CharactersButtonsLayer.SetActive(false);
         currentState = InterfaceState.NothingActive;
-
     }
 
+    // public void SetCharactersPanelActive1() => interfaceSm.ChangeState(characterPanelActive);
     public void SetCharactersPanelActive()
     {
         switch (currentState)

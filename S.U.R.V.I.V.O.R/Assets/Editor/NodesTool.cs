@@ -13,7 +13,7 @@ namespace Editor
     {
         public Texture2D icon;
         public Node nodePrefab;
-        private List<Node> graph = new();
+        private readonly List<Node> graph = new();
         private Vector3 mousePosition;
         private Transform parent;
         public override GUIContent toolbarIcon =>

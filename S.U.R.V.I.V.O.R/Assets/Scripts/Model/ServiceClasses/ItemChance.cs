@@ -1,12 +1,14 @@
-﻿[System.Serializable]
+﻿using UnityEngine.Serialization;
+
+[System.Serializable]
 public class ItemChance
 {
     public Item item;
-    public int weigthChance;
+    public int chanceWeight;
 
-    public ItemChance(Item item, int weigthChance)
+    public ItemChance(Item item, int chanceWeight)
     {
         this.item = item;
-        this.weigthChance = weigthChance;
+        this.chanceWeight = chanceWeight;
     }
 }
