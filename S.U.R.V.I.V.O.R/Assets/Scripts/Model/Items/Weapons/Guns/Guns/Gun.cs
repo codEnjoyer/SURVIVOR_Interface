@@ -2,6 +2,7 @@
 
 public class Gun: Weapon
 {
+    [SerializeField] private GunData gunData;
     [SerializeField] private Magazine currentMagazine;
     [SerializeField] private Bullet chamber;
     [SerializeField] private GunModule gunModule;

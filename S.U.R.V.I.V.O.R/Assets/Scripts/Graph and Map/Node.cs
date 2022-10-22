@@ -8,7 +8,7 @@ namespace Graph_and_Map
     public class Node : MonoBehaviour, IEnumerable<(Node start, Node end)>
     {
         public List<Node> neighborhoods;
-        public Location location;
+        public LocationType location;
         private LineRenderer line;
         public Vector2 positionIn2D => new(transform.position.x,transform.position.z);
         public IEnumerator<(Node start, Node end)> GetEnumerator()

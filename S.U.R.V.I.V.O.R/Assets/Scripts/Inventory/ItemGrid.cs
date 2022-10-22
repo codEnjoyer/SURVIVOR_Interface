@@ -16,7 +16,7 @@ public class ItemGrid : MonoBehaviour
     private Vector2 positionOnGrid;
     private Vector2Int tileGridPosition;
 
-    private Item[,] inventoryItemSlot;
+    private InventoryItem[,] inventoryItemSlot;
 
     private RectTransform rectTransform;
 
@@ -35,7 +35,7 @@ public class ItemGrid : MonoBehaviour
 
     private void Init(int width, int height)
     {
-        inventoryItemSlot = new Item[width, height];
+        inventoryItemSlot = new InventoryItem[width, height];
         var size = new Vector2(width * TileSize, height * TileSize);
         rectTransform.sizeDelta = size;
         /*var slot = transform.Find("Slot");
@@ -66,12 +66,12 @@ public class ItemGrid : MonoBehaviour
         return tileGridPosition;
     }
 
-    public bool PlaceItem(Item item, int posX, int posY, ref Item overlapItem)
+    public bool PlaceItem(InventoryItem inventoryItem, int posX, int posY, ref InventoryItem overlapItem)
     {
-        if (!BoundryCheck(posX, posY, item.Width, item.Height))
+        if (!BoundryCheck(posX, posY, inventoryItem.Width, inventoryItem.Height))
             return false;
 
-        if (!OverlapCheck(posX, posY, item.Width, item.Height, ref overlapItem))
+        if (!OverlapCheck(posX, posY, inventoryItem.Width, inventoryItem.Height, ref overlapItem))
         {
             overlapItem = null;
             return false;
@@ -82,30 +82,30 @@ public class ItemGrid : MonoBehaviour
             RemoveGridReference(overlapItem);
         }
 
-        PlaceItem(item, posX, posY);
+        PlaceItem(inventoryItem, posX, posY);
         return true;
     }
 
-    public void PlaceItem(Item item, int posX, int posY)
+    public void PlaceItem(InventoryItem inventoryItem, int posX, int posY)
     {
-        var itemRectTransform = item.GetComponent<RectTransform>();
+        var itemRectTransform = inventoryItem.GetComponent<RectTransform>();
         itemRectTransform.SetParent(rectTransform);
-        for (int x = 0; x < item.Width; x++)
+        for (int x = 0; x < inventoryItem.Width; x++)
         {
-            for (int y = 0; y < item.Height; y++)
+            for (int y = 0; y < inventoryItem.Height; y++)
             {
-                inventoryItemSlot[posX + x, posY + y] = item;
+                inventoryItemSlot[posX + x, posY + y] = inventoryItem;
             }
         }
 
-        item.onGridPositionX = posX;
-        item.onGridPositionY = posY;
+        inventoryItem.onGridPositionX = posX;
+        inventoryItem.onGridPositionY = posY;
 
-        var position = GetPositionOnGrid(item, posX, posY);
+        var position = GetPositionOnGrid(inventoryItem, posX, posY);
         itemRectTransform.localPosition = position;
     }
 
-    public Vector2 GetPositionOnGrid(Item item, int posX, int posY)
+    public Vector2 GetPositionOnGrid(InventoryItem item, int posX, int posY)
     {
         var position = new Vector2();
         position.x = posX * TileSize + TileSize * item.Width / 2;
@@ -113,7 +113,7 @@ public class ItemGrid : MonoBehaviour
         return position;
     }
 
-    private bool OverlapCheck(int posX, int posY, int width, int height, ref Item overlapItem)
+    private bool OverlapCheck(int posX, int posY, int width, int height, ref InventoryItem overlapItem)
     {
         for (int x = 0; x < width; x++)
         {
@@ -135,7 +135,7 @@ public class ItemGrid : MonoBehaviour
         return true;
     }
 
-    public Item PickUpItem(int x, int y)
+    public InventoryItem PickUpItem(int x, int y)
     {
         var returnedItem = inventoryItemSlot[x, y];
         if (returnedItem == null) return null;
@@ -145,7 +145,7 @@ public class ItemGrid : MonoBehaviour
         return returnedItem;
     }
 
-    private void RemoveGridReference(Item item)
+    private void RemoveGridReference(InventoryItem item)
     {
         for (int ix = 0; ix < item.Width; ix++)
         {
@@ -166,12 +166,12 @@ public class ItemGrid : MonoBehaviour
         return PositionCheck(posX, posY) && PositionCheck(posX + width - 1, posY + height - 1);
     }
 
-    public Item GetItem(int x, int y)
+    public InventoryItem GetItem(int x, int y)
     {
         return inventoryItemSlot[x, y];
     }
 
-    public Vector2Int? FindSpaceForObject(Item itemToInsert)
+    public Vector2Int? FindSpaceForObject(InventoryItem itemToInsert)
     {
         var height = gridSizeHeight - itemToInsert.Height + 1;
         var width = gridSizeWidth - itemToInsert.Width + 1;

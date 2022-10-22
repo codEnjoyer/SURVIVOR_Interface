@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "New GunData", menuName = "Data/Gun Data", order = 50)]
-public class GunData: ItemData
+[CreateAssetMenu(fileName = "New GunData", menuName = "Gun Data", order = 52)]
+public class GunData: ScriptableObject
 {
     [SerializeField] private int fireRate;
     [SerializeField] private float accuracy;
@@ -13,6 +13,6 @@ public class GunData: ItemData
      public float Accuracy => accuracy;
      public float ExtraDamage => extraDamage;
      public float FireDistance => fireDistance;
-     public float Ergonomics => ergonomics; 
+     public float Ergonomics => ergonomics; //Чем выше, тем больше негативное влияние на Mobility класса персонажа
     
 }
