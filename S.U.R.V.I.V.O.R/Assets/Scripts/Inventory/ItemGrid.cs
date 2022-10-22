@@ -17,8 +17,7 @@ public class ItemGrid : MonoBehaviour
     private Vector2Int tileGridPosition;
 
     private Item[,] inventoryItemSlot;
-
-    [HideInInspector] public List<Item> items = new();
+    [SerializeField] private List<Item> storedItems;
 
     private RectTransform rectTransform;
 
@@ -40,19 +39,6 @@ public class ItemGrid : MonoBehaviour
         inventoryItemSlot = new Item[width, height];
         var size = new Vector2(width * TileSize, height * TileSize);
         rectTransform.sizeDelta = size;
-        /*var slot = transform.Find("Slot");
-        slot.gameObject.SetActive(false);
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                var singleSlot = Instantiate(slot, transform);
-                singleSlot.gameObject.SetActive(true);
-            }
-        }
-        GetComponent<GridLayoutGroup>().cellSize = new Vector2(TileSize, TileSize);
-        GetComponent<RectTransform>().sizeDelta = new Vector2(width, height) * TileSize;
-        GetComponent<RectTransform>().anchoredPosition = rectTransform.anchoredPosition;*/
     }
 
     public Vector2Int GetTileGridPosition(Vector2 mousePosition)
@@ -106,7 +92,7 @@ public class ItemGrid : MonoBehaviour
         var position = GetPositionOnGrid(item, posX, posY);
         itemRectTransform.localPosition = position;
         
-        items.Add(item);
+        storedItems.Add(item);
     }
 
     public Vector2 GetPositionOnGrid(Item item, int posX, int posY)
@@ -145,7 +131,7 @@ public class ItemGrid : MonoBehaviour
         if (returnedItem == null) return null;
         RemoveGridReference(returnedItem);
 
-        items.Remove(returnedItem);
+        storedItems.Remove(returnedItem);
 
         inventoryItemSlot[x, y] = null;
         return returnedItem;
