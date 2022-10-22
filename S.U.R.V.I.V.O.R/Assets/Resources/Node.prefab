@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   neighborhoods: []
-  location: 0
+  location: {fileID: 0}
 --- !u!120 &3203164580380150253
 LineRenderer:
   m_ObjectHideFlags: 0

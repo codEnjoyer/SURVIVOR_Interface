@@ -6,9 +6,9 @@ using UnityEngine.Serialization;
 public abstract class Cloth : Item
 {
     [SerializeField] private int maxArmor;
-    [SerializeField] private readonly Inventory inventory;
+    [SerializeField] private readonly ItemGrid inventory;
     public float CurrentArmor { get; private set; }
-    public float TotalWeight => data.weight + inventory.items.Sum(item => item.data.weight);
+    public float TotalWeight => data.weight + inventory.storedItems.Sum(item => item.data.weight);
 
     public float CalculateBlockedDamage(Shoot shoot)
     {
