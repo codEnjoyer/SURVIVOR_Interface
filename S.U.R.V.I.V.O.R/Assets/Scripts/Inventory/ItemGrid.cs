@@ -11,7 +11,7 @@ public class ItemGrid : MonoBehaviour
 {
     private Canvas canvas;
     
-    public const float TileSize = 50;
+    public const float TileSize = 25;
 
     private Vector2 positionOnGrid;
     private Vector2Int tileGridPosition;
