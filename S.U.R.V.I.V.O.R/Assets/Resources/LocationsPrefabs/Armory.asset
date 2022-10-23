@@ -15,5 +15,5 @@ MonoBehaviour:
   chancesList:
   - item: {fileID: -6722866286398517484, guid: b81bf8efc1b1391428c66237f8d129af, type: 3}
     weigthChance: 1
-  - item: {fileID: -6722866286398517484, guid: b81bf8efc1b1391428c66237f8d129af, type: 3}
+  - item: {fileID: 4942306247763234581, guid: 6b66e29e7ddafc243ab6567adb22ff4e, type: 3}
     weigthChance: 1
