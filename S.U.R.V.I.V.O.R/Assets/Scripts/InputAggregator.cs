@@ -8,7 +8,7 @@ public class InputAggregator : MonoBehaviour
 {
     public Button turnEndButton;
 
-    public static Action OnTurnEndEvent;
+    public static event Action OnTurnEndEvent;
 
     public void Awake()
     {
