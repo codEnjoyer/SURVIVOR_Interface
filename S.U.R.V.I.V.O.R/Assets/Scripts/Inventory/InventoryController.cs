@@ -23,10 +23,8 @@ public class InventoryController : MonoBehaviour
     private RectTransform rectTransform;
 
     [SerializeField] private List<ItemData> items;
-    [SerializeField] private GameObject itemPrefab;
+    [SerializeField] public GameObject itemPrefab;
     [SerializeField] private Transform canvasTransform;
-
-    [SerializeField] private ItemListManager listManager;
 
     private InventoryHighlight inventoryHighlight;
     private Item itemToHighlight;
@@ -49,7 +47,7 @@ public class InventoryController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            InsertRandomItem(); 
+            InsertRandomItem();
         }
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -106,14 +104,14 @@ public class InventoryController : MonoBehaviour
 
     private void RotateItem()
     {
-        if(selectedItem == null) return;
+        if (selectedItem == null) return;
         selectedItem.Rotated();
     }
 
     private void HandleHighlight()
     {
         var positionOnGrid = GetTileGridPosition();
-        if(previousPosition == positionOnGrid) return;
+        if (previousPosition == positionOnGrid) return;
         if (selectedItem == null)
         {
             itemToHighlight = selectedItemGrid.GetItem(positionOnGrid.x, positionOnGrid.y);
@@ -148,36 +146,21 @@ public class InventoryController : MonoBehaviour
 
         return selectedItemGrid.GetTileGridPosition(mousePosition);
     }
-    
-    private void CreateRandomItem()
-    {
-        if(selectedItem != null)
-            return;
-        var inventoryItem = Instantiate(itemPrefab).GetComponent<Item>();
-        inventoryItem.transform.SetParent(canvasTransform);
-        var selectedItemID = Random.Range(0, items.Count);
-        inventoryItem.Set(items[selectedItemID]);
-        // listManager.currentItemList.Add(inventoryItem);
-        // listManager.PopulateList(listManager.currentItemList);
-        
-    }
-    
+
     private void InsertRandomItem()
     {
-        if(selectedItem != null)
-            return;
+        if (selectedItem != null) return;
+        if (selectedItemGrid == null) return;
         CreateRandomItem();
         var itemToInsert = selectedItem;
         selectedItem = null;
-        listManager.currentItemList.Add(itemToInsert);
-        listManager.PopulateList(listManager.currentItemList);
-        
+        InsertItem(itemToInsert);
     }
 
     private void InsertItem(Item itemToInsert)
     {
         var positionOnGrid = selectedItemGrid.FindSpaceForObject(itemToInsert);
-        if(positionOnGrid == null)
+        if (positionOnGrid == null)
         {
             Destroy(itemToInsert.gameObject);
             return;
@@ -185,13 +168,13 @@ public class InventoryController : MonoBehaviour
         selectedItemGrid.PlaceItem(itemToInsert, positionOnGrid.Value.x, positionOnGrid.Value.y);
     }
 
-    public Item GetSelectedItem()
+    private void CreateRandomItem()
     {
-        return selectedItem;
-    }
-
-    public void ResetSelectedItem()
-    {
-        Destroy(selectedItem);
+        if (selectedItem != null) return;
+        var inventoryItem = Instantiate(itemPrefab).GetComponent<Item>();
+        selectedItem = inventoryItem;
+        rectTransform = inventoryItem.GetComponent<RectTransform>();
+        rectTransform.SetParent(canvasTransform);
+        inventoryItem.Set(inventoryItem.data);
     }
 }

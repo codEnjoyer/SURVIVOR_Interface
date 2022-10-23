@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ItemListManager : MonoBehaviour
 { 
-    private InventoryController inventoryController;
+    /*private InventoryController inventoryController;
     
     public List<GameObject> currentButtonList;
     public List<Item> currentItemList;
@@ -58,5 +58,5 @@ public class ItemListManager : MonoBehaviour
         // buttonObj.GetComponent<CanvasGroup>().alpha = 1f;
         currentButtonList.Remove(buttonObj);
         Destroy(buttonObj);
-    }
+    }*/
 }
