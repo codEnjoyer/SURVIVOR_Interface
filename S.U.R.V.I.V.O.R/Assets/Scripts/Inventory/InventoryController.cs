@@ -21,9 +21,7 @@ public class InventoryController : MonoBehaviour
     private Item selectedItem;
     private Item overlapItem;
     private RectTransform rectTransform;
-
-    [SerializeField] private List<ItemData> items;
-    [SerializeField] public GameObject itemPrefab;
+    
     [SerializeField] private Transform canvasTransform;
 
     private InventoryHighlight inventoryHighlight;

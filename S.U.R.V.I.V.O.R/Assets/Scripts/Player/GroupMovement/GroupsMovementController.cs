@@ -15,7 +15,7 @@ namespace Player
 
         private void OnButtonClick()
         {
-            ChosenGroup.CurrentStage = GroupMovementLogic.Stage.WaitingTarget;
+            ChosenGroup.OnSelected();
         }
     }
 }

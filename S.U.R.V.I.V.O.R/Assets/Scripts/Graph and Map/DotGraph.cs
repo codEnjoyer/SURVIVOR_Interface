@@ -14,12 +14,13 @@ namespace Graph_and_Map
         public readonly KdTree kdTree = new();
         private Camera mainCamera;
         private Vector3 mPos;
-        private Node nearestNode;
-        private LineRenderer line;
 
         public Node GetNearestNode()
         {
-            return nearestNode;
+            var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out var rayHit))
+                mPos = rayHit.point;
+            return kdTree.GetNeighbour(new Vector2(mPos.x, mPos.z));
         }
 
         void Awake()
@@ -29,7 +30,6 @@ namespace Graph_and_Map
                 instance = this;
                 nodes.AddRange(FindObjectsOfType<Node>());
                 kdTree.AddRange(nodes);
-                line = GetComponent<LineRenderer>();
             }
             else if (instance == this)
                 Destroy(gameObject);
@@ -39,15 +39,6 @@ namespace Graph_and_Map
         private void Start()
         {
             mainCamera = Camera.main;
-        }
-
-        private void Update()
-        {
-            var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out var rayHit))
-                mPos = rayHit.point;
-            nearestNode = kdTree.GetNeighbour(new Vector2(mPos.x, mPos.z));
-            line.SetPositions(new[]{mPos,nearestNode.transform.position});
         }
     }
 }

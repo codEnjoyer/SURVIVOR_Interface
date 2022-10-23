@@ -5,15 +5,20 @@ using Random = System.Random;
 
 public class Location: MonoBehaviour
 {
-    public Random rnd = new();
+    public static readonly Random rnd = new();
     [SerializeField] private LocationData data; 
     private List<Item> chancesList = new ();
 
-    public void OnEnable(){
-        Debug.Log(1);
-         foreach (var itemChance in data.chancesList)
-             for (var i = 0; i < itemChance.weigthChance; i++)
-                 chancesList.Add(itemChance.item);
+    public void Awake()
+    {
+        if (data == null)
+        {
+            Debug.Log("У ноды нет локации!");
+            return;
+        }
+        foreach (var itemChance in data.chancesList)
+             for (var i = 0; i < itemChance.WeightChance; i++)
+                 chancesList.Add(itemChance.Item);
     }
 
     public Item GetLoot() => chancesList[rnd.Next(chancesList.Count)];
