@@ -33,6 +33,6 @@ public class LootButtonScript : MonoBehaviour
     {
         interfaceController.SetGroupLayerActive();
         inventoryController.SelectedItemGrid = LoactionItemGrid;
-        inventoryController.AddItem(playerGroup.location.GetLoot());
+        inventoryController.AddItemToInventory(playerGroup.location.GetLoot());
     }
 }

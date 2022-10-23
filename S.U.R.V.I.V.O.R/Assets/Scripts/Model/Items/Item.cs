@@ -23,6 +23,7 @@ public class Item : MonoBehaviour
         this.data = itemData;
 
         GetComponent<Image>().sprite = itemData.itemIcon;
+        GetComponent<Image>().raycastTarget = false;
         var scaleFactor = GetComponentInParent<Canvas>().scaleFactor;
 
         var size = new Vector2(itemData.width * ItemGrid.TileSize * scaleFactor,
