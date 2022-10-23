@@ -40,16 +40,6 @@ public class InventoryController : MonoBehaviour
         if (selectedItem != null)
             rectTransform.position = Input.mousePosition;
 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            CreateRandomItem();
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            InsertRandomItem();
-        }
-
         if (Input.GetKeyDown(KeyCode.R))
         {
             RotateItem();
@@ -60,8 +50,6 @@ public class InventoryController : MonoBehaviour
             inventoryHighlight.Show(false);
             return;
         }
-
-        HandleHighlight();
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -76,6 +64,8 @@ public class InventoryController : MonoBehaviour
                 PlaceItem(tileGridPosition);
             }
         }
+
+        HandleHighlight();
     }
 
     private void PickUpItem(Vector2Int tileGridPosition)
@@ -147,14 +137,14 @@ public class InventoryController : MonoBehaviour
         return selectedItemGrid.GetTileGridPosition(mousePosition);
     }
 
-    private void InsertRandomItem()
+    public void AddItem(Item item)
     {
         if (selectedItem != null) return;
-        if (selectedItemGrid == null) return;
-        CreateRandomItem();
+        CreateItem(item);
         var itemToInsert = selectedItem;
         selectedItem = null;
         InsertItem(itemToInsert);
+        selectedItemGrid = null;
     }
 
     private void InsertItem(Item itemToInsert)
@@ -168,10 +158,10 @@ public class InventoryController : MonoBehaviour
         selectedItemGrid.PlaceItem(itemToInsert, positionOnGrid.Value.x, positionOnGrid.Value.y);
     }
 
-    private void CreateRandomItem()
+    private void CreateItem(Item item)
     {
         if (selectedItem != null) return;
-        var inventoryItem = Instantiate(itemPrefab).GetComponent<Item>();
+        var inventoryItem = Instantiate(item);
         selectedItem = inventoryItem;
         rectTransform = inventoryItem.GetComponent<RectTransform>();
         rectTransform.SetParent(canvasTransform);

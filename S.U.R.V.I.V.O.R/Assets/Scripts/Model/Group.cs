@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Player;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -13,13 +14,13 @@ public class Group : MonoBehaviour
     public readonly List<Character> currentGroupMembers = new ();
     private int maxGroupMembers;
 
-
-    public readonly Location location;
+    public Location location { get; set; }
 
     void Start()
     {
         InputAggregator.OnTurnEndEvent += OnTurnEnd;
         currentGroupMembers.Add(new Character());
+        location = GetComponent<GroupMovementLogic>().CurrentNode.GetComponentInParent<Location>();
     }
 
     public Item Loot()

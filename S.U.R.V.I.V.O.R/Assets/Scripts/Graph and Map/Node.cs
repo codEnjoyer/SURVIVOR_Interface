@@ -10,6 +10,8 @@ namespace Graph_and_Map
         public List<Node> neighborhoods;
         public Location location;
         private LineRenderer line;
+
+
         public Vector2 positionIn2D => new(transform.position.x,transform.position.z);
         public IEnumerator<(Node start, Node end)> GetEnumerator()
         {

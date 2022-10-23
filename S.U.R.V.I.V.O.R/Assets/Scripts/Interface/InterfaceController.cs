@@ -43,6 +43,7 @@ public class InterfaceController : MonoBehaviour
         FourthPlayerLayer.SetActive(false);
         MainInfoPanelLayer.SetActive(true);
         GroupButtonsLayer.SetActive(true);
+        GroupInfoLayer.SetActive(false);
         CharactersButtonsLayer.SetActive(false);
         currentState = InterfaceState.NothingActive;
 

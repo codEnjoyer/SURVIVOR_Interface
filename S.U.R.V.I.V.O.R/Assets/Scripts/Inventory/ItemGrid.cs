@@ -27,7 +27,7 @@ public class ItemGrid : MonoBehaviour
     public int GridSizeWidth => gridSizeWidth;
     public int GridSizeHeight => gridSizeHeight;
 
-    private void Start()
+    private void Awake()
     {
         canvas = GetComponentInParent<Canvas>();
         rectTransform = GetComponent<RectTransform>();
