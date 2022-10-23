@@ -15,7 +15,7 @@ namespace Player
 
         private void OnButtonClick()
         {
-            ChosenGroup.GoToWaiting();
+            ChosenGroup.OnSelected();
         }
     }
 }

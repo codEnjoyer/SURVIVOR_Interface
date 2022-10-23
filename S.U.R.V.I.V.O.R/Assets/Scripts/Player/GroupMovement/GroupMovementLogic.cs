@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Graph_and_Map;
 using UnityEngine;
 
 namespace Player
 {
-    public class GroupMovementLogic : MonoBehaviour
+    public class GroupMovementLogic : Selectable
     {
         private StateMachine movementSm;
         private Sleeping sleeping;
@@ -65,9 +62,7 @@ namespace Player
             var targetPos = PathFinder.SwitchTo2d(targetNode.transform.position);
             return Vector2.Distance(curPos, targetPos) <= delta;
         }
-
-        public void GoToWaiting() => movementSm.ChangeState(waitingTarget);
-
+        
         public void DrawPath()
         {
             var path = GetPath();
@@ -157,7 +152,14 @@ namespace Player
             secondTurnObject.transform.position = new Vector3(0, -10, 0);
             thirdTurnObjectLineRenderer.transform.position = new Vector3(0, -10, 0);
         }
+
+        public override void OnSelected()
+        {
+            if (movementSm.CurrentState == sleeping)
+                movementSm.ChangeState(waitingTarget);
+        }
         
+
         #region MonoBehaviourCallBack
 
         public void Awake()
