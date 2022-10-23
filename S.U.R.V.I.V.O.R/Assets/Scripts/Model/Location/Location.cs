@@ -11,6 +11,11 @@ public class Location: MonoBehaviour
 
     public void Awake()
     {
+        if (data == null)
+        {
+            Debug.Log("У ноды нет локации!");
+            return;
+        }
         foreach (var itemChance in data.chancesList)
              for (var i = 0; i < itemChance.WeightChance; i++)
                  chancesList.Add(itemChance.Item);

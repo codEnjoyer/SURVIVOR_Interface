@@ -83,7 +83,7 @@ namespace Editor
         {
             graph.RemoveAll(n => n == null);
             foreach (var node in graph)
-            foreach (var (start, end) in node)
+            foreach (var (start, end) in node.GetEdges())
                 Debug.DrawLine(start.transform.position, end.transform.position);
         }
         private Node CreateNode()
