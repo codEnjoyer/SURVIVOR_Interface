@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ public class InputAggregator : MonoBehaviour
 {
     public Button turnEndButton;
 
-    public static event TurnController.OnTurnEnd OnTurnEndEvent;
+    public static Action OnTurnEndEvent;
 
     public void Awake()
     {
