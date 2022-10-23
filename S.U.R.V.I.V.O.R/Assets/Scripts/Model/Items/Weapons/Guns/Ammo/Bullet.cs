@@ -2,7 +2,7 @@
 
 // Патрон не наследуется от класса предмета, патроны будут хранится в коробках, которые будут отображаться в инвентаре
 [CreateAssetMenu(fileName = "New Caliber", menuName = "Data/Bullet Data", order = 50)]
-public class Bullet: ItemData
+public class Bullet: ScriptableObject
 {
     [SerializeField] private float damage;
     [SerializeField] private float extraFireDistance;

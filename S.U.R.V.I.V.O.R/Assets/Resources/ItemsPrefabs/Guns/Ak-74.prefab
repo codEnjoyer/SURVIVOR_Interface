@@ -51,7 +51,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fbd94d65ab8aa742b964ea141f00365, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 838f4c0b20738094e9632d454ae421d2, type: 2}
+  data: {fileID: 11400000, guid: 52fa35d181e38734fb1d885d3154ea0b, type: 2}
+  weight: 10
+  fireRate: 2
+  accuracy: 3
+  extraDamage: 4
+  fireDistance: 5
+  ergonomics: 6
   currentMagazine: {fileID: 0}
   chamber: {fileID: 0}
   gunModule: {fileID: 0}
