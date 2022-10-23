@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45223597eca67244e9c9c453c64cba72, type: 3}
   m_Name: 8x3
   m_EditorClassIdentifier: 
-  width: 1
-  height: 1
+  width: 8
+  height: 3
