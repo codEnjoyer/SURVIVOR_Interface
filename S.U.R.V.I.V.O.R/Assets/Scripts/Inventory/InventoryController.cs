@@ -46,6 +46,10 @@ public class InventoryController : MonoBehaviour
         if (selectedItemGrid == null)
         {
             inventoryHighlight.Show(false);
+            // if (selectedItem != null && Input.GetMouseButtonDown(0))
+            // {
+            //     ThrowItemAtLocation();
+            // }
             return;
         }
 
@@ -70,7 +74,10 @@ public class InventoryController : MonoBehaviour
     {
         selectedItem = selectedItemGrid.PickUpItem(tileGridPosition.x, tileGridPosition.y);
         if (selectedItem != null)
+        {
             rectTransform = selectedItem.GetComponent<RectTransform>();
+            rectTransform.SetParent(canvasTransform);
+        }
     }
 
     private void PlaceItem(Vector2Int tileGridPosition)
@@ -88,6 +95,14 @@ public class InventoryController : MonoBehaviour
                 rectTransform.SetAsLastSibling();
             }
         }
+    }
+
+    private void ThrowItemAtLocation() // Перемещение предмета в инвентарь локации при нажатии на пустое пространство
+    {
+        var locationItemGrid = GameObject.FindGameObjectWithTag("LocationItemGrid").GetComponent<ItemGrid>();
+        var positionOnGrid = locationItemGrid.FindSpaceForObject(selectedItem);
+        locationItemGrid.PlaceItem(selectedItem, positionOnGrid.Value.x, positionOnGrid.Value.y);
+        selectedItem = null;
     }
 
     private void RotateItem()
@@ -135,7 +150,7 @@ public class InventoryController : MonoBehaviour
         return selectedItemGrid.GetTileGridPosition(mousePosition);
     }
 
-    public void AddItem(Item item)
+    public void AddItemToInventory(Item item)
     {
         if (selectedItem != null) return;
         CreateItem(item);
