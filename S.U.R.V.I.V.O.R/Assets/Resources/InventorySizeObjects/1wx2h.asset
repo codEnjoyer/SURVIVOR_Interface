@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c73c94283b9401b97df2a11d9d26027, type: 3}
-  m_Name: Road
+  m_Script: {fileID: 11500000, guid: 45223597eca67244e9c9c453c64cba72, type: 3}
+  m_Name: 1wx2h
   m_EditorClassIdentifier: 
-  chancesList:
-  - item: {fileID: 0}
-    weightChance: 0
+  width: 1
+  height: 2

@@ -136,6 +136,7 @@ public class InterfaceController : MonoBehaviour
         currentState = InterfaceState.PlayerLayerActive;
     }
 
+
     public void ChooseFirstPlayer()
     {
         SetPlayerLayerActive(FirstPlayerLayer);

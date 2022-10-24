@@ -8,13 +8,7 @@ public class LootButtonScript : MonoBehaviour
 {
     private Button button;
     [SerializeField]
-    private Group playerGroup;
-    [SerializeField]
-    private InventoryController inventoryController;
-    [SerializeField]
-    private InterfaceController interfaceController;
-    [SerializeField]
-    private ItemGrid LoactionItemGrid;
+    private GameObject LootAmountButtonsLayer;
 
     // Start is called before the first frame update
     void Start()
@@ -31,8 +25,8 @@ public class LootButtonScript : MonoBehaviour
     
     void OnClick()
     {
-        interfaceController.SetGroupLayerActive();
-        inventoryController.SelectedItemGrid = LoactionItemGrid;
-        inventoryController.AddItemToInventory(playerGroup.location.GetLoot());
+        if(LootAmountButtonsLayer.activeInHierarchy)
+            LootAmountButtonsLayer.SetActive(false);
+        else LootAmountButtonsLayer.SetActive(true);
     }
 }
