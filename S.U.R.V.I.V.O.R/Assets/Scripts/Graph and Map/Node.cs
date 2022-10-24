@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts;
@@ -5,36 +6,41 @@ using UnityEngine;
 
 namespace Graph_and_Map
 {
-    public class Node : MonoBehaviour, IEnumerable<(Node start, Node end)>
+    public class Node : MonoBehaviour
     {
-        public List<Node> neighborhoods;
-        public Location location;
+        public List<Node> neighborhoods = new ();
         private LineRenderer line;
 
-
         public Vector2 positionIn2D => new(transform.position.x,transform.position.z);
-        public IEnumerator<(Node start, Node end)> GetEnumerator()
-        {
-            neighborhoods.RemoveAll(node => node == null);
-            foreach (var neighborhood in neighborhoods)
-                yield return (this, neighborhood);
-        }
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        private void Awake()
+        public void DrawEdges()
         {
             var index = 0;
-            line = GetComponent<LineRenderer>(); 
+            line = GetComponent<LineRenderer>();
+            line.positionCount = 0;
             neighborhoods.RemoveAll(node => node == null);
             line.positionCount = neighborhoods.Count * 2;
-            foreach (var neighborhood in neighborhoods)
+            foreach (var (start, end) in GetEdges())
             {
-                line.SetPosition(index,transform.position);
+                line.SetPosition(index,start.transform.position);
                 index++;
-                line.SetPosition(index,neighborhood.transform.position);
+                line.SetPosition(index,end.transform.position);
                 index++;
             }
         }
-        
+
+        public IEnumerable<(Node,Node)> GetEdges()
+        {
+            neighborhoods.RemoveAll(node => node == null);
+            foreach (var neighborhood in neighborhoods)
+            {
+                yield return (this, neighborhood);
+            }
+        }
+
+        public void Awake()
+        {
+            DrawEdges();
+        }
     }
 }

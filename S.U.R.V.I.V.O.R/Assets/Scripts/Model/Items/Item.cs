@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class Item : MonoBehaviour
 {
     public ItemData data;
+    [SerializeField] private float weight;
+    public float Weight => weight;
 
     public int onGridPositionX { get; set; }
     public int onGridPositionY { get; set; }
@@ -20,10 +22,6 @@ public class Item : MonoBehaviour
 
     public void Set(ItemData itemData)
     {
-        this.data = itemData;
-
-        GetComponent<Image>().sprite = itemData.itemIcon;
-        GetComponent<Image>().raycastTarget = false;
         var scaleFactor = GetComponentInParent<Canvas>().scaleFactor;
 
         var size = new Vector2(itemData.width * ItemGrid.TileSize * scaleFactor,

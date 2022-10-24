@@ -1,140 +1,101 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Graph_and_Map;
 using UnityEngine;
 
 namespace Player
 {
-    public class GroupMovementLogic : MonoBehaviour
+    public class GroupMovementLogic : Selectable
     {
-        public enum Stage
+        private StateMachine movementSm;
+        private Sleeping sleeping;
+        private WaitingTarget waitingTarget;
+        private Walking walking;
+
+        [SerializeField] private GameObject firstTurnObject;
+        [SerializeField] private GameObject secondTurnObject;
+        [SerializeField] private GameObject thirdTurnObject;
+        [SerializeField] private Node currentNode;
+
+        private LineRenderer firstTurnObjectLineRenderer;
+        private LineRenderer secondTurnObjectLineRenderer;
+        private LineRenderer thirdTurnObjectLineRenderer;
+        private Node targetNode;
+        private LineRenderer lineRenderer;
+        private Group group;
+
+        private float delta = 0.1f;
+        private float progress;
+        private Queue<Node> way = new();
+
+        public Node CurrentNode => currentNode;
+
+        private List<Node> GetPath() => PathFinder.FindShortestWay(currentNode, DotGraph.instance.GetNearestNode());
+
+        public void CreateWay()
         {
-            Sleeping,
-            WaitingTarget,
-            MovingFromAToB
+            way = new Queue<Node>(GetPath());
+            way.Dequeue();
         }
 
-        //Обьекты Ходов
-        public GameObject FirstTurnObject;
-        public GameObject SecondTurnObject;
-        public GameObject ThirdTurnObject;
-        private LineRenderer FirstTurnObjectLineRenderer;
-        private LineRenderer SecondTurnObjectLineRenderer;
-        private LineRenderer ThirdTurnObjectLineRenderer;
-
-        public DotGraph Graph;
-
-        public Stage CurrentStage;
-        public Node CurrentNode;
-        private Node TargetNode;
-        private LineRenderer LineRenderer;
-        private Group Group;
-
-        private float delta = 0.1f;//Дистанция до ноды, при которой группа считиает, что достигла её и переходит к следующему ребру пути
-        private float progress;//Текущий прогресс на отрезке пути между нодами
-        private Queue<Node> Way; //Текущий маршрут
-
-        public void Awake()
+        public void Move()
         {
-            Group = GetComponent<Group>();
-            LineRenderer = GetComponent<LineRenderer>();
-            LineRenderer.positionCount = 0;
-            FirstTurnObjectLineRenderer = FirstTurnObject.GetComponent<LineRenderer>();
-            SecondTurnObjectLineRenderer = SecondTurnObject.GetComponent<LineRenderer>();
-            ThirdTurnObjectLineRenderer = ThirdTurnObject.GetComponent<LineRenderer>();
+            transform.position = Vector3.Lerp(currentNode.transform.position, targetNode.transform.position, progress);
+            progress += 0.050f;
+            if (IsNearly())
+            {
+                currentNode = targetNode;
+                progress = 0;
+                if (way.Count == 0 || group.CurrentOnGlobalMapGroupEndurance == 0)
+                    movementSm.ChangeState(sleeping);
+                else
+                {
+                    targetNode = way.Dequeue();
+                    group.CurrentOnGlobalMapGroupEndurance -= 1;
+                }
+            }
+        }
+
+        private bool IsNearly()
+        {
+            var curPos = PathFinder.SwitchTo2d(transform.position);
+            var targetPos = PathFinder.SwitchTo2d(targetNode.transform.position);
+            return Vector2.Distance(curPos, targetPos) <= delta;
         }
         
-        public void Start()
+        public void DrawPath()
         {
-            Way = new Queue<Node>();
-            transform.position = CurrentNode.transform.position;
-            TargetNode = CurrentNode;
-        }
-
-        public void Update()
-        {
-            switch (CurrentStage)
-            {
-                case Stage.Sleeping:
-                    break;
-                case Stage.WaitingTarget:
-                    var list = PathFinder.FindShortestWay(CurrentNode, Graph.GetNearestNode());
-                    DrawWay(list);
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out var hitInfo, 200f))
-                        {
-                            Way.Clear();
-                            foreach (var node in list)
-                            {
-                                Way.Enqueue(node);
-                            }
-                            Way.Dequeue();
-                            CurrentStage = Stage.MovingFromAToB;
-                        }
-                    }
-                    break;
-            }
-        }
-
-        public void FixedUpdate()
-        {
-            if (CurrentStage == Stage.MovingFromAToB)
-            {
-                if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(TargetNode.transform.position.x, TargetNode.transform.position.z)) <= delta)
-                {
-                    CurrentNode = TargetNode;
-                    progress = 0;
-                    if (Way.Count == 0 || Group.CurrentOnGlobalMapGroupEndurance == 0)
-                    {
-                        ClearWay();
-                    }
-                    else
-                    {
-                        TargetNode = Way.Dequeue();
-                        Group.CurrentOnGlobalMapGroupEndurance -= 1;
-                    }
-                }
-                transform.position = Vector3.Lerp(CurrentNode.transform.position, TargetNode.transform.position, progress);
-                progress += 0.050f;
-            }
-        }
-
-        private void DrawWay(List<Node> list)
-        {
+            var path = GetPath();
             var firstList = new List<Vector3>();
             var secondList = new List<Vector3>();
             var thirdList = new List<Vector3>();
             var lastList = new List<Vector3>();
-            for (var i = 0; i < list.Count; i++)
+            for (var i = 0; i < path.Count; i++)
             {
-                var element = list[i].transform.position;
-                if (i < Group.CurrentOnGlobalMapGroupEndurance)
+                var element = path[i].transform.position;
+                if (i < group.CurrentOnGlobalMapGroupEndurance)
                 {
                     firstList.Add(element);
                 }
-                else if(i == Group.CurrentOnGlobalMapGroupEndurance)
+                else if (i == group.CurrentOnGlobalMapGroupEndurance)
                 {
                     firstList.Add(element);
                     secondList.Add(element);
                 }
-                else if (i < Group.CurrentOnGlobalMapGroupEndurance + Group.MaxOnGlobalMapGroupEndurance)
+                else if (i < group.CurrentOnGlobalMapGroupEndurance + group.MaxOnGlobalMapGroupEndurance)
                 {
                     secondList.Add(element);
                 }
-                else if (i == Group.CurrentOnGlobalMapGroupEndurance + Group.MaxOnGlobalMapGroupEndurance)
+                else if (i == group.CurrentOnGlobalMapGroupEndurance + group.MaxOnGlobalMapGroupEndurance)
                 {
                     thirdList.Add(element);
                     secondList.Add(element);
                 }
-                else if (i < Group.CurrentOnGlobalMapGroupEndurance + 2 * Group.MaxOnGlobalMapGroupEndurance)
+                else if (i < group.CurrentOnGlobalMapGroupEndurance + 2 * group.MaxOnGlobalMapGroupEndurance)
                 {
                     thirdList.Add(element);
                 }
-                else if (i == Group.CurrentOnGlobalMapGroupEndurance + 2 * Group.MaxOnGlobalMapGroupEndurance)
+                else if (i == group.CurrentOnGlobalMapGroupEndurance + 2 * group.MaxOnGlobalMapGroupEndurance)
                 {
                     thirdList.Add(element);
                     lastList.Add(element);
@@ -145,10 +106,10 @@ namespace Player
                 }
             }
 
-            DrawLineRenderer(LineRenderer,FirstTurnObject,firstList);
-            DrawLineRenderer(FirstTurnObjectLineRenderer, SecondTurnObject, secondList);
-            DrawLineRenderer(SecondTurnObjectLineRenderer,ThirdTurnObject, thirdList);
-            DrawLineRenderer(ThirdTurnObjectLineRenderer,lastList);
+            DrawLineRenderer(lineRenderer, firstTurnObject, firstList);
+            DrawLineRenderer(firstTurnObjectLineRenderer, secondTurnObject, secondList);
+            DrawLineRenderer(secondTurnObjectLineRenderer, thirdTurnObject, thirdList);
+            DrawLineRenderer(thirdTurnObjectLineRenderer, lastList);
         }
 
         private void DrawLineRenderer(LineRenderer lineRenderer, GameObject turnObject, List<Vector3> nodes)
@@ -171,7 +132,7 @@ namespace Player
             if (nodes.Count > 0)
             {
                 lineRenderer.positionCount = nodes.Count;
-                lineRenderer.SetPositions(nodes.Select(x => x + new Vector3(0,0.5f,0)).ToArray());
+                lineRenderer.SetPositions(nodes.Select(x => x + new Vector3(0, 0.5f, 0)).ToArray());
             }
             else
             {
@@ -179,20 +140,73 @@ namespace Player
             }
         }
 
-        private void ClearWay()
+        public void ClearWay()
         {
-            CurrentStage = Stage.Sleeping;
-            LineRenderer.positionCount = 0;
-            FirstTurnObjectLineRenderer.positionCount = 0;
-            SecondTurnObjectLineRenderer.positionCount = 0;
-            ThirdTurnObjectLineRenderer.positionCount = 0;
+            way.Clear();
+            lineRenderer.positionCount = 0;
+            firstTurnObjectLineRenderer.positionCount = 0;
+            secondTurnObjectLineRenderer.positionCount = 0;
+            thirdTurnObjectLineRenderer.positionCount = 0;
 
-            FirstTurnObject.transform.position = new Vector3(0, -10, 0);
-            SecondTurnObject.transform.position = new Vector3(0, -10, 0);
-            ThirdTurnObjectLineRenderer.transform.position = new Vector3(0, -10, 0);
+            firstTurnObject.transform.position = new Vector3(0, -10, 0);
+            secondTurnObject.transform.position = new Vector3(0, -10, 0);
+            thirdTurnObjectLineRenderer.transform.position = new Vector3(0, -10, 0);
         }
+
+        public override void OnSelected()
+        {
+            if (movementSm.CurrentState == sleeping)
+                movementSm.ChangeState(waitingTarget);
+        }
+        
+
+        #region MonoBehaviourCallBack
+
+        public void Awake()
+        {
+            movementSm = new StateMachine();
+            sleeping = new Sleeping(this, movementSm);
+            waitingTarget = new WaitingTarget(this, movementSm);
+            walking = new Walking(this, movementSm);
+            movementSm.Initialize(sleeping);
+
+            group = GetComponent<Group>();
+            lineRenderer = GetComponent<LineRenderer>();
+            lineRenderer.positionCount = 0;
+            firstTurnObjectLineRenderer = firstTurnObject.GetComponent<LineRenderer>();
+            secondTurnObjectLineRenderer = secondTurnObject.GetComponent<LineRenderer>();
+            thirdTurnObjectLineRenderer = thirdTurnObject.GetComponent<LineRenderer>();
+        }
+
+        public void Start()
+        {
+            if (currentNode == null)
+                Debug.Log("Нет стартовой ноды!");
+            else
+            {
+                transform.position = currentNode.transform.position;
+                targetNode = currentNode;
+            }
+        }
+
+        public void Update()
+        {
+            if (Input.GetMouseButtonDown(0) && movementSm.CurrentState == waitingTarget &&
+                Physics.Raycast(
+                    Camera.main.ScreenPointToRay(Input.mousePosition),
+                    out var hitInfo, 200f))
+            {
+                movementSm.ChangeState(walking);
+            }
+
+            movementSm.CurrentState.Update();
+        }
+
+        public void FixedUpdate()
+        {
+            movementSm.CurrentState.FixedUpdate();
+        }
+
+        #endregion
     }
 }
-
-
-

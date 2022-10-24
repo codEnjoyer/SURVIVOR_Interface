@@ -8,7 +8,7 @@ public abstract class Cloth : Item
     [SerializeField] private int maxArmor;
     [SerializeField] private readonly ItemGrid inventory;
     public float CurrentArmor { get; private set; }
-    public float TotalWeight => data.weight + inventory.storedItems.Sum(item => item.data.weight);
+    public float TotalWeight => Weight + inventory.storedItems.Sum(item => item.Weight);
 
     public float CalculateBlockedDamage(Shoot shoot)
     {
