@@ -22,6 +22,10 @@ MonoBehaviour:
   - item: {fileID: 8548521006887280039, guid: e3380e16e33218745bbae364675c69ff, type: 3}
     weightChance: 10
   - item: {fileID: 2631284673316642212, guid: 18afa26b145d6e84cb6574774cb96694, type: 3}
-    weightChance: 5
+    weightChance: 6
   - item: {fileID: 5536345956923993589, guid: d93b5f3d2cbff174bbb4b844bad5d69f, type: 3}
+    weightChance: 6
+  - item: {fileID: 590655843670137529, guid: 3a72c7e74d23db648813bb5e3db453f7, type: 3}
+    weightChance: 3
+  - item: {fileID: -5216056015649672875, guid: e7e62f9fadfb2ae48bd609f8d4926891, type: 3}
     weightChance: 5
