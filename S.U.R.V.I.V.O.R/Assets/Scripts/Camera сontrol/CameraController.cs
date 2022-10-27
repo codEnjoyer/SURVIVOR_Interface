@@ -18,6 +18,9 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float zoomDampening = 7.5f;
     [SerializeField] private float zoomMinHeight = 5f;
     [SerializeField] private float zoomMaxHeight = 50f;
+    [SerializeField]
+    [Range(0f,0.1f)]
+    private float edgeTolerance = 0.05f;
 
     [SerializeField] private float leftLimit;
     [SerializeField] private float rightLimit;
@@ -58,6 +61,7 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         GetKeyboardMovement();
+        CheckMouseAtScreenEdge();
 
         UpdateVelocity();
         UpdateBasePosition();
@@ -140,5 +144,23 @@ public class CameraController : MonoBehaviour
 
         localPosition = Vector3.Lerp(localPosition, zoomTarget, Time.deltaTime * zoomDampening);
         cameraTransform.localPosition = localPosition;
+    }
+
+    private void CheckMouseAtScreenEdge()
+    {
+        var mousePosition = Mouse.current.position.ReadValue();
+        var moveDirection = Vector3.zero;
+
+        if (mousePosition.x < edgeTolerance * Screen.width)
+            moveDirection += -GetCameraRight();
+        else if (mousePosition.x > (1f - edgeTolerance) * Screen.width)
+            moveDirection += GetCameraRight();
+        
+        if (mousePosition.y < edgeTolerance * Screen.height)
+            moveDirection += -GetCameraUp();
+        else if (mousePosition.y > (1f - edgeTolerance) * Screen.height)
+            moveDirection += GetCameraUp();
+
+        targetPosition += moveDirection;
     }
 }
