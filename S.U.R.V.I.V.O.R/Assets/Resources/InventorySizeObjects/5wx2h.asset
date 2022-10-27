@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45223597eca67244e9c9c453c64cba72, type: 3}
-  m_Name: 2wx5h
+  m_Name: 5wx2h
   m_EditorClassIdentifier: 
-  width: 2
-  height: 5
+  width: 5
+  height: 2
