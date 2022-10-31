@@ -24,7 +24,7 @@ namespace Player
         private LineRenderer lineRenderer;
         private Group group;
 
-        private float delta = 0.1f;
+        private const float Delta = 0.1f;
         private float progress;
         private Queue<Node> way = new();
 
@@ -58,9 +58,9 @@ namespace Player
 
         private bool IsNearly()
         {
-            var curPos = PathFinder.SwitchTo2d(transform.position);
-            var targetPos = PathFinder.SwitchTo2d(targetNode.transform.position);
-            return Vector2.Distance(curPos, targetPos) <= delta;
+            var curPos = SwitchTo2d(transform.position);
+            var targetPos = SwitchTo2d(targetNode.transform.position);
+            return Vector2.Distance(curPos, targetPos) <= Delta;
         }
         
         public void DrawPath()
@@ -159,10 +159,12 @@ namespace Player
                 movementSm.ChangeState(waitingTarget);
         }
         
+        private Vector2 SwitchTo2d(Vector3 v3) => new(v3.x, v3.z);
+        
 
         #region MonoBehaviourCallBack
 
-        public void Awake()
+        private void Awake()
         {
             movementSm = new StateMachine();
             sleeping = new Sleeping(this, movementSm);
@@ -178,7 +180,7 @@ namespace Player
             thirdTurnObjectLineRenderer = thirdTurnObject.GetComponent<LineRenderer>();
         }
 
-        public void Start()
+        private void Start()
         {
             if (currentNode == null)
                 Debug.Log("Нет стартовой ноды!");
@@ -189,7 +191,7 @@ namespace Player
             }
         }
 
-        public void Update()
+        private void Update()
         {
             if (Input.GetMouseButtonDown(0) && movementSm.CurrentState == waitingTarget &&
                 Physics.Raycast(
@@ -202,10 +204,7 @@ namespace Player
             movementSm.CurrentState.Update();
         }
 
-        public void FixedUpdate()
-        {
-            movementSm.CurrentState.FixedUpdate();
-        }
+        private void FixedUpdate() => movementSm.CurrentState.FixedUpdate();
 
         #endregion
     }
