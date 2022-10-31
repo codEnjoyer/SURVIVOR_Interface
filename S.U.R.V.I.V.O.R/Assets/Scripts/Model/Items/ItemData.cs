@@ -1,10 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New ItemData", menuName = "Data/Item Data", order = 50)]
 public class ItemData : ScriptableObject
 {
-    public int width = 1;
-    public int height = 1;
+    [SerializeField] private int width = 1;
+    [SerializeField] private int height = 1;
+    
+    public int Width => width;
+
+    public int Height => height;
 }

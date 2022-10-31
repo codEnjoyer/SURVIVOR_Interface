@@ -1,13 +1,8 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.PlayerLoop;
-using UnityEngine.UI;
 
-public class ItemGrid : MonoBehaviour
+
+public class ItemGrid : MonoBehaviour, IInventory
 {
     private Canvas canvas;
     
@@ -17,7 +12,7 @@ public class ItemGrid : MonoBehaviour
     private Vector2Int tileGridPosition;
 
     private Item[,] inventoryItemSlot;
-    public List<Item> storedItems;
+    private readonly List<Item> storedItems = new();
 
     private RectTransform rectTransform;
 
@@ -188,4 +183,6 @@ public class ItemGrid : MonoBehaviour
 
         return true;
     }
+
+    public IEnumerable<Item> GetItems() => storedItems;
 }

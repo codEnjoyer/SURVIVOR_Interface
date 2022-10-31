@@ -13,9 +13,9 @@ public class Item : MonoBehaviour
     public int onGridPositionX { get; set; }
     public int onGridPositionY { get; set; }
 
-    public int Height => !rotated ? data.height : data.width;
+    public int Height => !rotated ? data.Height : data.Width;
 
-    public int Width => !rotated ? data.width : data.height;
+    public int Width => !rotated ? data.Width : data.Height;
 
     public bool rotated { get; set; }
 
@@ -24,8 +24,8 @@ public class Item : MonoBehaviour
     {
         var scaleFactor = GetComponentInParent<Canvas>().scaleFactor;
 
-        var size = new Vector2(itemData.width * ItemGrid.TileSize * scaleFactor,
-            itemData.height * ItemGrid.TileSize * scaleFactor);
+        var size = new Vector2(itemData.Width * ItemGrid.TileSize * scaleFactor,
+            itemData.Height * ItemGrid.TileSize * scaleFactor);
         GetComponent<RectTransform>().sizeDelta = size;
     }
 

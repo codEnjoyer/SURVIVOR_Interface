@@ -5,7 +5,6 @@ namespace Graph_and_Map
 {
     public static class PathFinder
     {
-        public static Vector2 SwitchTo2d(Vector3 v3) => new(v3.x, v3.z);
         public static List<Node> FindShortestWay(Node start, Node end)
         {
             var queue = new Queue<Node>();
