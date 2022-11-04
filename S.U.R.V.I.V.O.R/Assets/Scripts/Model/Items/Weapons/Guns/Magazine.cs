@@ -7,6 +7,7 @@ public class Magazine: Item
     private Stack<Bullet> ammo;
     [SerializeField] private Bullet bullet;
     [SerializeField] private int capacity;
+    [SerializeField] private Caliber caliber;
     public Bullet DeLoad() => ammo.Pop();
     public void Load()
     {

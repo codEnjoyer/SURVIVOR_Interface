@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New ItemData", menuName = "Data/Item Data", order = 50)]
-public class ItemData : ScriptableObject
+[CreateAssetMenu(fileName = "New Size", menuName = "Data/Size", order = 50)]
+public class Size : ScriptableObject
 {
     [SerializeField] private int width = 1;
     [SerializeField] private int height = 1;

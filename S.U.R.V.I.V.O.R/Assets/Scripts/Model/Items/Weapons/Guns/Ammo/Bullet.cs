@@ -12,6 +12,7 @@ public class Bullet: ScriptableObject
     [SerializeField] private float recoil;
     [SerializeField] private float extraAccuracy;
     [SerializeField] private float noise;
+    [SerializeField] private Caliber caliber;
     
     public float Damage => damage;
     public float ExtraFireDistance => extraFireDistance;
@@ -21,4 +22,5 @@ public class Bullet: ScriptableObject
     public float Recoil => recoil;
     public float ExtraAccuracy => extraAccuracy;
     public float Noise => noise;
+    public Caliber Caliber => caliber;
 }
