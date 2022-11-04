@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class ItemGrid : MonoBehaviour, IInventory
+public class ItemGrid : MonoBehaviour
 {
+    private InventoryState curInventoryState;
     private Canvas canvas;
     
     public const float TileSize = 50;
@@ -27,6 +28,12 @@ public class ItemGrid : MonoBehaviour, IInventory
         canvas = GetComponentInParent<Canvas>();
         rectTransform = GetComponent<RectTransform>();
         Init(gridSizeWidth, gridSizeHeight);
+    }
+    
+    public void ChangeState(InventoryState inventoryState)
+    {
+        curInventoryState = inventoryState;
+        rectTransform.sizeDelta = new Vector2(inventoryState.Size.Width * TileSize, inventoryState.Size.Height  * TileSize);
     }
 
     private void Init(int width, int height)
@@ -143,20 +150,14 @@ public class ItemGrid : MonoBehaviour, IInventory
         }
     }
 
-    bool PositionCheck(int posX, int posY)
-    {
-        return posX >= 0 && posY >= 0 && posX < gridSizeWidth && posY < gridSizeHeight;
-    }
+    bool PositionCheck(int posX, int posY) => posX >= 0 && posY >= 0 && posX < gridSizeWidth && posY < gridSizeHeight;
 
     public bool BoundryCheck(int posX, int posY, int width, int height)
     {
         return PositionCheck(posX, posY) && PositionCheck(posX + width - 1, posY + height - 1);
     }
 
-    public Item GetItem(int x, int y)
-    {
-        return inventoryItemSlot[x, y];
-    }
+    public Item GetItem(int x, int y) => inventoryItemSlot[x, y];
 
     public Vector2Int? FindSpaceForObject(Item itemToInsert)
     {
@@ -184,5 +185,5 @@ public class ItemGrid : MonoBehaviour, IInventory
         return true;
     }
 
-    public IEnumerable<Item> GetItems() => storedItems;
+    public IEnumerable<Item> GetItems => storedItems;
 }

@@ -1,31 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 public class Item : MonoBehaviour
 {
-    public ItemData data;
-    [SerializeField] private float weight;
-    public float Weight => weight;
-
+    [SerializeField] private BaseItemData itemData;
+    
     public int onGridPositionX { get; set; }
     public int onGridPositionY { get; set; }
 
-    public int Height => !rotated ? data.Height : data.Width;
+    public int Height => !rotated ? size.Height : size.Width;
 
-    public int Width => !rotated ? data.Width : data.Height;
+    public int Width => !rotated ? size.Width : size.Height;
 
     public bool rotated { get; set; }
+    public Size size => itemData.Size;
+    public float Weight => itemData.Weight;
+    public BaseItemData ItemData => itemData;
 
-
-    public void Set(ItemData itemData)
+    public void Set(BaseItemData itemData)
     {
         var scaleFactor = GetComponentInParent<Canvas>().scaleFactor;
 
-        var size = new Vector2(itemData.Width * ItemGrid.TileSize * scaleFactor,
-            itemData.Height * ItemGrid.TileSize * scaleFactor);
+        var size = new Vector2(itemData.Size.Width * ItemGrid.TileSize * scaleFactor,
+            itemData.Size.Height * ItemGrid.TileSize * scaleFactor);
         GetComponent<RectTransform>().sizeDelta = size;
     }
 
