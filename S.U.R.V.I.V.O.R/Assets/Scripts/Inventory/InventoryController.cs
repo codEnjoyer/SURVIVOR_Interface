@@ -165,7 +165,7 @@ public class InventoryController : MonoBehaviour
         var positionOnGrid = selectedItemGrid.FindSpaceForObject(itemToInsert);
         if (positionOnGrid == null)
         {
-            Destroy(itemToInsert.gameObject);
+            Destroy(itemToInsert);
             return;
         }
         selectedItemGrid.PlaceItem(itemToInsert, positionOnGrid.Value.x, positionOnGrid.Value.y);
