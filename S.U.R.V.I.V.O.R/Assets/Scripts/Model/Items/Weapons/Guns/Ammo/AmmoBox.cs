@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-public class AmmoBox : Item
+public class AmmoBox : LogicalItem
 {
     [SerializeField] private Bullet bullet;
     [SerializeField] private int capacity;

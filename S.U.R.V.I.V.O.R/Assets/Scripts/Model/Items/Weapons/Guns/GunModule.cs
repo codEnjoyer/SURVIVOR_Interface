@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class GunModule : Item
+public class GunModule: LogicalItem
 {
     [SerializeField] private float deltaRecoil;
     [SerializeField] private float deltaAccuracy;

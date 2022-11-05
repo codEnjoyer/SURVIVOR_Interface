@@ -1,5 +1,5 @@
 ﻿
-public class Weapon : Item
+public class Weapon : LogicalItem
 {
     
 }

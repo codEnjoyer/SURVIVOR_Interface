@@ -21,7 +21,7 @@ public class Group : MonoBehaviour
         location = GetComponent<GroupMovementLogic>().CurrentNode.GetComponentInParent<Location>();
     }
 
-    public Item Loot()
+    public InventoryItem Loot()
     {
         throw new NotImplementedException();
     }

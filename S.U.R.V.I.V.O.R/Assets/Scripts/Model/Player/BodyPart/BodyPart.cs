@@ -4,7 +4,7 @@ using System.Linq;
 public abstract class BodyPart
 {
     protected readonly int MaxHp;
-    public float TotalWeight => Clothes.Sum(cloth => cloth.TotalWeight);
+    // public float TotalWeight => Clothes.Sum(cloth => cloth.TotalWeight);
     public float Hp { get; protected set; }
 
     private float size;
