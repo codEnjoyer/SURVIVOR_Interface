@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class Magazine: Item 
+public class Magazine: LogicalItem 
 {
     private Stack<Bullet> ammo;
     [SerializeField] private Bullet bullet;
