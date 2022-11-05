@@ -1,46 +1,72 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class ItemGrid : MonoBehaviour
 {
-    private InventoryState curInventoryState;
+    [SerializeField] private Size size;
+    
+    public InventoryState curInventoryState { get; private set; }
+    
     private Canvas canvas;
+    [SerializeField] private InventoryGridBackground inventoryGridBG;
     
     public const float TileSize = 50;
 
     private Vector2 positionOnGrid;
     private Vector2Int tileGridPosition;
 
-    private Item[,] inventoryItemSlot;
-    private readonly List<Item> storedItems = new();
+    private readonly List<Item> instantiateItems = new List<Item>();
 
     private RectTransform rectTransform;
 
-    [SerializeField] private int gridSizeWidth = 10;
-    [SerializeField] private int gridSizeHeight = 10;
-
-    public int GridSizeWidth => gridSizeWidth;
-    public int GridSizeHeight => gridSizeHeight;
+    public int GridSizeWidth => curInventoryState.Size.Width;
+    public int GridSizeHeight => curInventoryState.Size.Height;
 
     private void Awake()
     {
         canvas = GetComponentInParent<Canvas>();
         rectTransform = GetComponent<RectTransform>();
-        Init(gridSizeWidth, gridSizeHeight);
+        curInventoryState = new InventoryState(size);
+        Init(size.Width, size.Height);
     }
     
+    private void Init(int width, int height)
+    {
+        inventoryGridBG.DrawBackground(this);
+        rectTransform.sizeDelta = new Vector2(width * TileSize, height * TileSize);
+    }
+
     public void ChangeState(InventoryState inventoryState)
     {
         curInventoryState = inventoryState;
         rectTransform.sizeDelta = new Vector2(inventoryState.Size.Width * TileSize, inventoryState.Size.Height  * TileSize);
+        RedrawGrid();
+        inventoryGridBG.DrawBackground(this);
     }
 
-    private void Init(int width, int height)
+    private void RedrawGrid()
     {
-        inventoryItemSlot = new Item[width, height];
-        var size = new Vector2(width * TileSize, height * TileSize);
-        rectTransform.sizeDelta = size;
+        DestroyAllItems();
+        
+        foreach (var item in curInventoryState.GetItems)
+        {
+            // var newItem = Instantiate(item, rectTransform);
+            // newItem.Set(newItem.ItemData);
+            instantiateItems.Add(item);
+            item.gameObject.SetActive(true);
+            var position = GetPositionOnGrid(item, item.onGridPositionX, item.onGridPositionY);
+            item.GetComponent<RectTransform>().localPosition = position;
+        }
+    }
+    
+    private void DestroyAllItems()
+    {
+        foreach (var item in instantiateItems)
+            item.gameObject.SetActive(false);
+
+        instantiateItems.Clear();
     }
 
     public Vector2Int GetTileGridPosition(Vector2 mousePosition)
@@ -58,132 +84,36 @@ public class ItemGrid : MonoBehaviour
 
     public bool PlaceItem(Item item, int posX, int posY, ref Item overlapItem)
     {
-        if (!BoundryCheck(posX, posY, item.Width, item.Height))
-            return false;
-
-        if (!OverlapCheck(posX, posY, item.Width, item.Height, ref overlapItem))
-        {
-            overlapItem = null;
-            return false;
-        }
-
-        if (overlapItem != null)
-        {
-            RemoveGridReference(overlapItem);
-        }
-
-        PlaceItem(item, posX, posY);
-        return true;
+        var res = curInventoryState.PlaceItem(item, posX, posY, ref overlapItem);
+        if (res)
+            PlaceItem(item, posX, posY);
+        return res;
     }
 
     public void PlaceItem(Item item, int posX, int posY)
     {
         var itemRectTransform = item.GetComponent<RectTransform>();
         itemRectTransform.SetParent(rectTransform);
-        for (int x = 0; x < item.Width; x++)
-        {
-            for (int y = 0; y < item.Height; y++)
-            {
-                inventoryItemSlot[posX + x, posY + y] = item;
-            }
-        }
-
-        item.onGridPositionX = posX;
-        item.onGridPositionY = posY;
-
+        
         var position = GetPositionOnGrid(item, posX, posY);
         itemRectTransform.localPosition = position;
         
-        storedItems.Add(item);
+        instantiateItems.Add(item);
+
+        curInventoryState.PlaceItem(item, posX, posY);
     }
 
-    public Vector2 GetPositionOnGrid(Item item, int posX, int posY)
-    {
-        var position = new Vector2();
-        position.x = posX * TileSize + TileSize * item.Width / 2;
-        position.y = -(posY * TileSize + TileSize * item.Height / 2);
-        return position;
-    }
+    public Vector2 GetPositionOnGrid(Item item, int posX, int posY) => 
+        new(posX * TileSize + TileSize * item.Width / 2, -(posY * TileSize + TileSize * item.Height / 2));
+    
 
-    private bool OverlapCheck(int posX, int posY, int width, int height, ref Item overlapItem)
-    {
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                if (inventoryItemSlot[posX + x, posY + y] != null)
-                {
-                    if (overlapItem == null)
-                        overlapItem = inventoryItemSlot[posX + x, posY + y];
-                    else
-                    {
-                        if (overlapItem != inventoryItemSlot[posX + x, posY + y])
-                            return false;
-                    }
-                }
-            }
-        }
+    public Item PickUpItem(int x, int y) => curInventoryState.PickUpItem(x, y);
+    
+    public bool BoundryCheck(int posX, int posY, int width, int height) => curInventoryState.BoundryCheck(posX, posY, width, height);
 
-        return true;
-    }
+    public Vector2Int? FindSpaceForObject(Item itemToInsert) => curInventoryState.FindSpaceForObject(itemToInsert);
 
-    public Item PickUpItem(int x, int y)
-    {
-        var returnedItem = inventoryItemSlot[x, y];
-        if (returnedItem == null) return null;
-        RemoveGridReference(returnedItem);
+    public Item GetItem(int x, int y) => curInventoryState.GetItem(x, y);
 
-        storedItems.Remove(returnedItem);
-
-        inventoryItemSlot[x, y] = null;
-        return returnedItem;
-    }
-
-    private void RemoveGridReference(Item item)
-    {
-        for (int ix = 0; ix < item.Width; ix++)
-        {
-            for (int iy = 0; iy < item.Height; iy++)
-            {
-                inventoryItemSlot[item.onGridPositionX + ix, item.onGridPositionY + iy] = null;
-            }
-        }
-    }
-
-    bool PositionCheck(int posX, int posY) => posX >= 0 && posY >= 0 && posX < gridSizeWidth && posY < gridSizeHeight;
-
-    public bool BoundryCheck(int posX, int posY, int width, int height)
-    {
-        return PositionCheck(posX, posY) && PositionCheck(posX + width - 1, posY + height - 1);
-    }
-
-    public Item GetItem(int x, int y) => inventoryItemSlot[x, y];
-
-    public Vector2Int? FindSpaceForObject(Item itemToInsert)
-    {
-        var height = gridSizeHeight - itemToInsert.Height + 1;
-        var width = gridSizeWidth - itemToInsert.Width + 1;
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                if (CheckAvailableSpace(x, y, itemToInsert.Width, itemToInsert.Height))
-                    return new Vector2Int(x, y);
-            }
-        }
-
-        return null;
-    }
-
-    private bool CheckAvailableSpace(int posX, int posY, int width, int height)
-    {
-        for (int x = 0; x < width; x++)
-            for (int y = 0; y < height; y++)
-                if (inventoryItemSlot[posX + x, posY + y] != null)
-                 return false;
-
-        return true;
-    }
-
-    public IEnumerable<Item> GetItems => storedItems;
+    public IEnumerable<Item> GetItems => curInventoryState.GetItems;
 }

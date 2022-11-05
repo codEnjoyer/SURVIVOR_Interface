@@ -17,13 +17,13 @@ public class Item : MonoBehaviour
     public BaseItemData ItemData => itemData;
 
     public void Set(BaseItemData itemData)
-    {
-        var scaleFactor = GetComponentInParent<Canvas>().scaleFactor;
-
-        var size = new Vector2(itemData.Size.Width * ItemGrid.TileSize * scaleFactor,
-            itemData.Size.Height * ItemGrid.TileSize * scaleFactor);
-        GetComponent<RectTransform>().sizeDelta = size;
-    }
+     {
+         var scaleFactor = GetComponentInParent<Canvas>().scaleFactor;
+ 
+         var size = new Vector2(itemData.Size.Width * ItemGrid.TileSize * scaleFactor,
+             itemData.Size.Height * ItemGrid.TileSize * scaleFactor);
+         GetComponent<RectTransform>().sizeDelta = size;
+     }
 
     public void Rotated()
     {
