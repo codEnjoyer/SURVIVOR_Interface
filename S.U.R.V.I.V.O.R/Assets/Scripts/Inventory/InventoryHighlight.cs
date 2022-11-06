@@ -6,19 +6,19 @@ public class InventoryHighlight : MonoBehaviour
 {
     [SerializeField] private RectTransform highlighter;
 
-    public void SetSize(Item targetItem)
+    public void SetSize(InventoryItem targetItem)
     {
         var size = new Vector2(targetItem.Width * ItemGrid.TileSize,
             targetItem.Height * ItemGrid.TileSize);
         highlighter.sizeDelta = size;
     }
 
-    public void SetPosition(ItemGrid targetGrid, Item targetItem)
+    public void SetPosition(ItemGrid targetGrid, InventoryItem targetItem)
     {
         SetPosition(targetGrid, targetItem, targetItem.onGridPositionX, targetItem.onGridPositionY);
     }
 
-    public void SetPosition(ItemGrid targetGrid, Item targetItem, int posX, int posY)
+    public void SetPosition(ItemGrid targetGrid, InventoryItem targetItem, int posX, int posY)
     {
         var position = targetGrid.GetPositionOnGrid(targetItem, posX, posY);
         highlighter.localPosition = position;
