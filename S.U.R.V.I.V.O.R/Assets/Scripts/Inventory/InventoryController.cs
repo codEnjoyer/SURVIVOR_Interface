@@ -18,14 +18,14 @@ public class InventoryController : MonoBehaviour
         }
     }
 
-    private Item selectedItem;
-    private Item overlapItem;
+    private InventoryItem selectedInventoryItem;
+    private InventoryItem overlapInventoryItem;
     private RectTransform rectTransform;
     
     [SerializeField] private Transform canvasTransform;
 
     private InventoryHighlight inventoryHighlight;
-    private Item itemToHighlight;
+    private InventoryItem inventoryItemToHighlight;
     private Vector2Int? previousPosition;
 
     private void Awake()
@@ -35,7 +35,7 @@ public class InventoryController : MonoBehaviour
 
     private void Update()
     {
-        if (selectedItem != null)
+        if (selectedInventoryItem != null)
             rectTransform.position = Input.mousePosition;
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -57,7 +57,7 @@ public class InventoryController : MonoBehaviour
         {
             var tileGridPosition = GetTileGridPosition();
 
-            if (selectedItem == null)
+            if (selectedInventoryItem == null)
             {
                 PickUpItem(tileGridPosition);
             }
@@ -72,26 +72,26 @@ public class InventoryController : MonoBehaviour
 
     private void PickUpItem(Vector2Int tileGridPosition)
     {
-        selectedItem = selectedItemGrid.PickUpItem(tileGridPosition.x, tileGridPosition.y);
-        if (selectedItem != null)
+        selectedInventoryItem = selectedItemGrid.PickUpItem(tileGridPosition.x, tileGridPosition.y);
+        if (selectedInventoryItem != null)
         {
-            rectTransform = selectedItem.GetComponent<RectTransform>();
+            rectTransform = selectedInventoryItem.GetComponent<RectTransform>();
             rectTransform.SetParent(canvasTransform);
         }
     }
 
     private void PlaceItem(Vector2Int tileGridPosition)
     {
-        var complete = selectedItemGrid.PlaceItem(selectedItem, tileGridPosition.x, tileGridPosition.y,
-            ref overlapItem);
+        var complete = selectedItemGrid.PlaceItem(selectedInventoryItem, tileGridPosition.x, tileGridPosition.y,
+            ref overlapInventoryItem);
         if (complete)
         {
-            selectedItem = null;
-            if (overlapItem != null)
+            selectedInventoryItem = null;
+            if (overlapInventoryItem != null)
             {
-                selectedItem = overlapItem;
-                overlapItem = null;
-                rectTransform = selectedItem.GetComponent<RectTransform>();
+                selectedInventoryItem = overlapInventoryItem;
+                overlapInventoryItem = null;
+                rectTransform = selectedInventoryItem.GetComponent<RectTransform>();
                 rectTransform.SetAsLastSibling();
             }
         }
@@ -100,29 +100,29 @@ public class InventoryController : MonoBehaviour
     private void ThrowItemAtLocation() // Перемещение предмета в инвентарь локации при нажатии на пустое пространство
     {
         var locationItemGrid = GameObject.FindGameObjectWithTag("LocationItemGrid").GetComponent<ItemGrid>();
-        var positionOnGrid = locationItemGrid.FindSpaceForObject(selectedItem);
-        locationItemGrid.PlaceItem(selectedItem, positionOnGrid.Value.x, positionOnGrid.Value.y);
-        selectedItem = null;
+        var positionOnGrid = locationItemGrid.FindSpaceForObject(selectedInventoryItem);
+        locationItemGrid.PlaceItem(selectedInventoryItem, positionOnGrid.Value.x, positionOnGrid.Value.y);
+        selectedInventoryItem = null;
     }
 
     private void RotateItem()
     {
-        if (selectedItem == null) return;
-        selectedItem.Rotated();
+        if (selectedInventoryItem == null) return;
+        selectedInventoryItem.Rotated();
     }
 
     private void HandleHighlight()
     {
         var positionOnGrid = GetTileGridPosition();
         if (previousPosition == positionOnGrid) return;
-        if (selectedItem == null)
+        if (selectedInventoryItem == null)
         {
-            itemToHighlight = selectedItemGrid.GetItem(positionOnGrid.x, positionOnGrid.y);
-            if (itemToHighlight != null)
+            inventoryItemToHighlight = selectedItemGrid.GetItem(positionOnGrid.x, positionOnGrid.y);
+            if (inventoryItemToHighlight != null)
             {
                 inventoryHighlight.Show(true);
-                inventoryHighlight.SetSize(itemToHighlight);
-                inventoryHighlight.SetPosition(selectedItemGrid, itemToHighlight);
+                inventoryHighlight.SetSize(inventoryItemToHighlight);
+                inventoryHighlight.SetPosition(selectedItemGrid, inventoryItemToHighlight);
             }
             else
             {
@@ -132,50 +132,50 @@ public class InventoryController : MonoBehaviour
         else
         {
             inventoryHighlight.Show(selectedItemGrid.BoundryCheck(positionOnGrid.x, positionOnGrid.y,
-                selectedItem.Width, selectedItem.Height));
-            inventoryHighlight.SetSize(selectedItem);
-            inventoryHighlight.SetPosition(selectedItemGrid, selectedItem, positionOnGrid.x, positionOnGrid.y);
+                selectedInventoryItem.Width, selectedInventoryItem.Height));
+            inventoryHighlight.SetSize(selectedInventoryItem);
+            inventoryHighlight.SetPosition(selectedItemGrid, selectedInventoryItem, positionOnGrid.x, positionOnGrid.y);
         }
     }
 
     private Vector2Int GetTileGridPosition()
     {
         var mousePosition = Input.mousePosition;
-        if (selectedItem != null)
+        if (selectedInventoryItem != null)
         {
-            mousePosition.x -= (selectedItem.Width - 1) * ItemGrid.TileSize / 2;
-            mousePosition.y += (selectedItem.Height - 1) * ItemGrid.TileSize / 2;
+            mousePosition.x -= (selectedInventoryItem.Width - 1) * ItemGrid.TileSize / 2;
+            mousePosition.y += (selectedInventoryItem.Height - 1) * ItemGrid.TileSize / 2;
         }
 
         return selectedItemGrid.GetTileGridPosition(mousePosition);
     }
 
-    public void AddItemToInventory(Item item)
+    public void AddItemToInventory(InventoryItem inventoryItem)
     {
-        if (selectedItem != null) return;
-        CreateItem(item);
-        var itemToInsert = selectedItem;
-        selectedItem = null;
+        if (selectedInventoryItem != null) return;
+        CreateItem(inventoryItem);
+        var itemToInsert = selectedInventoryItem;
+        selectedInventoryItem = null;
         InsertItem(itemToInsert);
         selectedItemGrid = null;
     }
 
-    private void InsertItem(Item itemToInsert)
+    private void InsertItem(InventoryItem inventoryItemToInsert)
     {
-        var positionOnGrid = selectedItemGrid.FindSpaceForObject(itemToInsert);
+        var positionOnGrid = selectedItemGrid.FindSpaceForObject(inventoryItemToInsert);
         if (positionOnGrid == null)
         {
-            Destroy(itemToInsert);
+            Destroy(inventoryItemToInsert);
             return;
         }
-        selectedItemGrid.PlaceItem(itemToInsert, positionOnGrid.Value.x, positionOnGrid.Value.y);
+        selectedItemGrid.PlaceItem(inventoryItemToInsert, positionOnGrid.Value.x, positionOnGrid.Value.y);
     }
 
-    private void CreateItem(Item item)
+    private void CreateItem(InventoryItem inventoryItem)
     {
-        if (selectedItem != null) return;
-        var newInvItem = Instantiate(item);
-        selectedItem = newInvItem;
+        if (selectedInventoryItem != null) return;
+        var newInvItem = Instantiate(inventoryItem);
+        selectedInventoryItem = newInvItem;
         rectTransform = newInvItem.GetComponent<RectTransform>();
         rectTransform.SetParent(canvasTransform);
         newInvItem.Set(newInvItem.ItemData);

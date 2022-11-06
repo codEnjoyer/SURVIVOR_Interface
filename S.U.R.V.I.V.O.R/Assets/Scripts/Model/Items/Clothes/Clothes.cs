@@ -3,12 +3,14 @@ using System.Linq;
 using UnityEngine;
 
 
-public class Cloth: Item
+public class Clothes: Item
 {
-    [SerializeField] private ClothData clothData;
+    [SerializeField] private ClothesData clothesData;
+    
     private InventoryState inventory;
+    
     public float CurrentArmor { get; private set; }
-    public float TotalWeight => Weight + inventory.GetItems.Sum(item => item.Weight);
+    public float TotalWeight => InventoryItem.Weight + inventory.GetItems.Sum(i => i.Weight);
 
     public float CalculateBlockedDamage(Shoot shoot)
     {
@@ -18,6 +20,6 @@ public class Cloth: Item
 
     private void Awake()
     {
-        inventory = new InventoryState(clothData.InventorySize);
+        inventory = new InventoryState(clothesData.InventorySize);
     }
 }
