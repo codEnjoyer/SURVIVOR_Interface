@@ -17,7 +17,7 @@ public class ItemGrid : MonoBehaviour
     private Vector2 positionOnGrid;
     private Vector2Int tileGridPosition;
 
-    private readonly List<Item> instantiateItems = new List<Item>();
+    private readonly List<InventoryItem> instantiateItems = new List<InventoryItem>();
 
     private RectTransform rectTransform;
 
@@ -52,8 +52,6 @@ public class ItemGrid : MonoBehaviour
         
         foreach (var item in curInventoryState.GetItems)
         {
-            // var newItem = Instantiate(item, rectTransform);
-            // newItem.Set(newItem.ItemData);
             instantiateItems.Add(item);
             item.gameObject.SetActive(true);
             var position = GetPositionOnGrid(item, item.onGridPositionX, item.onGridPositionY);
@@ -82,7 +80,7 @@ public class ItemGrid : MonoBehaviour
         return tileGridPosition;
     }
 
-    public bool PlaceItem(Item item, int posX, int posY, ref Item overlapItem)
+    public bool PlaceItem(InventoryItem item, int posX, int posY, ref InventoryItem overlapItem)
     {
         var res = curInventoryState.PlaceItem(item, posX, posY, ref overlapItem);
         if (res)
@@ -90,7 +88,7 @@ public class ItemGrid : MonoBehaviour
         return res;
     }
 
-    public void PlaceItem(Item item, int posX, int posY)
+    public void PlaceItem(InventoryItem item, int posX, int posY)
     {
         var itemRectTransform = item.GetComponent<RectTransform>();
         itemRectTransform.SetParent(rectTransform);
@@ -103,17 +101,17 @@ public class ItemGrid : MonoBehaviour
         curInventoryState.PlaceItem(item, posX, posY);
     }
 
-    public Vector2 GetPositionOnGrid(Item item, int posX, int posY) => 
+    public Vector2 GetPositionOnGrid(InventoryItem item, int posX, int posY) => 
         new(posX * TileSize + TileSize * item.Width / 2, -(posY * TileSize + TileSize * item.Height / 2));
     
 
-    public Item PickUpItem(int x, int y) => curInventoryState.PickUpItem(x, y);
+    public InventoryItem PickUpItem(int x, int y) => curInventoryState.PickUpItem(x, y);
     
     public bool BoundryCheck(int posX, int posY, int width, int height) => curInventoryState.BoundryCheck(posX, posY, width, height);
 
-    public Vector2Int? FindSpaceForObject(Item itemToInsert) => curInventoryState.FindSpaceForObject(itemToInsert);
+    public Vector2Int? FindSpaceForObject(InventoryItem itemToInsert) => curInventoryState.FindSpaceForObject(itemToInsert);
 
-    public Item GetItem(int x, int y) => curInventoryState.GetItem(x, y);
+    public InventoryItem GetItem(int x, int y) => curInventoryState.GetItem(x, y);
 
-    public IEnumerable<Item> GetItems => curInventoryState.GetItems;
+    public IEnumerable<InventoryItem> GetItems => curInventoryState.GetItems;
 }

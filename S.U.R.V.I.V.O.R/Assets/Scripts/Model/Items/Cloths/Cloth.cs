@@ -3,11 +3,9 @@ using System.Linq;
 using UnityEngine;
 
 
-public class Cloth : Item
+public class Cloth : InventoryItem
 {
-    [SerializeField] private int maxArmor;
-    [SerializeField] private Size inventorySize;
-    
+    [SerializeField] private ClothData data;
     private InventoryState inventory;
     public float CurrentArmor { get; private set; }
     public float TotalWeight => Weight + inventory.GetItems.Sum(item => item.Weight);
@@ -20,6 +18,6 @@ public class Cloth : Item
 
     private void Awake()
     {
-        inventory = new InventoryState(inventorySize);
+        inventory = new InventoryState(data.InventorySize);
     }
 }
