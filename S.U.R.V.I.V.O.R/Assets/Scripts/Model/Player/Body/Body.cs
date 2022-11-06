@@ -6,9 +6,8 @@ using global::System.Linq;
 public abstract class Body
 {
     protected List<BodyPart> BodyParts;
-    public float TotalHp => BodyParts.Sum(path => path.Hp); 
+    public float TotalHp => BodyParts.Sum(path => path.Hp);
     public float TotalWeight => BodyParts.Sum(path => path.TotalWeight);
-    
     public readonly Health Health;
     public event Action Died;
 

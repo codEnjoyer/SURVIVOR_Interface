@@ -25,4 +25,9 @@ public class testChancgeState : MonoBehaviour
             currentItemGrid.ChangeState(state1);
         }
     }
+
+    void Update()
+    {
+        
+    }
 }

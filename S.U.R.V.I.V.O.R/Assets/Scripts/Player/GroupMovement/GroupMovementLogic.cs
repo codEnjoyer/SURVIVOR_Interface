@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Player
 {
-    public class GroupMovementLogic: MonoBehaviour
+    public class GroupMovementLogic : Selectable
     {
         private StateMachine movementSm;
         private Sleeping sleeping;
@@ -153,7 +153,7 @@ namespace Player
             thirdTurnObjectLineRenderer.transform.position = new Vector3(0, -10, 0);
         }
 
-        public void PreparingToMove()
+        public override void OnSelected()
         {
             if (movementSm.CurrentState == sleeping)
                 movementSm.ChangeState(waitingTarget);

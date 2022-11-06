@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class MeleeWeapon : Weapon
+internal class MeleeWeapon : Weapon
 {
     
 }

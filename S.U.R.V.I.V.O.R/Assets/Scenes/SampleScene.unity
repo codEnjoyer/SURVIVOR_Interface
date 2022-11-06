@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44324037, g: 0.49248022, b: 0.57215136, a: 1}
+  m_IndirectSpecularColor: {r: 0.44323984, g: 0.4924798, b: 0.57215095, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -153,7 +153,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skin: {fileID: 11400000, guid: 417b26e473af87941b9312e7225d16b9, type: 2}
-  instance: {fileID: 0}
 --- !u!4 &11603916
 Transform:
   m_ObjectHideFlags: 0
@@ -444,7 +443,6 @@ GameObject:
   - component: {fileID: 154339907}
   - component: {fileID: 154339909}
   - component: {fileID: 154339910}
-  - component: {fileID: 154339911}
   m_Layer: 0
   m_Name: Group
   m_TagString: Untagged
@@ -660,36 +658,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxOnGlobalMapGroupEndurance: 10
   CurrentOnGlobalMapGroupEndurance: 10
---- !u!114 &154339911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 154339900}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88e7eedcbca941288d487847f5fa7b93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onSelected:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 154339909}
-        m_TargetAssemblyTypeName: Player.GroupMovementLogic, Assembly-CSharp
-        m_MethodName: PreparingToMove
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onDeselected:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &204383396
 GameObject:
   m_ObjectHideFlags: 0
@@ -1732,10 +1700,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size1: {fileID: 11400000, guid: 52fa35d181e38734fb1d885d3154ea0b, type: 2}
   size2: {fileID: 11400000, guid: b85bb4f17f83a9049a9b891a2228cd0e, type: 2}
-  state1: {size: {fileID: 0}, storedItems: []
-}
-  state2: {size: {fileID: 0}, storedItems: []
-}
   currentItemGrid: {fileID: 1725873114}
 --- !u!114 &595266664
 MonoBehaviour:

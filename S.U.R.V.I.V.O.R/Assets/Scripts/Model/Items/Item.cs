@@ -1,13 +1,34 @@
-﻿using System;
 using UnityEngine;
 
-[RequireComponent(typeof(InventoryItem))]
-public abstract class Item: MonoBehaviour
+public class Item : MonoBehaviour
 {
-    public InventoryItem InventoryItem { get; private set; }
+    [SerializeField] private BaseItemData itemData;
+    
+    public int onGridPositionX { get; set; }
+    public int onGridPositionY { get; set; }
 
-    private void Awake()
+    public int Height => !rotated ? size.Height : size.Width;
+
+    public int Width => !rotated ? size.Width : size.Height;
+
+    public bool rotated { get; set; }
+    public Size size => itemData.Size;
+    public float Weight => itemData.Weight;
+    public BaseItemData ItemData => itemData;
+
+    public void Set(BaseItemData itemData)
+     {
+         var scaleFactor = GetComponentInParent<Canvas>().scaleFactor;
+ 
+         var size = new Vector2(itemData.Size.Width * ItemGrid.TileSize * scaleFactor,
+             itemData.Size.Height * ItemGrid.TileSize * scaleFactor);
+         GetComponent<RectTransform>().sizeDelta = size;
+     }
+
+    public void Rotated()
     {
-        InventoryItem = gameObject.GetComponent<InventoryItem>();
+        rotated = !rotated;
+        var rectTransform = GetComponent<RectTransform>();
+        rectTransform.rotation = Quaternion.Euler(0, 0, rotated ? 90 : 0);
     }
 }

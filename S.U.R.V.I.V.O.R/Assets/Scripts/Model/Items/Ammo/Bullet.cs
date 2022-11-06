@@ -1,9 +1,8 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-
-[CreateAssetMenu(fileName = "New Bullet", menuName = "Data/Bullet Data", order = 50)]
-public class Bullet : ScriptableObject
+// Патрон не наследуется от класса предмета, патроны будут хранится в коробках, которые будут отображаться в инвентаре
+[CreateAssetMenu(fileName = "New Caliber", menuName = "Data/Bullet Data", order = 50)]
+public class Bullet: ScriptableObject
 {
     [SerializeField] private float damage;
     [SerializeField] private float extraFireDistance;
@@ -13,7 +12,7 @@ public class Bullet : ScriptableObject
     [SerializeField] private float recoil;
     [SerializeField] private float extraAccuracy;
     [SerializeField] private float noise;
-
+    
     public float Damage => damage;
     public float ExtraFireDistance => extraFireDistance;
     public float ArmorPenetrating => armorPenetrating;

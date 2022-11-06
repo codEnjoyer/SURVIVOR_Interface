@@ -1,7 +1,5 @@
 ﻿
-using UnityEngine;
-
-public abstract class Weapon : Item
+public class Weapon : Item
 {
     
 }

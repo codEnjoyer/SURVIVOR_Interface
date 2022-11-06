@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45223597eca67244e9c9c453c64cba72, type: 3}
-  m_Name: 4x7
+  m_Name: Diamond
   m_EditorClassIdentifier: 
-  width: 4
-  height: 7
+  width: 1
+  height: 1
+  itemIcon: {fileID: 21300000, guid: 3aae173e62a439a4abe9a41c35c1cc26, type: 3}

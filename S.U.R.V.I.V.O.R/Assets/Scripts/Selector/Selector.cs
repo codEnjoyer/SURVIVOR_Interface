@@ -2,16 +2,12 @@
 using UnityEngine;
 using Enumerable = System.Linq.Enumerable;
 
-
 public class Selector: MonoBehaviour
 {
-	[SerializeField] private GUISkin skin;
-
-	[HideInInspector] public static Selector instance;
-
-	private bool isActive = true;
 	private static Selectable[] units; // массив всех юнитов, которых мы можем выделить
 	private static List<Selectable> unitSelected; // массив выделенных юнитов
+
+	[SerializeField] private GUISkin skin;
 	private Rect rect;
 	private bool draw;
 	private Vector2 startPos;
@@ -19,34 +15,24 @@ public class Selector: MonoBehaviour
 
 	private void Awake ()
 	{
-		if (instance == null)
-		{
-			instance = this;
-			units = FindObjectsOfType<Selectable>();
-			unitSelected = new List<Selectable>();
-		}
-		else if (instance == this)
-			Destroy(gameObject);
-		DontDestroyOnLoad(gameObject);
+		units = FindObjectsOfType<Selectable>();
+		unitSelected = new List<Selectable>();
 	}
 	
 	private void Select()
 	{
 		foreach (var unit in unitSelected)
-			unit.Select();
+			unit.OnSelected();
 	}
 
 	private void Deselect()
 	{
 		foreach (var unit in unitSelected)
-			unit.Deselect();
+			unit.OnDeselected();
 	}
 	
 	private void OnGUI ()
 	{
-		if (!isActive)
-			return;
-		
 		GUI.skin = skin;
 		GUI.depth = 99;
 		
@@ -95,9 +81,5 @@ public class Selector: MonoBehaviour
 				unitSelected.Add(unit);
 		}
 	}
-
-	public void Activate() => isActive = true;
-
-	public void Deactivate() => isActive = false;
-
+	
 }
