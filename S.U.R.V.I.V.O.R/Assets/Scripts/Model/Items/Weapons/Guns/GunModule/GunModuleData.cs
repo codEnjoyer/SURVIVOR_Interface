@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class GunModule: LogicalItem
+[CreateAssetMenu(fileName = "New GunModuleData", menuName = "Data/GunModule Data", order = 50)]
+public class GunModuleData: ScriptableObject
 {
     [SerializeField] private float deltaRecoil;
     [SerializeField] private float deltaAccuracy;

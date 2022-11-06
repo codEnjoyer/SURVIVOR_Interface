@@ -1,7 +1,11 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "New 2", menuName = "Data/2", order = 50)]
+[CreateAssetMenu(fileName = "New ClothData", menuName = "Data/Cloth Data", order = 50)]
 public class ClothData: ScriptableObject
 {
     [SerializeField] private int maxArmor;
+    [SerializeField] private Size inventorySize;
+
+    public int MaxArmor => maxArmor;
+    public Size InventorySize => inventorySize;
 }

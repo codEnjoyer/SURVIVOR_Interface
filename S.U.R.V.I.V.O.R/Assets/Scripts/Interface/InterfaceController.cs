@@ -46,7 +46,7 @@ public class InterfaceController : MonoBehaviour
         GroupInfoLayer.SetActive(false);
         CharactersButtonsLayer.SetActive(false);
         currentState = InterfaceState.NothingActive;
-
+        Selector.instance.Activate();
     }
 
     public void SetCharactersPanelActive()
@@ -70,6 +70,7 @@ public class InterfaceController : MonoBehaviour
                 return;
         }
         currentState = InterfaceState.CharacterPanelActive;
+        Selector.instance.Activate();
     }
 
     public void SetGroupLayerActive()
@@ -89,6 +90,7 @@ public class InterfaceController : MonoBehaviour
                 }
                 GroupButtonsLayer.SetActive(true);
                 GroupInfoLayer.SetActive(false);
+                Selector.instance.Activate();
                 return;
             case InterfaceState.NothingActive:
                 GroupButtonsLayer.SetActive(false);
@@ -108,6 +110,7 @@ public class InterfaceController : MonoBehaviour
                 break;
         }
         currentState = InterfaceState.GroupLayerActive;
+        Selector.instance.Deactivate();
     }
 
     private void SetPlayerLayerActive(GameObject characterLayer)
@@ -134,6 +137,7 @@ public class InterfaceController : MonoBehaviour
                 break;
         }
         currentState = InterfaceState.PlayerLayerActive;
+        Selector.instance.Activate();
     }
 
 

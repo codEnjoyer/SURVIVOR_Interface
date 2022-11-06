@@ -1,7 +1,13 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
-public abstract class Selectable: MonoBehaviour
+public class Selectable: MonoBehaviour
 {
-    public virtual void OnSelected(){}
-    public virtual void OnDeselected(){}
+    [SerializeField] private UnityEvent onSelected = new ();
+    [SerializeField] private UnityEvent onDeselected = new ();
+
+    public void Select() => onSelected?.Invoke();
+    public void Deselect() => onDeselected?.Invoke();
 }

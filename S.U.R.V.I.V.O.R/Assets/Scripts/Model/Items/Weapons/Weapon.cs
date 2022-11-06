@@ -1,5 +1,5 @@
 ﻿
-public class Weapon : LogicalItem
+public abstract class Weapon : Item
 {
     
 }
