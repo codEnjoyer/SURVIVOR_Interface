@@ -6,9 +6,9 @@ namespace Graph_and_Map
 {
     public class DotGraph:MonoBehaviour
     {
-        public static DotGraph instance;
-        public readonly List<Node> nodes = new();
-        public readonly KdTree kdTree = new();
+        public static DotGraph Instance { get; private set; }
+        private readonly List<Node> nodes = new();
+        private readonly KdTree kdTree = new();
         private Camera mainCamera;
         private Vector3 mPos;
 
@@ -22,13 +22,13 @@ namespace Graph_and_Map
 
         void Awake()
         {
-            if (instance == null)
+            if (Instance == null)
             {
-                instance = this;
+                Instance = this;
                 nodes.AddRange(FindObjectsOfType<Node>());
                 kdTree.AddRange(nodes);
             }
-            else if (instance == this)
+            else if (Instance == this)
                 Destroy(gameObject);
             DontDestroyOnLoad(gameObject);
         }
@@ -37,5 +37,7 @@ namespace Graph_and_Map
         {
             mainCamera = Camera.main;
         }
+
+        public IEnumerable<Node> GetNodes() => nodes;
     }
 }

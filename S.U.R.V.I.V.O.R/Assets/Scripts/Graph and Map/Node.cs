@@ -8,7 +8,7 @@ namespace Graph_and_Map
         public List<Node> neighborhoods = new ();
         private LineRenderer line;
 
-        public Vector2 positionIn2D => new(transform.position.x,transform.position.z);
+        public Vector2 PositionIn2D => new(transform.position.x,transform.position.z);
 
         public void DrawEdges()
         {
