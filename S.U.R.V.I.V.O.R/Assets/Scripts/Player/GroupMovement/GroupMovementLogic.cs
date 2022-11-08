@@ -30,7 +30,7 @@ namespace Player
 
         public Node CurrentNode => currentNode;
 
-        private List<Node> GetPath() => PathFinder.FindShortestWay(currentNode, DotGraph.instance.GetNearestNode());
+        private List<Node> GetPath() => PathFinder.FindShortestWay(currentNode, DotGraph.Instance.GetNearestNode());
 
         public void CreateWay()
         {

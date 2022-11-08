@@ -7,7 +7,7 @@ public class Location: MonoBehaviour
 {
     public static readonly Random rnd = new();
     [SerializeField] private LocationData data; 
-    private List<InventoryItem> chancesList = new ();
+    private List<BaseItem> chancesList = new ();
 
     public void Awake()
     {
@@ -21,6 +21,6 @@ public class Location: MonoBehaviour
                  chancesList.Add(itemChance.Item);
     }
 
-    public InventoryItem GetLoot() => chancesList[rnd.Next(chancesList.Count)];
+    public BaseItem GetLoot() => chancesList[rnd.Next(chancesList.Count)];
 
 }

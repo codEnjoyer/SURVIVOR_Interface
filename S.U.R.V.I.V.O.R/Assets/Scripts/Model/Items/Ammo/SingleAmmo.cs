@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Caliber", menuName = "Data/Caliber", order = 50)]
-public class Caliber: ScriptableObject
+public class SingleAmmo: ScriptableObject
 {
     [SerializeField] private float damage;
     [SerializeField] private float extraFireDistance;
@@ -20,4 +20,5 @@ public class Caliber: ScriptableObject
     public float Recoil => recoil;
     public float ExtraAccuracy => extraAccuracy;
     public float Noise => noise;
+    
 }

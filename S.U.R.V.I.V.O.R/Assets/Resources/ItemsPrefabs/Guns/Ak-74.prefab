@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 113959316428248284}
+  - component: {fileID: 5561361593710358000}
   - component: {fileID: -6722866286398517484}
   - component: {fileID: 782676808316561241}
   - component: {fileID: 6846347066420432819}
@@ -39,6 +40,19 @@ RectTransform:
   m_AnchoredPosition: {x: 880.11084, y: 516.7415}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5561361593710358000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6711868433939330614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a4c089bab1174640a6ddaf8a88be3a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 0}
 --- !u!114 &-6722866286398517484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51,12 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fbd94d65ab8aa742b964ea141f00365, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemData: {fileID: 0}
-  fireRate: 2
-  accuracy: 3
-  extraDamage: 4
-  fireDistance: 5
-  ergonomics: 6
+  data: {fileID: 0}
   currentMagazine: {fileID: 0}
   chamber: {fileID: 0}
   gunModule: {fileID: 0}

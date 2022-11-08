@@ -18,14 +18,14 @@ public class InventoryController : MonoBehaviour
         }
     }
 
-    private InventoryItem selectedItem;
-    private InventoryItem overlapItem;
+    private BaseItem selectedItem;
+    private BaseItem overlapItem;
     private RectTransform rectTransform;
     
     [SerializeField] private Transform canvasTransform;
 
     private InventoryHighlight inventoryHighlight;
-    private InventoryItem itemToHighlight;
+    private BaseItem itemToHighlight;
     private Vector2Int? previousPosition;
 
     private void Awake()
@@ -150,7 +150,7 @@ public class InventoryController : MonoBehaviour
         return selectedItemGrid.GetTileGridPosition(mousePosition);
     }
 
-    public void AddItemToInventory(InventoryItem item)
+    public void AddItemToInventory(BaseItem item)
     {
         if (selectedItem != null) return;
         CreateItem(item);
@@ -160,7 +160,7 @@ public class InventoryController : MonoBehaviour
         selectedItemGrid = null;
     }
 
-    private void InsertItem(InventoryItem itemToInsert)
+    private void InsertItem(BaseItem itemToInsert)
     {
         var positionOnGrid = selectedItemGrid.FindSpaceForObject(itemToInsert);
         if (positionOnGrid == null)
@@ -171,7 +171,7 @@ public class InventoryController : MonoBehaviour
         selectedItemGrid.PlaceItem(itemToInsert, positionOnGrid.Value.x, positionOnGrid.Value.y);
     }
 
-    private void CreateItem(InventoryItem item)
+    private void CreateItem(BaseItem item)
     {
         if (selectedItem != null) return;
         var inventoryItem = Instantiate(item);

@@ -6,20 +6,20 @@ using UnityEngine;
 public class InventoryState
 {
     private Size size;
-    private InventoryItem[,] inventoryItemSlot;
-    private List<InventoryItem> storedItems;
+    private BaseItem[,] inventoryItemSlot;
+    private List<BaseItem> storedItems;
 
     public Size Size => size;
-    public IEnumerable<InventoryItem> GetItems => storedItems;
+    public IEnumerable<BaseItem> GetItems => storedItems;
 
     public InventoryState(Size size)
     {
         this.size = size;
-        inventoryItemSlot = new InventoryItem[size.Width, size.Height];
-        storedItems = new List<InventoryItem>();
+        inventoryItemSlot = new BaseItem[size.Width, size.Height];
+        storedItems = new List<BaseItem>();
     }
     
-    public InventoryItem PickUpItem(int x, int y)
+    public BaseItem PickUpItem(int x, int y)
     {
         var returnedItem = inventoryItemSlot[x, y];
         if (returnedItem == null) return null;
@@ -31,7 +31,7 @@ public class InventoryState
         return returnedItem;
     }
     
-    public bool PlaceItem(InventoryItem item, int posX, int posY, ref InventoryItem overlapItem)
+    public bool PlaceItem(BaseItem item, int posX, int posY, ref BaseItem overlapItem)
     {
         if (!BoundryCheck(posX, posY, item.Width, item.Height))
             return false;
@@ -51,7 +51,7 @@ public class InventoryState
         return true;
     }
     
-    public void PlaceItem(InventoryItem item, int posX, int posY)
+    public void PlaceItem(BaseItem item, int posX, int posY)
     {
         for (int x = 0; x < item.Width; x++)
         {
@@ -67,7 +67,7 @@ public class InventoryState
         storedItems.Add(item);
     }
 
-    private void RemoveGridReference(InventoryItem item)
+    private void RemoveGridReference(BaseItem item)
     {
         for (int ix = 0; ix < item.Width; ix++)
         {
@@ -82,7 +82,7 @@ public class InventoryState
     
     public bool BoundryCheck(int posX, int posY, int width, int height) => PositionCheck(posX, posY) && PositionCheck(posX + width - 1, posY + height - 1);
     
-    private bool OverlapCheck(int posX, int posY, int width, int height, ref InventoryItem overlapItem)
+    private bool OverlapCheck(int posX, int posY, int width, int height, ref BaseItem overlapItem)
     {
         for (int x = 0; x < width; x++)
         {
@@ -104,9 +104,9 @@ public class InventoryState
         return true;
     }
     
-    public InventoryItem GetItem(int x, int y) => inventoryItemSlot[x, y];
+    public BaseItem GetItem(int x, int y) => inventoryItemSlot[x, y];
     
-    public Vector2Int? FindSpaceForObject(InventoryItem itemToInsert)
+    public Vector2Int? FindSpaceForObject(BaseItem itemToInsert)
     {
         var height = size.Height - itemToInsert.Height + 1;
         var width = size.Width - itemToInsert.Width + 1;

@@ -3,9 +3,9 @@
 [System.Serializable]
 public class ItemChance
 {
-    [SerializeField] private InventoryItem item;
+    [SerializeField] private BaseItem item;
     [SerializeField] private int weightChance = 1;
 
-    public InventoryItem Item => item;
+    public BaseItem Item => item;
     public int WeightChance => weightChance;
 }

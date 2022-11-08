@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8614545779229299664}
   - component: {fileID: 5875100398135147666}
   - component: {fileID: 2672491159598226669}
+  - component: {fileID: 5712621993585454331}
   - component: {fileID: 590655843670137529}
   m_Layer: 0
   m_Name: Sawed-off-Shotgun
@@ -77,6 +78,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5712621993585454331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1066198503746911967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a4c089bab1174640a6ddaf8a88be3a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 0}
 --- !u!114 &590655843670137529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,12 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fbd94d65ab8aa742b964ea141f00365, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemData: {fileID: 0}
-  fireRate: 0
-  accuracy: 0
-  extraDamage: 0
-  fireDistance: 0
-  ergonomics: 0
+  data: {fileID: 0}
   currentMagazine: {fileID: 0}
   chamber: {fileID: 0}
   gunModule: {fileID: 0}

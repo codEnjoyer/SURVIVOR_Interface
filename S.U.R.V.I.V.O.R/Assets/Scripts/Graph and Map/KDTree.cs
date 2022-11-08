@@ -7,18 +7,18 @@ namespace Graph_and_Map
 {
     public class KdTree: IEnumerable<Node>
     {
-        public Node value { get; private set; }
+        public Node Value { get; private set; }
         public readonly bool splitX;
-        public int count { get; private set; }
+        public int Count { get; private set; }
         
         private KdTree left;
         private KdTree right;
-        private bool isEmpty => count == 0;
+        private bool IsEmpty => Count == 0;
         private KdTree(Node value, KdTree parent)
         {
-            this.value = value;
+            this.Value = value;
             splitX = !parent.splitX;
-            count = 1;
+            Count = 1;
         }
 
         public KdTree()
@@ -36,19 +36,19 @@ namespace Graph_and_Map
         {
             if(node is null)
                 return;
-            if (isEmpty)
+            if (IsEmpty)
             {
-                value = node;
-                count++;
+                Value = node;
+                Count++;
                 return;
             }
 
             var currentNode = this;
             while (true)
             {
-                currentNode.count++;
-                if (currentNode.splitX && node.positionIn2D.x < currentNode.value.positionIn2D.x ||
-                    !currentNode.splitX && node.positionIn2D.y < currentNode.value.positionIn2D.y)
+                currentNode.Count++;
+                if (currentNode.splitX && node.PositionIn2D.x < currentNode.Value.PositionIn2D.x ||
+                    !currentNode.splitX && node.PositionIn2D.y < currentNode.Value.PositionIn2D.y)
                 {
                     if (currentNode.left == null)
                     {
@@ -76,7 +76,7 @@ namespace Graph_and_Map
 
         public Node GetNeighbour(Vector2 target)
         {
-            if (isEmpty) return null;
+            if (IsEmpty) return null;
             minDist = int.MaxValue;
             result = default;
             InnerGetClosest(this, target);
@@ -88,24 +88,24 @@ namespace Graph_and_Map
             while (true)
             {
                 if (tree is null) return;
-                var curDist = (target - tree.value.positionIn2D).magnitude;
+                var curDist = (target - tree.Value.PositionIn2D).magnitude;
                 if (curDist < minDist)
                 {
-                    result = tree.value;
+                    result = tree.Value;
                     minDist = curDist;
                 }
 
-                if (tree.splitX && target.x < tree.value.positionIn2D.x ||
-                    !tree.splitX && target.y < tree.value.positionIn2D.y)
+                if (tree.splitX && target.x < tree.Value.PositionIn2D.x ||
+                    !tree.splitX && target.y < tree.Value.PositionIn2D.y)
                     InnerGetClosest(tree.left, target);
                 else
                     InnerGetClosest(tree.right, target);
                 var rang = tree.splitX
-                    ? Math.Abs(tree.value.positionIn2D.x - target.x)
-                    : Math.Abs(tree.value.positionIn2D.y - target.y);
+                    ? Math.Abs(tree.Value.PositionIn2D.x - target.x)
+                    : Math.Abs(tree.Value.PositionIn2D.y - target.y);
                 if (rang > minDist) return;
-                if (tree.splitX && target.x < tree.value.positionIn2D.x ||
-                    !tree.splitX && target.y < tree.value.positionIn2D.y)
+                if (tree.splitX && target.x < tree.Value.PositionIn2D.x ||
+                    !tree.splitX && target.y < tree.Value.PositionIn2D.y)
                     tree = tree.right;
                 else
                     tree = tree.left;
@@ -116,7 +116,7 @@ namespace Graph_and_Map
         {
             foreach (var point in left)
                 yield return point;
-            yield return value;
+            yield return Value;
             foreach (var point in right)
                 yield return point;
         }

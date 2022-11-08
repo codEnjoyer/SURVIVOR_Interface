@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class GunModule : InventoryItem
+[RequireComponent(typeof(BaseItem))]
+public class GunModule : MonoBehaviour
 {
     [SerializeField] private GunModuleData data;
 }
