@@ -1,11 +1,12 @@
 ﻿using System;
 using UnityEngine;
 
-public class Gun: Weapon
+[RequireComponent(typeof(BaseItem))]
+public class Gun: MonoBehaviour
 {
     [SerializeField] private GunData data;
     [SerializeField] private Magazine currentMagazine;
-    [SerializeField] private Caliber chamber;
+    [SerializeField] private SingleAmmo chamber;
     [SerializeField] private GunModule gunModule;
     /* 
      * После патронника в реализации абстракных классов будут идти слоты для GunModule.

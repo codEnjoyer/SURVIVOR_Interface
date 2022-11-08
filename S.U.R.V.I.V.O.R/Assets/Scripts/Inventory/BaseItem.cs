@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class InventoryItem : MonoBehaviour
+public class BaseItem : MonoBehaviour
 {
-    [SerializeField] private InventoryItemData itemData;
+    [SerializeField] private BaseItemData itemData;
     
     public int onGridPositionX { get; set; }
     public int onGridPositionY { get; set; }
@@ -14,9 +14,9 @@ public class InventoryItem : MonoBehaviour
     public bool rotated { get; set; }
     public Size size => itemData.Size;
     public float Weight => itemData.Weight;
-    public InventoryItemData ItemData => itemData;
+    public BaseItemData ItemData => itemData;
 
-    public void Set(InventoryItemData itemData)
+    public void Set(BaseItemData itemData)
      {
          var scaleFactor = GetComponentInParent<Canvas>().scaleFactor;
  

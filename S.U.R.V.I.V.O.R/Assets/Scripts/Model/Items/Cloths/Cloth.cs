@@ -2,13 +2,14 @@
 using System.Linq;
 using UnityEngine;
 
-
-public class Cloth : InventoryItem
+[RequireComponent(typeof(BaseItem))]
+public class Cloth : MonoBehaviour
 {
     [SerializeField] private ClothData data;
+    private BaseItem baseItem;
     private InventoryState inventory;
     public float CurrentArmor { get; private set; }
-    public float TotalWeight => Weight + inventory.GetItems.Sum(item => item.Weight);
+    public float TotalWeight => baseItem.Weight + inventory.GetItems.Sum(item => item.Weight);
 
     public float CalculateBlockedDamage(Shoot shoot)
     {
@@ -19,5 +20,6 @@ public class Cloth : InventoryItem
     private void Awake()
     {
         inventory = new InventoryState(data.InventorySize);
+        baseItem = gameObject.GetComponent<BaseItem>();
     }
 }

@@ -3,25 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class Magazine: InventoryItem
+[RequireComponent(typeof(BaseItem))]
+public class Magazine: MonoBehaviour
 {
-    [SerializeField] private AmmoContainerData data; 
-    
-    private Stack<Caliber> ammo;
-    public Caliber DeLoad() => ammo.Pop();
-    public void Load(Caliber caliber)
+    [SerializeField] private AmmoContainerData data;
+
+    private Stack<SingleAmmo> ammoStack;
+    public SingleAmmo DeLoad() => ammoStack.Pop();
+    public void Load(SingleAmmo ammo)
     {
-        if (!caliber.Equals(data.CaliberType))
+        if (!ammo.Equals(data.AmmoType))
             throw new NotImplementedException();
         if (CurrentNumberAmmo < data.Capacity)
-            ammo.Push(data.CaliberType);
+            this.ammoStack.Push(data.AmmoType);
     }
     
-    public int CurrentNumberAmmo => ammo.Count;
-    public bool IsEmpty => ammo.Count == 0;
+    public int CurrentNumberAmmo => ammoStack.Count;
+    public bool IsEmpty => ammoStack.Count == 0;
 
     private void Awake()
     {
-        ammo = new Stack<Caliber>(data.Capacity);
+        ammoStack = new Stack<SingleAmmo>(data.Capacity);
     }
 }

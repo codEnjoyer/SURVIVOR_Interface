@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "New ItemData", menuName = "Data/Item Data", order = 50)]
-public class InventoryItemData : ScriptableObject
+public class BaseItemData : ScriptableObject
 {
     [SerializeField] private Size size;
     [SerializeField] private Sprite icon;
