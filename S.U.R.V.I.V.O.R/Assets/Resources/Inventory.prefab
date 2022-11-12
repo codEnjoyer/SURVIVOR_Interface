@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: {fileID: 0}
+  inventoryGridBG: {fileID: 0}
 --- !u!114 &6139962565968454367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,7 +170,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7ce3907a67c64b3459c98ed38baf27f4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2a799561a9010dd46afa2865bc655c83, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -254,7 +255,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fe342009bddd8b4d9840c7933a15331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemGrid: {fileID: 6139962565968454366}
 --- !u!1 &6139962566568014573
 GameObject:
   m_ObjectHideFlags: 0

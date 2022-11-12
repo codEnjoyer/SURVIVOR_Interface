@@ -14,4 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chancesList:
   - item: {fileID: 731280611706633546, guid: ad00c86b81342f747a9c051e4a4d4d6f, type: 3}
+    weightChance: 1
+  - item: {fileID: 4095413982720242275, guid: f957be7fec7aa2345a9f2654b097d0ce, type: 3}
+    weightChance: 2
+  - item: {fileID: 6599396045980022428, guid: 35d90080ff0819f43bf1f7ebb0064882, type: 3}
+    weightChance: 2
+  - item: {fileID: 2539260194455474760, guid: 3fc0784634be7934988decd6d0eb5f42, type: 3}
     weightChance: 5
+  - item: {fileID: 6741271524207551836, guid: 8d15a65b6ccba254688180f73882d70d, type: 3}
+    weightChance: 5
+  - item: {fileID: 5007528691572348784, guid: 69096a30b242b044eadb5735a8306d1c, type: 3}
+    weightChance: 3

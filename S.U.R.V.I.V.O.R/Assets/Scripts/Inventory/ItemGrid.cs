@@ -12,7 +12,7 @@ public class ItemGrid : MonoBehaviour
     private Canvas canvas;
     [SerializeField] private InventoryGridBackground inventoryGridBG;
     
-    public const float TileSize = 50;
+    public const float TileSize = 40;
 
     private Vector2 positionOnGrid;
     private Vector2Int tileGridPosition;
