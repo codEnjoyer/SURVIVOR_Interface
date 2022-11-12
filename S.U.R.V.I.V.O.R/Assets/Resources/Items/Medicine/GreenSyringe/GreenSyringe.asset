@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c6575d931043aba537c27e7472d109, type: 3}
   m_Name: GreenSyringe
   m_EditorClassIdentifier: 
-  size: {fileID: 0}
-  icon: {fileID: 0}
-  description: 
-  weight: 0
+  size: {fileID: 11400000, guid: e7b5ab7e04ef7ec4a9ac1e62cb6d4507, type: 2}
+  icon: {fileID: 21300000, guid: 92d389a10d2d8bf46af5c01b89cfbeed, type: 3}
+  description: "\u0410\u0442\u0440\u043E\u043F\u0438\u043D"
+  weight: 0.02

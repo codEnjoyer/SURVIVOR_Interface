@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c6575d931043aba537c27e7472d109, type: 3}
   m_Name: RedSyrigne
   m_EditorClassIdentifier: 
-  size: {fileID: 0}
-  icon: {fileID: 0}
-  description: 
-  weight: 0
+  size: {fileID: 11400000, guid: e7b5ab7e04ef7ec4a9ac1e62cb6d4507, type: 2}
+  icon: {fileID: 21300000, guid: 32846afa8d1c82c419885ca9d04180f2, type: 3}
+  description: "\u0412\u0438\u043D\u0438\u043A\u0430\u0433\u0438\u043D(+\u0445\u043F)"
+  weight: 0.02

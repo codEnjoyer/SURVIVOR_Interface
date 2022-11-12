@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c6575d931043aba537c27e7472d109, type: 3}
   m_Name: GreenTablets
   m_EditorClassIdentifier: 
-  size: {fileID: 0}
-  icon: {fileID: 0}
-  description: 
+  size: {fileID: 11400000, guid: 902a373d2ce74ec4383ddd2eb14a6150, type: 2}
+  icon: {fileID: 21300000, guid: 09694f4eb5d47e9408c1d89af886956b, type: 3}
+  description: "\u0421\u043E\u043C\u0435\u043F\u0442\u043E\u043A\u0438\u043D(- \u043E\u0442\u0440\u0430\u0432\u0430
+    + \u0445\u043F - \u0440\u0430\u0434)"
   weight: 0

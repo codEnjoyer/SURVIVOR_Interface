@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c6575d931043aba537c27e7472d109, type: 3}
   m_Name: YellowSyringe
   m_EditorClassIdentifier: 
-  size: {fileID: 0}
-  icon: {fileID: 0}
-  description: 
-  weight: 0
+  size: {fileID: 11400000, guid: e7b5ab7e04ef7ec4a9ac1e62cb6d4507, type: 2}
+  icon: {fileID: 21300000, guid: 40eb70cf0566edc4ba75701040a93ed4, type: 3}
+  description: "\u0428\u043F\u0440\u0438\u0446 \u0430\u0434\u0440\u0435\u043D\u0430\u043B\u0438\u043D\u0430"
+  weight: 0.02
