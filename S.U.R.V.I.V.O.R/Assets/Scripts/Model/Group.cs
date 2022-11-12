@@ -12,13 +12,12 @@ public class Group : MonoBehaviour
     public readonly List<Character> currentGroupMembers = new ();
     private int maxGroupMembers;
 
-    public Location location { get; set; }
+    public Location location => GetComponent<GroupMovementLogic>().CurrentNode.GetComponentInParent<Location>();
 
     void Start()
     {
         InputAggregator.OnTurnEndEvent += OnTurnEnd;
         currentGroupMembers.Add(new Character());
-        location = GetComponent<GroupMovementLogic>().CurrentNode.GetComponentInParent<Location>();
     }
 
     public BaseItem Loot()
