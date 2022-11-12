@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2281740797122158608}
   - component: {fileID: 6205756150975093434}
+  - component: {fileID: 5100915919292453909}
   m_Layer: 0
   m_Name: 12Caliber
   m_TagString: Untagged
@@ -50,3 +51,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: 5f3520e5940921e44be20e7be50983ae, type: 2}
+--- !u!222 &5100915919292453909
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 731280611706633546}
+  m_CullTransparentMesh: 1

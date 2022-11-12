@@ -1,4 +1,7 @@
+using System;
 using UnityEngine;
+using UnityEngine.UIElements;
+using Image = UnityEngine.UI.Image;
 
 public class BaseItem : MonoBehaviour
 {
@@ -15,6 +18,11 @@ public class BaseItem : MonoBehaviour
     public Size size => itemData.Size;
     public float Weight => itemData.Weight;
     public BaseItemData ItemData => itemData;
+
+    public void Awake()
+    {
+        gameObject.AddComponent<Image>().sprite = itemData.Icon;
+    }
 
     public void Set(BaseItemData itemData)
      {
