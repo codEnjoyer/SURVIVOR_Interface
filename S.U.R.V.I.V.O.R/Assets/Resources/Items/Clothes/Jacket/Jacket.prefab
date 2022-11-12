@@ -50,3 +50,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: 77a27b331942636409107f4440d25f7b, type: 2}
+  SpecialCellType: 1

@@ -2242,6 +2242,7 @@ GameObject:
   - component: {fileID: 444219834}
   - component: {fileID: 444219836}
   - component: {fileID: 444219835}
+  - component: {fileID: 444219837}
   m_Layer: 5
   m_Name: SecondaryGun
   m_TagString: Untagged
@@ -2307,6 +2308,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 444219833}
   m_CullTransparentMesh: 1
+--- !u!114 &444219837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 444219833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CellType: 8
+  canvasTransform: {fileID: 2050006519}
 --- !u!1 &494645160
 GameObject:
   m_ObjectHideFlags: 0
@@ -2565,6 +2580,7 @@ GameObject:
   - component: {fileID: 501991161}
   - component: {fileID: 501991163}
   - component: {fileID: 501991162}
+  - component: {fileID: 501991164}
   m_Layer: 5
   m_Name: PrimaryGun
   m_TagString: Untagged
@@ -2630,6 +2646,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 501991160}
   m_CullTransparentMesh: 1
+--- !u!114 &501991164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 501991160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CellType: 8
+  canvasTransform: {fileID: 2050006519}
 --- !u!224 &514343869 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6139962566568014572, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
@@ -2754,6 +2784,7 @@ GameObject:
   - component: {fileID: 567015689}
   - component: {fileID: 567015691}
   - component: {fileID: 567015690}
+  - component: {fileID: 567015692}
   m_Layer: 5
   m_Name: Underwear
   m_TagString: Untagged
@@ -2819,6 +2850,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 567015688}
   m_CullTransparentMesh: 1
+--- !u!114 &567015692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567015688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CellType: 4
+  canvasTransform: {fileID: 0}
 --- !u!1 &583950204
 GameObject:
   m_ObjectHideFlags: 0
@@ -4646,6 +4691,7 @@ GameObject:
   - component: {fileID: 825327538}
   - component: {fileID: 825327540}
   - component: {fileID: 825327539}
+  - component: {fileID: 825327541}
   m_Layer: 5
   m_Name: Jacket
   m_TagString: Untagged
@@ -4711,6 +4757,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 825327537}
   m_CullTransparentMesh: 1
+--- !u!114 &825327541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825327537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CellType: 1
+  canvasTransform: {fileID: 2050006519}
 --- !u!1 &856026683
 GameObject:
   m_ObjectHideFlags: 0
@@ -5988,6 +6048,7 @@ GameObject:
   - component: {fileID: 1086285283}
   - component: {fileID: 1086285285}
   - component: {fileID: 1086285284}
+  - component: {fileID: 1086285286}
   m_Layer: 5
   m_Name: MleeWeapon
   m_TagString: Untagged
@@ -6053,6 +6114,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1086285282}
   m_CullTransparentMesh: 1
+--- !u!114 &1086285286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1086285282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CellType: 9
+  canvasTransform: {fileID: 2050006519}
 --- !u!1 &1089916147
 GameObject:
   m_ObjectHideFlags: 0
@@ -10518,6 +10593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf6fb3b6db6f7724c92fe4d139c0591f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedItem: {fileID: 0}
   canvasTransform: {fileID: 2050006519}
 --- !u!1 &1682808204
 GameObject:
@@ -11338,6 +11414,7 @@ GameObject:
   - component: {fileID: 1771033299}
   - component: {fileID: 1771033301}
   - component: {fileID: 1771033300}
+  - component: {fileID: 1771033302}
   m_Layer: 5
   m_Name: Bacpack
   m_TagString: Untagged
@@ -11403,6 +11480,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1771033298}
   m_CullTransparentMesh: 1
+--- !u!114 &1771033302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771033298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CellType: 2
+  canvasTransform: {fileID: 2050006519}
 --- !u!1 &1782082705
 GameObject:
   m_ObjectHideFlags: 0

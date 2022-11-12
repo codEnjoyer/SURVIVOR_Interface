@@ -18,7 +18,8 @@ public class InventoryController : MonoBehaviour
         }
     }
 
-    private BaseItem selectedItem;
+    public BaseItem selectedItem;
+
     private BaseItem overlapItem;
     private RectTransform rectTransform;
     

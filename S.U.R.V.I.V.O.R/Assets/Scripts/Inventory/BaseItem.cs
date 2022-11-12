@@ -19,9 +19,12 @@ public class BaseItem : MonoBehaviour
     public float Weight => itemData.Weight;
     public BaseItemData ItemData => itemData;
 
+    public SpecialCellType SpecialCellType;
+
     public void Awake()
     {
         gameObject.AddComponent<Image>().sprite = itemData.Icon;
+        gameObject.GetComponent<Image>().raycastTarget = false;
     }
 
     public void Set(BaseItemData itemData)

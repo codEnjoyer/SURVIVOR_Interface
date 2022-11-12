@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: d890512de0cd8dc49a8d2ea7396a92d5, type: 2}
+  SpecialCellType: 8
 --- !u!114 &-529245315396173938
 MonoBehaviour:
   m_ObjectHideFlags: 0
