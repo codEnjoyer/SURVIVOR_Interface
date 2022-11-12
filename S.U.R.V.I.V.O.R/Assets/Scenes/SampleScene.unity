@@ -5833,7 +5833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236e1d67015328045b82952330577da1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 02c14680c8aced34185097a06c452f7b, type: 2}
+  data: {fileID: 11400000, guid: 7f02fa91f19a0dc4381455664c11a45e, type: 2}
 --- !u!120 &1687752739
 LineRenderer:
   m_ObjectHideFlags: 0
