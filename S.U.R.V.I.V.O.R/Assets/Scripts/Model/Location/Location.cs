@@ -5,7 +5,7 @@ using Random = System.Random;
 
 public class Location: MonoBehaviour
 {
-    public static readonly Random rnd = new();
+    private static readonly Random rnd = new();
     [SerializeField] private LocationData data; 
     private List<BaseItem> chancesList = new ();
 
