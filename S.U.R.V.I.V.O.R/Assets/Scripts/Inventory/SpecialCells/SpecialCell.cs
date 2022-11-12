@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing.Printing;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 public enum SpecialCellType
 {
@@ -14,20 +15,27 @@ public enum SpecialCellType
     Vest,
     Hat,
     Pants,
-    Gun,
-    MleeWeapon
+    PrimaryGun,
+    SecondaryGun,
+    MeleeWeapon
 }
 public class SpecialCell : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField]
-    private SpecialCellType CellType;
+    private InventoryController inventoryController;
+    
     [SerializeField] 
     private Transform canvasTransform;
+    
+    [SerializeField]
+    private SpecialCellType cellType;
+    
     private RectTransform rectTransform;
     private Vector3 itemSize;
-    private InventoryController inventoryController;
-    private BaseItem PlacedItem;
-    public SpecialCellType cellType => CellType;
+    private BaseItem placedItem;
+    public SpecialCellType CellType => cellType;
+    public BaseItem PlacedItem => placedItem;
+
+    public UnityEvent OnItemChanged = new ();
 
     private void Awake()
     {
@@ -35,46 +43,47 @@ public class SpecialCell : MonoBehaviour, IPointerClickHandler
         rectTransform = GetComponent<RectTransform>();
     }
 
-    public void Update()
+    private bool CanInsertIntoSlot()
     {
-        
+        return inventoryController.selectedItem.SpecialCellType == CellType;
     }
-
-    public void OnPointerClick(PointerEventData eventData)
+    
+    public virtual void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log(1);
-        if (PlacedItem == null && inventoryController.selectedItem != null)
+        if (placedItem == null && inventoryController.selectedItem != null)
         {
-            Debug.Log(2);
-            if (inventoryController.selectedItem.SpecialCellType == cellType)
+            if (CanInsertIntoSlot())
             {
-                Debug.Log(3);
                 PlaceItem(inventoryController.selectedItem);
             }
         }
-        else
+        else if (inventoryController.selectedItem == null)
         {
             GiveItem();
         }
     }
     
-    private void PlaceItem(BaseItem item)
+    public void PlaceItem(BaseItem item)
     {
-        PlacedItem = item;
-        var itemRectTransform = item.GetComponent<RectTransform>();
+        if (item.rotated)
+            item.Rotated();
+        placedItem = item;
+        var itemRectTransform = placedItem.GetComponent<RectTransform>();
         itemRectTransform.SetParent(rectTransform);
         itemRectTransform.localPosition = new Vector2(0,0);
         itemRectTransform.localScale = rectTransform.localScale;
-        ChangeItemSize(PlacedItem.GetComponent<RectTransform>());
+        ChangeItemSize(placedItem.GetComponent<RectTransform>());
         inventoryController.selectedItem = null;
+        OnItemChanged.Invoke();
     }
     
     private void GiveItem()
     {
-        PlacedItem.GetComponent<RectTransform>().sizeDelta = itemSize;
-        inventoryController.selectedItem = PlacedItem;
-        PlacedItem.GetComponent<RectTransform>().SetParent(canvasTransform);
-        PlacedItem = null;
+        placedItem.GetComponent<RectTransform>().sizeDelta = itemSize;
+        placedItem.GetComponent<RectTransform>().SetParent(canvasTransform);
+        inventoryController.PickUpItem(placedItem);
+        OnItemChanged.Invoke();
+        placedItem = null;
     }
 
     private void ChangeItemSize(RectTransform transform)

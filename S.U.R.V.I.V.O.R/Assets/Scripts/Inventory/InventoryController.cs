@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
 public class InventoryController : MonoBehaviour
@@ -28,6 +29,7 @@ public class InventoryController : MonoBehaviour
     private InventoryHighlight inventoryHighlight;
     private BaseItem itemToHighlight;
     private Vector2Int? previousPosition;
+    public bool IsPointerUnderInventory;
 
     private void Awake()
     {
@@ -54,7 +56,7 @@ public class InventoryController : MonoBehaviour
             return;
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && IsPointerUnderInventory)
         {
             var tileGridPosition = GetTileGridPosition();
 
@@ -71,14 +73,23 @@ public class InventoryController : MonoBehaviour
         HandleHighlight();
     }
 
+    public void PickUpItem(BaseItem item)
+    {
+        selectedItem = item;
+        ChangeRectTransform();
+    }
+
+    private void ChangeRectTransform()
+    {
+        if (selectedItem == null) return;
+        rectTransform = selectedItem.GetComponent<RectTransform>();
+        rectTransform.SetParent(canvasTransform);
+    }
+    
     private void PickUpItem(Vector2Int tileGridPosition)
     {
         selectedItem = selectedItemGrid.PickUpItem(tileGridPosition.x, tileGridPosition.y);
-        if (selectedItem != null)
-        {
-            rectTransform = selectedItem.GetComponent<RectTransform>();
-            rectTransform.SetParent(canvasTransform);
-        }
+        ChangeRectTransform();
     }
 
     private void PlaceItem(Vector2Int tileGridPosition)

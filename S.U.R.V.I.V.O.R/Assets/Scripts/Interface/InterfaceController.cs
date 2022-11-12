@@ -13,6 +13,8 @@ public class InterfaceController : MonoBehaviour
         NothingActive
     }
     [SerializeField]
+    private InterfaceGruopLogicController interfaceGruopLogicController;
+    [SerializeField]
     private GameObject MainInfoPanelLayer;
     [SerializeField]
     private GameObject GroupButtonsLayer;
@@ -110,6 +112,7 @@ public class InterfaceController : MonoBehaviour
                 break;
         }
         currentState = InterfaceState.GroupLayerActive;
+        interfaceGruopLogicController.OnGroupLayerOpen.Invoke();
         Selector.Instance.DeActivate();
     }
 
@@ -144,6 +147,7 @@ public class InterfaceController : MonoBehaviour
     public void ChooseFirstPlayer()
     {
         SetPlayerLayerActive(FirstPlayerLayer);
+        interfaceGruopLogicController.OnFirstPlayerLayerOpen.Invoke();
         activePlayerLayer = FirstPlayerLayer;
     }
     public void ChooseSecondPlayer()

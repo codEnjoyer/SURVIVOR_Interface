@@ -15,17 +15,27 @@ MonoBehaviour:
   chancesList:
   - item: {fileID: 5465871505330971282, guid: 802e3318c45bda1429de16db5a12cb94, type: 3}
     weightChance: 1
+    photo: {fileID: 0}
   - item: {fileID: 6794031796469496094, guid: 77ab4841f2e5611459982331a497a727, type: 3}
     weightChance: 1
+    photo: {fileID: 0}
   - item: {fileID: 9178981062478041695, guid: f94e3e3f6e1c4f54c9fbaeeb551c5263, type: 3}
     weightChance: 1
+    photo: {fileID: 0}
   - item: {fileID: 7197879041666909519, guid: 3a75f7f04ed7fb54eb759443fc2f6531, type: 3}
     weightChance: 1
+    photo: {fileID: 0}
   - item: {fileID: 206784796820217031, guid: 5160f3d344ff7834cb2d79706d6e3246, type: 3}
     weightChance: 1
+    photo: {fileID: 0}
   - item: {fileID: 4458172527438486800, guid: 25fe05551fc4b534f931596040df6167, type: 3}
     weightChance: 1
+    photo: {fileID: 0}
   - item: {fileID: 6599396045980022428, guid: 35d90080ff0819f43bf1f7ebb0064882, type: 3}
     weightChance: 1
+    photo: {fileID: 0}
   - item: {fileID: 4095413982720242275, guid: f957be7fec7aa2345a9f2654b097d0ce, type: 3}
     weightChance: 1
+    photo: {fileID: 0}
+  locationName: "\u041C\u0435\u0434\u0438\u0446\u0438\u043D\u0441\u043A\u0430\u044F
+    \u043B\u043E\u043A\u0430\u0446\u0438\u044F"

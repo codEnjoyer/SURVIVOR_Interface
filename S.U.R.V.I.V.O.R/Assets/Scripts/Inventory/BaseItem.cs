@@ -19,7 +19,7 @@ public class BaseItem : MonoBehaviour
     public float Weight => itemData.Weight;
     public BaseItemData ItemData => itemData;
 
-    public SpecialCellType SpecialCellType;
+    public SpecialCellType SpecialCellType => itemData.SpecialCellType;
 
     public void Awake()
     {

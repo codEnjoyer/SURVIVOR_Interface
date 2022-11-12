@@ -21,12 +21,12 @@ public abstract class BodyPart
     }
     
     protected readonly int MaxClothesAmount;
-    protected readonly Cloth[] Clothes;
+    protected readonly Clothes[] Clothes;
     public event Action OnZeroHp;
 
     protected BodyPart()
     {
-        Clothes = new Cloth[MaxClothesAmount];
+        Clothes = new Clothes[MaxClothesAmount];
     }
 
 

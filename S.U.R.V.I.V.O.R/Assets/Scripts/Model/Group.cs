@@ -8,8 +8,7 @@ public class Group : MonoBehaviour
 {
     public int MaxOnGlobalMapGroupEndurance;
     public int CurrentOnGlobalMapGroupEndurance;
-
-    public readonly List<Character> currentGroupMembers = new ();
+    public List<Character> currentGroupMembers = new ();
     private int maxGroupMembers;
 
     public Location location => GetComponent<GroupMovementLogic>().CurrentNode.GetComponentInParent<Location>();
@@ -67,7 +66,6 @@ public class Group : MonoBehaviour
 
     public void OnTurnEnd()
     {
-        SubtractEnergy();
         if (CurrentOnGlobalMapGroupEndurance != MaxOnGlobalMapGroupEndurance)
             SubtractEnergy();
         SubtractSatiety();

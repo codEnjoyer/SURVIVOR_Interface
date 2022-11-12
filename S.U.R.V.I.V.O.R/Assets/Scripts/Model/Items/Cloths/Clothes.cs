@@ -3,12 +3,16 @@ using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(BaseItem))]
-public class Cloth : MonoBehaviour
+public class Clothes : MonoBehaviour
 {
     [SerializeField] private ClothData data;
     private BaseItem baseItem;
+    [SerializeField]
     private InventoryState inventory;
     public float CurrentArmor { get; private set; }
+
+    public InventoryState Inventory => inventory;
+
     public float TotalWeight => baseItem.Weight + inventory.GetItems.Sum(item => item.Weight);
 
     public float CalculateBlockedDamage(Shoot shoot)

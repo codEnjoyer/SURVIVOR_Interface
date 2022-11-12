@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4795528193682294464}
   - component: {fileID: 3763918663941373874}
-  - component: {fileID: 266276046221523388}
   - component: {fileID: 739726032757525600}
   m_Layer: 0
   m_Name: Ak-74
@@ -52,23 +51,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: f7b449fabf9aae74386858fd735eb529, type: 2}
-  SpecialCellType: 8
---- !u!114 &266276046221523388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3994759378867550104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fbd94d65ab8aa742b964ea141f00365, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: {fileID: 0}
-  currentMagazine: {fileID: 0}
-  chamber: {fileID: 0}
-  gunModule: {fileID: 0}
 --- !u!222 &739726032757525600
 CanvasRenderer:
   m_ObjectHideFlags: 0

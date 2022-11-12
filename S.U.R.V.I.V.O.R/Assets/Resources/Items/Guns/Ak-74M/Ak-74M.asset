@@ -16,3 +16,4 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 8d3fc30695926754b9cc1091119640bf, type: 3}
   description: "\u0410\u0432\u0442\u043E\u043C\u0430\u0442 \u0410\u041A-74M"
   weight: 3
+  specialCellType: 8

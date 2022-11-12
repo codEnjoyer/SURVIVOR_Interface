@@ -5,4 +5,5 @@ using UnityEngine;
 public class LocationData: ScriptableObject
 {
     public List<ItemChance> chancesList;
+    public string locationName;
 }

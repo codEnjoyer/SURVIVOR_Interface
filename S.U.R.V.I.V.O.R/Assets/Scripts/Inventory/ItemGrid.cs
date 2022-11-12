@@ -11,7 +11,9 @@ public class ItemGrid : MonoBehaviour
     
     private Canvas canvas;
     [SerializeField] private InventoryGridBackground inventoryGridBG;
-    
+
+    public InventoryGridBackground InventoryGridBg => inventoryGridBG;
+
     public const float TileSize = 40;
 
     private Vector2 positionOnGrid;
@@ -31,7 +33,7 @@ public class ItemGrid : MonoBehaviour
         curInventoryState = new InventoryState(size);
         Init(size.Width, size.Height);
     }
-    
+
     private void Init(int width, int height)
     {
         inventoryGridBG.DrawBackground(this);

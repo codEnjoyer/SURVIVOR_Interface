@@ -9,6 +9,8 @@ public class Location: MonoBehaviour
     [SerializeField] private LocationData data; 
     private List<BaseItem> chancesList = new ();
 
+    public LocationData Data => data;
+
     public void Awake()
     {
         if (data == null)
