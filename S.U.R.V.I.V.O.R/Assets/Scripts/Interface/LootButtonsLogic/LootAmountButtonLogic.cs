@@ -13,8 +13,6 @@ public class LootAmountButtonLogic : MonoBehaviour
     [SerializeField]
     private InterfaceController interfaceController;
     [SerializeField]
-    private ItemGrid LoactionItemGrid;
-    [SerializeField]
     private Group playerGroup;
     [SerializeField]
     private GameObject LootAmountButtonsLayer;
@@ -29,15 +27,8 @@ public class LootAmountButtonLogic : MonoBehaviour
         interfaceController.SetGroupLayerActive();
         for (int i = 0; i < LootAmount; i++)
         {
-            inventoryController.SelectedItemGrid = LoactionItemGrid;
+            inventoryController.SelectedItemGrid = LocationManager.Instance.ItemGrid;
             inventoryController.AddItemToInventory(playerGroup.location.GetLoot());
         }
-        LootAmountButtonsLayer.SetActive(false);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

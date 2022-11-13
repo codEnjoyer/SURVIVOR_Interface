@@ -2,15 +2,19 @@
 using System.Linq;
 using Graph_and_Map;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Player
 {
     public class GroupMovementLogic : MonoBehaviour
     {
         private StateMachine movementSm;
-        private Sleeping sleeping;
-        private WaitingTarget waitingTarget;
-        private Walking walking;
+
+        public Sleeping Sleeping { get; private set; }
+
+        public WaitingTarget WaitingTarget { get; private set; }
+
+        public Walking Walking { get; private set; }
 
         [SerializeField] private GameObject firstTurnObject;
         [SerializeField] private GameObject secondTurnObject;
@@ -27,7 +31,7 @@ namespace Player
         private const float Delta = 0.1f;
         private float progress;
         private Queue<Node> way = new();
-
+        
         public Node CurrentNode => currentNode;
 
         private List<Node> GetPath() => PathFinder.FindShortestWay(currentNode, DotGraph.Instance.GetNearestNode());
@@ -47,7 +51,7 @@ namespace Player
                 currentNode = targetNode;
                 progress = 0;
                 if (way.Count == 0 || group.CurrentOnGlobalMapGroupEndurance == 0)
-                    movementSm.ChangeState(sleeping);
+                    movementSm.ChangeState(Sleeping);
                 else
                 {
                     targetNode = way.Dequeue();
@@ -139,8 +143,6 @@ namespace Player
                 lineRenderer.positionCount = 0;
             }
         }
-        
-        
 
         public void ClearWay()
         {
@@ -157,8 +159,8 @@ namespace Player
 
         public void PreparingToMove()
         {
-            if (movementSm.CurrentState == sleeping)
-                movementSm.ChangeState(waitingTarget);
+            if (movementSm.CurrentState == Sleeping)
+                movementSm.ChangeState(WaitingTarget);
         }
         
         private Vector2 SwitchTo2d(Vector3 v3) => new(v3.x, v3.z);
@@ -169,10 +171,9 @@ namespace Player
         private void Awake()
         {
             movementSm = new StateMachine();
-            sleeping = new Sleeping(this, movementSm);
-            waitingTarget = new WaitingTarget(this, movementSm);
-            walking = new Walking(this, movementSm);
-            movementSm.Initialize(sleeping);
+            Sleeping = new Sleeping(this, movementSm);
+            WaitingTarget = new WaitingTarget(this, movementSm);
+            Walking = new Walking(this, movementSm);
 
             group = GetComponent<Group>();
             lineRenderer = GetComponent<LineRenderer>();
@@ -180,6 +181,7 @@ namespace Player
             firstTurnObjectLineRenderer = firstTurnObject.GetComponent<LineRenderer>();
             secondTurnObjectLineRenderer = secondTurnObject.GetComponent<LineRenderer>();
             thirdTurnObjectLineRenderer = thirdTurnObject.GetComponent<LineRenderer>();
+            movementSm.Initialize(Sleeping);
         }
 
         private void Start()
@@ -195,12 +197,12 @@ namespace Player
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0) && movementSm.CurrentState == waitingTarget &&
+            if (Input.GetMouseButtonDown(0) && movementSm.CurrentState == WaitingTarget &&
                 Physics.Raycast(
                     Camera.main.ScreenPointToRay(Input.mousePosition),
                     out var hitInfo, 200f))
             {
-                movementSm.ChangeState(walking);
+                movementSm.ChangeState(Walking);
             }
 
             movementSm.CurrentState.Update();

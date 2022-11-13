@@ -18,6 +18,6 @@ public class Location: MonoBehaviour
         }
     }
 
-    public BaseItem GetLoot() => data.ChancesList[rnd.Next(data.ChancesList.Count)];
+    public BaseItem GetLoot() => data.ChancesList[rnd.Next(data.ChancesList.Length)];
 
 }

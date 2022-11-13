@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Interface.InterfaceStates;
@@ -58,6 +59,12 @@ public class InterfaceController : MonoBehaviour
         Selector.Instance.Activate();
         
         interfaceStateMachine.Initialize(NothingActive);
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+            interfaceStateMachine.ChangeState(NothingActive);
     }
 
     private void SetActiveInterface(bool value)

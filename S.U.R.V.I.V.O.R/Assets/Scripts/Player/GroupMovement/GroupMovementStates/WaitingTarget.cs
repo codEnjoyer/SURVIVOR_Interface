@@ -1,6 +1,7 @@
 ﻿using Graph_and_Map;
 using Player;
 using Unity.VisualScripting;
+using UnityEngine;
 
 public class WaitingTarget : GmState
 {
@@ -10,7 +11,9 @@ public class WaitingTarget : GmState
     
     public override void Update()
     {
-        gml.DrawPath();
+        if (Input.GetKeyDown(KeyCode.Escape))
+            stateMachine.ChangeState(gml.Sleeping);
+        else
+            gml.DrawPath();
     }
-    
 }
