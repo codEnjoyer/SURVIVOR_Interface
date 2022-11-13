@@ -35,7 +35,7 @@ public class Group : MonoBehaviour
         OnEnergyChanged.Invoke();
         foreach (var groupMember in currentGroupMembers)
         {
-            groupMember.Body.Energy--;
+            groupMember.body.Energy--;
         }
     }
 
@@ -44,7 +44,7 @@ public class Group : MonoBehaviour
         OnWaterChanged.Invoke();
         foreach (var groupMember in currentGroupMembers)
         {
-            groupMember.Body.Water--;
+            groupMember.body.Water--;
         }
     }
 
@@ -53,7 +53,7 @@ public class Group : MonoBehaviour
         OnFoodChanged.Invoke();
         foreach (var groupMember in currentGroupMembers)
         {
-            groupMember.Body.Hunger--;
+            groupMember.body.Hunger--;
         }
     }
 
@@ -62,10 +62,10 @@ public class Group : MonoBehaviour
         OnEnergyChanged.Invoke();
         foreach (var groupMember in currentGroupMembers)
         {
-            if (groupMember.Body.Hunger >= 8)
-                groupMember.Body.Energy++;
-            if (groupMember.Body.Water >= 8)
-                groupMember.Body.Energy++;
+            if (groupMember.body.Hunger >= 8)
+                groupMember.body.Energy++;
+            if (groupMember.body.Water >= 8)
+                groupMember.body.Energy++;
         }
     }
 

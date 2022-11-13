@@ -11,11 +11,11 @@ public class Character : Entity
     public IMeleeWeapon MeleeWeapon;
     public readonly Skills Skills;
 
-    public readonly ManBody Body;
+    public readonly ManBody body;
     public int Mobility => throw new NotImplementedException(); //Скорость передвижения на глобальной карте
 
     public Character()
     {
-        Body = new ManBody();
+        body = new ManBody();
     }
 }

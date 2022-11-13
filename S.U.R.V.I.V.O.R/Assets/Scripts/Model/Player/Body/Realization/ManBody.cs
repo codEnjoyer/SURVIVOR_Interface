@@ -1,27 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class ManBody: Body
 {
-    public readonly ManHead Head = new();
-    public readonly ManChest Chest = new();
-    public readonly ManStomach Stomach = new();
-    public readonly ManArm LeftArm = new();
-    public readonly ManArm RightArm = new();
-    public readonly ManLeg LeftLeg = new();
-    public readonly ManLeg RightLeg = new();
+    public readonly ManHead head = new();
+    public readonly ManChest chest = new();
+    public readonly ManStomach stomach = new();
+    public readonly ManArm leftArm = new();
+    public readonly ManArm rightArm = new();
+    public readonly ManLeg leftLeg = new();
+    public readonly ManLeg rightLeg = new();
 
     public ManBody()
     {
-        BodyParts = new List<BodyPart>{Head, Chest, Stomach, LeftArm, RightArm, LeftLeg, RightLeg};
+        bodyParts = new List<BodyPart>{head, chest, stomach, leftArm, rightArm, leftLeg, rightLeg};
         Energy = MaxEnergy;
         Hunger = MaxHunger;
         Water = MaxWater;
     }
 
-    public readonly int MaxEnergy = 10;
-    public readonly int MaxHunger = 10;
-    public readonly int MaxWater = 10;
+    public const int MaxEnergy = 10;
+    public const int MaxHunger = 10;
+    public const int MaxWater = 10;
     public float Endurance => throw new NotImplementedException();
 
     private int energy;
@@ -39,7 +40,7 @@ public class ManBody: Body
                 energy = MaxEnergy;
             else
                 energy = value;
-            
+            EnergyChange?.Invoke(energy);
         }
     }
 
@@ -58,6 +59,8 @@ public class ManBody: Body
                 hunger = MaxHunger;
             else
                 hunger = value;
+            Debug.Log(value);
+            HungerChange?.Invoke(hunger);
         }
     }
 
@@ -76,10 +79,15 @@ public class ManBody: Body
                 water = MaxWater;
             else
                 water = value;
+            WaterChange?.Invoke(water);
         }
     }
 
     public event Action PlayerTired;
     public event Action PlayerHungry;
     public event Action PlayerThirsty;
+    
+    public event Action<int> EnergyChange;
+    public event Action<int> HungerChange;
+    public event Action<int> WaterChange;
 }

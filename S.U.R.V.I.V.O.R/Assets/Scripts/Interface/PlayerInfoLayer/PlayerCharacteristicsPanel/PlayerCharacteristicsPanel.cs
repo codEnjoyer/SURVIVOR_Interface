@@ -7,7 +7,19 @@ using UnityEngine.UI;
 
 public class PlayerCharacteristicsPanel : MonoBehaviour
 {
-    public Character Player { get; set; }
+    private Character player;
+
+    public Character Player
+    {
+        get => player;
+        set
+        {
+            OnDestroy();
+            player = value;
+            OnEnable();
+        }
+    }
+
     [SerializeField] private Image Photo;
     [SerializeField] private Text food;
     [SerializeField] private Text water;
@@ -19,32 +31,29 @@ public class PlayerCharacteristicsPanel : MonoBehaviour
         Photo.sprite = Player.sprite;
     }
 
-    public Text Food => food;
+    private void OnFoodChanged(int value) => food.text = value.ToString();
 
-    public Text Water => water;
+    private void OnWaterChanged(int value) => water.text = value.ToString();
 
-    public Text Energy => energy;
-    
-    public void OnFoodChanged()
-    {
-        if (enabled)
-            food.text = Player.Body.Hunger.ToString();
-    }
-    
-    public void OnWaterChanged()
-    {
-        if (enabled)
-            water.text = Player.Body.Water.ToString();
-    }
-    
-    public void OnEnegryChanged()
-    {
-        if (enabled)
-            energy.text = Player.Body.Energy.ToString();
-    }
-    
+    private void OnEnergyChanged(int value) => energy.text = value.ToString();
+
     public void OnHealthChanged()
     {
     }
-    
+
+    private void OnEnable()
+    {
+        if(player is null) return;
+        player.body.EnergyChange += OnEnergyChanged;
+        player.body.WaterChange += OnWaterChanged;
+        player.body.HungerChange += OnFoodChanged;
+    }
+
+    private void OnDestroy()
+    {
+        if(player is null) return;
+        player.body.EnergyChange -= OnEnergyChanged;
+        player.body.WaterChange -= OnWaterChanged;
+        player.body.HungerChange -= OnFoodChanged;
+    }
 }

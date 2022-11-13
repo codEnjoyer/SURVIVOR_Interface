@@ -1,10 +1,13 @@
-﻿public abstract class InterfaceState: State
+﻿namespace Interface.InterfaceStates
 {
-    protected InterfaceController contr;
-
-    protected InterfaceState(InterfaceController contr, StateMachine sm)
+    public abstract class InterfaceState: State
     {
-        this.contr = contr;
-        this.stateMachine = sm;
+        protected InterfaceController contr;
+
+        protected InterfaceState(InterfaceController contr, StateMachine sm)
+        {
+            this.contr = contr;
+            this.stateMachine = sm;
+        }
     }
 }
