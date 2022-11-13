@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -29,6 +30,7 @@ public class InventoryController : MonoBehaviour
     private InventoryHighlight inventoryHighlight;
     private BaseItem itemToHighlight;
     private Vector2Int? previousPosition;
+    public ItemGrid itemgridtotest;
     public bool IsPointerUnderInventory;
 
     private void Awake()

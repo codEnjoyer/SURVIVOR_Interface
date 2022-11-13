@@ -87,7 +87,16 @@ public class ItemGrid : MonoBehaviour
     {
         var res = curInventoryState.PlaceItem(item, posX, posY, ref overlapItem);
         if (res)
-            PlaceItem(item, posX, posY);
+        {
+            var itemRectTransform = item.GetComponent<RectTransform>();
+            itemRectTransform.SetParent(rectTransform);
+        
+            var position = GetPositionOnGrid(item, posX, posY);
+            itemRectTransform.localPosition = position;
+            
+            instantiateItems.Add(item);  
+        }
+
         return res;
     }
 
@@ -106,9 +115,14 @@ public class ItemGrid : MonoBehaviour
 
     public Vector2 GetPositionOnGrid(BaseItem item, int posX, int posY) => 
         new(posX * TileSize + TileSize * item.Width / 2, -(posY * TileSize + TileSize * item.Height / 2));
-    
 
-    public BaseItem PickUpItem(int x, int y) => curInventoryState.PickUpItem(x, y);
+
+    public BaseItem PickUpItem(int x, int y)
+    {
+        var item = curInventoryState.PickUpItem(x, y);
+        instantiateItems.Remove(item);
+        return item;
+    } 
     
     public bool BoundryCheck(int posX, int posY, int width, int height) => curInventoryState.BoundryCheck(posX, posY, width, height);
 
