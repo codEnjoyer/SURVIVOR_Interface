@@ -16,7 +16,8 @@ public class InterfaceGruopLogicController : MonoBehaviour
     [SerializeField] private PlayerLayerLogic GroupSecondPlayerLayer;
     [SerializeField] private PlayerLayerLogic GroupThirdPlayerLayer;
     [SerializeField] private PlayerLayerLogic GroupFourthPlayerLayer;
-    
+
+    [SerializeField] private LocationInventoryManager locationInventoryManager;
     
     public UnityEvent OnFirstPlayerLayerOpen = new();
     public UnityEvent OnGroupLayerOpen = new();
@@ -24,6 +25,7 @@ public class InterfaceGruopLogicController : MonoBehaviour
     {
         FirstPlayerLayer.CurrentCharacter = currentGroup.currentGroupMembers[0];
         GroupFirstPlayerLayer.CurrentCharacter = currentGroup.currentGroupMembers[0];
+        locationInventoryManager.group = currentGroup;
         /*
         SecondPlayerLayer.CurrentCharacter = currentGroup.currentGroupMembers[1];
         ThirdPlayerLayer.CurrentCharacter = currentGroup.currentGroupMembers[2];

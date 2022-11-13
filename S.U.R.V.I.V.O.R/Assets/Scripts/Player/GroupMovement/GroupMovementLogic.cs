@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Graph_and_Map;
 using UnityEngine;
@@ -49,6 +50,7 @@ namespace Player
             if (IsNearly())
             {
                 currentNode = targetNode;
+                LocationCahnge?.Invoke(currentNode.GetComponent<Location>().Data.LocationName);
                 progress = 0;
                 if (way.Count == 0 || group.CurrentOnGlobalMapGroupEndurance == 0)
                     movementSm.ChangeState(Sleeping);
@@ -211,5 +213,7 @@ namespace Player
         private void FixedUpdate() => movementSm.CurrentState.FixedUpdate();
 
         #endregion
+        
+        public event Action<string> LocationCahnge;
     }
 }
