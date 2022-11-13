@@ -6,7 +6,7 @@ public class GunInterfaceSet : MonoBehaviour
 {
     public Character CurrentCharacter { get; set; }
     [SerializeField]
-    private SpecialCell gunSlot;
+    public SpecialCell gunSlot;
     [SerializeField]
     private SpecialCell magazineSlot;
     [SerializeField]

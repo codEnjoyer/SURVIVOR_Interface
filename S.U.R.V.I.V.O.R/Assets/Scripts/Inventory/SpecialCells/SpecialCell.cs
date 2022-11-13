@@ -35,7 +35,8 @@ public class SpecialCell : MonoBehaviour, IPointerClickHandler
     public SpecialCellType CellType => cellType;
     public BaseItem PlacedItem => placedItem;
 
-    public UnityEvent OnItemChanged = new ();
+    public UnityEvent OnItemPlaced = new ();
+    public UnityEvent OnItemTaked = new ();
 
     private void Awake()
     {
@@ -74,7 +75,7 @@ public class SpecialCell : MonoBehaviour, IPointerClickHandler
         itemRectTransform.localScale = rectTransform.localScale;
         ChangeItemSize(placedItem.GetComponent<RectTransform>());
         inventoryController.selectedItem = null;
-        OnItemChanged.Invoke();
+        OnItemPlaced.Invoke();
     }
     
     private void GiveItem()
@@ -82,7 +83,7 @@ public class SpecialCell : MonoBehaviour, IPointerClickHandler
         placedItem.GetComponent<RectTransform>().sizeDelta = itemSize;
         placedItem.GetComponent<RectTransform>().SetParent(canvasTransform);
         inventoryController.PickUpItem(placedItem);
-        OnItemChanged.Invoke();
+        OnItemTaked.Invoke();
         placedItem = null;
     }
 

@@ -27,17 +27,20 @@ public class PlayerCharacteristicsPanel : MonoBehaviour
     
     public void OnFoodChanged()
     {
-        food.text = Player.Body.Food.ToString();
+        if (enabled)
+            food.text = Player.Body.Hunger.ToString();
     }
     
     public void OnWaterChanged()
     {
-        water.text = Player.Body.Water.ToString();
+        if (enabled)
+            water.text = Player.Body.Water.ToString();
     }
     
     public void OnEnegryChanged()
     {
-        energy.text = Player.Body.Energy.ToString();
+        if (enabled)
+            energy.text = Player.Body.Energy.ToString();
     }
     
     public void OnHealthChanged()

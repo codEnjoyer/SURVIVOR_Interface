@@ -14,6 +14,9 @@ public class ManBody: Body
     public ManBody()
     {
         BodyParts = new List<BodyPart>{Head, Chest, Stomach, LeftArm, RightArm, LeftLeg, RightLeg};
+        Energy = MaxEnergy;
+        Hunger = MaxHunger;
+        Water = MaxWater;
     }
 
     public readonly int MaxEnergy = 10;
@@ -40,21 +43,21 @@ public class ManBody: Body
         }
     }
 
-    private int food;
-    public int Food
+    private int hunger;
+    public int Hunger
     {
-        get => food;
+        get => hunger;
         set
         {
             if (value <= 0)
             {
-                food = 0;
+                hunger = 0;
                 PlayerHungry?.Invoke();
             }
             else if (value > MaxHunger)
-                food = MaxHunger;
+                hunger = MaxHunger;
             else
-                food = value;
+                hunger = value;
         }
     }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Player;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 public class Group : MonoBehaviour
@@ -10,6 +11,11 @@ public class Group : MonoBehaviour
     public int CurrentOnGlobalMapGroupEndurance;
     public List<Character> currentGroupMembers = new ();
     private int maxGroupMembers;
+
+    public UnityEvent OnEnergyChanged;
+    public UnityEvent OnWaterChanged;
+    public UnityEvent OnFoodChanged;
+    public UnityEvent OnHealthChanged;
 
     public Location location => GetComponent<GroupMovementLogic>().CurrentNode.GetComponentInParent<Location>();
 
@@ -26,6 +32,7 @@ public class Group : MonoBehaviour
 
     private void SubtractEnergy()
     {
+        OnEnergyChanged.Invoke();
         foreach (var groupMember in currentGroupMembers)
         {
             groupMember.Body.Energy--;
@@ -34,6 +41,7 @@ public class Group : MonoBehaviour
 
     private void SubtractWater()
     {
+        OnWaterChanged.Invoke();
         foreach (var groupMember in currentGroupMembers)
         {
             groupMember.Body.Water--;
@@ -42,17 +50,19 @@ public class Group : MonoBehaviour
 
     private void SubtractSatiety()
     {
+        OnFoodChanged.Invoke();
         foreach (var groupMember in currentGroupMembers)
         {
-            groupMember.Body.Food--;
+            groupMember.Body.Hunger--;
         }
     }
 
     private void AddExtraEnergy()
     {
+        OnEnergyChanged.Invoke();
         foreach (var groupMember in currentGroupMembers)
         {
-            if (groupMember.Body.Food >= 8)
+            if (groupMember.Body.Hunger >= 8)
                 groupMember.Body.Energy++;
             if (groupMember.Body.Water >= 8)
                 groupMember.Body.Energy++;

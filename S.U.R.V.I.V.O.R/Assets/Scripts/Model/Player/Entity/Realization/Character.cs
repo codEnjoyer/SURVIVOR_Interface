@@ -6,7 +6,9 @@ public class Character : Entity
     public Sprite sprite;
     public string name;
     public string surname;
-    
+    public IMainGun PrimaryGun;
+    public ISecondaryGun SecondaryGun;
+    public IMeleeWeapon MeleeWeapon;
     public readonly Skills Skills;
 
     public readonly ManBody Body;
