@@ -59,7 +59,6 @@ public class ManBody: Body
                 hunger = MaxHunger;
             else
                 hunger = value;
-            Debug.Log(value);
             HungerChange?.Invoke(hunger);
         }
     }

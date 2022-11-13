@@ -69,11 +69,6 @@ public class PlayerLayerLogic : MonoBehaviour
         bootsCell.OnItemTaked.AddListener(OnBootsTaken);
     }
 
-    public void Update()
-    {
-        Debug.Log(CurrentCharacter.body.chest.Jacket);
-    }
-
     private void OnJacketPlaced()
     {
         CurrentCharacter.body.chest.Jacket = jacketCell.PlacedItem.GetComponent<Clothes>();

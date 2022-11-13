@@ -19,6 +19,6 @@ public class Walking: GmState
 
     public override void Exit()
     {
-        gml.ClearWay();
+        LocationManager.Instance.ItemGrid.Clear();
     }
 }

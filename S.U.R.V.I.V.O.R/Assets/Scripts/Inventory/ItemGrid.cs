@@ -122,7 +122,17 @@ public class ItemGrid : MonoBehaviour
         var item = curInventoryState.PickUpItem(x, y);
         instantiateItems.Remove(item);
         return item;
-    } 
+    }
+
+    public void Clear()
+    {
+        foreach (var item in instantiateItems)
+        {
+            Destroy(item.gameObject);
+        }
+        instantiateItems?.Clear();
+        curInventoryState?.Clear();
+    }
     
     public bool BoundryCheck(int posX, int posY, int width, int height) => curInventoryState.BoundryCheck(posX, posY, width, height);
 
