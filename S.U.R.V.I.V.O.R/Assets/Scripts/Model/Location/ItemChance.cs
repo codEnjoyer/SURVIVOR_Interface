@@ -4,10 +4,9 @@ using UnityEngine.UI;
 [System.Serializable]
 public class ItemChance
 {
-    [SerializeField] private GameObject item;
+    [SerializeField] private BaseItem item;
     [SerializeField] private int weightChance = 1;
-    [SerializeField] private Sprite photo;
 
-    public BaseItem Item => item.GetComponent<BaseItem>();
+    public BaseItem Item => item;
     public int WeightChance => weightChance;
 }

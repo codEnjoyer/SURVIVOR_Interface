@@ -13,25 +13,18 @@ MonoBehaviour:
   m_Name: Test Location
   m_EditorClassIdentifier: 
   chancesList:
-  - item: {fileID: 731280611706633546, guid: ad00c86b81342f747a9c051e4a4d4d6f, type: 3}
+  - item: {fileID: 6205756150975093434, guid: ad00c86b81342f747a9c051e4a4d4d6f, type: 3}
     weightChance: 1
-    photo: {fileID: 0}
-  - item: {fileID: 4095413982720242275, guid: f957be7fec7aa2345a9f2654b097d0ce, type: 3}
+  - item: {fileID: 7989406233264152095, guid: f957be7fec7aa2345a9f2654b097d0ce, type: 3}
     weightChance: 2
-    photo: {fileID: 0}
-  - item: {fileID: 6599396045980022428, guid: 35d90080ff0819f43bf1f7ebb0064882, type: 3}
+  - item: {fileID: 7616576644202868889, guid: 35d90080ff0819f43bf1f7ebb0064882, type: 3}
     weightChance: 2
-    photo: {fileID: 0}
-  - item: {fileID: 2539260194455474760, guid: 3fc0784634be7934988decd6d0eb5f42, type: 3}
+  - item: {fileID: 7521545726855088371, guid: 3fc0784634be7934988decd6d0eb5f42, type: 3}
     weightChance: 5
-    photo: {fileID: 0}
-  - item: {fileID: 6741271524207551836, guid: 8d15a65b6ccba254688180f73882d70d, type: 3}
+  - item: {fileID: -7405737862124459891, guid: 8d15a65b6ccba254688180f73882d70d, type: 3}
     weightChance: 5
-    photo: {fileID: 0}
-  - item: {fileID: 5007528691572348784, guid: 69096a30b242b044eadb5735a8306d1c, type: 3}
+  - item: {fileID: -5285827569045471981, guid: 69096a30b242b044eadb5735a8306d1c, type: 3}
     weightChance: 400
-    photo: {fileID: 0}
-  - item: {fileID: 8073354101777460830, guid: 704f35796fa5065428db22cfffeadd51, type: 3}
+  - item: {fileID: -7828054832626531359, guid: 704f35796fa5065428db22cfffeadd51, type: 3}
     weightChance: 400
-    photo: {fileID: 0}
   locationName: "\u0422\u0435\u0441\u0442\u043E\u0432\u0430\u044F \u043B\u043E\u043A\u0430\u0446\u0438\u044F"

@@ -8,12 +8,12 @@ public abstract class Body
     protected List<BodyPart> bodyParts;
     public float TotalHp => bodyParts.Sum(path => path.Hp);
     public float TotalWeight => bodyParts.Sum(path => path.TotalWeight);
-    public readonly Health Health;
+    public readonly Health health;
     public event Action Died;
 
     public Body()
     {
-        Health = new Health(this);
+        health = new Health(this);
     }
 
     public void TakeDamage(Shoot shoot)

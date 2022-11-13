@@ -131,4 +131,13 @@ public class InventoryState
 
         return true;
     }
+
+
+    public void Clear()
+    {
+        storedItems.Clear();
+        for(var i = 0; i < inventoryItemSlot.GetLength(0); i++)
+        for (int j = 0; j < inventoryItemSlot.GetLength(1); j++)
+            inventoryItemSlot[i, j] = null;
+    }
 }
