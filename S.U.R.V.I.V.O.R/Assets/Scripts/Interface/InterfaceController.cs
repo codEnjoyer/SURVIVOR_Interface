@@ -52,18 +52,24 @@ public class InterfaceController : MonoBehaviour
         CharacterPanelActive = new CharacterPanelActive(this, interfaceStateMachine);
         GroupLayerActive = new GroupLayerActive(this, interfaceStateMachine);
         PlayerLayerActive = new PlayerLayerActive(this, interfaceStateMachine);
+        SetActiveInterface(true);
+        SetActiveInterface(false);
         
-        MainInfoPanelLayer.SetActive(false);
-        GroupButtonsLayer.SetActive(false);
-        GroupInfoLayer.SetActive(false);
-        CharactersButtonsLayer.SetActive(false);
-        FirstPlayerLayer.SetActive(false);
-        SecondPlayerLayer.SetActive(false);
-        ThirdPlayerLayer.SetActive(false);
-        FourthPlayerLayer.SetActive(false);
         Selector.Instance.Activate();
         
         interfaceStateMachine.Initialize(NothingActive);
+    }
+
+    private void SetActiveInterface(bool value)
+    {
+        MainInfoPanelLayer.SetActive(value);
+        GroupButtonsLayer.SetActive(value);
+        GroupInfoLayer.SetActive(value);
+        CharactersButtonsLayer.SetActive(value);
+        FirstPlayerLayer.SetActive(value);
+        SecondPlayerLayer.SetActive(value);
+        ThirdPlayerLayer.SetActive(value);
+        FourthPlayerLayer.SetActive(value);
     }
 
     public void SetCharactersPanelActive()

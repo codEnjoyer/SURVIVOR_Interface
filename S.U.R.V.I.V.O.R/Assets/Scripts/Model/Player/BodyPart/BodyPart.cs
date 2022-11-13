@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-
 public abstract class BodyPart
 {
     protected readonly int MaxHp;

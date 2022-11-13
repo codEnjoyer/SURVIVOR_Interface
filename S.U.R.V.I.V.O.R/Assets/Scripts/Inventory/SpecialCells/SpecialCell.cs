@@ -22,6 +22,7 @@ public enum SpecialCellType
 public class SpecialCell : MonoBehaviour, IPointerClickHandler
 {
     private InventoryController inventoryController;
+    public BodyPart bodyPart;
     
     [SerializeField] 
     private Transform canvasTransform;

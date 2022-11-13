@@ -6,8 +6,7 @@ using Random = System.Random;
 public class Location: MonoBehaviour
 {
     private static readonly Random rnd = new();
-    [SerializeField] private LocationData data; 
-    private List<BaseItem> chancesList = new ();
+    [SerializeField] private LocationData data;
 
     public LocationData Data => data;
 
@@ -16,13 +15,9 @@ public class Location: MonoBehaviour
         if (data == null)
         {
             Debug.Log("У ноды нет локации!");
-            return;
         }
-        foreach (var itemChance in data.chancesList)
-             for (var i = 0; i < itemChance.WeightChance; i++)
-                 chancesList.Add(itemChance.Item);
     }
 
-    public BaseItem GetLoot() => chancesList[rnd.Next(chancesList.Count)];
+    public BaseItem GetLoot() => data.ChancesList[rnd.Next(data.ChancesList.Count)];
 
 }

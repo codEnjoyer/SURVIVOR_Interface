@@ -139,6 +139,8 @@ namespace Player
                 lineRenderer.positionCount = 0;
             }
         }
+        
+        
 
         public void ClearWay()
         {
