@@ -14,9 +14,9 @@ public class PlayerCharacteristicsPanel : MonoBehaviour
         get => player;
         set
         {
-            OnDestroy();
+            Unsubscribe();
             player = value;
-            OnEnable();
+            Subscribe();
         }
     }
 
@@ -41,7 +41,8 @@ public class PlayerCharacteristicsPanel : MonoBehaviour
     {
     }
 
-    private void OnEnable()
+    private int i;
+    private void Subscribe()
     {
         if(player is null) return;
         player.body.EnergyChange += OnEnergyChanged;
@@ -49,11 +50,16 @@ public class PlayerCharacteristicsPanel : MonoBehaviour
         player.body.HungerChange += OnFoodChanged;
     }
 
-    private void OnDestroy()
+    private void Unsubscribe()
     {
         if(player is null) return;
         player.body.EnergyChange -= OnEnergyChanged;
         player.body.WaterChange -= OnWaterChanged;
         player.body.HungerChange -= OnFoodChanged;
+    }
+
+    private void OnDestroy()
+    {
+        Unsubscribe();
     }
 }
