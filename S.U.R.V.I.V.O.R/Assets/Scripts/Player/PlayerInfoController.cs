@@ -1,9 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-public class PlayerInfoController : MonoBehaviour
+namespace Player
 {
-    public Group MainGroup;
+    public class PlayerInfoController : MonoBehaviour
+    {
+        public Group MainGroup;
+    }
 }

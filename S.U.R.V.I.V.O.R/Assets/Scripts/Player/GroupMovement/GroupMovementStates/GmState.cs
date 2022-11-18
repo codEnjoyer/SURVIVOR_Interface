@@ -1,13 +1,14 @@
-﻿using Player;
-
-public abstract class GmState: State
+﻿namespace Player.GroupMovement.GroupMovementStates
 {
-    protected readonly GroupMovementLogic gml;
-
-    protected GmState(GroupMovementLogic gml, StateMachine sm)
+    public abstract class GmState: State
     {
-        this.gml = gml;
-        stateMachine = sm;
-    }
+        protected readonly GroupMovementLogic gml;
 
+        protected GmState(GroupMovementLogic gml, StateMachine sm)
+        {
+            this.gml = gml;
+            stateMachine = sm;
+        }
+
+    }
 }

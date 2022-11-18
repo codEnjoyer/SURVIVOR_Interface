@@ -1,24 +1,24 @@
-﻿using Player;
-using UnityEngine;
-
-public class Walking: GmState
+﻿namespace Player.GroupMovement.GroupMovementStates
 {
-    public Walking(GroupMovementLogic gml, StateMachine sm) : base(gml, sm)
+    public class Walking: GmState
     {
-    }
+        public Walking(GroupMovementLogic gml, StateMachine sm) : base(gml, sm)
+        {
+        }
 
-    public override void Enter()
-    {
-        gml.CreateWay();
-    }
+        public override void Enter()
+        {
+            gml.CreateWay();
+        }
 
-    public override void FixedUpdate()
-    {
-        gml.Move();
-    }
+        public override void FixedUpdate()
+        {
+            gml.Move();
+        }
 
-    public override void Exit()
-    {
-        LocationManager.Instance.ItemGrid.Clear();
+        public override void Exit()
+        {
+            LocationManager.Instance.ItemGrid.Clear();
+        }
     }
 }

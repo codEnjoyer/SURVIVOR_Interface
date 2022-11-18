@@ -40,8 +40,7 @@ public class PlayerCharacteristicsPanel : MonoBehaviour
     public void OnHealthChanged()
     {
     }
-
-    private int i;
+    
     private void Subscribe()
     {
         if(player is null) return;

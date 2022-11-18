@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Player
+namespace Player.GroupMovement
 {
     public class GroupsMovementController : MonoBehaviour
     {

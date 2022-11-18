@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Player;
+using Player.GroupMovement;
 using UnityEngine;
 using UnityEngine.UI;
 
