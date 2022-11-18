@@ -17,7 +17,7 @@ namespace Graph_and_Map
             var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var rayHit))
                 mPos = rayHit.point;
-            return kdTree.GetNeighbour(new Vector2(mPos.x, mPos.z));
+            return (Node)kdTree.GetNeighbour(new Vector2(mPos.x, mPos.z));
         }
 
         void Awake()

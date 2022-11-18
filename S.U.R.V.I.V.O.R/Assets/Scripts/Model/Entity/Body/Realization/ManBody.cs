@@ -95,9 +95,9 @@ public class ManBody: Body
         }
     }
 
-    public event Action<IHealth> PlayerTired;
-    public event Action<IHealth> PlayerHungry;
-    public event Action<IHealth> PlayerThirsty;
+    public event Action<Health> PlayerTired;
+    public event Action<Health> PlayerHungry;
+    public event Action<Health> PlayerThirsty;
     
     public event Action<int> EnergyChange;
     public event Action<int> HungerChange;

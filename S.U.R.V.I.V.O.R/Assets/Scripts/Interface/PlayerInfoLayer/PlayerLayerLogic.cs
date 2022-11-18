@@ -45,7 +45,7 @@ public class PlayerLayerLogic : MonoBehaviour
         pantsInventory.ChangeState(new InventoryState(emptyInventorySize));
         
         playerCharacteristicsPanel.Player = CurrentCharacter;
-        nameTextBox.text = CurrentCharacter.name;
+        nameTextBox.text = CurrentCharacter.Name;
         
         jacketCell.OnItemPlaced.AddListener(OnJacketPlaced);
         jacketCell.OnItemTaked.AddListener(OnJacketTaken);

@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
-public interface IHealth
+public abstract class Health
 {
-    public IAlive Target { get; }
-    public ICollection<IHealthProperty> HealthProperties { get; }
+    public abstract IAlive Target { get; }
+    public abstract ICollection<HealthProperty> HealthProperties { get; }
     
-    public void AddProperty(IHealthProperty property)
+    public void AddProperty(HealthProperty property)
     {
         if (HealthProperties.Contains(property))
             return;
@@ -13,7 +13,7 @@ public interface IHealth
         property.InitialAction(this);
     }
 
-    public void DeleteProperty(IHealthProperty property)
+    public void DeleteProperty(HealthProperty property)
     {
         HealthProperties.Remove(property);
         property.FinalAction(this);

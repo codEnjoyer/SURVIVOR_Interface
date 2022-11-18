@@ -3,13 +3,11 @@ using UnityEngine;
 
 namespace Graph_and_Map
 {
-    public class Node : MonoBehaviour
+    public class Node : MonoBehaviour, IKdTreePoint
     {
         public List<Node> neighborhoods = new ();
         private LineRenderer line;
-
-        public Vector2 PositionIn2D => new(transform.position.x,transform.position.z);
-
+        public Vector2 PositionIn2D => transform.position.To2D();
         public void DrawEdges()
         {
             var index = 0;
