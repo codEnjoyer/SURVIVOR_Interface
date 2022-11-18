@@ -1,21 +1,22 @@
 ﻿
 using System;
 
-public class Poisoning: IHealthProperty
+public class Poisoning: HealthProperty
 {
     public int Duration { get; private set; }
     public readonly int damage;
-    public HealthPropertyType Type { get; }
+    public override HealthPropertyType Type { get; }
 
     public Poisoning(int damage = 1, int duration = 4)
     {
+        Type = HealthPropertyType.Poisoning;
         this.Duration = duration;
         this.damage = damage;
     }
 
-    public void InitialAction(IHealth health) {}
+    public override void InitialAction(Health health) {}
 
-    public void OnTurnEnd(IHealth health)
+    public override void OnTurnEnd(Health health)
     {
         health.Target.TakeDamage(damage);
         Duration--;
@@ -23,7 +24,5 @@ public class Poisoning: IHealthProperty
             health.DeleteProperty(this);
     }
 
-    public void FinalAction(IHealth health) {}
-
-    public override bool Equals(object obj) => obj is Poisoning;
+    public override void FinalAction(Health health) {}
 }

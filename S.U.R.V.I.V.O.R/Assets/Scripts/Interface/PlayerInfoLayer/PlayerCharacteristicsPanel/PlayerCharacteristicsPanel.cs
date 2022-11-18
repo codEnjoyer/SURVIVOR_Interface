@@ -28,7 +28,7 @@ public class PlayerCharacteristicsPanel : MonoBehaviour
 
     public void Start()
     {
-        Photo.sprite = Player.sprite;
+        Photo.sprite = Player.Sprite;
     }
 
     private void OnFoodChanged(int value) => food.text = value.ToString();

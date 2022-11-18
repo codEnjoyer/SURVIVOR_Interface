@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 
-public class BodyPathHealth: IHealth
+public class BodyPathHealth: Health
 {
-    public IAlive Target { get; }
-    public ICollection<IHealthProperty> HealthProperties { get; }
+    public override IAlive Target { get; }
+    public override ICollection<HealthProperty> HealthProperties { get; }
 
     public BodyPathHealth(BodyPart bodyPart)
     {
         Target = bodyPart;
-        HealthProperties = new List<IHealthProperty>();
+        HealthProperties = new List<HealthProperty>();
     }
 }

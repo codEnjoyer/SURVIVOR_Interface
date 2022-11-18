@@ -64,8 +64,8 @@ namespace Player.GroupMovement
 
         private bool IsNearly()
         {
-            var curPos = SwitchTo2d(transform.position);
-            var targetPos = SwitchTo2d(targetNode.transform.position);
+            var curPos = transform.position.To2D();
+            var targetPos = targetNode.PositionIn2D;
             return Vector2.Distance(curPos, targetPos) <= Delta;
         }
         
@@ -165,9 +165,6 @@ namespace Player.GroupMovement
                 movementSm.ChangeState(WaitingTarget);
         }
         
-        private Vector2 SwitchTo2d(Vector3 v3) => new(v3.x, v3.z);
-        
-
         #region MonoBehaviourCallBack
 
         private void Awake()

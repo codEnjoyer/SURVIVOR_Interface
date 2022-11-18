@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-public class BodyHealth: IHealth
+public class BodyHealth: Health
 {
-    public IAlive Target { get; }
-    public ICollection<IHealthProperty> HealthProperties { get; }
+    public override IAlive Target { get; }
+    public override ICollection<HealthProperty> HealthProperties { get; }
 
     private float radiation;
     public float Radiation
@@ -18,6 +18,6 @@ public class BodyHealth: IHealth
     public BodyHealth(Body body)
     {
         Target = body;
-        HealthProperties = new List<IHealthProperty>();
+        HealthProperties = new List<HealthProperty>();
     }
 }

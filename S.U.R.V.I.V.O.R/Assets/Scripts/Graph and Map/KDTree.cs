@@ -5,16 +5,16 @@ using UnityEngine;
 
 namespace Graph_and_Map
 {
-    public class KdTree: IEnumerable<Node>
+    public class KdTree: IEnumerable<IKdTreePoint>
     {
-        public Node Value { get; private set; }
+        public IKdTreePoint Value { get; private set; }
         public readonly bool splitX;
         public int Count { get; private set; }
         
         private KdTree left;
         private KdTree right;
         private bool IsEmpty => Count == 0;
-        private KdTree(Node value, KdTree parent)
+        private KdTree(IKdTreePoint value, KdTree parent)
         {
             this.Value = value;
             splitX = !parent.splitX;
@@ -26,13 +26,13 @@ namespace Graph_and_Map
             splitX = true;
         }
     
-        public void AddRange(IEnumerable<Node> data)
+        public void AddRange(IEnumerable<IKdTreePoint> data)
         {
             foreach (var point in data)
                 Add(point);
         }
     
-        public void Add(Node node)
+        public void Add(IKdTreePoint node)
         {
             if(node is null)
                 return;
@@ -72,9 +72,9 @@ namespace Graph_and_Map
         }
         
         private static double minDist;
-        private static Node result;
+        private static IKdTreePoint result;
 
-        public Node GetNeighbour(Vector2 target)
+        public IKdTreePoint GetNeighbour(Vector2 target)
         {
             if (IsEmpty) return null;
             minDist = int.MaxValue;
@@ -112,7 +112,7 @@ namespace Graph_and_Map
             }
         }
 
-        public IEnumerator<Node> GetEnumerator()
+        public IEnumerator<IKdTreePoint> GetEnumerator()
         {
             foreach (var point in left)
                 yield return point;
