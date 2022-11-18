@@ -3,11 +3,9 @@
 
 public interface IGun: IWeapon
 {
+    public bool IsFirstGun { get; }
     public GunData Data { get; }
-    public Caliber Caliber { get; }
-    
-    
-    public IEnumerable<GunModule> GunModules { get; }
+    public ICollection<GunModule> GunModules { get; }
     
     public Magazine Reload(Magazine magazine);
 }

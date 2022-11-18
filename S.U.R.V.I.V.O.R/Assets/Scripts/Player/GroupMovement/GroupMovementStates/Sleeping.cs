@@ -1,14 +1,15 @@
-﻿using Player;
-
-public class Sleeping: GmState
+﻿namespace Player.GroupMovement.GroupMovementStates
 {
-    public Sleeping(GroupMovementLogic gml, StateMachine sm) : base(gml, sm)
+    public class Sleeping: GmState
     {
+        public Sleeping(GroupMovementLogic gml, StateMachine sm) : base(gml, sm)
+        {
         
-    }
+        }
 
-    public override void Enter()
-    {
-        gml.ClearWay();
+        public override void Enter()
+        {
+            gml.ClearWay();
+        }
     }
 }
