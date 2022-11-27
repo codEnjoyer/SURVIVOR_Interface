@@ -173,6 +173,11 @@ public class PlayerLayerLogic : MonoBehaviour
 
     private void PlaceAllItems()
     {
+        Debug.Log(CurrentCharacter);
+        Debug.Log(CurrentCharacter.body);
+        Debug.Log(CurrentCharacter.body.chest);
+        Debug.Log(CurrentCharacter.body.chest.Jacket );
+        
         if (CurrentCharacter.body.chest.Jacket != null)
             jacketCell.PlaceItem(CurrentCharacter.body.chest.Jacket.gameObject.GetComponent<BaseItem>());
         if (CurrentCharacter.body.chest.Vest != null)

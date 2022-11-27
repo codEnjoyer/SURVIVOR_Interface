@@ -787,9 +787,7 @@ MonoBehaviour:
   MaxOnGlobalMapGroupEndurance: 10
   CurrentOnGlobalMapGroupEndurance: 10
   currentGroupMembers:
-  - sprite: {fileID: 21300000, guid: 89ff57b97afb46b4998ab4cfd8ace0e1, type: 3}
-    name: "\u0418\u0432\u0430\u043D"
-    surname: "\u041F\u0435\u0442\u0440\u043E\u0432"
+  - {fileID: 234525757738228535, guid: 57e839bd74f2726409759bc236374acd, type: 3}
 --- !u!114 &154339911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13204,6 +13202,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2048833773}
+  - component: {fileID: 2048833774}
   m_Layer: 0
   m_Name: GameLogic
   m_TagString: Untagged
@@ -13230,6 +13229,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2048833774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2048833772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd15d339090e4eaf91c478dcd232d3a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chosenGroup: {fileID: 154339910}
 --- !u!1 &2050006518
 GameObject:
   m_ObjectHideFlags: 0

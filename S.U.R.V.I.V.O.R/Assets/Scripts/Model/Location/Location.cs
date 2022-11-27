@@ -13,6 +13,4 @@ public class Location: MonoBehaviour
             Debug.Log("У ноды нет локации!");
         }
     }
-
-    public BaseItem GetLoot() => data.GetLoot();
 }

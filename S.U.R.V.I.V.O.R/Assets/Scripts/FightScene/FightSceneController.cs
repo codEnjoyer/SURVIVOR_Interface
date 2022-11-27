@@ -33,12 +33,12 @@ public class FightSceneController : MonoBehaviour
         else if (Instance == this)
             Destroy(gameObject);
     }
-    
-    private void Start() 
+
+    private void Start()
     {
         InitializeCharacters();
         NodesNav.InitializeNodesLists(graph);
-        
+
         StateController.MakeAvailablePhases();
         CharacterObj = CharactersQueue.Dequeue();
         AI.CurrentCharacterObj = CharacterObj;
@@ -49,16 +49,16 @@ public class FightSceneController : MonoBehaviour
         Sign.transform.parent = CharacterObj.transform;
     }
 
-    private void Update() 
+    private void Update()
     {
         lineRenderer.positionCount = 0;
-        
-        if(CharacterObj.GetComponent<FightCharacter>().Type == CharacterType.Ally)
+
+        if (CharacterObj.GetComponent<FightCharacter>().Type == CharacterType.Ally)
         {
             var point = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
             var cameraRay = mainCamera.ScreenPointToRay(point);
             Physics.Raycast(cameraRay, out var hit);
-            switch(State)
+            switch (State)
             {
                 case FightState.MovePhase:
                     CalculateAvailalePathToPoint(hit, false);
@@ -68,8 +68,9 @@ public class FightSceneController : MonoBehaviour
                     break;
                 case FightState.EndTurnPhase:
                     EndTurn();
-                    break;   
+                    break;
             }
+
             if (Input.GetMouseButtonDown(0) && !eventSystem.IsPointerOverGameObject())
                 MakeAction(State, hit.transform.gameObject);
         }
@@ -80,20 +81,20 @@ public class FightSceneController : MonoBehaviour
         }
 
 
-        if(State == FightState.Moving || State == FightState.Fighting)
+        if (State == FightState.Moving || State == FightState.Fighting)
         {
-            if(NodesNav.IsEndMoveCharacter())
+            if (NodesNav.IsEndMoveCharacter())
             {
                 CharacterReachTarget();
             }
             else
                 NodesNav.MoveCharacterByPath(CharacterObj);
-        }   
+        }
     }
 
-    private void MakeAction(FightState state, GameObject targetObj) 
+    private void MakeAction(FightState state, GameObject targetObj)
     {
-        switch(state)
+        switch (state)
         {
             case FightState.MovePhase:
                 MoveCharacter();
@@ -106,7 +107,7 @@ public class FightSceneController : MonoBehaviour
                 break;
             case FightState.EndTurnPhase:
                 EndTurn();
-                break;   
+                break;
         }
     }
 
@@ -119,17 +120,18 @@ public class FightSceneController : MonoBehaviour
             //component.MeleeWeapon = new Knife(3, 0.3f);
             CharactersQueue.Enqueue(Characters[i]);
         }
+
         Debug.Log(CharactersQueue.Count);
     }
-    
+
     private void CharacterReachTarget()
     {
         NodesNav.Path.Clear();
         currentCharacterNodeObj = NodesNav.GetNearestNode(CharacterObj.transform.position);
-        if(State == FightState.Fighting)
+        if (State == FightState.Fighting)
         {
             Debug.Log("Hit");
-           // CharacterObj.GetComponent<FightCharacter>().MakeHit();
+            // CharacterObj.GetComponent<FightCharacter>().MakeHit();
             CharacterObj.GetComponent<FightCharacter>().TargetToHit = null;
             DeleteDeathCharacterFromQueue();
         }
@@ -145,8 +147,8 @@ public class FightSceneController : MonoBehaviour
         CharacterObj = GetNextCharacter();
         AI.CurrentCharacterObj = CharacterObj;
 
-        Sign.transform.position = new Vector3(CharacterObj.transform.position.x, 
-        Sign.transform.position.y, CharacterObj.transform.position.z);
+        Sign.transform.position = new Vector3(CharacterObj.transform.position.x,
+            Sign.transform.position.y, CharacterObj.transform.position.z);
         Sign.transform.parent = CharacterObj.transform;
 
         StateController.MakeAvailablePhases();
@@ -159,11 +161,12 @@ public class FightSceneController : MonoBehaviour
     private GameObject GetNextCharacter()
     {
         var nextCharacter = CharactersQueue.Dequeue();
-        while(nextCharacter == null || !nextCharacter.GetComponent<FightCharacter>().Alive)
+        while (nextCharacter == null || !nextCharacter.GetComponent<FightCharacter>().Alive)
         {
             nextCharacter = CharactersQueue.Dequeue();
             Debug.Log("OK");
         }
+
         return nextCharacter;
     }
 
@@ -180,9 +183,10 @@ public class FightSceneController : MonoBehaviour
     }
 
     private void Fight(GameObject targetObj)
-    { 
-        if(targetObj.tag == "Character" && targetObj != CharacterObj
-            && targetObj.GetComponent<FightCharacter>().Type != CharacterObj.GetComponent<FightCharacter>().Type)
+    {
+        if (targetObj.tag == "Character" && targetObj != CharacterObj
+                                         && targetObj.GetComponent<FightCharacter>().Type !=
+                                         CharacterObj.GetComponent<FightCharacter>().Type)
         {
             CharacterObj.GetComponent<FightCharacter>().TargetToHit = targetObj;
             NodesNav.StartMoveCharacter(CharacterObj);
@@ -197,23 +201,23 @@ public class FightSceneController : MonoBehaviour
     private void Shoot(GameObject targetObj)
     {
         if (targetObj.tag == "Character" && targetObj != CharacterObj
-            && targetObj.GetComponent<FightCharacter>().Alive)
-            {
-                Debug.Log("Shoot");
-                var character = CharacterObj.GetComponent<FightCharacter>();
-               // character.MakeShoot(targetObj, "Body");
-                State = FightState.Sleeping;
-                StateController.AvailablePhase[FightState.FightPhase] = false;
-                StateController.AvailablePhase[FightState.ShootPhase] = false;
-                DeleteDeathCharacterFromQueue();
-                Debug.Log(CharactersQueue.Count);
-            }
+                                         && targetObj.GetComponent<FightCharacter>().Alive)
+        {
+            Debug.Log("Shoot");
+            var character = CharacterObj.GetComponent<FightCharacter>();
+            // character.MakeShoot(targetObj, "Body");
+            State = FightState.Sleeping;
+            StateController.AvailablePhase[FightState.FightPhase] = false;
+            StateController.AvailablePhase[FightState.ShootPhase] = false;
+            DeleteDeathCharacterFromQueue();
+            Debug.Log(CharactersQueue.Count);
+        }
     }
 
     private void DeleteDeathCharacterFromQueue()
     {
         var newQueue = new Queue<GameObject>();
-        while(CharactersQueue.Count > 0)
+        while (CharactersQueue.Count > 0)
         {
             var charObj = CharactersQueue.Dequeue();
             if (charObj != null && charObj.GetComponent<FightCharacter>().Alive)
@@ -222,11 +226,11 @@ public class FightSceneController : MonoBehaviour
 
         CharactersQueue = newQueue;
     }
-    
+
     public void DeleteDeathCharacterFromQueue(FightCharacter character)
     {
         var newQueue = new Queue<GameObject>();
-        while(CharactersQueue.Count > 0)
+        while (CharactersQueue.Count > 0)
         {
             var charObj = CharactersQueue.Dequeue();
             if (charObj != null && charObj.GetComponent<FightCharacter>() != character)
@@ -246,8 +250,8 @@ public class FightSceneController : MonoBehaviour
 
     private void CalculateAvailalePathToPoint(RaycastHit hit, bool isForFighting)
     {
-        if(hit.transform != null && 
-        ((hit.transform.gameObject.tag == "Character" && isForFighting) || !isForFighting))
+        if (hit.transform != null &&
+            ((hit.transform.gameObject.tag == "Character" && isForFighting) || !isForFighting))
         {
             if (isForFighting)
                 NodesNav.TryFindPath(currentCharacterNodeObj.GetComponent<FightNode>(),
@@ -256,19 +260,25 @@ public class FightSceneController : MonoBehaviour
                 NodesNav.TryFindPath(currentCharacterNodeObj.GetComponent<FightNode>(),
                     NodesNav.GetNearestNode(hit.point).GetComponent<FightNode>());
 
-            if(NodesNav.Path.Count != 0)
+            if (NodesNav.Path.Count != 0)
                 DrawPath(isForFighting);
         }
     }
 
-     private void DrawPath(bool isForFighting)
+    private void DrawPath(bool isForFighting)
     {
         var pathPoints = NodesNav.Path;
         var energy = CharacterObj.GetComponent<FightCharacter>().Energy;
-        if(NodesNav.Path.Count != 0)
+        if (NodesNav.Path.Count != 0)
         {
             lineRenderer.positionCount = pathPoints.Count;
             lineRenderer.SetPositions(pathPoints.ToArray());
         }
+    }
+
+
+    public void Initialization(FightData data)
+    {
+        
     }
 }

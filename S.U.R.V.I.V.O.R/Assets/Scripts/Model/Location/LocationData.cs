@@ -46,8 +46,9 @@ public class LocationData : ScriptableObject
     {
         if (rnd.NextDouble() < fightChance)
         {
+            Debug.Log("!");
             var fight = fightChances[rnd.Next(fightChances.Length)];
-            //TODO Вызвать бой
+            fight.Initialization();
         }
     }
 }

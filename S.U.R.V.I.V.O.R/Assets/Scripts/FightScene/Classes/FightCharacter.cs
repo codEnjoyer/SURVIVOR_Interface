@@ -36,19 +36,21 @@ public class FightCharacter : MonoBehaviour
         Target.Attack(new List<BodyPart>(), 10);
     }
 
-    public void OnEnable()
-    {
-        Target.Body.Died += OnDied;
-    }
-
-    public void OnDisable()
-    {
-        Target.Body.Died -= OnDied;
-    }
-
-    private void OnDied()
-    {
-        FightSceneController.Instance.DeleteDeathCharacterFromQueue(this);
-        Destroy(gameObject);
-    }
+//     public void OnEnable()
+//     {
+//         Debug.Log(Target);
+//         Debug.Log(Target.Body);
+//         Target.Body.Died += OnDied;
+//     }
+//
+//     public void OnDisable()
+//     {
+//         Target.Body.Died -= OnDied;
+//     }
+//
+//     private void OnDied()
+//     {
+//         FightSceneController.Instance.DeleteDeathCharacterFromQueue(this);
+//         Destroy(gameObject);
+//     }
 }
