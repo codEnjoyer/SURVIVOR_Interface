@@ -32,6 +32,7 @@ public class SpecialCell : MonoBehaviour, IPointerClickHandler
     
     private RectTransform rectTransform;
     private Vector3 itemSize;
+    private Vector3 itemScale;
     private BaseItem placedItem;
     public SpecialCellType CellType => cellType;
     public BaseItem PlacedItem => placedItem;
@@ -73,7 +74,6 @@ public class SpecialCell : MonoBehaviour, IPointerClickHandler
         var itemRectTransform = placedItem.GetComponent<RectTransform>();
         itemRectTransform.SetParent(rectTransform);
         itemRectTransform.localPosition = new Vector2(0,0);
-        itemRectTransform.localScale = rectTransform.localScale;
         ChangeItemSize(placedItem.GetComponent<RectTransform>());
         inventoryController.selectedItem = null;
         OnItemPlaced.Invoke();
@@ -82,6 +82,7 @@ public class SpecialCell : MonoBehaviour, IPointerClickHandler
     private void GiveItem()
     {
         placedItem.GetComponent<RectTransform>().sizeDelta = itemSize;
+        placedItem.GetComponent<RectTransform>().localScale = itemScale;
         placedItem.GetComponent<RectTransform>().SetParent(canvasTransform);
         inventoryController.PickUpItem(placedItem);
         OnItemTaked.Invoke();
@@ -91,13 +92,15 @@ public class SpecialCell : MonoBehaviour, IPointerClickHandler
     private void ChangeItemSize(RectTransform transform)
     {
         itemSize = transform.sizeDelta;
-        if (transform.sizeDelta.x > rectTransform.sizeDelta.x)
+        itemScale = transform.localScale;
+        transform.localScale = new Vector3(1, 1, 1);
+        if (transform.sizeDelta.x * itemScale.x > rectTransform.sizeDelta.x * rectTransform.localScale.x)
         {
-            transform.sizeDelta = new Vector2(rectTransform.sizeDelta.x,itemSize.y/(itemSize.x/rectTransform.sizeDelta.x));
+            transform.sizeDelta = new Vector2(rectTransform.sizeDelta.x * itemScale.x,itemSize.y * itemScale.y/(itemSize.x * itemScale.x/rectTransform.sizeDelta.x * rectTransform.localScale.x));
         }
-        if (transform.sizeDelta.y > rectTransform.sizeDelta.y)
+        if (transform.sizeDelta.x * itemScale.x > rectTransform.sizeDelta.x * rectTransform.localScale.x)
         {
-            transform.sizeDelta = new Vector2(itemSize.x/(itemSize.y/rectTransform.sizeDelta.y),rectTransform.sizeDelta.y);
+            transform.sizeDelta = new Vector2(itemSize.x * itemScale.x/(itemSize.y * itemScale.y/rectTransform.sizeDelta.y * rectTransform.localScale.y),rectTransform.sizeDelta.y * rectTransform.localScale.y);
         }
     }
 }
