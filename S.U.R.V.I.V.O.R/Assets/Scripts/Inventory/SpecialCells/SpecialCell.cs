@@ -31,8 +31,6 @@ public class SpecialCell : MonoBehaviour, IPointerClickHandler
     private SpecialCellType cellType;
     
     private RectTransform rectTransform;
-    private Vector3 itemSize;
-    private Vector3 itemScale;
     private BaseItem placedItem;
     public SpecialCellType CellType => cellType;
     public BaseItem PlacedItem => placedItem;
@@ -74,15 +72,22 @@ public class SpecialCell : MonoBehaviour, IPointerClickHandler
         var itemRectTransform = placedItem.GetComponent<RectTransform>();
         itemRectTransform.SetParent(rectTransform);
         itemRectTransform.localPosition = new Vector2(0,0);
-        ChangeItemSize(placedItem.GetComponent<RectTransform>());
+        ChangeItemSize(itemRectTransform);
         inventoryController.selectedItem = null;
         OnItemPlaced.Invoke();
+    }
+
+    public void PlaceNullItem()
+    {
+        placedItem = null;
+        
     }
     
     private void GiveItem()
     {
-        placedItem.GetComponent<RectTransform>().sizeDelta = itemSize;
-        placedItem.GetComponent<RectTransform>().localScale = itemScale;
+        if (placedItem == null) return;
+        placedItem.GetComponent<RectTransform>().sizeDelta = placedItem.onAwakeRectTransformSize;
+        placedItem.GetComponent<RectTransform>().localScale = placedItem.onAwakeRectTransformScale;
         placedItem.GetComponent<RectTransform>().SetParent(canvasTransform);
         inventoryController.PickUpItem(placedItem);
         OnItemTaked.Invoke();
@@ -91,16 +96,15 @@ public class SpecialCell : MonoBehaviour, IPointerClickHandler
 
     private void ChangeItemSize(RectTransform transform)
     {
-        itemSize = transform.sizeDelta;
-        itemScale = transform.localScale;
-        transform.localScale = new Vector3(1, 1, 1);
-        if (transform.sizeDelta.x * itemScale.x > rectTransform.sizeDelta.x * rectTransform.localScale.x)
+        if (placedItem.onAwakeRectTransformSize.x * placedItem.onAwakeRectTransformScale.x > rectTransform.sizeDelta.x * rectTransform.localScale.x)
         {
-            transform.sizeDelta = new Vector2(rectTransform.sizeDelta.x * itemScale.x,itemSize.y * itemScale.y/(itemSize.x * itemScale.x/rectTransform.sizeDelta.x * rectTransform.localScale.x));
+            transform.sizeDelta = new Vector2(rectTransform.sizeDelta.x * placedItem.onAwakeRectTransformScale.x,placedItem.onAwakeRectTransformSize.y * placedItem.onAwakeRectTransformScale.y/(placedItem.onAwakeRectTransformSize.x * placedItem.onAwakeRectTransformScale.x/rectTransform.sizeDelta.x * rectTransform.localScale.x));
+            transform.localScale = new Vector3(1, 1, 1);
         }
-        if (transform.sizeDelta.x * itemScale.x > rectTransform.sizeDelta.x * rectTransform.localScale.x)
+        if (placedItem.onAwakeRectTransformSize.y * placedItem.onAwakeRectTransformScale.y > rectTransform.sizeDelta.y * rectTransform.localScale.y)
         {
-            transform.sizeDelta = new Vector2(itemSize.x * itemScale.x/(itemSize.y * itemScale.y/rectTransform.sizeDelta.y * rectTransform.localScale.y),rectTransform.sizeDelta.y * rectTransform.localScale.y);
+            transform.sizeDelta = new Vector2(placedItem.onAwakeRectTransformSize.x * placedItem.onAwakeRectTransformScale.x/(placedItem.onAwakeRectTransformSize.y * placedItem.onAwakeRectTransformScale.y/rectTransform.sizeDelta.y * rectTransform.localScale.y),rectTransform.sizeDelta.y * rectTransform.localScale.y);
+            transform.localScale = new Vector3(1, 1, 1);
         }
     }
 }

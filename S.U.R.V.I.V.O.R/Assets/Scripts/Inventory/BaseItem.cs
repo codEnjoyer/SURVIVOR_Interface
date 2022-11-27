@@ -10,6 +10,10 @@ public class BaseItem : MonoBehaviour
     public int onGridPositionX { get; set; }
     public int onGridPositionY { get; set; }
 
+    public Vector3 onAwakeRectTransformSize { get; set; }
+    
+    public Vector3 onAwakeRectTransformScale { get; set; }
+    
     public int Height => !rotated ? size.Height : size.Width;
 
     public int Width => !rotated ? size.Width : size.Height;
@@ -29,11 +33,13 @@ public class BaseItem : MonoBehaviour
 
     public void Set(BaseItemData itemData)
      {
+         var rt = gameObject.GetComponent<RectTransform>();
          var scaleFactor = GetComponentInParent<Canvas>().scaleFactor;
- 
          var size = new Vector2(itemData.Size.Width * ItemGrid.TileSize * scaleFactor,
              itemData.Size.Height * ItemGrid.TileSize * scaleFactor);
-         GetComponent<RectTransform>().sizeDelta = size;
+         rt.sizeDelta = size;
+         onAwakeRectTransformScale = rt.localScale;
+         onAwakeRectTransformSize = rt.sizeDelta;
      }
 
     public void Rotated()

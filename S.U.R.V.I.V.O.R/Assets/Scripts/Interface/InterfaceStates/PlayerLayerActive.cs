@@ -1,4 +1,5 @@
 ﻿
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Interface.InterfaceStates
@@ -12,6 +13,11 @@ namespace Interface.InterfaceStates
 
         public override void Enter()
         {
+            if (contr.CurrentPlayerLayer == contr.FirstPlayerLayer)
+            {
+                contr.InterfaceGruopLogicController.OnFirstPlayerLayerOpen.Invoke();
+                Debug.Log(1);
+            }
             Selector.Instance.DeActivate();
             memory = contr.CurrentPlayerLayer;
             memory.SetActive(true);
