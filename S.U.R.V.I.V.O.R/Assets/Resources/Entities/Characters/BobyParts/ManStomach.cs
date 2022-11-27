@@ -5,7 +5,6 @@ public class ManStomach : BodyPart
 {
     public ManStomach(Body body) : base(body)
     {
-        
     }
 
     public override int MaxHp { get; }

@@ -27,7 +27,7 @@ public abstract class Body : IAlive
             Died?.Invoke();
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(DamageInfo damage)
     {
         throw new NotImplementedException();
     }

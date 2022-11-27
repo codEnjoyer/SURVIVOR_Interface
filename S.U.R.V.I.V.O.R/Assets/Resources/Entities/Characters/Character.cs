@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Character: Entity
+public class Character : Entity
 {
     public Sprite Sprite { get; set; }
     public string Name { get; set; }
@@ -13,7 +13,7 @@ public class Character: Entity
     public IMeleeWeapon MeleeWeapon { get; set; }
     public readonly Skills skills;
     public readonly ManBody body;
-    
+
     public override float Initiative { get; }
     public override int SpeedInFightScene { get; }
     public override Body Body => body;
@@ -24,7 +24,7 @@ public class Character: Entity
         skills = new Skills();
         body = new ManBody();
     }
-    
+
     public override void Attack(List<BodyPart> targets, float distance)
     {
         throw new NotImplementedException();

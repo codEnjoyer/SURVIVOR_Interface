@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;using UnityEngine;
+using System.Linq;
+using UnityEngine;
 
 public abstract class BodyPart : IAlive
 {
@@ -19,21 +20,18 @@ public abstract class BodyPart : IAlive
         this.body = body;
     }
 
-    public void TakeDamage(Shoot shot)
+    public void TakeDamage(DamageInfo damage)
     {
         throw new NotImplementedException();
         //TODO реализовать метод получения урона в зависимоти от выстрела
-        
-        
-        var blockedDamage = Clothes.Sum(cloth => cloth.CalculateBlockedDamage(shot));
-        var damage = 1;
-        TakeDamage(damage);
+
+
+        var blockedDamage = Clothes.Sum(cloth => cloth.CalculateBlockedDamage(damage));
+        TakeDamage(damage.Damage);
     }
 
-    public void TakeDamage(float damage)
+    private void TakeDamage(float damage)
     {
-        if (damage < 0)
-            throw new ArgumentException(nameof(damage));
         Hp -= damage;
         if (Hp <= 0)
         {
@@ -41,6 +39,7 @@ public abstract class BodyPart : IAlive
             body.LossBodyParts();
         }
     }
+
     public void Healing(float heal)
     {
         throw new NotImplementedException();
