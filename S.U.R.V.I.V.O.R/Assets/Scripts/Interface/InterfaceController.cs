@@ -101,8 +101,7 @@ public class InterfaceController : MonoBehaviour
 
     private void SetPlayerLayerActive(GameObject characterLayer)
     {
-        if(interfaceStateMachine.CurrentState == PlayerLayerActive 
-           && CurrentPlayerLayer == characterLayer)
+        if(interfaceStateMachine.CurrentState == PlayerLayerActive && CurrentPlayerLayer == characterLayer)
             interfaceStateMachine.ChangeState(CharacterPanelActive);
         else
         {
@@ -114,7 +113,6 @@ public class InterfaceController : MonoBehaviour
 
     public void ChooseFirstPlayer()
     {
-        interfaceGruopLogicController.OnFirstPlayerLayerOpen.Invoke();
         SetPlayerLayerActive(firstPlayerLayer);
     }
     public void ChooseSecondPlayer() => SetPlayerLayerActive(secondPlayerLayer);
