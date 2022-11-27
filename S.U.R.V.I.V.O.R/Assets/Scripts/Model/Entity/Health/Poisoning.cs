@@ -18,7 +18,7 @@ public class Poisoning: HealthProperty
 
     public override void OnTurnEnd(Health health)
     {
-        health.Target.TakeDamage(damage);
+        health.Target.TakeDamage(new DamageInfo(damage));
         Duration--;
         if (Duration == 0)
             health.DeleteProperty(this);

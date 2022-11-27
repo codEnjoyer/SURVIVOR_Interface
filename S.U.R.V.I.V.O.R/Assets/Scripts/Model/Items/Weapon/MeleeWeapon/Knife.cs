@@ -21,6 +21,6 @@ public class Knife : MonoBehaviour, IMeleeWeapon
             return;
 
         var target = targets.First();
-        target.TakeDamage(Damage);
+        target.TakeDamage(new DamageInfo(Damage));
     }
 }

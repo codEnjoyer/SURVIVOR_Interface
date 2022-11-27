@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ManBody: Body
+public class ManBody : Body
 {
     public readonly ManHead head;
     public readonly ManChest chest;
     public readonly ManStomach stomach;
-    public readonly ManArm leftArm ;
+    public readonly ManArm leftArm;
     public readonly ManArm rightArm;
     public readonly ManLeg leftLeg;
     public readonly ManLeg rightLeg;
@@ -24,8 +24,8 @@ public class ManBody: Body
         rightArm = new ManArm(this);
         leftLeg = new ManLeg(this);
         rightLeg = new ManLeg(this);
-        
-        BodyParts = new List<BodyPart>{head, chest, stomach, leftArm, rightArm, leftLeg, rightLeg};
+
+        BodyParts = new List<BodyPart> {head, chest, stomach, leftArm, rightArm, leftLeg, rightLeg};
         CriticalLoses = BodyParts.Count;
         Energy = MaxEnergy;
         Hunger = MaxHunger;
@@ -36,6 +36,7 @@ public class ManBody: Body
     public const int MaxHunger = 10;
     public const int MaxWater = 10;
     private int energy;
+
     public int Energy
     {
         get => energy;
@@ -50,11 +51,13 @@ public class ManBody: Body
                 energy = MaxEnergy;
             else
                 energy = value;
+
             EnergyChange?.Invoke(energy);
         }
     }
 
     private int hunger;
+
     public int Hunger
     {
         get => hunger;
@@ -69,6 +72,7 @@ public class ManBody: Body
                 hunger = MaxHunger;
             else
                 hunger = value;
+
             HungerChange?.Invoke(hunger);
         }
     }
@@ -89,6 +93,7 @@ public class ManBody: Body
                 water = MaxWater;
             else
                 water = value;
+
             WaterChange?.Invoke(water);
         }
     }
@@ -96,7 +101,7 @@ public class ManBody: Body
     public event Action<Health> PlayerTired;
     public event Action<Health> PlayerHungry;
     public event Action<Health> PlayerThirsty;
-    
+
     public event Action<int> EnergyChange;
     public event Action<int> HungerChange;
     public event Action<int> WaterChange;
