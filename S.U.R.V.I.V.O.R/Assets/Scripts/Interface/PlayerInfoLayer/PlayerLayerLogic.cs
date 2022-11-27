@@ -153,7 +153,7 @@ public class PlayerLayerLogic : MonoBehaviour
     
     private void UpdateAllInventories()
     {
-        if (CurrentCharacter.body.chest.Jacket != null)
+        if (jacketCell.PlacedItem != null)
         {
             jacketInventory.ChangeState(jacketCell.PlacedItem.GetComponent<Clothes>().Inventory);
         }
@@ -169,29 +169,35 @@ public class PlayerLayerLogic : MonoBehaviour
         {
             pantsInventory.ChangeState(pantsCell.PlacedItem.GetComponent<Clothes>().Inventory);
         }
+        //TODO если вещи в спец слоте нету, то вместо инвенторя отрисовать замочек
     }
 
     private void PlaceAllItems()
     {
-        if (CurrentCharacter.body.chest.Jacket != null)
-            jacketCell.PlaceItem(CurrentCharacter.body.chest.Jacket.gameObject.GetComponent<BaseItem>());
-        if (CurrentCharacter.body.chest.Vest != null)
-            vestCell.PlaceItem(CurrentCharacter.body.chest.Vest.gameObject.GetComponent<BaseItem>());
-        if (CurrentCharacter.body.chest.Backpack != null)
-            backpackCell.PlaceItem(CurrentCharacter.body.chest.Backpack.gameObject.GetComponent<BaseItem>());
-        if (CurrentCharacter.body.leftLeg.Pants != null)
-            pantsCell.PlaceItem(CurrentCharacter.body.leftLeg.Pants.gameObject.GetComponent<BaseItem>());
-        if (CurrentCharacter.body.head.Hat != null)
-            hatCell.PlaceItem(CurrentCharacter.body.head.Hat.gameObject.GetComponent<BaseItem>());
-        if (CurrentCharacter.body.chest.Underwear != null)
-            underwearCell.PlaceItem(CurrentCharacter.body.chest.Underwear.gameObject.GetComponent<BaseItem>());
-        if (CurrentCharacter.body.leftLeg.Boots != null)
-            bootsCell.PlaceItem(CurrentCharacter.body.leftLeg.Boots.gameObject.GetComponent<BaseItem>());
+        CheckClothCellAfterWindowOpen(CurrentCharacter.body.chest.Jacket, jacketCell);
+        CheckClothCellAfterWindowOpen(CurrentCharacter.body.chest.Backpack, backpackCell);
+        CheckClothCellAfterWindowOpen(CurrentCharacter.body.leftLeg.Pants, pantsCell);
+        CheckClothCellAfterWindowOpen(CurrentCharacter.body.head.Hat, hatCell);
+        CheckClothCellAfterWindowOpen(CurrentCharacter.body.chest.Underwear, underwearCell);
+        CheckClothCellAfterWindowOpen(CurrentCharacter.body.leftLeg.Boots, bootsCell);
     }
 
+    private void CheckClothCellAfterWindowOpen(Clothes cloth, SpecialCell cell)
+    {
+        if (cloth != null)
+            cell.PlaceItem(cloth.gameObject.GetComponent<BaseItem>());
+        else
+            cell.PlaceNullItem();
+    }
+
+    private void CheckClothInventoryAfterWindowOpen(ItemGrid inventory, SpecialCell cell)
+    {
+
+    }
+    
     public void OnOpen()
     {
         PlaceAllItems();
-        UpdateAllInventories();
+        UpdateAllInventories();//ОБЯЗАТЕЛЬНО ПОСЛЕ РАЗМЕЩЕНИЯ ПРЕДМЕТОВ, В МЕТОДЕ ИДЕТ ПРОВЕРКА НА РАЗМЕЩЕНИЕ ПРЕДМЕТА В КЛЕТКЕ, А НЕ НА ОДЕЖДУ ПЕРСОНАЖА
     }
 }
