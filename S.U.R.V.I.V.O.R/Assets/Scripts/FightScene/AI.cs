@@ -27,10 +27,10 @@ public static class AI
     public static Decision MakeDecision(IEnumerable<GameObject> opponentsObj)
     {
         if (!StateController.CanChangePhase())
-            return new Decision(SceneController.State, null);
+            return new Decision(FightSceneController.State, null);
         opponents = GetOpponents(opponentsObj);
         SortOpponentsListByDistance();
-        var character = CurrentCharacterObj.GetComponent<Character>();
+        var character = CurrentCharacterObj.GetComponent<FightCharacter>();
 
         if(StateController.AvailablePhase[FightState.FightPhase])
         {

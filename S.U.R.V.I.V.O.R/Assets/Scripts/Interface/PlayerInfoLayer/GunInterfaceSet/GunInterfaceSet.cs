@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GunInterfaceSet : MonoBehaviour
 {
-    public FightCharacter CurrentCharacter { get; set; }
+    public Character CurrentCharacter { get; set; }
     [SerializeField]
     public SpecialCell gunSlot;
     [SerializeField]
