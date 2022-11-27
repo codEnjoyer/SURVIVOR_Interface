@@ -11,6 +11,8 @@ public class Fight: ScriptableObject
 
     public void Initialization()
     {
-        SceneManager.LoadScene((int) sceneName, LoadSceneMode.Single);
+        var data = new FightData(enemies, Game.Instance.ChosenGroup.currentGroupMembers);
+        SceneManager.LoadScene((int) sceneName);
+        FightSceneController.Instance.Initialization(data);
     }
 }

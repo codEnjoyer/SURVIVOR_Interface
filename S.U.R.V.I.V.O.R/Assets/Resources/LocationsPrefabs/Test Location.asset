@@ -27,4 +27,8 @@ MonoBehaviour:
     weightChance: 400
   - item: {fileID: -7828054832626531359, guid: 704f35796fa5065428db22cfffeadd51, type: 3}
     weightChance: 400
+  fightChancesList:
+  - fight: {fileID: 11400000, guid: d903b53a056813c478ecd771086b99c2, type: 2}
+    weightChance: 1
   locationName: "\u0422\u0435\u0441\u0442\u043E\u0432\u0430\u044F \u043B\u043E\u043A\u0430\u0446\u0438\u044F"
+  fightChance: 1

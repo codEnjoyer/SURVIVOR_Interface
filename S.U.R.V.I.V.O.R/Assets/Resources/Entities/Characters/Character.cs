@@ -13,9 +13,7 @@ public class Character : Entity
     public IMeleeWeapon MeleeWeapon { get; set; }
     public readonly Skills skills = new Skills();
     public readonly ManBody body = new ManBody();
-
-    public override float Initiative { get; }
-    public override int SpeedInFightScene { get; }
+    
     public override Body Body => body;
     public int Mobility => throw new NotImplementedException(); //Скорость передвижения на глобальной карте
     
