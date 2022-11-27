@@ -17,7 +17,6 @@ namespace Player
         void Start()
         {
             InputAggregator.OnTurnEndEvent += OnTurnEnd;
-            currentGroupMembers.Add(new Character());
         }
 
         public BaseItem Loot()

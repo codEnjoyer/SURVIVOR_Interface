@@ -38,6 +38,8 @@ public class FightCharacter : MonoBehaviour
 
     public void OnEnable()
     {
+        Debug.Log(Target);
+        Debug.Log(Target.Body);
         Target.Body.Died += OnDied;
     }
 

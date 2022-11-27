@@ -787,9 +787,7 @@ MonoBehaviour:
   MaxOnGlobalMapGroupEndurance: 10
   CurrentOnGlobalMapGroupEndurance: 10
   currentGroupMembers:
-  - sprite: {fileID: 21300000, guid: 89ff57b97afb46b4998ab4cfd8ace0e1, type: 3}
-    name: "\u0418\u0432\u0430\u043D"
-    surname: "\u041F\u0435\u0442\u0440\u043E\u0432"
+  - {fileID: 0}
 --- !u!114 &154339911
 MonoBehaviour:
   m_ObjectHideFlags: 0

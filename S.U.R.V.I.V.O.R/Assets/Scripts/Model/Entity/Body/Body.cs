@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-
+[Serializable]
 public abstract class Body : IAlive
 {
     private int counterForNumberLostBodyParts;
