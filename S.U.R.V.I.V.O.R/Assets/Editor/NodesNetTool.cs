@@ -18,18 +18,13 @@ public class NodesNetTool : EditorTool
     private List<Tuple<Vector3, Vector3>> Edges = new List<Tuple<Vector3, Vector3>>();
     private bool needDrawEdges = true;
 
-    public override GUIContent toolbarIcon
-    {
-        get 
+    public override GUIContent toolbarIcon =>
+        new GUIContent
         {
-            return new GUIContent
-            {
-                image = icon,
-                text = "Nodes Net Tool",
-                tooltip = "Создает сеть вершин по двум вершинам"
-            };
-        }
-    }
+            image = icon,
+            text = "Nodes Net Tool",
+            tooltip = "Создает сеть вершин по двум вершинам"
+        };
 
     public override void OnToolGUI(EditorWindow window)
     {

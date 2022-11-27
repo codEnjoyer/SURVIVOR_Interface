@@ -35,8 +35,6 @@ public class ManBody: Body
     public const int MaxEnergy = 10;
     public const int MaxHunger = 10;
     public const int MaxWater = 10;
-    public float Endurance => throw new NotImplementedException();
-
     private int energy;
     public int Energy
     {

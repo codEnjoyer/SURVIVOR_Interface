@@ -10,14 +10,14 @@ public class StateController : MonoBehaviour
     {
         if(CanChangePhase() && AvailablePhase[FightState.MovePhase])
         {
-            if(SceneController.State == FightState.MovePhase)
+            if(FightSceneController.State == FightState.MovePhase)
             {
-                SceneController.State = FightState.Sleeping;
+                FightSceneController.State = FightState.Sleeping;
                 Debug.Log("Cancel Move Phase");
             }
             else
             {
-                SceneController.State = FightState.MovePhase;
+                FightSceneController.State = FightState.MovePhase;
                 Debug.Log("Move Phase");
             }
         }
@@ -27,14 +27,14 @@ public class StateController : MonoBehaviour
     {
         if(CanChangePhase() && AvailablePhase[FightState.ShootPhase])
         {
-            if(SceneController.State == FightState.ShootPhase)
+            if(FightSceneController.State == FightState.ShootPhase)
             {
-                SceneController.State = FightState.Sleeping;
+                FightSceneController.State = FightState.Sleeping;
                 Debug.Log("Cancel Shoot Phase");
             }
             else
             {
-                SceneController.State = FightState.ShootPhase;
+                FightSceneController.State = FightState.ShootPhase;
                 Debug.Log("Shoot Phase");
             }
         }
@@ -44,14 +44,14 @@ public class StateController : MonoBehaviour
     {
         if(CanChangePhase() && AvailablePhase[FightState.FightPhase])
         {
-            if(SceneController.State == FightState.FightPhase)
+            if(FightSceneController.State == FightState.FightPhase)
             {
-                SceneController.State = FightState.Sleeping;
+                FightSceneController.State = FightState.Sleeping;
                 Debug.Log("Cancel Fight Phase");
             }
             else
             {
-                SceneController.State = FightState.FightPhase;
+                FightSceneController.State = FightState.FightPhase;
                 Debug.Log("Fight Phase");
             }
         }
@@ -61,7 +61,7 @@ public class StateController : MonoBehaviour
     {
         if(CanChangePhase())
         {
-            SceneController.State = FightState.EndTurnPhase;
+            FightSceneController.State = FightState.EndTurnPhase;
             Debug.Log("End Phase");
         }
     }
@@ -75,9 +75,9 @@ public class StateController : MonoBehaviour
 
     public static bool CanChangePhase()
     {
-        return SceneController.State == FightState.Sleeping
-            || SceneController.State == FightState.ShootPhase
-            || SceneController.State == FightState.MovePhase
-            || SceneController.State == FightState.FightPhase;
+        return FightSceneController.State == FightState.Sleeping
+            || FightSceneController.State == FightState.ShootPhase
+            || FightSceneController.State == FightState.MovePhase
+            || FightSceneController.State == FightState.FightPhase;
     }
 }

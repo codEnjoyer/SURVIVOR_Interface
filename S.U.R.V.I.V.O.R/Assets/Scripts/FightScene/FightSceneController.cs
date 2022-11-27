@@ -8,8 +8,9 @@ using System.Linq;
 using UnityEngine.SceneManagement;
 using UnityEditor.SceneTemplate;
 
-public class SceneController : MonoBehaviour
+public class FightSceneController : MonoBehaviour
 {
+    public static FightSceneController Instance { get; private set; }
     public List<GameObject> Characters = new List<GameObject>();
     public GameObject CharacterObj;
 
@@ -23,6 +24,16 @@ public class SceneController : MonoBehaviour
     private static Queue<GameObject> CharactersQueue = new Queue<GameObject>();
     private GameObject currentCharacterNodeObj;
 
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance == this)
+            Destroy(gameObject);
+    }
+    
     private void Start() 
     {
         InitializeCharacters();
@@ -118,12 +129,12 @@ public class SceneController : MonoBehaviour
         if(State == FightState.Fighting)
         {
             Debug.Log("Hit");
-            CharacterObj.GetComponent<FightCharacter>().MakeHit();
+           // CharacterObj.GetComponent<FightCharacter>().MakeHit();
             CharacterObj.GetComponent<FightCharacter>().TargetToHit = null;
             DeleteDeathCharacterFromQueue();
         }
 
-        SceneController.State = FightState.Sleeping;
+        FightSceneController.State = FightState.Sleeping;
         Debug.Log("Sleeping Phase");
     }
 
@@ -190,7 +201,7 @@ public class SceneController : MonoBehaviour
             {
                 Debug.Log("Shoot");
                 var character = CharacterObj.GetComponent<FightCharacter>();
-                character.MakeShoot(targetObj, "Body");
+               // character.MakeShoot(targetObj, "Body");
                 State = FightState.Sleeping;
                 StateController.AvailablePhase[FightState.FightPhase] = false;
                 StateController.AvailablePhase[FightState.ShootPhase] = false;
@@ -206,6 +217,19 @@ public class SceneController : MonoBehaviour
         {
             var charObj = CharactersQueue.Dequeue();
             if (charObj != null && charObj.GetComponent<FightCharacter>().Alive)
+                newQueue.Enqueue(charObj);
+        }
+
+        CharactersQueue = newQueue;
+    }
+    
+    public void DeleteDeathCharacterFromQueue(FightCharacter character)
+    {
+        var newQueue = new Queue<GameObject>();
+        while(CharactersQueue.Count > 0)
+        {
+            var charObj = CharactersQueue.Dequeue();
+            if (charObj != null && charObj.GetComponent<FightCharacter>() != character)
                 newQueue.Enqueue(charObj);
         }
 
