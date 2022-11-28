@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-public class ManLeg : BodyPart
+public sealed class ManLeg : BodyPart
 {
     public Clothes Pants { get; set; }
 

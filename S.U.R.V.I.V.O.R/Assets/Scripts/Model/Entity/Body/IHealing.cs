@@ -1,5 +1,5 @@
 ﻿
 public interface IHealing
 {
-    public void Healing(float heal);
+    public void Healing(HealInfo heal);
 }

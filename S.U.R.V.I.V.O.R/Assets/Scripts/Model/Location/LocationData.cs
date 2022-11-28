@@ -42,13 +42,15 @@ public class LocationData : ScriptableObject
 
     public BaseItem GetLoot() => itemChances[rnd.Next(itemChances.Length)];
 
-    public void CheckFight()
+    public bool CheckFight()
     {
         if (rnd.NextDouble() < fightChance)
         {
-            Debug.Log("!");
             var fight = fightChances[rnd.Next(fightChances.Length)];
             fight.Initialization();
+            return true;
         }
+
+        return false;
     }
 }

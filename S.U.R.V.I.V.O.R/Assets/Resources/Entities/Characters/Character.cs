@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
 public class Character : Entity
 {
-    public Sprite Sprite { get; set; }
-    public string Name { get; set; }
-    public string Surname { get; set; }
+    
+    [SerializeField] private Sprite sprite; 
+    [SerializeField] private string firstName;
+    [SerializeField] private string surname;
+
+    public Sprite Sprite => sprite;
+    public string FirstName => firstName;
+    public string Surname => surname;
+
     public IGun PrimaryGun { get; set; }
     public IGun SecondaryGun { get; set; }
     public IMeleeWeapon MeleeWeapon { get; set; }

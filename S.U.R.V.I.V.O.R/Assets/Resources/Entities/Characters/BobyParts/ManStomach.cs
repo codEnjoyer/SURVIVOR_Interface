@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class ManStomach : BodyPart
+public sealed class ManStomach : BodyPart
 {
     public ManStomach(Body body) : base(body)
     {
