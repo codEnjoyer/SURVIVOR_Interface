@@ -22,13 +22,14 @@ public class BaseItem : MonoBehaviour
     public Size size => itemData.Size;
     public float Weight => itemData.Weight;
     public BaseItemData ItemData => itemData;
+    public void SetItemData(BaseItemData data) => itemData = data;
 
     public SpecialCellType SpecialCellType => itemData.SpecialCellType;
 
     public void Awake()
     {
-        gameObject.AddComponent<Image>().sprite = itemData.Icon;
-        gameObject.GetComponent<Image>().raycastTarget = false;
+        // gameObject.AddComponent<Image>().sprite = itemData.Icon;
+        // gameObject.GetComponent<Image>().raycastTarget = false;
     }
 
     public void Set(BaseItemData itemData)

@@ -12,7 +12,7 @@ namespace GoogleSheetLink
     {
         private readonly string[] scopes = {SheetsService.Scope.Spreadsheets};
         private const string ApplicationName = "SURVIVOR";
-        private string spreadsheetId;
+        private readonly string spreadsheetId;
         private SheetsService Service { get; set; }
         
         public GoogleSheetHelper(string spreadsheetId, string jsonKeyFileName)
