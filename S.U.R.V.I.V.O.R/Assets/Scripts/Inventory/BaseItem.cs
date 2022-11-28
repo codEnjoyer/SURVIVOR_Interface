@@ -28,7 +28,6 @@ public class BaseItem : MonoBehaviour
     public void Awake()
     {
         gameObject.AddComponent<Image>().sprite = itemData.Icon;
-        gameObject.GetComponent<Image>().raycastTarget = false;
     }
 
     public void Set(BaseItemData itemData)

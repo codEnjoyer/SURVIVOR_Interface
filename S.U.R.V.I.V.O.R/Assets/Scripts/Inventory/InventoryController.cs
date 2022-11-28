@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class InventoryController : MonoBehaviour
@@ -21,7 +22,6 @@ public class InventoryController : MonoBehaviour
     }
 
     public BaseItem selectedItem;
-
     private BaseItem overlapItem;
     private RectTransform rectTransform;
     
