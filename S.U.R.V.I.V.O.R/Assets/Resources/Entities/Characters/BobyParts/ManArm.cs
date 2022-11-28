@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 
-public class ManArm : BodyPart
+public sealed class ManArm : BodyPart
 {
     public ManArm(Body body) : base(body)
     {
         MaxHp = 100;
+        Hp = MaxHp;
+        Size = 100;
+        Clothes = null;
     }
 
     public override int MaxHp { get; }

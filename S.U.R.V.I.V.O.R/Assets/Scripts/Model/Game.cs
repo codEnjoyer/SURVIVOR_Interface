@@ -14,5 +14,6 @@ public class Game: MonoBehaviour
             Instance = this;
         else if (Instance == this)
             Destroy(gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 }

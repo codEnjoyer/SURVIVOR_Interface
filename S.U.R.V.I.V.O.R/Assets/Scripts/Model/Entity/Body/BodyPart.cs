@@ -40,7 +40,7 @@ public abstract class BodyPart : IAlive
         }
     }
 
-    public void Healing(float heal)
+    public void Healing(HealInfo heal)
     {
         throw new NotImplementedException();
     }

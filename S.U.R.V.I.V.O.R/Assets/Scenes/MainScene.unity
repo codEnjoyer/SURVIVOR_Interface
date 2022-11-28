@@ -160,13 +160,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 11603914}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -22.433805, y: 0, z: 43.345284}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -24.181072, y: -22.605225, z: 47.20879}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_Father: {fileID: 2048833773}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &16677849
 GameObject:
@@ -820,7 +820,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 154339909}
         m_TargetAssemblyTypeName: Player.GroupMovementLogic, Assembly-CSharp
-        m_MethodName: StopMove
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1292,6 +1292,10 @@ PrefabInstance:
     - target: {fileID: 6139962566568014573, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
       propertyPath: m_Name
       value: BacpackInventory
+      objectReference: {fileID: 0}
+    - target: {fileID: 6139962566568014573, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
@@ -2177,7 +2181,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 387845125}
   m_CullTransparentMesh: 1
---- !u!1 &400098668
+--- !u!1 &434975902
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2185,29 +2189,43 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 400098669}
+  - component: {fileID: 434975903}
+  - component: {fileID: 434975904}
   m_Layer: 0
-  m_Name: Bar
+  m_Name: Game
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &400098669
+--- !u!4 &434975903
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 400098668}
+  m_GameObject: {fileID: 434975902}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -24.723106, y: -7.877405, z: 36.175026}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_Father: {fileID: 2048833773}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &434975904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 434975902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd15d339090e4eaf91c478dcd232d3a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chosenGroup: {fileID: 154339910}
 --- !u!1 &443994103
 GameObject:
   m_ObjectHideFlags: 0
@@ -7484,6 +7502,10 @@ PrefabInstance:
       propertyPath: inventoryGridBG
       value: 
       objectReference: {fileID: 1045959707}
+    - target: {fileID: 6139962566206197590, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6139962566206197593, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -7603,6 +7625,10 @@ PrefabInstance:
     - target: {fileID: 6139962566568014573, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
       propertyPath: m_Name
       value: JacketInventory
+      objectReference: {fileID: 0}
+    - target: {fileID: 6139962566568014573, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
@@ -8271,6 +8297,10 @@ PrefabInstance:
     - target: {fileID: 6139962566568014573, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
       propertyPath: m_Name
       value: PantsInventory
+      objectReference: {fileID: 0}
+    - target: {fileID: 6139962566568014573, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
@@ -13202,7 +13232,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2048833773}
-  - component: {fileID: 2048833774}
   m_Layer: 0
   m_Name: GameLogic
   m_TagString: Untagged
@@ -13226,22 +13255,11 @@ Transform:
   - {fileID: 279836420}
   - {fileID: 878336098}
   - {fileID: 1668062273}
+  - {fileID: 11603916}
+  - {fileID: 434975903}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2048833774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2048833772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd15d339090e4eaf91c478dcd232d3a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chosenGroup: {fileID: 154339910}
 --- !u!1 &2050006518
 GameObject:
   m_ObjectHideFlags: 0
@@ -14058,6 +14076,10 @@ PrefabInstance:
     - target: {fileID: 6139962566568014573, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
       propertyPath: m_Name
       value: VestInventory
+      objectReference: {fileID: 0}
+    - target: {fileID: 6139962566568014573, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8fd433874763936428da3d4bee0636ad, type: 3}

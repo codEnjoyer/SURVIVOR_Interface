@@ -32,7 +32,7 @@ public abstract class Body : IAlive
         throw new NotImplementedException();
     }
 
-    public void Healing(float heal)
+    public void Healing(HealInfo heal)
     {
         throw new NotImplementedException();
     }
