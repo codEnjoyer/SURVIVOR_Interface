@@ -24,6 +24,7 @@ public class InterfaceGruopLogicController : MonoBehaviour
     public UnityEvent OnGroupLayerOpen = new();
     public void Start()
     {
+        Debug.Log(currentGroup.currentGroupMembers[0]);
         FirstPlayerLayer.CurrentCharacter = currentGroup.currentGroupMembers[0];
         GroupFirstPlayerLayer.CurrentCharacter = currentGroup.currentGroupMembers[0];
         locationInventoryManager.group = currentGroup;

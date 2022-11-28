@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
-using Random = System.Random;
 
 public class Location: MonoBehaviour
 {
-    private static readonly Random rnd = new();
     [SerializeField] private LocationData data;
 
     public LocationData Data => data;
@@ -15,7 +13,4 @@ public class Location: MonoBehaviour
             Debug.Log("У ноды нет локации!");
         }
     }
-
-    public BaseItem GetLoot() => data.ChancesList[rnd.Next(data.ChancesList.Length)];
-
 }

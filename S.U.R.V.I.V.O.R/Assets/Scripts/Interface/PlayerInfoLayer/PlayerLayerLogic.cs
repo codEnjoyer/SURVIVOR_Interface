@@ -45,7 +45,7 @@ public class PlayerLayerLogic : MonoBehaviour
         pantsInventory.ChangeState(new InventoryState(emptyInventorySize));
         
         playerCharacteristicsPanel.Player = CurrentCharacter;
-        nameTextBox.text = CurrentCharacter.Name;
+        nameTextBox.text = CurrentCharacter.FirstName;
         
         jacketCell.OnItemPlaced.AddListener(OnJacketPlaced);
         jacketCell.OnItemTaked.AddListener(OnJacketTaken);
@@ -71,12 +71,16 @@ public class PlayerLayerLogic : MonoBehaviour
 
     private void OnJacketPlaced()
     {
+        Debug.Log("jacketPlaced");
+
         CurrentCharacter.body.chest.Jacket = jacketCell.PlacedItem.GetComponent<Clothes>();
         jacketInventory.ChangeState(jacketCell.PlacedItem.GetComponent<Clothes>().Inventory);
     }
     
     private void OnJacketTaken()
     {
+        Debug.Log("jacketTaken");
+
         CurrentCharacter.body.chest.Jacket = null;
         jacketInventory.ChangeState(new InventoryState(emptyInventorySize));
     }

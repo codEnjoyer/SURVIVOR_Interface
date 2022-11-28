@@ -12,6 +12,8 @@ public class Automat: MonoBehaviour, IGun
     public bool IsFirstGun => true;
     public GunData Data => data;
     public ICollection<GunModule> GunModules => gunModule;
+    public float AttackDistance => 100;
+
     public void Attack(List<BodyPart> targets, float distance, Skills skills)
     {
         throw new NotImplementedException();

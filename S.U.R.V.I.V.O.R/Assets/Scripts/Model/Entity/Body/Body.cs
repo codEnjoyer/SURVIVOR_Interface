@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-
+[Serializable]
 public abstract class Body : IAlive
 {
     private int counterForNumberLostBodyParts;
@@ -27,12 +27,12 @@ public abstract class Body : IAlive
             Died?.Invoke();
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(DamageInfo damage)
     {
         throw new NotImplementedException();
     }
 
-    public void Healing(float heal)
+    public void Healing(HealInfo heal)
     {
         throw new NotImplementedException();
     }

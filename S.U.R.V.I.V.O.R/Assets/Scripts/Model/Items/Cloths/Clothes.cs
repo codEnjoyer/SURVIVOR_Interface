@@ -15,7 +15,7 @@ public class Clothes : MonoBehaviour
 
     public float TotalWeight => baseItem.Weight + inventory.GetItems.Sum(item => item.Weight);
 
-    public float CalculateBlockedDamage(Shoot shoot)
+    public float CalculateBlockedDamage(DamageInfo damageInfo)
     {
         //TODO расчитать колличество заблокированного урона
         throw new NotImplementedException();
