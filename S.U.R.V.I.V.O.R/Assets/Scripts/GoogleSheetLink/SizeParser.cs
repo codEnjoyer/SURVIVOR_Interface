@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace GoogleSheetLink
 {
@@ -25,12 +26,16 @@ namespace GoogleSheetLink
 
         public Size Parse(string sizeObjectName)
         {
-            sizeObjectName = $"{sizeObjectName}.asset";
-            var objPath = $@"{absolutePath}/{sizeObjectName}";
-            if (sizeObjectsFileNames.Contains(sizeObjectName))
-                return (Size) Resources.Load(objPath);
+            var sizeObjectFileName = $"{sizeObjectName}.asset";
+            var objPath = $@"{absolutePath}\{sizeObjectFileName}";
+            if (sizeObjectsFileNames.Any(path => string.CompareOrdinal(path, objPath) == 0))
+            {
+                var a = Resources.Load<Size>($@"InventorySizeObjects/{sizeObjectName}");
+                Debug.Log(a);
+                return a;
+            }
             else
-                return CreateSizeObject(sizeObjectName);
+                return CreateSizeObject(sizeObjectFileName);
         }
 
         private Size CreateSizeObject(string sizeObjectName)
@@ -39,10 +44,10 @@ namespace GoogleSheetLink
                 .Select(x => int.Parse(x.ToString()))
                 .ToArray();
             if (findData.Length != 2)
-                throw new ArgumentException("Неверное форматирование размера предмета (Size). Объект не был создан.");
-            var sizeObj = new Size(findData[0], findData[1]);
+                throw new ArgumentException($"Неверное форматирование размера предмета ({sizeObjectName}). Объект не был создан.");
+            var sizeObj = Object.Instantiate(new Size(findData[0], findData[1]));
 
-            var objPath = AssetDatabase.GenerateUniqueAssetPath(relativePath);
+            var objPath = AssetDatabase.GenerateUniqueAssetPath($"{relativePath}/{sizeObjectName}");
             AssetDatabase.CreateAsset(sizeObj, objPath);
             return sizeObj;
         }

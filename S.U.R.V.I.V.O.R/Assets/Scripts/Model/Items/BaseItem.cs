@@ -1,12 +1,12 @@
 using System;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
 
 public class BaseItem : MonoBehaviour
 {
-    [SerializeField] private BaseItemData itemData;
-    
+    [SerializeField] public BaseItemData itemData;
     public int OnGridPositionX { get; set; }
     public int OnGridPositionY { get; set; }
 
@@ -23,10 +23,18 @@ public class BaseItem : MonoBehaviour
     public float Weight => itemData.Weight;
     public BaseItemData ItemData => itemData;
 
+    public void SetBaseItemData(BaseItemData newBaseItemData)
+    {
+        itemData = newBaseItemData;
+    }
+
     public SpecialCellType SpecialCellType => itemData.SpecialCellType;
 
     public void Awake()
     {
+        if (itemData == null || itemData.Icon == null)
+            return;
+        
         gameObject.AddComponent<Image>().sprite = itemData.Icon;
         gameObject.GetComponent<Image>().raycastTarget = false;
     }
