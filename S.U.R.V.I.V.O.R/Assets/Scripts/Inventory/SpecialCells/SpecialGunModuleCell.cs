@@ -15,9 +15,13 @@ public class SpecialGunModuleCell : SpecialCell
         var itemRectTransform = placedItem.GetComponent<RectTransform>();
         itemRectTransform.SetParent(GetComponent<RectTransform>());
         itemRectTransform.localPosition = new Vector2(0,0);
+        
         ChangeItemSize(itemRectTransform,GetComponent<RectTransform>());
+        
         InventoryController.SelectedItem = null;
+        
         OnItemPlaced.Invoke();
+        
         gunModules.Add(placedItem.GetComponent<GunModule>());
     }
 
@@ -27,9 +31,13 @@ public class SpecialGunModuleCell : SpecialCell
         PlacedItem.GetComponent<RectTransform>().sizeDelta = PlacedItem.onAwakeRectTransformSize;
         PlacedItem.GetComponent<RectTransform>().localScale = PlacedItem.onAwakeRectTransformScale;
         PlacedItem.GetComponent<RectTransform>().SetParent(canvasTransform);
+        
         InventoryController.PickUpItem(PlacedItem);
+
         OnItemTaked.Invoke();
+        
         PlaceNullItem();
+        
         gunModules.Remove(placedItem.GetComponent<GunModule>());
     }
 

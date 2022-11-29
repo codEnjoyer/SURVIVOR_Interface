@@ -6,11 +6,39 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public enum ClothType
+{
+    Jacket,
+    Backpack,
+    Boots,
+    Underwear,
+    Vest,
+    Hat,
+    Pants
+}
+    
+public enum GunType
+{
+    PrimaryGun,
+    SecondaryGun,
+    MeleeWeapon,
+}
+    
+public enum GunModuleType
+{
+    Grip,
+    Spring,
+    Shutter,
+    Scope,
+    Suppressor,
+    Tactical
+}
+
+public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     protected InventoryController InventoryController { get; private set; }
     protected BaseItem placedItem;
-    protected bool isPointerOverCell;
+    private bool isPointerOverCell;
     public BaseItem PlacedItem => placedItem;
     
     public UnityEvent OnItemPlaced = new ();
@@ -44,11 +72,8 @@ public class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             }
         }
     }
-    
-    public virtual void PlaceItem(BaseItem item)
-    {
-        return;
-    }
+
+    public abstract void PlaceItem(BaseItem item);
 
     public void PlaceNullItem()
     {
@@ -56,10 +81,7 @@ public class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         
     }
 
-    public virtual void GiveItem()
-    {
-        return;
-    }
+    public abstract void GiveItem();
 
     protected void ChangeItemSize(RectTransform transform, RectTransform cellTransform)
     {

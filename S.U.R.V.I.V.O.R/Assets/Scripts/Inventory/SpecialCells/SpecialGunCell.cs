@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpecialGunCell : SpecialCell
 {
     [SerializeField] private Transform canvasTransform;
-    [SerializeField] private SpecialGunCellType cellType;
+    [SerializeField] private GunType type;
     public override void PlaceItem(BaseItem item)
     {
         if (item.rotated)
@@ -34,6 +34,6 @@ public class SpecialGunCell : SpecialCell
     {
         var x = InventoryController.SelectedItem.GetComponent<Gun>();
         return InventoryController.SelectedItem.GetComponent<Gun>() != null &&
-               InventoryController.SelectedItem.GetComponent<Gun>().Data.GunCellType == cellType;
+               InventoryController.SelectedItem.GetComponent<Gun>().Data.GunType == type;
     }
 }

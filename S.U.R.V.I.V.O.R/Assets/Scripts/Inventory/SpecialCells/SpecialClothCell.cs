@@ -2,39 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
-public enum SpecialClothCellType
-{
-    Jacket,
-    Backpack,
-    Boots,
-    Underwear,
-    Vest,
-    Hat,
-    Pants
-}
-    
-public enum SpecialGunCellType
-{
-    PrimaryGun,
-    SecondaryGun,
-    MeleeWeapon,
-}
-    
-public enum GunModuleType
-{
-    Grip,
-    Spring,
-    Shutter,
-    Scope,
-    Suppressor,
-    Tactical
-}
 public class SpecialClothCell : SpecialCell
 {
     [SerializeField] private Transform canvasTransform;
-    [SerializeField] private SpecialClothCellType cellType;
-    
+    [SerializeField] private ClothType type;
     public override void PlaceItem(BaseItem item)
     {
         if (item.rotated)
@@ -62,6 +33,6 @@ public class SpecialClothCell : SpecialCell
     protected override bool CanInsertIntoSlot()
     {
         return InventoryController.SelectedItem.GetComponent<Clothes>() &&
-               InventoryController.SelectedItem.GetComponent<Clothes>().Data.SpecialClothCellType == cellType;
+               InventoryController.SelectedItem.GetComponent<Clothes>().Data.ClothType == type;
     }
 }

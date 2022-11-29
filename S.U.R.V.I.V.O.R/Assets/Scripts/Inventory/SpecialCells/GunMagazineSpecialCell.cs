@@ -19,6 +19,7 @@ public class GunMagazineSpecialCell : SpecialCell
         ChangeItemSize(itemRectTransform,GetComponent<RectTransform>());
         
         InventoryController.SelectedItem = null;
+        
         OnItemPlaced.Invoke();
 
         gunCell.PlacedItem.GetComponent<Gun>().Reload(PlacedItem.GetComponent<Magazine>());

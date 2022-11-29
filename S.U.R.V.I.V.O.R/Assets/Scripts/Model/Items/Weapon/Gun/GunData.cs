@@ -10,7 +10,7 @@ public class GunData : ScriptableObject
     [SerializeField] private float ergonomics; //Чем выше, тем больше негативное влияние на Mobility класса персонажа
     [SerializeField] private SingleAmmo ammoType;
     [SerializeField] private Caliber caliber;
-    [SerializeField] private SpecialGunCellType gunCellType;
+    [SerializeField] private GunType gunType;
     
     public int FireRate => fireRate;
     public float Accuracy => accuracy;
@@ -19,5 +19,5 @@ public class GunData : ScriptableObject
     public float Ergonomics => ergonomics; 
     public SingleAmmo AmmoType => ammoType;
     public Caliber Caliber => caliber;
-    public SpecialGunCellType GunCellType => gunCellType;
+    public GunType GunType => gunType;
 }

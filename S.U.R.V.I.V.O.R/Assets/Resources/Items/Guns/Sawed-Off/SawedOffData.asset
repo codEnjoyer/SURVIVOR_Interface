@@ -19,4 +19,4 @@ MonoBehaviour:
   ergonomics: 0
   ammoType: {fileID: 0}
   caliber: 0
-  gunCellType: 1
+  gunType: 1
