@@ -15,7 +15,7 @@ public class InventoryHighlight : MonoBehaviour
 
     public void SetPosition(ItemGrid targetGrid, BaseItem targetItem)
     {
-        SetPosition(targetGrid, targetItem, targetItem.onGridPositionX, targetItem.onGridPositionY);
+        SetPosition(targetGrid, targetItem, targetItem.OnGridPositionX, targetItem.OnGridPositionY);
     }
 
     public void SetPosition(ItemGrid targetGrid, BaseItem targetItem, int posX, int posY)

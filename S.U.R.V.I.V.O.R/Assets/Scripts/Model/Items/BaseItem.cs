@@ -7,12 +7,12 @@ public class BaseItem : MonoBehaviour
 {
     [SerializeField] private BaseItemData itemData;
     
-    public int onGridPositionX { get; set; }
-    public int onGridPositionY { get; set; }
+    public int OnGridPositionX { get; set; }
+    public int OnGridPositionY { get; set; }
 
-    public Vector3 onAwakeRectTransformSize { get; set; }
+    public Vector3 OnAwakeRectTransformSize { get; set; }
     
-    public Vector3 onAwakeRectTransformScale { get; set; }
+    public Vector3 OnAwakeRectTransformScale { get; set; }
     
     public int Height => !rotated ? size.Height : size.Width;
 
@@ -38,8 +38,8 @@ public class BaseItem : MonoBehaviour
          var size = new Vector2(itemData.Size.Width * ItemGrid.TileSize * scaleFactor,
              itemData.Size.Height * ItemGrid.TileSize * scaleFactor);
          rt.sizeDelta = size;
-         onAwakeRectTransformScale = rt.localScale;
-         onAwakeRectTransformSize = rt.sizeDelta;
+         OnAwakeRectTransformScale = rt.localScale;
+         OnAwakeRectTransformSize = rt.sizeDelta;
      }
 
     public void Rotated()
