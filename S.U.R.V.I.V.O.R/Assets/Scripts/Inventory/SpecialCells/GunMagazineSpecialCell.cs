@@ -29,8 +29,8 @@ public class GunMagazineSpecialCell : SpecialCell
     {
         if (PlacedItem == null) return;
         
-        PlacedItem.GetComponent<RectTransform>().sizeDelta = PlacedItem.onAwakeRectTransformSize;
-        PlacedItem.GetComponent<RectTransform>().localScale = PlacedItem.onAwakeRectTransformScale;
+        PlacedItem.GetComponent<RectTransform>().sizeDelta = PlacedItem.OnAwakeRectTransformSize;
+        PlacedItem.GetComponent<RectTransform>().localScale = PlacedItem.OnAwakeRectTransformScale;
         PlacedItem.GetComponent<RectTransform>().SetParent(canvasTransform);
         
         InventoryController.PickUpItem(PlacedItem);

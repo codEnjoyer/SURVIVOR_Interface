@@ -85,14 +85,14 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
 
     protected void ChangeItemSize(RectTransform transform, RectTransform cellTransform)
     {
-        if (placedItem.onAwakeRectTransformSize.x * placedItem.onAwakeRectTransformScale.x > cellTransform.sizeDelta.x * cellTransform.localScale.x)
+        if (placedItem.OnAwakeRectTransformSize.x * placedItem.OnAwakeRectTransformScale.x > cellTransform.sizeDelta.x * cellTransform.localScale.x)
         {
-            transform.sizeDelta = new Vector2(cellTransform.sizeDelta.x * placedItem.onAwakeRectTransformScale.x,placedItem.onAwakeRectTransformSize.y * placedItem.onAwakeRectTransformScale.y/(placedItem.onAwakeRectTransformSize.x * placedItem.onAwakeRectTransformScale.x/cellTransform.sizeDelta.x * cellTransform.localScale.x));
+            transform.sizeDelta = new Vector2(cellTransform.sizeDelta.x * placedItem.OnAwakeRectTransformScale.x,placedItem.OnAwakeRectTransformSize.y * placedItem.OnAwakeRectTransformScale.y/(placedItem.OnAwakeRectTransformSize.x * placedItem.OnAwakeRectTransformScale.x/cellTransform.sizeDelta.x * cellTransform.localScale.x));
             transform.localScale = new Vector3(1, 1, 1);
         }
-        if (placedItem.onAwakeRectTransformSize.y * placedItem.onAwakeRectTransformScale.y > cellTransform.sizeDelta.y * cellTransform.localScale.y)
+        if (placedItem.OnAwakeRectTransformSize.y * placedItem.OnAwakeRectTransformScale.y > cellTransform.sizeDelta.y * cellTransform.localScale.y)
         {
-            transform.sizeDelta = new Vector2(placedItem.onAwakeRectTransformSize.x * placedItem.onAwakeRectTransformScale.x/(placedItem.onAwakeRectTransformSize.y * placedItem.onAwakeRectTransformScale.y/cellTransform.sizeDelta.y * cellTransform.localScale.y),cellTransform.sizeDelta.y * cellTransform.localScale.y);
+            transform.sizeDelta = new Vector2(placedItem.OnAwakeRectTransformSize.x * placedItem.OnAwakeRectTransformScale.x/(placedItem.OnAwakeRectTransformSize.y * placedItem.OnAwakeRectTransformScale.y/cellTransform.sizeDelta.y * cellTransform.localScale.y),cellTransform.sizeDelta.y * cellTransform.localScale.y);
             transform.localScale = new Vector3(1, 1, 1);
         }
     }

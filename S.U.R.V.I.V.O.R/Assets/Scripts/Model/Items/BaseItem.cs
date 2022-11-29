@@ -14,12 +14,12 @@ public class BaseItem : MonoBehaviour
     
     public Vector3 OnAwakeRectTransformScale { get; set; }
     
-    public int Height => !rotated ? size.Height : size.Width;
+    public int Height => !rotated ? Size.Height : Size.Width;
 
-    public int Width => !rotated ? size.Width : size.Height;
+    public int Width => !rotated ? Size.Width : Size.Height;
 
     public bool rotated { get; set; }
-    public Size size => itemData.Size;
+    public Size Size => itemData.Size;
     public float Weight => itemData.Weight;
     public BaseItemData ItemData => itemData;
 
@@ -27,8 +27,6 @@ public class BaseItem : MonoBehaviour
     {
         itemData = newBaseItemData;
     }
-
-    public SpecialCellType SpecialCellType => itemData.SpecialCellType;
 
     public void Awake()
     {
