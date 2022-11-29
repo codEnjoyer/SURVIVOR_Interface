@@ -5,6 +5,7 @@ using UnityEngine;
 public class AmmoBox : MonoBehaviour
 {
     private AmmoContainerData data;
+    
     private Stack<SingleAmmo> ammoStack;
     public SingleAmmo TakeBullet() => ammoStack.Pop();
     public int CurrentNumberAmmo => ammoStack.Count;

@@ -335,17 +335,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 47077319}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasTransform: {fileID: 2050006519}
-  cellType: 7
   OnItemPlaced:
     m_PersistentCalls:
       m_Calls: []
   OnItemTaked:
     m_PersistentCalls:
       m_Calls: []
+  canvasTransform: {fileID: 2050006519}
+  cellType: 6
 --- !u!1 &74524614
 GameObject:
   m_ObjectHideFlags: 0
@@ -2314,6 +2314,7 @@ GameObject:
   - component: {fileID: 444219836}
   - component: {fileID: 444219835}
   - component: {fileID: 444219837}
+  - component: {fileID: 444219838}
   m_Layer: 5
   m_Name: SecondaryGun
   m_TagString: Untagged
@@ -2388,17 +2389,43 @@ MonoBehaviour:
   m_GameObject: {fileID: 444219833}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: 3bfea5b6809c58a4b89775e94823cf23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasTransform: {fileID: 2050006519}
-  cellType: 9
+  gunSlot: {fileID: 444219838}
+  magazineSlot: {fileID: 0}
+  springSlot: {fileID: 0}
+  shutterSlot: {fileID: 0}
+  scopeSlot: {fileID: 0}
+  gripSlot: {fileID: 0}
+  tacticalSlot: {fileID: 0}
+  supressorSlot: {fileID: 0}
+  GunPlaced:
+    m_PersistentCalls:
+      m_Calls: []
+  GunTaken:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &444219838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 444219833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73b4df179adf1fd44aa80a0050e98ae5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   OnItemPlaced:
     m_PersistentCalls:
       m_Calls: []
   OnItemTaked:
     m_PersistentCalls:
       m_Calls: []
+  canvasTransform: {fileID: 2050006519}
+  cellType: 1
 --- !u!1 &494645160
 GameObject:
   m_ObjectHideFlags: 0
@@ -2656,6 +2683,7 @@ GameObject:
   - component: {fileID: 501991161}
   - component: {fileID: 501991163}
   - component: {fileID: 501991162}
+  - component: {fileID: 501991165}
   - component: {fileID: 501991164}
   m_Layer: 5
   m_Name: PrimaryGun
@@ -2731,15 +2759,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 501991160}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: 73b4df179adf1fd44aa80a0050e98ae5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasTransform: {fileID: 2050006519}
-  cellType: 8
   OnItemPlaced:
     m_PersistentCalls:
       m_Calls: []
   OnItemTaked:
+    m_PersistentCalls:
+      m_Calls: []
+  canvasTransform: {fileID: 2050006519}
+  cellType: 0
+--- !u!114 &501991165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 501991160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bfea5b6809c58a4b89775e94823cf23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunSlot: {fileID: 501991164}
+  magazineSlot: {fileID: 0}
+  springSlot: {fileID: 0}
+  shutterSlot: {fileID: 0}
+  scopeSlot: {fileID: 0}
+  gripSlot: {fileID: 0}
+  tacticalSlot: {fileID: 0}
+  supressorSlot: {fileID: 0}
+  GunPlaced:
+    m_PersistentCalls:
+      m_Calls: []
+  GunTaken:
     m_PersistentCalls:
       m_Calls: []
 --- !u!224 &514343869 stripped
@@ -2959,17 +3013,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 567015688}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasTransform: {fileID: 2050006519}
-  cellType: 4
   OnItemPlaced:
     m_PersistentCalls:
       m_Calls: []
   OnItemTaked:
     m_PersistentCalls:
       m_Calls: []
+  canvasTransform: {fileID: 2050006519}
+  cellType: 3
 --- !u!1 &583950204
 GameObject:
   m_ObjectHideFlags: 0
@@ -3527,17 +3581,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 663588895}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasTransform: {fileID: 2050006519}
-  cellType: 6
   OnItemPlaced:
     m_PersistentCalls:
       m_Calls: []
   OnItemTaked:
     m_PersistentCalls:
       m_Calls: []
+  canvasTransform: {fileID: 2050006519}
+  cellType: 5
 --- !u!1 &667553582
 GameObject:
   m_ObjectHideFlags: 0
@@ -3624,17 +3678,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 667553582}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasTransform: {fileID: 2050006519}
-  cellType: 4
   OnItemPlaced:
     m_PersistentCalls:
       m_Calls: []
   OnItemTaked:
     m_PersistentCalls:
       m_Calls: []
+  canvasTransform: {fileID: 2050006519}
+  cellType: 3
 --- !u!1 &672090594
 GameObject:
   m_ObjectHideFlags: 0
@@ -4790,17 +4844,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 825327537}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasTransform: {fileID: 2050006519}
-  cellType: 1
   OnItemPlaced:
     m_PersistentCalls:
       m_Calls: []
   OnItemTaked:
     m_PersistentCalls:
       m_Calls: []
+  canvasTransform: {fileID: 2050006519}
+  cellType: 0
 --- !u!1 &856026683
 GameObject:
   m_ObjectHideFlags: 0
@@ -6088,7 +6142,6 @@ GameObject:
   - component: {fileID: 1086285283}
   - component: {fileID: 1086285285}
   - component: {fileID: 1086285284}
-  - component: {fileID: 1086285286}
   m_Layer: 5
   m_Name: MleeWeapon
   m_TagString: Untagged
@@ -6154,26 +6207,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1086285282}
   m_CullTransparentMesh: 1
---- !u!114 &1086285286
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1086285282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvasTransform: {fileID: 2050006519}
-  cellType: 10
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1089916147
 GameObject:
   m_ObjectHideFlags: 0
@@ -6474,17 +6507,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1092196054}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasTransform: {fileID: 2050006519}
-  cellType: 3
   OnItemPlaced:
     m_PersistentCalls:
       m_Calls: []
   OnItemTaked:
     m_PersistentCalls:
       m_Calls: []
+  canvasTransform: {fileID: 2050006519}
+  cellType: 2
 --- !u!1 &1102807571
 GameObject:
   m_ObjectHideFlags: 0
@@ -6620,8 +6653,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCharacteristicsPanel: {fileID: 529178208}
   emptyInventorySize: {fileID: 11400000, guid: f1f5456fc8a18d94aab7578f00222ad9, type: 2}
-  primaryGunSet: {fileID: 0}
-  secondaryGunSet: {fileID: 0}
+  primaryGunSet: {fileID: 1238882725}
+  secondaryGunSet: {fileID: 1500571675}
   meleeWeaponSet: {fileID: 0}
   nameTextBox: {fileID: 1636199731}
   hatCell: {fileID: 1222503106}
@@ -7014,17 +7047,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1198560219}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasTransform: {fileID: 2050006519}
-  cellType: 5
   OnItemPlaced:
     m_PersistentCalls:
       m_Calls: []
   OnItemTaked:
     m_PersistentCalls:
       m_Calls: []
+  canvasTransform: {fileID: 2050006519}
+  cellType: 4
 --- !u!224 &1204949912 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6139962566568014572, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
@@ -7121,17 +7154,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1222503102}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasTransform: {fileID: 2050006519}
-  cellType: 6
   OnItemPlaced:
     m_PersistentCalls:
       m_Calls: []
   OnItemTaked:
     m_PersistentCalls:
       m_Calls: []
+  canvasTransform: {fileID: 2050006519}
+  cellType: 5
 --- !u!1 &1238882720
 GameObject:
   m_ObjectHideFlags: 0
@@ -7144,7 +7177,7 @@ GameObject:
   - component: {fileID: 1238882723}
   - component: {fileID: 1238882722}
   - component: {fileID: 1238882725}
-  - component: {fileID: 1238882724}
+  - component: {fileID: 1238882726}
   m_Layer: 5
   m_Name: PrimaryGun
   m_TagString: Untagged
@@ -7210,26 +7243,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1238882720}
   m_CullTransparentMesh: 1
---- !u!114 &1238882724
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1238882720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvasTransform: {fileID: 2050006519}
-  cellType: 8
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1238882725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7242,7 +7255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bfea5b6809c58a4b89775e94823cf23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunSlot: {fileID: 1238882724}
+  gunSlot: {fileID: 1238882726}
   magazineSlot: {fileID: 0}
   springSlot: {fileID: 0}
   shutterSlot: {fileID: 0}
@@ -7256,6 +7269,26 @@ MonoBehaviour:
   GunTaken:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1238882726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238882720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73b4df179adf1fd44aa80a0050e98ae5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnItemPlaced:
+    m_PersistentCalls:
+      m_Calls: []
+  OnItemTaked:
+    m_PersistentCalls:
+      m_Calls: []
+  canvasTransform: {fileID: 2050006519}
+  cellType: 0
 --- !u!1 &1243250763
 GameObject:
   m_ObjectHideFlags: 0
@@ -8208,17 +8241,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1329026377}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasTransform: {fileID: 2050006519}
-  cellType: 3
   OnItemPlaced:
     m_PersistentCalls:
       m_Calls: []
   OnItemTaked:
     m_PersistentCalls:
       m_Calls: []
+  canvasTransform: {fileID: 2050006519}
+  cellType: 2
 --- !u!1001 &1345357559
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8562,8 +8595,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCharacteristicsPanel: {fileID: 308258944}
   emptyInventorySize: {fileID: 11400000, guid: f1f5456fc8a18d94aab7578f00222ad9, type: 2}
-  primaryGunSet: {fileID: 0}
-  secondaryGunSet: {fileID: 0}
+  primaryGunSet: {fileID: 501991165}
+  secondaryGunSet: {fileID: 444219837}
   meleeWeaponSet: {fileID: 0}
   nameTextBox: {fileID: 195431913}
   hatCell: {fileID: 663588899}
@@ -9227,17 +9260,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1464470127}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasTransform: {fileID: 2050006519}
-  cellType: 2
   OnItemPlaced:
     m_PersistentCalls:
       m_Calls: []
   OnItemTaked:
     m_PersistentCalls:
       m_Calls: []
+  canvasTransform: {fileID: 2050006519}
+  cellType: 1
 --- !u!1 &1466170884
 GameObject:
   m_ObjectHideFlags: 0
@@ -9361,17 +9394,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1471617520}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasTransform: {fileID: 2050006519}
-  cellType: 1
   OnItemPlaced:
     m_PersistentCalls:
       m_Calls: []
   OnItemTaked:
     m_PersistentCalls:
       m_Calls: []
+  canvasTransform: {fileID: 2050006519}
+  cellType: 0
 --- !u!1 &1495650631
 GameObject:
   m_ObjectHideFlags: 0
@@ -9460,7 +9493,7 @@ GameObject:
   - component: {fileID: 1500571673}
   - component: {fileID: 1500571672}
   - component: {fileID: 1500571675}
-  - component: {fileID: 1500571674}
+  - component: {fileID: 1500571676}
   m_Layer: 5
   m_Name: SecondaryGun
   m_TagString: Untagged
@@ -9526,26 +9559,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500571670}
   m_CullTransparentMesh: 1
---- !u!114 &1500571674
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1500571670}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvasTransform: {fileID: 2050006519}
-  cellType: 9
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1500571675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9558,7 +9571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bfea5b6809c58a4b89775e94823cf23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunSlot: {fileID: 1500571674}
+  gunSlot: {fileID: 1500571676}
   magazineSlot: {fileID: 0}
   springSlot: {fileID: 0}
   shutterSlot: {fileID: 0}
@@ -9572,6 +9585,26 @@ MonoBehaviour:
   GunTaken:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1500571676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500571670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73b4df179adf1fd44aa80a0050e98ae5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnItemPlaced:
+    m_PersistentCalls:
+      m_Calls: []
+  OnItemTaked:
+    m_PersistentCalls:
+      m_Calls: []
+  canvasTransform: {fileID: 2050006519}
+  cellType: 1
 --- !u!1 &1508588818
 GameObject:
   m_ObjectHideFlags: 0
@@ -9583,7 +9616,6 @@ GameObject:
   - component: {fileID: 1508588819}
   - component: {fileID: 1508588821}
   - component: {fileID: 1508588820}
-  - component: {fileID: 1508588822}
   m_Layer: 5
   m_Name: MleeWeapon
   m_TagString: Untagged
@@ -9649,26 +9681,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1508588818}
   m_CullTransparentMesh: 1
---- !u!114 &1508588822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1508588818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvasTransform: {fileID: 2050006519}
-  cellType: 10
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1508683057 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
@@ -9803,17 +9815,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1525192898}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasTransform: {fileID: 2050006519}
-  cellType: 5
   OnItemPlaced:
     m_PersistentCalls:
       m_Calls: []
   OnItemTaked:
     m_PersistentCalls:
       m_Calls: []
+  canvasTransform: {fileID: 2050006519}
+  cellType: 4
 --- !u!1 &1526479704
 GameObject:
   m_ObjectHideFlags: 0
@@ -12309,17 +12321,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1771033298}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasTransform: {fileID: 2050006519}
-  cellType: 0
   OnItemPlaced:
     m_PersistentCalls:
       m_Calls: []
   OnItemTaked:
     m_PersistentCalls:
       m_Calls: []
+  canvasTransform: {fileID: 2050006519}
+  cellType: 1
 --- !u!1 &1782082705
 GameObject:
   m_ObjectHideFlags: 0
@@ -13222,17 +13234,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1938125677}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasTransform: {fileID: 2050006519}
-  cellType: 1
   OnItemPlaced:
     m_PersistentCalls:
       m_Calls: []
   OnItemTaked:
     m_PersistentCalls:
       m_Calls: []
+  canvasTransform: {fileID: 2050006519}
+  cellType: 6
 --- !u!1 &2013968916
 GameObject:
   m_ObjectHideFlags: 0
@@ -13701,6 +13713,7 @@ GameObject:
   - component: {fileID: 2102159421}
   - component: {fileID: 2102159423}
   - component: {fileID: 2102159422}
+  - component: {fileID: 2102159424}
   m_Layer: 5
   m_Name: Magazine
   m_TagString: Untagged
@@ -13766,6 +13779,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2102159420}
   m_CullTransparentMesh: 1
+--- !u!114 &2102159424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2102159420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 085006acd419bd64a8c045b677348e82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnItemPlaced:
+    m_PersistentCalls:
+      m_Calls: []
+  OnItemTaked:
+    m_PersistentCalls:
+      m_Calls: []
+  canvasTransform: {fileID: 2050006519}
+  gunCell: {fileID: 1238882726}
 --- !u!1 &2107226296
 GameObject:
   m_ObjectHideFlags: 0

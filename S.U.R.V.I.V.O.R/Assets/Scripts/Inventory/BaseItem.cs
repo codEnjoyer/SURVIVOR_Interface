@@ -23,8 +23,6 @@ public class BaseItem : MonoBehaviour
     public float Weight => itemData.Weight;
     public BaseItemData ItemData => itemData;
 
-    public SpecialCellType SpecialCellType => itemData.SpecialCellType;
-
     public void Awake()
     {
         gameObject.AddComponent<Image>().sprite = itemData.Icon;
