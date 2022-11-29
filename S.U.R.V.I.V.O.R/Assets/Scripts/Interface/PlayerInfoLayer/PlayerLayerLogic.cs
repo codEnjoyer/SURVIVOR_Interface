@@ -45,6 +45,15 @@ public class PlayerLayerLogic : MonoBehaviour
         pantsInventory.ChangeState(new InventoryState(emptyInventorySize));
         
         playerCharacteristicsPanel.Player = CurrentCharacter;
+        
+        primaryGunSet.Player = CurrentCharacter;
+        primaryGunSet.GunPlaced.AddListener(OnPrimaryGunPlaced);
+        primaryGunSet.GunTaken.AddListener(OnPrimaryGunTaken);
+        
+        secondaryGunSet.Player = CurrentCharacter;
+        secondaryGunSet.GunPlaced.AddListener(OnSecondaryGunPlaced);
+        secondaryGunSet.GunTaken.AddListener(OnSecondaryGunTaken);
+        
         nameTextBox.text = CurrentCharacter.FirstName;
         
         jacketCell.OnItemPlaced.AddListener(OnJacketPlaced);
@@ -69,18 +78,34 @@ public class PlayerLayerLogic : MonoBehaviour
         bootsCell.OnItemTaked.AddListener(OnBootsTaken);
     }
 
+    private void OnPrimaryGunTaken()
+    {
+        CurrentCharacter.PrimaryGun = null;
+    }
+    
+    private void OnPrimaryGunPlaced()
+    {
+        CurrentCharacter.PrimaryGun = primaryGunSet.CurrentInterfaceSetGun;
+    }
+    
+    private void OnSecondaryGunTaken()
+    {
+        CurrentCharacter.SecondaryGun = null;
+    }
+    
+    private void OnSecondaryGunPlaced()
+    {
+        CurrentCharacter.SecondaryGun = primaryGunSet.CurrentInterfaceSetGun;
+    }
+    
     private void OnJacketPlaced()
     {
-        Debug.Log("jacketPlaced");
-
         CurrentCharacter.body.chest.Jacket = jacketCell.PlacedItem.GetComponent<Clothes>();
         jacketInventory.ChangeState(jacketCell.PlacedItem.GetComponent<Clothes>().Inventory);
     }
     
     private void OnJacketTaken()
     {
-        Debug.Log("jacketTaken");
-
         CurrentCharacter.body.chest.Jacket = null;
         jacketInventory.ChangeState(new InventoryState(emptyInventorySize));
     }

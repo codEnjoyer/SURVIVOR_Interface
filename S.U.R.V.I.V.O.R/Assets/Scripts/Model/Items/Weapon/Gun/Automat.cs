@@ -11,7 +11,18 @@ public class Automat: MonoBehaviour, IGun
 
     public bool IsFirstGun => true;
     public GunData Data => data;
-    public ICollection<GunModule> GunModules => gunModule;
+    public IReadOnlyCollection<GunModule> GunModules => gunModule;
+    public void AddGunModule(GunModule gunModule)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void RemoveGunModule(GunModule gunModule)
+    {
+        throw new NotImplementedException();
+    }
+
+    public IReadOnlyCollection<SpecialCellType> AvailableGunModules { get; }
     public float AttackDistance => 100;
 
     public void Attack(List<BodyPart> targets, float distance, Skills skills)
@@ -20,7 +31,15 @@ public class Automat: MonoBehaviour, IGun
     }
     public Magazine Reload(Magazine magazine)
     {
-        throw new NotImplementedException();
+        if (currentMagazine == null)
+        {
+            currentMagazine = magazine;
+            return null;
+        }
+        
+        var result = currentMagazine;
+        currentMagazine = magazine;
+        return result;
     }
 }
 

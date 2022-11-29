@@ -17,7 +17,14 @@ public enum SpecialCellType
     Pants,
     PrimaryGun,
     SecondaryGun,
-    MeleeWeapon
+    MeleeWeapon,
+    ModuleGrip,
+    ModuleMagazine,
+    ModuleSpring,
+    ModuleShutter,
+    ModuleScope,
+    ModuleSuppressor,
+    ModuleTactical
 }
 public class SpecialCell : MonoBehaviour, IPointerClickHandler
 {
