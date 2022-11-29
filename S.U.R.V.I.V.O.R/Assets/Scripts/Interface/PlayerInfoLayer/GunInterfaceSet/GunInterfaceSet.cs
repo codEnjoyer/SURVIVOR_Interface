@@ -8,68 +8,104 @@ using UnityEngine.Events;
 public class GunInterfaceSet : MonoBehaviour
 {
     public Character Player { get; set; }
-    public IGun CurrentInterfaceSetGun { get; set; }
+    public Gun CurrentInterfaceSetGun { get; set; }
     [SerializeField]
-    public SpecialCell gunSlot;
+    public SpecialGunCell gunSlot;
     [SerializeField]
-    private SpecialCell magazineSlot;
+    private GunMagazineSpecialCell magazineSlot;
     [SerializeField]
-    private SpecialCell springSlot;
+    private SpecialGunModuleCell springSlot;
     [SerializeField]
-    private SpecialCell shutterSlot;
+    private SpecialGunModuleCell shutterSlot;
     [SerializeField]
-    private SpecialCell scopeSlot;
+    private SpecialGunModuleCell scopeSlot;
     [SerializeField]
-    private SpecialCell gripSlot;
+    private SpecialGunModuleCell gripSlot;
     [SerializeField]
-    private SpecialCell tacticalSlot;
+    private SpecialGunModuleCell tacticalSlot;
     [SerializeField]
-    private SpecialCell supressorSlot;
+    private SpecialGunModuleCell supressorSlot;
+
+    private List<SpecialGunModuleCell> allSlots;
 
     public UnityEvent GunPlaced = new ();
     public UnityEvent GunTaken = new ();
     
     public void Awake()
     {
+        allSlots = new List<SpecialGunModuleCell>
+        {
+            shutterSlot,
+            springSlot,
+            scopeSlot,
+            supressorSlot,
+            tacticalSlot,
+            gripSlot,
+        };
         gunSlot.OnItemPlaced.AddListener(OnGunPlaced);
         gunSlot.OnItemTaked.AddListener(OnGunTaken);
-        
-        magazineSlot.OnItemPlaced.AddListener(OnMagazinePlaced);
-        magazineSlot.OnItemTaked.AddListener(OnMagazineTaken);
     }
 
     private void OnGunPlaced()
     {
-        CurrentInterfaceSetGun = gunSlot.PlacedItem.GetComponent<IGun>();
+        CurrentInterfaceSetGun = gunSlot.PlacedItem.GetComponent<Gun>();
         CheckGunAvailableModules();
-        //TODO Когда оружие кладут в слот расставить по местам модулей все его модули.
+        UpdateAllSlots();
         GunPlaced.Invoke();
     }
 
     private void OnGunTaken()
     {
         CurrentInterfaceSetGun = null;
-        //TODO Когда оружие берут, убрать из слотов все его модули
+        ClearAllSlots();
         GunTaken.Invoke();
-    }
-
-    private void OnMagazinePlaced()
-    {
-        CurrentInterfaceSetGun.Reload(magazineSlot.PlacedItem.GetComponent<Magazine>());
-    }
-
-    private void OnMagazineTaken()
-    {
-        CurrentInterfaceSetGun.Reload(null);
     }
 
     private void CheckGunAvailableModules()
     {
-        springSlot.gameObject.SetActive(CurrentInterfaceSetGun.AvailableGunModules.Contains(SpecialCellType.ModuleSpring));
-        shutterSlot.gameObject.SetActive(CurrentInterfaceSetGun.AvailableGunModules.Contains(SpecialCellType.ModuleShutter));
-        scopeSlot.gameObject.SetActive(CurrentInterfaceSetGun.AvailableGunModules.Contains(SpecialCellType.ModuleScope));
-        gripSlot.gameObject.SetActive(CurrentInterfaceSetGun.AvailableGunModules.Contains(SpecialCellType.ModuleGrip));
-        supressorSlot.gameObject.SetActive(CurrentInterfaceSetGun.AvailableGunModules.Contains(SpecialCellType.ModuleSuppressor));
-        tacticalSlot.gameObject.SetActive(CurrentInterfaceSetGun.AvailableGunModules.Contains(SpecialCellType.ModuleTactical));
+        var gun = gunSlot.PlacedItem.GetComponent<Gun>();
+        if (springSlot != null)
+        {
+            springSlot.gameObject.SetActive(gun.CheckGunModule(GunModuleType.Spring));
+            shutterSlot.gameObject.SetActive(gun.CheckGunModule(GunModuleType.Shutter));
+            scopeSlot.gameObject.SetActive(gun.CheckGunModule(GunModuleType.Scope));
+            gripSlot.gameObject.SetActive(gun.CheckGunModule(GunModuleType.Grip));
+            supressorSlot.gameObject.SetActive(gun.CheckGunModule(GunModuleType.Suppressor));
+            tacticalSlot.gameObject.SetActive(gun.CheckGunModule(GunModuleType.Tactical));
+        }
+    }
+
+    private void ClearAllSlots()
+    {
+        foreach (var slot in allSlots)
+        {
+            if (slot != null)
+            {
+                slot.PlaceItem(null);
+                slot.gameObject.SetActive(false);
+            }
+        }
+    }
+    
+    private void UpdateAllSlots()
+    {
+        if (gunSlot.PlacedItem == null) return;
+        foreach (var slot in allSlots)
+        {
+            if(slot != null)
+                slot.gameObject.SetActive(true);
+        }
+        var gun = gunSlot.PlacedItem.GetComponent<Gun>();
+
+        if (springSlot != null)
+        {
+            springSlot.PlaceItem(gun.GunModules.First(x => x.Data.ModuleType == GunModuleType.Spring).GetComponent<BaseItem>());
+            shutterSlot.PlaceItem(gun.GunModules.First(x => x.Data.ModuleType == GunModuleType.Shutter).GetComponent<BaseItem>());
+            supressorSlot.PlaceItem(gun.GunModules.First(x => x.Data.ModuleType == GunModuleType.Suppressor).GetComponent<BaseItem>());
+            scopeSlot.PlaceItem(gun.GunModules.First(x => x.Data.ModuleType == GunModuleType.Scope).GetComponent<BaseItem>());
+            gripSlot.PlaceItem(gun.GunModules.First(x => x.Data.ModuleType == GunModuleType.Grip).GetComponent<BaseItem>());
+            tacticalSlot.PlaceItem(gun.GunModules.First(x => x.Data.ModuleType == GunModuleType.Tactical).GetComponent<BaseItem>());
+            magazineSlot.PlaceItem(gun.CurrentMagazine.GetComponent<BaseItem>()); 
+        }
     }
 }

@@ -23,7 +23,4 @@ public class BaseItemData : ScriptableObject
     public Sprite Icon => icon;
     public string Description => description;
     public float Weight => weight;
-
-    [SerializeField] private SpecialCellType specialCellType;
-    public SpecialCellType SpecialCellType => specialCellType;
 }

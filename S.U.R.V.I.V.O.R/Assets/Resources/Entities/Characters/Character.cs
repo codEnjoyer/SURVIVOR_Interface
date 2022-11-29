@@ -13,8 +13,8 @@ public class Character : Entity
     public string FirstName => firstName;
     public string Surname => surname;
 
-    public IGun PrimaryGun { get; set; }
-    public IGun SecondaryGun { get; set; }
+    public Gun PrimaryGun { get; set; }
+    public Gun SecondaryGun { get; set; }
     public IMeleeWeapon MeleeWeapon { get; set; }
     public readonly Skills skills = new Skills();
     public readonly ManBody body = new ManBody();

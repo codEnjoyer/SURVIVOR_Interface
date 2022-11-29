@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 746332497264292580}
   - component: {fileID: -7828054832626531359}
+  - component: {fileID: -6147722554496465568}
   m_Layer: 0
   m_Name: Sawed-Off
   m_TagString: Untagged
@@ -50,3 +51,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: d890512de0cd8dc49a8d2ea7396a92d5, type: 2}
+--- !u!114 &-6147722554496465568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8073354101777460830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56e3639dac334d9e8e1b6f2517931f11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 875c805c35a78004dae688442dfad3e1, type: 2}
+  gunModule: []

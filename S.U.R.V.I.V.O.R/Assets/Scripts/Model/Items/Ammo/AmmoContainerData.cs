@@ -4,6 +4,7 @@
 public class AmmoContainerData:ScriptableObject
 {
     [SerializeField] private SingleAmmo ammoType;
+    
     [SerializeField] private int capacity;
 
     public SingleAmmo AmmoType => ammoType;

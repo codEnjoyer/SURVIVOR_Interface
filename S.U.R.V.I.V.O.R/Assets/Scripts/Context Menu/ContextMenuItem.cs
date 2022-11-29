@@ -17,9 +17,12 @@ public class ContextMenuItem : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("click");
-        var position = Input.mousePosition;
-        ContextMenuController.Instance.Clear();
-        ContextMenuController.Instance.CreateContextMenu(contextMenuActions, new Vector2(position.x, position.y));
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            Debug.Log("click");
+            var position = Input.mousePosition;
+            ContextMenuController.Instance.Clear();
+            ContextMenuController.Instance.CreateContextMenu(contextMenuActions, new Vector2(position.x, position.y));
+        }
     }
 }

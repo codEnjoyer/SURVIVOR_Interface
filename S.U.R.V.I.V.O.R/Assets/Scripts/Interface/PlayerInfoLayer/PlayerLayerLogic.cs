@@ -24,13 +24,13 @@ public class PlayerLayerLogic : MonoBehaviour
 
     [SerializeField] private Text nameTextBox;
     
-    [SerializeField] private SpecialCell hatCell;
-    [SerializeField] private SpecialCell underwearCell;
-    [SerializeField] private SpecialCell backpackCell;
-    [SerializeField] private SpecialCell vestCell;
-    [SerializeField] private SpecialCell jacketCell;
-    [SerializeField] private SpecialCell pantsCell;
-    [SerializeField] private SpecialCell bootsCell;
+    [SerializeField] private SpecialClothCell hatCell;
+    [SerializeField] private SpecialClothCell underwearCell;
+    [SerializeField] private SpecialClothCell backpackCell;
+    [SerializeField] private SpecialClothCell vestCell;
+    [SerializeField] private SpecialClothCell jacketCell;
+    [SerializeField] private SpecialClothCell pantsCell;
+    [SerializeField] private SpecialClothCell bootsCell;
 
     [SerializeField] private ItemGrid backpackInventory;
     [SerializeField] private ItemGrid vestInventory;
@@ -95,7 +95,7 @@ public class PlayerLayerLogic : MonoBehaviour
     
     private void OnSecondaryGunPlaced()
     {
-        CurrentCharacter.SecondaryGun = primaryGunSet.CurrentInterfaceSetGun;
+        CurrentCharacter.SecondaryGun = secondaryGunSet.CurrentInterfaceSetGun;
     }
     
     private void OnJacketPlaced()
@@ -209,6 +209,9 @@ public class PlayerLayerLogic : MonoBehaviour
         CheckClothCellAfterWindowOpen(CurrentCharacter.body.head.Hat, hatCell);
         CheckClothCellAfterWindowOpen(CurrentCharacter.body.chest.Underwear, underwearCell);
         CheckClothCellAfterWindowOpen(CurrentCharacter.body.leftLeg.Boots, bootsCell);
+        
+        CheckGunSetAfterWindowOpen(CurrentCharacter.PrimaryGun,primaryGunSet);
+        CheckGunSetAfterWindowOpen(CurrentCharacter.SecondaryGun,secondaryGunSet);
     }
 
     private void CheckClothCellAfterWindowOpen(Clothes cloth, SpecialCell cell)
@@ -217,6 +220,14 @@ public class PlayerLayerLogic : MonoBehaviour
             cell.PlaceItem(cloth.gameObject.GetComponent<BaseItem>());
         else
             cell.PlaceNullItem();
+    }
+
+    private void CheckGunSetAfterWindowOpen(Gun gun, GunInterfaceSet interfaceSet)
+    {
+        if (gun != null)
+            interfaceSet.gunSlot.PlaceItem(gun.gameObject.GetComponent<BaseItem>());
+        else
+            interfaceSet.gunSlot.PlaceNullItem();
     }
 
     private void CheckClothInventoryAfterWindowOpen(ItemGrid inventory, SpecialCell cell)
