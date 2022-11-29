@@ -56,7 +56,7 @@ public class ItemGrid : MonoBehaviour
         {
             instantiateItems.Add(item);
             item.gameObject.SetActive(true);
-            var position = GetPositionOnGrid(item, item.onGridPositionX, item.onGridPositionY);
+            var position = GetPositionOnGrid(item, item.OnGridPositionX, item.OnGridPositionY);
             item.GetComponent<RectTransform>().SetParent(transform);
             item.GetComponent<RectTransform>().localPosition = position;
         }
