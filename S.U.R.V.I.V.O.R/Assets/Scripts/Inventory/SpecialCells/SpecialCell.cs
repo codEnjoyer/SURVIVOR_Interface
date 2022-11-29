@@ -22,21 +22,17 @@ public enum SpecialCellType
 public class SpecialCell : MonoBehaviour, IPointerClickHandler
 {
     private InventoryController inventoryController;
-    public BodyPart bodyPart;
-    
-    [SerializeField] 
-    private Transform canvasTransform;
-    
-    [SerializeField]
-    private SpecialCellType cellType;
+    [SerializeField] private Transform canvasTransform;
+    [SerializeField] private SpecialCellType cellType;
     
     private RectTransform rectTransform;
-    private BaseItem placedItem;
+    private BaseItem placedItem; 
     public SpecialCellType CellType => cellType;
     public BaseItem PlacedItem => placedItem;
-
+    
     public UnityEvent OnItemPlaced = new ();
     public UnityEvent OnItemTaked = new ();
+    
 
     private void Awake()
     {
@@ -46,19 +42,20 @@ public class SpecialCell : MonoBehaviour, IPointerClickHandler
 
     private bool CanInsertIntoSlot()
     {
-        return inventoryController.selectedItem.SpecialCellType == CellType;
+        return inventoryController.SelectedItem.SpecialCellType == CellType;
     }
     
     public virtual void OnPointerClick(PointerEventData eventData)
     {
-        if (placedItem == null && inventoryController.selectedItem != null)
+        if (eventData.button != PointerEventData.InputButton.Left) return;
+        if (placedItem == null && inventoryController.SelectedItem != null)
         {
             if (CanInsertIntoSlot())
             {
-                PlaceItem(inventoryController.selectedItem);
+                PlaceItem(inventoryController.SelectedItem);
             }
         }
-        else if (inventoryController.selectedItem == null)
+        else if (inventoryController.SelectedItem == null)
         {
             GiveItem();
         }
@@ -73,7 +70,7 @@ public class SpecialCell : MonoBehaviour, IPointerClickHandler
         itemRectTransform.SetParent(rectTransform);
         itemRectTransform.localPosition = new Vector2(0,0);
         ChangeItemSize(itemRectTransform);
-        inventoryController.selectedItem = null;
+        inventoryController.SelectedItem = null;
         OnItemPlaced.Invoke();
     }
 
