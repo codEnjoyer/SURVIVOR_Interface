@@ -5,16 +5,18 @@ using System;
 
 public class FightCharacter : MonoBehaviour
 {
-    public Entity Target { get; private set; }
+    public Entity Entity { get; private set; }
     public CharacterType Type { get; private set; }
 
-    public FightCharacter(Entity target, CharacterType type)
+    public void ApplyProperties(Entity target, CharacterType type, bool alive = true)
     {
-        Target = target;
+        Entity = target;
         Type = type;
+        Alive = alive;
     }
 
-    public int Energy => Target.SpeedInFightScene;
+    public float Initiative => Entity.Initiative;
+    public int Energy => Entity.SpeedInFightScene;
     public bool Alive = true;
     public GameObject TargetToHit;
     public readonly float radius;
@@ -33,7 +35,7 @@ public class FightCharacter : MonoBehaviour
 
     public void Attack()
     {
-        Target.Attack(new List<BodyPart>(), 10);
+        Entity.Attack(new List<BodyPart>(), 10);
     }
 
 //     public void OnEnable()

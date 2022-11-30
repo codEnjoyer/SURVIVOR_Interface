@@ -21,8 +21,11 @@ public class FightSceneController : MonoBehaviour
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private GameObject graph;
     [SerializeField] private EventSystem eventSystem;
+    [SerializeField] private List<Vector3> spawnPoints;
+    [SerializeField] private GameObject characterPrefab;
     private static Queue<GameObject> CharactersQueue = new Queue<GameObject>();
     private GameObject currentCharacterNodeObj;
+
 
     void Awake()
     {
@@ -31,11 +34,12 @@ public class FightSceneController : MonoBehaviour
             Instance = this;
         }
         else if (Instance == this)
-            Destroy(gameObject);
+            Destroy(gameObject); 
     }
 
     private void Start()
     {
+        CreateCharactersList();
         InitializeCharacters();
         NodesNav.InitializeNodesLists(graph);
 
@@ -46,6 +50,7 @@ public class FightSceneController : MonoBehaviour
         State = FightState.Sleeping;
 
         currentCharacterNodeObj = NodesNav.GetNearestNode(CharacterObj.transform.position);
+        Sign.transform.position = CharacterObj.transform.position + new Vector3(0, 1.3f, 0);
         Sign.transform.parent = CharacterObj.transform;
     }
 
@@ -109,6 +114,30 @@ public class FightSceneController : MonoBehaviour
                 EndTurn();
                 break;
         }
+    }
+
+    public void CreateCharactersList()
+    {
+        var data = FightSceneLoader.CurrentData;
+        foreach (var entity in data.group)
+        {
+            var obj = Instantiate(characterPrefab, spawnPoints[0] + new Vector3(0, 1.22f, 0), Quaternion.identity);
+            obj.AddComponent<FightCharacter>().ApplyProperties(entity, CharacterType.Ally);
+            obj.GetComponent<Renderer>().material.color = Color.green;
+            Characters.Add(obj);
+        }
+
+        foreach (var entity in data.enemies)
+        {
+            var obj = Instantiate(characterPrefab, spawnPoints[1] + new Vector3(0, 1.22f, 0), Quaternion.identity);
+            obj.AddComponent<FightCharacter>().ApplyProperties(entity, CharacterType.Enemy);
+            obj.GetComponent<Renderer>().material.color = Color.red;
+            Characters.Add(obj);
+        }
+
+        Characters = Characters
+            .OrderByDescending(c => c.GetComponent<FightCharacter>().Initiative)
+            .ToList();
     }
 
     private void InitializeCharacters()
@@ -275,10 +304,5 @@ public class FightSceneController : MonoBehaviour
             lineRenderer.SetPositions(pathPoints.ToArray());
         }
     }
-
-
-    public void Initialization(FightData data)
-    {
-        
-    }
+    
 }
