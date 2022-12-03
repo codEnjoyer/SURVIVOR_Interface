@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Size", menuName = "Data/Size", order = 50)]
@@ -15,4 +16,14 @@ public class Size : ScriptableObject
     public int Width => width;
 
     public int Height => height;
+
+    public override bool Equals(object other)
+    {
+        if (other is Size otherSize)
+            return Equals(otherSize);
+        return false;
+    }
+
+    private bool Equals(Size other) => width == other.width && height == other.height;
+    public override int GetHashCode() => HashCode.Combine(base.GetHashCode(), width, height);
 }

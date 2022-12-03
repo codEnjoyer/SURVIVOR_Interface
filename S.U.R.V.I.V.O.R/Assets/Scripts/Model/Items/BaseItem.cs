@@ -6,7 +6,7 @@ using Image = UnityEngine.UI.Image;
 
 public class BaseItem : MonoBehaviour
 {
-    [SerializeField] public BaseItemData itemData;
+    [SerializeField] private BaseItemData itemData;
     public int OnGridPositionX { get; set; }
     public int OnGridPositionY { get; set; }
 

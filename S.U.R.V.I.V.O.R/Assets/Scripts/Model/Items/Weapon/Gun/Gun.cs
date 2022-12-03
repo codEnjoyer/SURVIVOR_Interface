@@ -4,26 +4,33 @@ using System.Linq;
 using UnityEngine;
 
 
-public abstract class Gun: MonoBehaviour, IWeapon
+public abstract class Gun : MonoBehaviour, IWeapon
 {
-    private readonly List<GunModuleType> availableGunModules;
-
     protected Magazine currentMagazine;
+    protected readonly List<GunModule> gunModules = new();
 
+    public abstract GunData Data { get; set; }
+    public abstract Magazine Reload(Magazine magazine);
+    public abstract void Attack(List<BodyPart> targets, float distance, Skills skills);
+
+
+    public bool IsFirstGun => Data.IsFirstGun;
     public Magazine CurrentMagazine => currentMagazine;
+    public bool CheckGunModule(GunModuleType module) => Data.AvailableGunModules.Contains(module);
+    public float AttackDistance => Data.FireDistance;
+    public IReadOnlyCollection<GunModule> GunModules => gunModules;
 
-    protected Gun(List<GunModuleType> availableGunModules)
+    public bool AddGunModule(GunModule newGunModule)
     {
-        this.availableGunModules = availableGunModules;
+        if (Data.AvailableGunModules.Contains(newGunModule.Data.ModuleType)
+            && !gunModules.Any(module => module.Data.ModuleType.Equals(newGunModule.Data.ModuleType)))
+        {
+            gunModules.Add(newGunModule);
+            return true;
+        }
+
+        return false;
     }
 
-    public abstract bool IsFirstGun { get; }
-    public abstract GunData Data { get; }
-    public abstract IReadOnlyCollection<GunModule> GunModules { get; }
-    public abstract void AddGunModule(GunModule gunModule);
-    public abstract void RemoveGunModule(GunModule gunModule);
-    public abstract Magazine Reload(Magazine magazine);
-    public bool CheckGunModule(GunModuleType module) => availableGunModules.Contains(module);
-    public abstract float AttackDistance { get; }
-    public abstract void Attack(List<BodyPart> targets, float distance, Skills skills);
+    public bool RemoveGunModule(GunModule gunModule) => gunModules.Remove(gunModule);
 }

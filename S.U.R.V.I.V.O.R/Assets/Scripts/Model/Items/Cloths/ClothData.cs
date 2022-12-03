@@ -10,6 +10,5 @@ public class ClothData : ScriptableObject
     public int MaxArmor => maxArmor;
     public Size InventorySize => inventorySize;
     public float Warm => warm;
-
     public ClothType ClothType => clothType;
 }

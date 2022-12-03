@@ -13,52 +13,58 @@ namespace GoogleSheetLink
     {
         private readonly string absolutePath;
         private readonly string relativePath;
-        private readonly Regex regex;
-        private List<string> sizeObjectsFileNames;
+        private readonly List<Size> sizeObjects;
+
 
         public SizeParser()
         {
-            regex = new Regex(@"\d+");
             absolutePath = $@"{Application.dataPath}/Resources/InventorySizeObjects";
             relativePath = @"Assets/Resources/InventorySizeObjects";
-            FindSizeObjects();
+            sizeObjects = FindSizeObjects();
         }
 
         public Size Parse(string sizeObjectName)
         {
-            var sizeObjectFileName = $"{sizeObjectName}.asset";
-            var objPath = $@"{absolutePath}\{sizeObjectFileName}";
-            if (sizeObjectsFileNames.Any(path => string.CompareOrdinal(path, objPath) == 0))
-            {
-                var a = Resources.Load<Size>($@"InventorySizeObjects/{sizeObjectName}");
-                Debug.Log(a);
-                return a;
-            }
-            else
-                return CreateSizeObject(sizeObjectFileName);
+            var newSizeObj = ConvertToSize(sizeObjectName);
+            if (sizeObjects.Any(size => newSizeObj.Equals(size)))
+                return Resources.Load<Size>($@"InventorySizeObjects/{sizeObjectName}");
+            return CreateSizeObject(newSizeObj, sizeObjectName);
         }
 
-        private Size CreateSizeObject(string sizeObjectName)
+        private Size CreateSizeObject(Size sizeObj, string sizeObjectName)
         {
-            var findData = regex.Matches(sizeObjectName)
-                .Select(x => int.Parse(x.ToString()))
-                .ToArray();
-            if (findData.Length != 2)
-                throw new ArgumentException($"Неверное форматирование размера предмета ({sizeObjectName}). Объект не был создан.");
-            var sizeObj = Object.Instantiate(new Size(findData[0], findData[1]));
-
-            var objPath = AssetDatabase.GenerateUniqueAssetPath($"{relativePath}/{sizeObjectName}");
+            var objPath = AssetDatabase.GenerateUniqueAssetPath($"{relativePath}/{sizeObjectName}.asset");
             AssetDatabase.CreateAsset(sizeObj, objPath);
+            Debug.Log($"Объект {nameof(Size)} с именем {sizeObjectName} не был найден," +
+                      $" объект был создан автоматически");
             return sizeObj;
         }
 
-        private void FindSizeObjects()
+        private List<Size> FindSizeObjects() => FindSizeObjectsNames()
+            .Select(name => Resources.Load<Size>($@"InventorySizeObjects/{name}"))
+            .ToList();
+
+
+        private List<string> FindSizeObjectsNames()
         {
-            sizeObjectsFileNames = new List<string>();
-            var regex = new Regex(@"[.]asset\z");
-            foreach (var file in Directory.EnumerateFiles(absolutePath))
-                if(regex.IsMatch(file))
-                    sizeObjectsFileNames.Add(file);
+            var pattern = new Regex(@"[.]asset\z");
+            return Directory.GetFiles(absolutePath)
+                .Where(file => pattern.IsMatch(file))
+                .Select(file => Path.GetFileName(file).Split(".")[0])
+                .ToList();
+        }
+
+        private Size ConvertToSize(string sizeObjectName)
+        {
+            var pattern = new Regex(@"\d+");
+            var findData = pattern.Matches(sizeObjectName)
+                .Select(x => int.Parse(x.ToString()))
+                .ToArray();
+            if (findData.Length != 2)
+                throw new ArgumentException(
+                    $"Неверное форматирование размера предмета ({sizeObjectName}). Объект не был создан.");
+
+            return new Size(findData[0], findData[1]);
         }
     }
 }
