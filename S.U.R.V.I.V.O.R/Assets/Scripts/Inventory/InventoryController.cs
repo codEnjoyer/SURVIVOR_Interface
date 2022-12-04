@@ -227,6 +227,6 @@ public class InventoryController : MonoBehaviour
         SelectedItem = inventoryItem;
         rectTransform = inventoryItem.GetComponent<RectTransform>();
         rectTransform.SetParent(canvasTransform);
-        inventoryItem.Set(inventoryItem.ItemData);
+        inventoryItem.Set(inventoryItem.Data);
     }
 }

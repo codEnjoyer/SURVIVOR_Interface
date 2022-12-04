@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using GoogleSheetLink.DataParsers;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -14,7 +11,6 @@ namespace GoogleSheetLink
 {
     public class SheetParser : MonoBehaviour
     {
-        private readonly Dictionary<string, Func<string, string[], GameObject, Object[]>> converter = new();
         [SerializeField] private string sheetName;
         [SerializeField] private string from;
         [SerializeField] private string to;
@@ -31,42 +27,7 @@ namespace GoogleSheetLink
             absolutePath = $@"{Application.dataPath}/Resources/Items";
             googleSheetHelper = new GoogleSheetHelper("12o3fSTiRqjt2EpLmurYA9KE_DWGaghkFuJkT4jzL09g", "JsonKey.json");
             range = $"{sheetName}!{from}:{to}";
-
-            converter.Add("BaseItem", (fullComponentName, param, obj) =>
-            {
-                var baseItem = obj.AddComponent<BaseItem>();
-                var baseItemData = BaseItemDataParser.Parse(param);
-                baseItem.SetBaseItemData(baseItemData);
-                return new Object[] {baseItemData};
-            });
-
-            converter.Add("Gun", (fullComponentName, param, obj) =>
-            {
-                var gunClassName = fullComponentName.Split("=>")[1];
-                var gun = obj.AddComponent(Type.GetType(gunClassName)) as Gun;
-                var gunData = GunDataParser.Parse(param);
-                if (gun == null) throw new Exception($"Типа {gunClassName} не существует");
-                gun.Data = gunData;
-                return new Object[] {gunData};
-            });
-
-            converter.Add("Clothes", (fullComponentName, param, obj) =>
-            {
-                var clothes = obj.AddComponent<Clothes>();
-                var clothData = ClothDataParser.Parse(param);
-                clothes.SetClothData(clothData);
-                return new Object[] {clothData};
-            });
-
-            converter.Add("GunModule", (fullComponentName, param, obj) =>
-            {
-                var gunModule = obj.AddComponent<GunModule>();
-                var gunModuleData = GunModuleDataParser.Parse(param);
-                gunModule.SetGunModuleData(gunModuleData);
-                return new Object[] {gunModuleData};
-            });
-
-
+            
             var table = googleSheetHelper.ReadEntries(range)
                 .Select(x => x
                     .Select(y => y.ToString())
@@ -81,7 +42,7 @@ namespace GoogleSheetLink
             {
                 var path = row[0];
                 var prefabName = row[1];
-                var newGameObject = Instantiate(new GameObject());
+                var newGameObject = new GameObject();
                 var assets = new List<Object>();
                 var param = new List<string>();
                 string fullComponentName = null;
@@ -119,9 +80,8 @@ namespace GoogleSheetLink
                 {
                     try
                     {
-                        var mainComponentName = fullComponentName.Split("=>")[0];
-                        assets.AddRange(converter[mainComponentName](fullComponentName, param.ToArray(),
-                            newGameObject));
+                        var asset = AddComponent(newGameObject, fullComponentName, param.ToArray());
+                        assets.Add(asset);
                     }
                     catch (Exception e)
                     {
@@ -177,6 +137,35 @@ namespace GoogleSheetLink
                     Debug.Log($"Была создана дирректория {term}");
                 }
             }
+        }
+
+        private Object AddComponent(GameObject obj, string fullComponentName, string[] param)
+        {
+            var tempSplit = fullComponentName.Split("=>");
+            var mainComponentName = tempSplit[0];
+            var componentName = tempSplit[^1];
+
+            var componentType = Type.GetType(componentName);
+            if (componentType == null)
+                throw new Exception(@$"Указанный компонент {componentName} не был найден");
+
+            var component = obj.AddComponent(componentType);
+            var parserName = $"{nameof(GoogleSheetLink)}.{nameof(DataParsers)}.{mainComponentName}DataParser";
+            var parserType = Type.GetType(parserName);
+            if (parserType == null)
+                throw new Exception(
+                    $@"Парсер данных {parserName} не был найден. Пожалуйста убедитесь что его название соответствует шаблону [Название главного компонента]DataParser");
+
+            var parse = parserType.GetMethod("Parse", BindingFlags.Public | BindingFlags.Static);
+            if (parse == null)
+                throw new Exception(@"Парсер данных не содержит метода Parse");
+            var componentData = parse.Invoke(null, new object[] {param});
+            var componentDataField = componentType.GetField("data", BindingFlags.Instance | BindingFlags.NonPublic);
+            if (componentDataField == null)
+                throw new Exception(
+                    @$"Не найдено data поле. Убедитесь, что указанный компонент содержит приватное поле data");
+            componentDataField.SetValue(component, componentData);
+            return (Object) componentData;
         }
     }
 }
