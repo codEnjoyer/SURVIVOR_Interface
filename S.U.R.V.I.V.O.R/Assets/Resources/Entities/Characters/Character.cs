@@ -15,7 +15,7 @@ public class Character : Entity
 
     public Gun PrimaryGun { get; set; }
     public Gun SecondaryGun { get; set; }
-    public IMeleeWeapon MeleeWeapon { get; set; }
+    public MeleeWeapon MeleeWeapon { get; set; }
     public readonly Skills skills = new Skills();
     public readonly ManBody body = new ManBody();
     

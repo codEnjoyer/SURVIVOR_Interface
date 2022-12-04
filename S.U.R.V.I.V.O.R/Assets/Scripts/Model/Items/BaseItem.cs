@@ -1,12 +1,13 @@
 using System;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
 
 public class BaseItem : MonoBehaviour
 {
-    [SerializeField] public BaseItemData itemData;
+    [FormerlySerializedAs("itemData")] [SerializeField] private BaseItemData data;
     public int OnGridPositionX { get; set; }
     public int OnGridPositionY { get; set; }
 
@@ -19,21 +20,21 @@ public class BaseItem : MonoBehaviour
     public int Width => !rotated ? Size.Width : Size.Height;
 
     public bool rotated { get; set; }
-    public Size Size => itemData.Size;
-    public float Weight => itemData.Weight;
-    public BaseItemData ItemData => itemData;
+    public Size Size => data.Size;
+    public float Weight => data.Weight;
+    public BaseItemData Data => data;
 
     public void SetBaseItemData(BaseItemData newBaseItemData)
     {
-        itemData = newBaseItemData;
+        data = newBaseItemData;
     }
 
     public void Awake()
     {
-        if (itemData == null || itemData.Icon == null)
+        if (data == null || data.Icon == null)
             return;
         
-        gameObject.AddComponent<Image>().sprite = itemData.Icon;
+        gameObject.AddComponent<Image>().sprite = data.Icon;
         gameObject.GetComponent<Image>().raycastTarget = false;
     }
 

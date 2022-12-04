@@ -20,8 +20,7 @@ public enum ClothType
 public enum GunType
 {
     PrimaryGun,
-    SecondaryGun,
-    MeleeWeapon,
+    SecondaryGun
 }
     
 public enum GunModuleType

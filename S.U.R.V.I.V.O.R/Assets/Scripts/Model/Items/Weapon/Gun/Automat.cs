@@ -8,35 +8,13 @@ using UnityEngine;
 public class Automat : Gun
 {
     [SerializeField] private GunData data;
-    [SerializeField] private List<GunModule> gunModule;
-
-    public override bool IsFirstGun { get; }
-    public override GunData Data => data;
-    public override IReadOnlyCollection<GunModule> GunModules { get; }
-
-    private Automat(List<GunModuleType> availableGunModules) : base(availableGunModules)
+    
+    public override GunData Data
     {
-        availableGunModules.AddRange(new[]
-        {
-            GunModuleType.Grip,
-            GunModuleType.Scope,
-            GunModuleType.Shutter,
-            GunModuleType.Spring,
-            GunModuleType.Suppressor,
-            GunModuleType.Tactical
-        });
+        get => data;
+        set => data = value;
     }
-
-    public override void AddGunModule(GunModule gunModule)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void RemoveGunModule(GunModule gunModule)
-    {
-        throw new NotImplementedException();
-    }
-
+    
     public override Magazine Reload(Magazine magazine)
     {
         if (currentMagazine == null)
@@ -49,8 +27,6 @@ public class Automat : Gun
         currentMagazine = magazine;
         return result;
     }
-
-    public override float AttackDistance { get; }
 
     public override void Attack(List<BodyPart> targets, float distance, Skills skills)
     {
