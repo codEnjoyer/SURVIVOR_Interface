@@ -23,12 +23,7 @@ public class BaseItem : MonoBehaviour
     public Size Size => data.Size;
     public float Weight => data.Weight;
     public BaseItemData Data => data;
-
-    public void SetBaseItemData(BaseItemData newBaseItemData)
-    {
-        data = newBaseItemData;
-    }
-
+    
     public void Awake()
     {
         if (data == null || data.Icon == null)

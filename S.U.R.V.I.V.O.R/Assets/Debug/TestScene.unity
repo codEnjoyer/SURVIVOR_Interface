@@ -217,7 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sheetName: Gun
   from: A2
-  to: H2
+  to: Q3
 --- !u!4 &979362508
 Transform:
   m_ObjectHideFlags: 0

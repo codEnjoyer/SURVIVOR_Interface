@@ -22,7 +22,7 @@ namespace GoogleSheetLink
 
             while (asyncOp.isDone == false)
             {
-                await Task.Delay(1000 / 30);
+                await Task.Delay(33);
             }
 
             return www.result != UnityWebRequest.Result.Success ? null : DownloadHandlerTexture.GetContent(www);

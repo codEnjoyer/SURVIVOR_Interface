@@ -9,10 +9,9 @@ public abstract class Gun : MonoBehaviour, IWeapon
     protected Magazine currentMagazine;
     protected readonly List<GunModule> gunModules = new();
 
-    public abstract GunData Data { get; set; }
+    public abstract GunData Data { get; }
     public abstract Magazine Reload(Magazine magazine);
     public abstract void Attack(List<BodyPart> targets, float distance, Skills skills);
-    
     
     public Magazine CurrentMagazine => currentMagazine;
     public bool CheckGunModule(GunModuleType module) => Data.AvailableGunModules.Contains(module);

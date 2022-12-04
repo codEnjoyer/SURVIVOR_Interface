@@ -13,7 +13,6 @@ public class Clothes : MonoBehaviour
 
     public InventoryState Inventory => inventory;
     public ClothData Data => data;
-    public void SetClothData(ClothData newClothData) => data = newClothData;
 
     public float TotalWeight => baseItem.Weight + inventory.GetItems.Sum(item => item.Weight);
 

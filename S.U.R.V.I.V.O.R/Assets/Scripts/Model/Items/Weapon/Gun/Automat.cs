@@ -9,12 +9,8 @@ public class Automat : Gun
 {
     [SerializeField] private GunData data;
     
-    public override GunData Data
-    {
-        get => data;
-        set => data = value;
-    }
-    
+    public override GunData Data => data;
+
     public override Magazine Reload(Magazine magazine)
     {
         if (currentMagazine == null)
