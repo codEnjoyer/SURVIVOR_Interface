@@ -5,7 +5,7 @@ using Object = UnityEngine.Object;
 
 namespace GoogleSheetLink.DataParsers
 {
-    public class GunDataParser
+    public static class GunDataParser
     {
         public static GunData Parse(string[] param)
         {
@@ -14,17 +14,16 @@ namespace GoogleSheetLink.DataParsers
             var extraDamage = float.Parse(param[2]);
             var fireDistance = float.Parse(param[3]);
             var ergonomics = float.Parse(param[4]);
-
-            var isFirstGun = int.Parse(param[5]) == 1;
-            var caliber = Enum.Parse<Caliber>(param[6], true);
-            var gunType = Enum.Parse<GunType>(param[7], true);
-            var availableGunModules = param[8].Split(", ")
+            
+            var caliber = Enum.Parse<Caliber>(param[5], true);
+            var gunType = Enum.Parse<GunType>(param[6], true);
+            var availableGunModules = param[7].Split(", ")
                 .Select(x => Enum.Parse<GunModuleType>(x, true))
                 .ToList();
 
             // ReSharper disable once Unity.IncorrectScriptableObjectInstantiation
-            var gunData = new GunData(fireRate, accuracy, extraDamage, fireDistance, ergonomics,
-                isFirstGun, caliber, gunType, availableGunModules)
+            var gunData = new GunData(fireRate, accuracy, extraDamage, fireDistance, ergonomics, caliber, gunType,
+                availableGunModules)
             {
                 name = "GunData"
             };

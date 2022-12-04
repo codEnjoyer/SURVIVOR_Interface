@@ -5,10 +5,19 @@ public class ClothData : ScriptableObject
 {
     [SerializeField] private int maxArmor;
     [SerializeField] private Size inventorySize;
-    [SerializeField] private float warm;
+    [SerializeField] private int warm;
     [SerializeField] private ClothType clothType;
+
+    public ClothData(int maxArmor, Size inventorySize, int warm, ClothType clothType)
+    {
+        this.maxArmor = maxArmor;
+        this.inventorySize = inventorySize;
+        this.warm = warm;
+        this.clothType = clothType;
+    }
+
     public int MaxArmor => maxArmor;
     public Size InventorySize => inventorySize;
-    public float Warm => warm;
+    public int Warm => warm;
     public ClothType ClothType => clothType;
 }

@@ -10,13 +10,12 @@ public sealed class GunData : ScriptableObject
     [SerializeField] private float extraDamage;
     [SerializeField] private float fireDistance;
     [SerializeField] private float ergonomics; //Чем выше, тем больше негативное влияние на Mobility класса персонажа
-    [SerializeField] private bool isFirstGun;
     [SerializeField] private Caliber caliber;
     [SerializeField] private GunType gunType;
     [SerializeField] private List<GunModuleType> availableGunModules;
 
     public GunData(float fireRate, float accuracy, float extraDamage, float fireDistance,
-        float ergonomics, bool isFirstGun, Caliber caliber, GunType gunType,
+        float ergonomics, Caliber caliber, GunType gunType,
         IEnumerable<GunModuleType> availableGunModules)
     {
         this.fireRate = fireRate;
@@ -24,7 +23,6 @@ public sealed class GunData : ScriptableObject
         this.extraDamage = extraDamage;
         this.fireDistance = fireDistance;
         this.ergonomics = ergonomics;
-        this.isFirstGun = isFirstGun;
         this.caliber = caliber;
         this.gunType = gunType;
         this.availableGunModules = availableGunModules.ToList();
@@ -35,7 +33,6 @@ public sealed class GunData : ScriptableObject
     public float ExtraDamage => extraDamage;
     public float FireDistance => fireDistance;
     public float Ergonomics => ergonomics;
-    public bool IsFirstGun => isFirstGun;
     public Caliber Caliber => caliber;
     public GunType GunType => gunType;
     public IReadOnlyCollection<GunModuleType> AvailableGunModules => availableGunModules;

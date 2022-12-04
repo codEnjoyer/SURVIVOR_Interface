@@ -8,21 +8,7 @@ using UnityEngine;
 public class Automat : Gun
 {
     [SerializeField] private GunData data;
-
-
-    // private Automat()
-    // {
-    //     availableGunModules.AddRange(new[]
-    //     {
-    //         GunModuleType.Grip,
-    //         GunModuleType.Scope,
-    //         GunModuleType.Shutter,
-    //         GunModuleType.Spring,
-    //         GunModuleType.Suppressor,
-    //         GunModuleType.Tactical
-    //     });
-    // }
-
+    
     public override GunData Data
     {
         get => data;
