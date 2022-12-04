@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using GoogleSheetLink.DataParsers;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -12,7 +12,7 @@ namespace GoogleSheetLink
 {
     public class SheetParser : MonoBehaviour
     {
-        private readonly Dictionary<string, Func<string, string[], GameObject, Object[]>> converter = new();
+        private readonly Dictionary<string, Func<string, string[], GameObject, Task<Object[]>>> converter = new();
 
         [SerializeField] private string sheetName;
         [SerializeField] private string from;
@@ -22,23 +22,22 @@ namespace GoogleSheetLink
         private string range;
         private string relativePath;
         private string absolutePath;
-        
-        private void Awake()
+
+        private async void Awake()
         {
             relativePath = "Assets/Resources/Items";
             absolutePath = $@"{Application.dataPath}/Resources/Items";
             googleSheetHelper = new GoogleSheetHelper("12o3fSTiRqjt2EpLmurYA9KE_DWGaghkFuJkT4jzL09g", "JsonKey.json");
             range = $"{sheetName}!{from}:{to}";
 
-            converter.Add("BaseItem", (fullComponentName, param, obj) =>
+            converter.Add("BaseItem", async (fullComponentName, param, obj) =>
             {
                 var baseItem = obj.AddComponent<BaseItem>();
-                var baseItemData = BaseItemDataParser.Parse(param);
-                baseItemData.name = "ItemData";
+                var baseItemData = await BaseItemDataParser.Parse(param);
                 baseItem.SetBaseItemData(baseItemData);
-                return new Object[] {baseItemData};
+                return new Object[] {baseItemData, baseItemData.Icon};
             });
-            
+
             converter.Add("Gun", (fullComponentName, param, obj) =>
             {
                 var gunClassName = fullComponentName.Split("=>")[1];
@@ -47,7 +46,7 @@ namespace GoogleSheetLink
                 if (gun == null)
                     throw new Exception($"Типа {gunClassName} не существует");
                 gun.Data = gunData;
-                return new Object[] {gunData};
+                return Task.FromResult(new Object[] {gunData});
             });
 
 
@@ -56,10 +55,10 @@ namespace GoogleSheetLink
                     .Select(y => y.ToString())
                     .ToList())
                 .ToList();
-            ParseAndSave(table);
+            await ParseAndSave(table);
         }
 
-        public void ParseAndSave(List<List<string>> table)
+        public async Task ParseAndSave(List<List<string>> table)
         {
             foreach (var row in table)
             {
@@ -69,13 +68,8 @@ namespace GoogleSheetLink
                 var assets = new List<Object>();
                 var fullComponentName = "";
                 var param = new List<string>();
-
-                bool CheckAddAssets() => CheckCreateComponents(() =>
-                {
-                    var mainComponentName = fullComponentName.Split("=>")[0];
-                    assets.AddRange(converter[mainComponentName](fullComponentName, param.ToArray(), newGameObject));
-                });
-
+                string mainComponentName;
+                
                 for (var j = 2; j < row.Count; j++)
                 {
                     var cell = row[j];
@@ -83,8 +77,8 @@ namespace GoogleSheetLink
                     {
                         if (fullComponentName != "")
                         {
-                            if (CheckAddAssets() == false)
-                                break;
+                            mainComponentName = fullComponentName.Split("=>")[0];
+                            assets.AddRange(await converter[mainComponentName](fullComponentName, param.ToArray(), newGameObject));
                         }
 
                         fullComponentName = cell.Replace("$", "");
@@ -94,8 +88,8 @@ namespace GoogleSheetLink
                         param.Add(cell);
                 }
 
-                if (CheckAddAssets() == false)
-                    continue;
+                mainComponentName = fullComponentName.Split("=>")[0];
+                assets.AddRange(await converter[mainComponentName](fullComponentName, param.ToArray(), newGameObject));
                 CreateDirectoryForPrefab(path);
                 foreach (var asset in assets)
                     SaveAsset(path, prefabName + asset.name, asset);

@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace GoogleSheetLink
+namespace GoogleSheetLink.DataParsers
 {
     public class GunDataParser
     {
@@ -28,7 +28,7 @@ namespace GoogleSheetLink
             {
                 name = "GunData"
             };
-            return Object.Instantiate(gunData);
+            return gunData;
         }
     }
 }
