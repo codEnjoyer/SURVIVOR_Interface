@@ -23,9 +23,6 @@ public class TestCreatePrefabs: MonoBehaviour
         // AssetDatabase.CreateAsset(testScriptableObject, scriptableObjectPath);
         // testComponent.i = 10;
         // testComponent.s = "Привет мир!";
-
-        var sizeParser = new SizeParser();
-        sizeParser.Parse("6x6");
     }
     
 }
