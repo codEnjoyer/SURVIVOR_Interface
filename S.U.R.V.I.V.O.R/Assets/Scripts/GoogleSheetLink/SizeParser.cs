@@ -25,8 +25,10 @@ namespace GoogleSheetLink
         public static Size Parse(string sizeObjectName)
         {
             var newSizeObj = ConvertToSize(sizeObjectName);
-            if (sizeObjects.Any(size => newSizeObj.Equals(size)))
-                return Resources.Load<Size>($@"InventorySizeObjects/{sizeObjectName}");
+            var existSizeObj = sizeObjects.FirstOrDefault(size => newSizeObj.Equals(size));
+            if (existSizeObj != null)
+                return Resources.Load<Size>($@"InventorySizeObjects/{existSizeObj.name}");
+       
             return CreateSizeObject(newSizeObj, sizeObjectName);
         }
 
