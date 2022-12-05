@@ -8,21 +8,21 @@ using UnityEngine;
 
 namespace GoogleSheetLink
 {
-    public class SizeParser
+    public static class SizeParser
     {
-        private readonly string absolutePath;
-        private readonly string relativePath;
-        private readonly List<Size> sizeObjects;
+        private static readonly string absolutePath;
+        private static readonly string relativePath;
+        private static readonly List<Size> sizeObjects;
 
 
-        public SizeParser()
+        static SizeParser()
         {
             absolutePath = $@"{Application.dataPath}/Resources/InventorySizeObjects";
             relativePath = @"Assets/Resources/InventorySizeObjects";
             sizeObjects = FindSizeObjects();
         }
 
-        public Size Parse(string sizeObjectName)
+        public static Size Parse(string sizeObjectName)
         {
             var newSizeObj = ConvertToSize(sizeObjectName);
             if (sizeObjects.Any(size => newSizeObj.Equals(size)))
@@ -30,7 +30,7 @@ namespace GoogleSheetLink
             return CreateSizeObject(newSizeObj, sizeObjectName);
         }
 
-        private Size CreateSizeObject(Size sizeObj, string sizeObjectName)
+        private static Size CreateSizeObject(Size sizeObj, string sizeObjectName)
         {
             var objPath = AssetDatabase.GenerateUniqueAssetPath($"{relativePath}/{sizeObjectName}.asset");
             AssetDatabase.CreateAsset(sizeObj, objPath);
@@ -39,12 +39,12 @@ namespace GoogleSheetLink
             return sizeObj;
         }
 
-        private List<Size> FindSizeObjects() => FindSizeObjectsNames()
+        private static List<Size> FindSizeObjects() => FindSizeObjectsNames()
             .Select(name => Resources.Load<Size>($@"InventorySizeObjects/{name}"))
             .ToList();
 
 
-        private List<string> FindSizeObjectsNames()
+        private static List<string> FindSizeObjectsNames()
         {
             var pattern = new Regex(@"[.]asset\z");
             return Directory.GetFiles(absolutePath)
@@ -53,7 +53,7 @@ namespace GoogleSheetLink
                 .ToList();
         }
 
-        private Size ConvertToSize(string sizeObjectName)
+        private static Size ConvertToSize(string sizeObjectName)
         {
             var pattern = new Regex(@"\d+");
             var findData = pattern.Matches(sizeObjectName)

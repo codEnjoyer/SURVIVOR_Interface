@@ -9,13 +9,11 @@ namespace GoogleSheetLink.DataParsers
 {
     public static class BaseItemDataParser
     {
-        private static readonly SizeParser sizeParser = new();
-
         public static BaseItemData Parse(string[] param)
         {
             var name = param[0];
             var description = param[1];
-            var size = sizeParser.Parse(param[2]);
+            var size = SizeParser.Parse(param[2]);
             //var sprite = await SpriteLoader.LoadSprite(param[3]);
             var weight = float.Parse(param[4]);
 

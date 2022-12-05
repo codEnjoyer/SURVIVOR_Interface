@@ -24,7 +24,8 @@ namespace GoogleSheetLink
         {
             relativePath = "Assets/Resources/Items";
             absolutePath = $@"{Application.dataPath}/Resources/Items";
-            googleSheetHelper = new GoogleSheetHelper("12o3fSTiRqjt2EpLmurYA9KE_DWGaghkFuJkT4jzL09g", "JsonKey.json");
+            googleSheetHelper = new GoogleSheetHelper("12o3fSTiRqjt2EpLmurYA9KE_DWGaghkFuJkT4jzL09g",
+                "JsonKey.json");
             range = $"{sheetName}!{from}:{to}";
 
             var table = googleSheetHelper.ReadEntries(range)
@@ -153,7 +154,8 @@ namespace GoogleSheetLink
             var parserType = Type.GetType(parserName);
             if (parserType == null)
                 throw new Exception(
-                    $@"Парсер данных {parserName} не был найден. Пожалуйста убедитесь, что его название соответствует шаблону [Название главного компонента]DataParser");
+                    $"Парсер данных {parserName} не был найден. Пожалуйста убедитесь," +
+                    $" что его название соответствует шаблону [Название главного компонента]DataParser");
 
             var parse = parserType.GetMethod("Parse", BindingFlags.Public | BindingFlags.Static);
             if (parse == null)
