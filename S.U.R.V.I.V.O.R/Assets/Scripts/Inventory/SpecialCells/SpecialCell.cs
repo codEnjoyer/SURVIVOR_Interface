@@ -40,8 +40,6 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
     private bool isPointerOverCell;
     public BaseItem PlacedItem => placedItem;
     
-    public UnityEvent OnItemPlaced = new ();
-    public UnityEvent OnItemTaked = new ();
     
 
     private void Awake()
@@ -52,6 +50,15 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
     protected virtual bool CanInsertIntoSlot()
     {
         return false;
+    }
+
+    public void DrawItem()
+    {
+        if (placedItem == null) return;
+        placedItem.gameObject.SetActive(true);
+        placedItem.gameObject.GetComponent<RectTransform>().SetParent(GetComponent<RectTransform>());
+        placedItem.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0,0);
+        ChangeItemSize(placedItem.gameObject.GetComponent<RectTransform>(),GetComponent<RectTransform>());
     }
     
     public void Update()

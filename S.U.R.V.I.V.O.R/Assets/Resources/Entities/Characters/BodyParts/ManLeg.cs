@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine.Events;
 
 public sealed class ManLeg : BodyPart
 {
-    public Clothes Pants { get; set; }
-
     public Clothes Boots { get; set; }
 
     public ManLeg(Body body) : base(body)
@@ -14,4 +14,5 @@ public sealed class ManLeg : BodyPart
     public override float Hp { get; protected set; }
     public override float Size { get; }
     public override IEnumerable<Clothes> Clothes { get; }
+    public override event Action OnClothesChanged;
 }

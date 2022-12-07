@@ -43,7 +43,7 @@ public class ItemGrid : MonoBehaviour
     public void ChangeState(InventoryState inventoryState)
     {
         curInventoryState = inventoryState;
-        rectTransform.sizeDelta = new Vector2(inventoryState.Size.Width * TileSize, inventoryState.Size.Height  * TileSize);
+        GetComponent<RectTransform>().sizeDelta = new Vector2(inventoryState.Size.Width * TileSize, inventoryState.Size.Height  * TileSize);
         RedrawGrid();
         inventoryGridBG.DrawBackground(this);
     }

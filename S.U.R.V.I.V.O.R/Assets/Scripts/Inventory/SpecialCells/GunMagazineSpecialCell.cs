@@ -11,16 +11,8 @@ public class GunMagazineSpecialCell : SpecialCell
     {
         if (item.rotated) item.Rotated();
         placedItem = item;
-        
-        var itemRectTransform = placedItem.GetComponent<RectTransform>();
-        itemRectTransform.SetParent(GetComponent<RectTransform>());
-        itemRectTransform.localPosition = new Vector2(0,0);
-        
-        ChangeItemSize(itemRectTransform,GetComponent<RectTransform>());
-        
+
         InventoryController.SelectedItem = null;
-        
-        OnItemPlaced.Invoke();
 
         gunCell.PlacedItem.GetComponent<Gun>().Reload(PlacedItem.GetComponent<Magazine>());
     }
@@ -35,10 +27,8 @@ public class GunMagazineSpecialCell : SpecialCell
         
         InventoryController.PickUpItem(PlacedItem);
         
-        OnItemTaked.Invoke();
-        
         PlaceNullItem();
-
+        
         gunCell.PlacedItem.GetComponent<Gun>().Reload(null);
     }
 

@@ -6,19 +6,22 @@ public class SpecialClothCell : SpecialCell
 {
     [SerializeField] private Transform canvasTransform;
     [SerializeField] private ClothType type;
+    private RectTransform rectTransform;
+    public Character currentCharacter { get; set; }
+
+    public void Start()
+    {
+        rectTransform = GetComponent<RectTransform>();
+    }
     public override void PlaceItem(BaseItem item)
     {
         if (item.rotated)
             item.Rotated();
         placedItem = item;
-        var itemRectTransform = placedItem.GetComponent<RectTransform>();
-        itemRectTransform.SetParent(GetComponent<RectTransform>());
-        itemRectTransform.localPosition = new Vector2(0,0);
-        ChangeItemSize(itemRectTransform,GetComponent<RectTransform>());
+        ChangeCharacterClothes();
         InventoryController.SelectedItem = null;
-        OnItemPlaced.Invoke();
     }
-
+    
     public override void GiveItem()
     {
         if (PlacedItem == null) return;
@@ -26,13 +29,44 @@ public class SpecialClothCell : SpecialCell
         PlacedItem.GetComponent<RectTransform>().localScale = PlacedItem.OnAwakeRectTransformScale;
         PlacedItem.GetComponent<RectTransform>().SetParent(canvasTransform);
         InventoryController.PickUpItem(PlacedItem);
-        OnItemTaked.Invoke();
         PlaceNullItem();
+        ChangeCharacterClothes();
     }
 
     protected override bool CanInsertIntoSlot()
     {
         return InventoryController.SelectedItem.GetComponent<Clothes>() &&
                InventoryController.SelectedItem.GetComponent<Clothes>().Data.ClothType == type;
+    }
+
+    private void ChangeCharacterClothes()
+    {
+        var currentCloth = placedItem?.GetComponent<Clothes>();
+        switch (type)
+        {
+            case ClothType.Backpack:
+                currentCharacter.body.chest.Backpack = currentCloth;
+                break;
+            case ClothType.Jacket:
+                currentCharacter.body.chest.Jacket = currentCloth;
+                break;
+            case ClothType.Underwear:
+                currentCharacter.body.chest.Underwear = currentCloth;
+                break;
+            case ClothType.Boots:
+                currentCharacter.body.leftLeg.Boots = currentCloth;
+                currentCharacter.body.rightLeg.Boots = currentCloth;
+                break;
+            case ClothType.Hat:
+                currentCharacter.body.head.Hat = currentCloth;
+                break;
+            case ClothType.Pants:
+                currentCharacter.body.stomach.Pants = currentCloth;
+                break;
+            case ClothType.Vest:
+                currentCharacter.body.chest.Vest = currentCloth;
+                break;
+
+        }  
     }
 }

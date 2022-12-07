@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine.Events;
 
 public sealed class RatChest : BodyPart
 {
@@ -11,4 +13,5 @@ public sealed class RatChest : BodyPart
     public override float Hp { get; protected set; }
     public override float Size => 100;
     public override IEnumerable<Clothes> Clothes => null;
+    public override event Action OnClothesChanged;
 }

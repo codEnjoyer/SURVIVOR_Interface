@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class BodyPart : IAlive
 {
@@ -13,6 +15,8 @@ public abstract class BodyPart : IAlive
     public abstract IEnumerable<Clothes> Clothes { get; }
     public float Weight => Clothes.Sum(cloth => cloth.TotalWeight);
     public event Action<BodyPart> OnZeroHp;
+    
+    public abstract event Action OnClothesChanged;
 
     public BodyPart(Body body)
     {

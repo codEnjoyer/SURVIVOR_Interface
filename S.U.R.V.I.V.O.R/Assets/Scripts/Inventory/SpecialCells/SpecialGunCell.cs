@@ -6,17 +6,14 @@ public class SpecialGunCell : SpecialCell
 {
     [SerializeField] private Transform canvasTransform;
     [SerializeField] private GunType type;
+    public Character currentCharacter { get; set; }
     public override void PlaceItem(BaseItem item)
     {
         if (item.rotated)
             item.Rotated();
         placedItem = item;
-        var itemRectTransform = placedItem.GetComponent<RectTransform>();
-        itemRectTransform.SetParent(GetComponent<RectTransform>());
-        itemRectTransform.localPosition = new Vector2(0,0);
-        ChangeItemSize(itemRectTransform,GetComponent<RectTransform>());
+        ChangeCharacterGuns();
         InventoryController.SelectedItem = null;
-        OnItemPlaced.Invoke();
     }
 
     public override void GiveItem()
@@ -26,7 +23,6 @@ public class SpecialGunCell : SpecialCell
         PlacedItem.GetComponent<RectTransform>().localScale = PlacedItem.OnAwakeRectTransformScale;
         PlacedItem.GetComponent<RectTransform>().SetParent(canvasTransform);
         InventoryController.PickUpItem(PlacedItem);
-        OnItemTaked.Invoke();
         PlaceNullItem();
     }
 
@@ -35,5 +31,20 @@ public class SpecialGunCell : SpecialCell
         var x = InventoryController.SelectedItem.GetComponent<Gun>();
         return InventoryController.SelectedItem.GetComponent<Gun>() != null &&
                InventoryController.SelectedItem.GetComponent<Gun>().Data.GunType == type;
+    }
+    
+    
+    private void ChangeCharacterGuns()
+    {
+        var currentGun = placedItem?.GetComponent<Gun>();
+        switch (type)
+        {
+            case GunType.PrimaryGun:
+                currentCharacter.PrimaryGun = currentGun;
+                break;
+            case GunType.SecondaryGun:
+                currentCharacter.SecondaryGun = currentGun;
+                break;
+        }  
     }
 }
