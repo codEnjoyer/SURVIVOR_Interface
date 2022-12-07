@@ -30,6 +30,7 @@ public class ManBody : Body
         Energy = MaxEnergy;
         Hunger = MaxHunger;
         Water = MaxWater;
+        
     }
 
     public const int MaxEnergy = 10;
@@ -106,8 +107,71 @@ public class ManBody : Body
     public event Action<int> HungerChange;
     public event Action<int> WaterChange;
 
+    public event Action<ClothType> WearChanged;
+
     public void Eat(Meal meal)
     {
         throw new NotImplementedException();
+    }
+
+    public void Wear(Clothes clothToWear,bool shouldUnwear ,out bool isSuccessful)
+    {
+        var valueToWear = shouldUnwear ? null : clothToWear;
+        if (clothToWear == null)
+        {
+            isSuccessful = false;
+            return;
+        }
+        switch (clothToWear.Data.ClothType)
+        {
+            case ClothType.Backpack:
+                chest.Backpack = valueToWear;
+                break;
+            case ClothType.Boots:
+                leftLeg.Boots = valueToWear;
+                rightLeg.Boots = valueToWear;
+                break;
+            case ClothType.Pants:
+                leftLeg.Pants = valueToWear;
+                rightLeg.Pants = valueToWear;
+                break;
+            case ClothType.Hat:
+                head.Hat = valueToWear;
+                break;
+            case ClothType.Jacket:
+                chest.Jacket = valueToWear;
+                break;
+            case ClothType.Underwear:
+                chest.Underwear = valueToWear;
+                break;
+            case ClothType.Vest:
+                chest.Vest = valueToWear;
+                break;
+        }
+        isSuccessful = true;
+        WearChanged?.Invoke(clothToWear.Data.ClothType);
+    }
+
+    public Clothes GetClothByType(ClothType type)
+    {
+        switch (type)
+        {
+            case ClothType.Backpack:
+                return chest.Backpack;
+            case ClothType.Boots:
+                return rightLeg.Boots;
+            case ClothType.Pants:
+                return rightLeg.Pants;
+            case ClothType.Hat:
+                return head.Hat;
+            case ClothType.Jacket:
+                return chest.Jacket;
+            case ClothType.Underwear:
+                return chest.Underwear;
+            case ClothType.Vest:
+                return chest.Vest;
+        }
+
+        return default;
     }
 }

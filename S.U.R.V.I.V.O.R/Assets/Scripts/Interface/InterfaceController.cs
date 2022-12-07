@@ -53,10 +53,13 @@ public class InterfaceController : MonoBehaviour
         CharacterPanelActive = new CharacterPanelActive(this, interfaceStateMachine);
         GroupLayerActive = new GroupLayerActive(this, interfaceStateMachine);
         PlayerLayerActive = new PlayerLayerActive(this, interfaceStateMachine);
+        Selector.Instance.Activate();
+    }
+
+    private void Start()
+    {
         SetActiveInterface(true);
         SetActiveInterface(false);
-        Selector.Instance.Activate();
-        
         interfaceStateMachine.Initialize(NothingActive);
     }
 

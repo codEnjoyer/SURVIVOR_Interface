@@ -14,5 +14,4 @@ public sealed class ManStomach : BodyPart
     public override float Hp { get; protected set; }
     public override float Size { get; }
     public override IEnumerable<Clothes> Clothes { get; }
-    public override event Action OnClothesChanged;
 }
