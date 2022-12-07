@@ -2,14 +2,12 @@
 
 public class RatBody : Body
 {
-    public readonly RatChest chest;
-    public override ICollection<BodyPart> BodyParts { get; }
-    protected override int CriticalLoses { get; }
+    public RatChest Chest { get; private set; }
 
     public RatBody()
     {
-        chest = new RatChest(this);
-        BodyParts = new List<BodyPart> {chest};
-        CriticalLoses = 1;
+        Chest = new RatChest(this);
+        bodyParts.Add(Chest);
+        MaxCriticalLoses = 1;
     }
 }

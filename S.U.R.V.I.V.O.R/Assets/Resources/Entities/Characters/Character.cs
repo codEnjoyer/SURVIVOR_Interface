@@ -23,7 +23,7 @@ public class Character : Entity
     public override Body Body => body;
     public int Mobility => throw new NotImplementedException(); //Скорость передвижения на глобальной карте
     
-    public override void Attack(ICollection<BodyPart> targets, float distance)
+    public override void Attack(IEnumerable<BodyPart> targets, float distance)
     {
         targets.First().TakeDamage(new DamageInfo(15f));
         Debug.Log(targets.First().Hp);

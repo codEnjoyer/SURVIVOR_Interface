@@ -11,9 +11,7 @@ public class ManBody : Body
     public readonly ManArm rightArm;
     public readonly ManLeg leftLeg;
     public readonly ManLeg rightLeg;
-
-    public override ICollection<BodyPart> BodyParts { get; }
-    protected override int CriticalLoses { get; }
+    
 
     public ManBody()
     {
@@ -25,8 +23,7 @@ public class ManBody : Body
         leftLeg = new ManLeg(this);
         rightLeg = new ManLeg(this);
 
-        BodyParts = new List<BodyPart> {head, chest, stomach, leftArm, rightArm, leftLeg, rightLeg};
-        CriticalLoses = BodyParts.Count;
+        bodyParts.AddRange(new List<BodyPart> {head, chest, stomach, leftArm, rightArm, leftLeg, rightLeg});
         Energy = MaxEnergy;
         Hunger = MaxHunger;
         Water = MaxWater;

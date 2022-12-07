@@ -33,12 +33,13 @@ public class FightSceneController : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            Init();
         }
         else if (Instance == this)
             Destroy(gameObject); 
     }
 
-    private void Start()
+    private void Init()
     {
         CreateCharactersList();
         InitializeCharacters();
@@ -130,8 +131,9 @@ public class FightSceneController : MonoBehaviour
 
         foreach (var entity in data.enemies)
         {
-            var obj = Instantiate(ratPrefab, spawnPoints[1] + new Vector3(0, 1.22f, 0), Quaternion.identity);
-            obj.AddComponent<FightCharacter>().ApplyProperties(entity, CharacterType.Enemy);
+            var temp = Instantiate(entity, spawnPoints[1] + new Vector3(0, 1.22f, 0), Quaternion.identity);
+            var obj = temp.gameObject;
+            obj.AddComponent<FightCharacter>().ApplyProperties(temp, CharacterType.Enemy);
             obj.GetComponent<Renderer>().material.color = Color.red;
             Characters.Add(obj);
         }

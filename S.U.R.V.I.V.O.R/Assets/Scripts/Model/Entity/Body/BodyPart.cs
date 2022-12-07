@@ -18,7 +18,6 @@ public abstract class BodyPart : IAlive
     {
         Health = new BodyPathHealth(this);
         this.body = body;
-        //OnZeroHp += DeletePart;
     }
 
     public void TakeDamage(DamageInfo damage)
@@ -37,17 +36,12 @@ public abstract class BodyPart : IAlive
         if (Hp <= 0)
         {
             //OnZeroHp?.Invoke(this);
-            body.LossBodyParts();
+            body.LossBodyParts(this);
         }
     }
 
     public void Healing(HealInfo heal)
     {
         throw new NotImplementedException();
-    }
-
-    private void DeletePart(BodyPart part)
-    {
-        body.BodyParts.Remove(part);
     }
 }
