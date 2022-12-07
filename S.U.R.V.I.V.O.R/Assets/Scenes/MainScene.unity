@@ -338,12 +338,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
   canvasTransform: {fileID: 2050006519}
   type: 0
 --- !u!1 &74524614
@@ -771,7 +765,6 @@ MonoBehaviour:
   firstTurnObject: {fileID: 775075723}
   secondTurnObject: {fileID: 340664874}
   thirdTurnObject: {fileID: 1244891097}
-  currentNode: {fileID: 1687752736}
 --- !u!114 &154339910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -784,8 +777,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc365e50704050649a7f3cdc97592230, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxOnGlobalMapGroupEndurance: 10
-  CurrentOnGlobalMapGroupEndurance: 10
+  maxOnGlobalMapGroupEndurance: 10
+  currentOnGlobalMapGroupEndurance: 10
   currentGroupMembers:
   - {fileID: 234525757738228535, guid: 57e839bd74f2726409759bc236374acd, type: 3}
 --- !u!114 &154339911
@@ -2225,7 +2218,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd15d339090e4eaf91c478dcd232d3a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groups: []
   chosenGroup: {fileID: 154339910}
+  startNode: {fileID: 1687752736}
 --- !u!1 &443994103
 GameObject:
   m_ObjectHideFlags: 0
@@ -2400,12 +2395,6 @@ MonoBehaviour:
   gripSlot: {fileID: 0}
   tacticalSlot: {fileID: 0}
   supressorSlot: {fileID: 0}
-  GunPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  GunTaken:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &444219838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2418,12 +2407,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73b4df179adf1fd44aa80a0050e98ae5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
   canvasTransform: {fileID: 2050006519}
   type: 1
 --- !u!1 &494645160
@@ -2762,12 +2745,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73b4df179adf1fd44aa80a0050e98ae5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
   canvasTransform: {fileID: 2050006519}
   type: 0
 --- !u!114 &501991165
@@ -2790,12 +2767,6 @@ MonoBehaviour:
   gripSlot: {fileID: 0}
   tacticalSlot: {fileID: 0}
   supressorSlot: {fileID: 0}
-  GunPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  GunTaken:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!224 &514343869 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6139962566568014572, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
@@ -3016,12 +2987,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
   canvasTransform: {fileID: 2050006519}
   type: 0
 --- !u!1 &583950204
@@ -3584,12 +3549,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
   canvasTransform: {fileID: 2050006519}
   type: 0
 --- !u!1 &667553582
@@ -3681,12 +3640,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
   canvasTransform: {fileID: 2050006519}
   type: 0
 --- !u!1 &672090594
@@ -4847,12 +4800,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
   canvasTransform: {fileID: 2050006519}
   type: 0
 --- !u!1 &856026683
@@ -6510,12 +6457,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
   canvasTransform: {fileID: 2050006519}
   type: 0
 --- !u!1 &1102807571
@@ -7050,12 +6991,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
   canvasTransform: {fileID: 2050006519}
   type: 0
 --- !u!224 &1204949912 stripped
@@ -7157,12 +7092,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
   canvasTransform: {fileID: 2050006519}
   type: 0
 --- !u!1 &1238882720
@@ -7263,12 +7192,6 @@ MonoBehaviour:
   gripSlot: {fileID: 0}
   tacticalSlot: {fileID: 0}
   supressorSlot: {fileID: 0}
-  GunPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  GunTaken:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1238882726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7281,12 +7204,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73b4df179adf1fd44aa80a0050e98ae5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
   canvasTransform: {fileID: 2050006519}
   type: 0
 --- !u!1 &1243250763
@@ -7355,7 +7272,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62f6b01ab4a648d47a02c0aac93ca0c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentGroup: {fileID: 154339910}
   FirstPlayerLayer: {fileID: 1120807950}
   SecondPlayerLayer: {fileID: 0}
   ThirdPlayerLayer: {fileID: 0}
@@ -7364,7 +7280,6 @@ MonoBehaviour:
   GroupSecondPlayerLayer: {fileID: 0}
   GroupThirdPlayerLayer: {fileID: 0}
   GroupFourthPlayerLayer: {fileID: 0}
-  locationInventoryManager: {fileID: 1426913594}
   OnFirstPlayerLayerOpen:
     m_PersistentCalls:
       m_Calls: []
@@ -8032,7 +7947,8 @@ PrefabInstance:
       propertyPath: itemGrid
       value: 
       objectReference: {fileID: 1725873114}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7140779212959648733, guid: b629dac688e572746ac083273501009d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b629dac688e572746ac083273501009d, type: 3}
 --- !u!1 &1324188163
 GameObject:
@@ -8244,12 +8160,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
   canvasTransform: {fileID: 2050006519}
   type: 0
 --- !u!1001 &1345357559
@@ -8790,11 +8700,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1426913590}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88d23afa1791ca149be78fb5a41bec21, type: 3}
+  m_Script: {fileID: 11500000, guid: d7a09f34fa124e8d99d7f780f0595106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  group: {fileID: 0}
   text: {fileID: 1729742934}
+  itemGrid: {fileID: 1725873114}
 --- !u!1001 &1427509601
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9263,12 +9173,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
   canvasTransform: {fileID: 2050006519}
   type: 0
 --- !u!1 &1466170884
@@ -9397,12 +9301,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
   canvasTransform: {fileID: 2050006519}
   type: 0
 --- !u!1 &1495650631
@@ -9579,12 +9477,6 @@ MonoBehaviour:
   gripSlot: {fileID: 0}
   tacticalSlot: {fileID: 0}
   supressorSlot: {fileID: 0}
-  GunPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  GunTaken:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1500571676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9597,12 +9489,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73b4df179adf1fd44aa80a0050e98ae5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
   canvasTransform: {fileID: 2050006519}
   type: 1
 --- !u!1 &1508588818
@@ -9818,12 +9704,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
   canvasTransform: {fileID: 2050006519}
   type: 0
 --- !u!1 &1526479704
@@ -11183,7 +11063,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasTransform: {fileID: 2050006519}
-  itemgridtotest: {fileID: 1393145680}
   IsPointerUnderInventory: 0
 --- !u!1 &1682808204
 GameObject:
@@ -12324,12 +12203,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
   canvasTransform: {fileID: 2050006519}
   type: 0
 --- !u!1 &1782082705
@@ -13237,12 +13110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
   canvasTransform: {fileID: 2050006519}
   type: 0
 --- !u!1 &2013968916
@@ -13791,12 +13658,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 085006acd419bd64a8c045b677348e82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
   canvasTransform: {fileID: 2050006519}
   gunCell: {fileID: 1238882726}
 --- !u!1 &2107226296
