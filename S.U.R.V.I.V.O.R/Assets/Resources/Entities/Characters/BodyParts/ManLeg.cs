@@ -6,6 +6,8 @@ public sealed class ManLeg : BodyPart
 {
     public Clothes Boots { get; set; }
 
+    public Clothes Pants { get; set; }
+    
     public ManLeg(Body body) : base(body)
     {
     }
@@ -14,5 +16,4 @@ public sealed class ManLeg : BodyPart
     public override float Hp { get; protected set; }
     public override float Size { get; }
     public override IEnumerable<Clothes> Clothes { get; }
-    public override event Action OnClothesChanged;
 }

@@ -39,10 +39,8 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
     protected BaseItem placedItem;
     private bool isPointerOverCell;
     public BaseItem PlacedItem => placedItem;
-    
-    
 
-    private void Awake()
+    protected virtual void Awake()
     {
         InventoryController = FindObjectOfType(typeof(InventoryController)) as InventoryController;
     }
@@ -54,10 +52,13 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void DrawItem()
     {
+        var rectTransform = placedItem.gameObject.GetComponent<RectTransform>();
         if (placedItem == null) return;
         placedItem.gameObject.SetActive(true);
-        placedItem.gameObject.GetComponent<RectTransform>().SetParent(GetComponent<RectTransform>());
-        placedItem.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0,0);
+        rectTransform.SetParent(GetComponent<RectTransform>());
+        rectTransform.anchoredPosition = new Vector2(0,0);
+        placedItem.GetComponent<RectTransform>().sizeDelta = placedItem.OnAwakeRectTransformSize;
+        placedItem.GetComponent<RectTransform>().localScale = placedItem.OnAwakeRectTransformScale;
         ChangeItemSize(placedItem.gameObject.GetComponent<RectTransform>(),GetComponent<RectTransform>());
     }
     

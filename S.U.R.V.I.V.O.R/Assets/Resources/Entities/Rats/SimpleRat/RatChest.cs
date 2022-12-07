@@ -13,5 +13,4 @@ public sealed class RatChest : BodyPart
     public override float Hp { get; protected set; }
     public override float Size => 100;
     public override IEnumerable<Clothes> Clothes => null;
-    public override event Action OnClothesChanged;
 }

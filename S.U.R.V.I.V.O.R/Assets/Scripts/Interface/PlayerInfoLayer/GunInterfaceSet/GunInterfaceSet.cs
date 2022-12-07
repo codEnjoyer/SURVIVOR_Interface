@@ -42,7 +42,7 @@ public class GunInterfaceSet : MonoBehaviour
 
         gunSlot.currentCharacter = CurrentCharacter;
         
-        CurrentCharacter.OnGunsChanged += OnGunsChanged;
+        //CurrentCharacter.OnGunsChanged += OnGunsChanged;
     }
 
     private void OnGunsChanged()

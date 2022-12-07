@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Player;
 using UnityEngine;
 using UnityEngine.Events;
@@ -21,7 +20,7 @@ public class InterfaceGruopLogicController : MonoBehaviour
     
     public UnityEvent OnFirstPlayerLayerOpen = new();
     public UnityEvent OnGroupLayerOpen = new();
-    public void Start()
+    public void Awake()
     {
         FirstPlayerLayer.CurrentCharacter = Game.Instance.ChosenGroup.CurrentGroupMembers.First();
         GroupFirstPlayerLayer.CurrentCharacter = Game.Instance.ChosenGroup.CurrentGroupMembers.First();
@@ -30,7 +29,5 @@ public class InterfaceGruopLogicController : MonoBehaviour
         ThirdPlayerLayer.CurrentCharacter = currentGroup.currentGroupMembers[2];
         FourthPlayerLayer.CurrentCharacter = currentGroup.currentGroupMembers[3];
         */
-        OnGroupLayerOpen.AddListener(GroupFirstPlayerLayer.OnOpen);
-        OnFirstPlayerLayerOpen.AddListener(FirstPlayerLayer.OnOpen);
     }
 }

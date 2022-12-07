@@ -15,8 +15,6 @@ public abstract class BodyPart : IAlive
     public abstract IEnumerable<Clothes> Clothes { get; }
     public float Weight => Clothes.Sum(cloth => cloth.TotalWeight);
     public event Action<BodyPart> OnZeroHp;
-    
-    public abstract event Action OnClothesChanged;
 
     public BodyPart(Body body)
     {
