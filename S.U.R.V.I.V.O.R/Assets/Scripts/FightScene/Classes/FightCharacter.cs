@@ -11,10 +11,10 @@ public class FightCharacter : MonoBehaviour
     public void ApplyProperties(Entity target, CharacterType type, bool alive = true)
     {
         Debug.Log("Apply");
+        target.Body.Died += OnDied;
         Entity = target;
         Type = type;
         Alive = alive;
-        Entity.Body.Died += OnDied;
         Debug.Log(Entity.Body);
     }
 
