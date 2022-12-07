@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Character : Entity
 {
@@ -22,8 +23,9 @@ public class Character : Entity
     public override Body Body => body;
     public int Mobility => throw new NotImplementedException(); //Скорость передвижения на глобальной карте
     
-    public override void Attack(List<BodyPart> targets, float distance)
+    public override void Attack(ICollection<BodyPart> targets, float distance)
     {
-        throw new NotImplementedException();
+        targets.First().TakeDamage(new DamageInfo(15f));
+        Debug.Log(targets.First().Hp);
     }
 }
