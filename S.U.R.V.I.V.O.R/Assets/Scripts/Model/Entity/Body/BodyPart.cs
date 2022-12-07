@@ -26,11 +26,11 @@ public abstract class BodyPart : IAlive
 
     public void TakeDamage(DamageInfo damage)
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
         //TODO реализовать метод получения урона в зависимоти от выстрела
 
 
-        var blockedDamage = Clothes.Sum(cloth => cloth.CalculateBlockedDamage(damage));
+        //var blockedDamage = Clothes.Sum(cloth => cloth.CalculateBlockedDamage(damage));
         TakeDamage(damage.Damage);
     }
 
@@ -39,8 +39,8 @@ public abstract class BodyPart : IAlive
         Hp -= damage;
         if (Hp <= 0)
         {
-            OnZeroHp?.Invoke(this);
-            body.LossBodyParts();
+            //OnZeroHp?.Invoke(this);
+            body.LossBodyParts(this);
         }
     }
 

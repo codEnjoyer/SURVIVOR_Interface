@@ -11,5 +11,5 @@ public abstract class Entity: MonoBehaviour
     public int SpeedInFightScene => speedInFightScene;
 
     public abstract Body Body { get; }
-    public abstract void Attack(List<BodyPart> targets, float distance);
+    public abstract void Attack(IEnumerable<BodyPart> targets, float distance);
 }

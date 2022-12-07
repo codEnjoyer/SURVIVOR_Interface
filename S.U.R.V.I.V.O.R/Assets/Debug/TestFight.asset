@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: TestFight
   m_EditorClassIdentifier: 
   enemies:
-  - {fileID: 234525757738228535, guid: 57e839bd74f2726409759bc236374acd, type: 3}
+  - {fileID: -8374986040575136808, guid: 9449a94c99a31054a9c99b121af8906b, type: 3}
   sceneName: 1

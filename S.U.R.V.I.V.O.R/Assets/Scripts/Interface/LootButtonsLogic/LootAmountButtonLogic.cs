@@ -25,8 +25,8 @@ public class LootAmountButtonLogic : MonoBehaviour
 
     private void OnButtonClick()
     {
-        //if(playerGroup.location.Data.CheckFight())
-            //return;
+        if(playerGroup.location.Data.CheckFight())
+            return;
         interfaceController.SetGroupLayerActive();
         for (int i = 0; i < LootAmount; i++)
         {
