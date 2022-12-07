@@ -10,9 +10,12 @@ public class FightCharacter : MonoBehaviour
 
     public void ApplyProperties(Entity target, CharacterType type, bool alive = true)
     {
+        Debug.Log("Apply");
         Entity = target;
         Type = type;
         Alive = alive;
+        Entity.Body.Died += OnDied;
+        Debug.Log(Entity.Body);
     }
 
     public float Initiative => Entity.Initiative;
@@ -35,24 +38,22 @@ public class FightCharacter : MonoBehaviour
 
     public void Attack()
     {
-        Entity.Attack(new List<BodyPart>(), 10);
+        transform.LookAt(TargetToHit.transform.position);
+        var bodyParts = TargetToHit.GetComponent<FightCharacter>().Entity.Body.BodyParts;
+        Entity.Attack(bodyParts, Vector3.Distance(gameObject.transform.position,
+                                                             TargetToHit.transform.position));
     }
 
-//     public void OnEnable()
-//     {
-//         Debug.Log(Target);
-//         Debug.Log(Target.Body);
-//         Target.Body.Died += OnDied;
-//     }
-//
-//     public void OnDisable()
-//     {
-//         Target.Body.Died -= OnDied;
-//     }
-//
-//     private void OnDied()
-//     {
-//         FightSceneController.Instance.DeleteDeathCharacterFromQueue(this);
-//         Destroy(gameObject);
-//     }
+    public void OnDisable()
+    {
+        Debug.Log("Disable");
+        Entity.Body.Died -= OnDied;
+    }
+
+    private void OnDied()
+    {
+        Debug.Log("I'm Died");
+        FightSceneController.Instance.DeleteDeathCharacterFromQueue(this);
+        Destroy(gameObject);
+    }
 }

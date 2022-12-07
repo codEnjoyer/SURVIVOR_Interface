@@ -110,3 +110,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99dab8a252364992806cca63c67e58b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initiative: 2
+  speedInFightScene: 5

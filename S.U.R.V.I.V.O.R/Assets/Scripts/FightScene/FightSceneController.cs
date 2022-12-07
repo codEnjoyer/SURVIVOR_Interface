@@ -23,6 +23,7 @@ public class FightSceneController : MonoBehaviour
     [SerializeField] private EventSystem eventSystem;
     [SerializeField] private List<Vector3> spawnPoints;
     [SerializeField] private GameObject characterPrefab;
+    [SerializeField] private GameObject ratPrefab;
     private static Queue<GameObject> CharactersQueue = new Queue<GameObject>();
     private GameObject currentCharacterNodeObj;
 
@@ -129,7 +130,7 @@ public class FightSceneController : MonoBehaviour
 
         foreach (var entity in data.enemies)
         {
-            var obj = Instantiate(characterPrefab, spawnPoints[1] + new Vector3(0, 1.22f, 0), Quaternion.identity);
+            var obj = Instantiate(ratPrefab, spawnPoints[1] + new Vector3(0, 1.22f, 0), Quaternion.identity);
             obj.AddComponent<FightCharacter>().ApplyProperties(entity, CharacterType.Enemy);
             obj.GetComponent<Renderer>().material.color = Color.red;
             Characters.Add(obj);
@@ -150,7 +151,7 @@ public class FightSceneController : MonoBehaviour
             CharactersQueue.Enqueue(Characters[i]);
         }
 
-        Debug.Log(CharactersQueue.Count);
+        Debug.Log("CharacteQueue Count: " + CharactersQueue.Count);
     }
 
     private void CharacterReachTarget()
@@ -161,8 +162,10 @@ public class FightSceneController : MonoBehaviour
         {
             Debug.Log("Hit");
             // CharacterObj.GetComponent<FightCharacter>().MakeHit();
-            CharacterObj.GetComponent<FightCharacter>().TargetToHit = null;
-            DeleteDeathCharacterFromQueue();
+            var character = CharacterObj.GetComponent<FightCharacter>();
+            character.Attack();
+            character.TargetToHit = null;
+            //DeleteDeathCharacterFromQueue();
         }
 
         FightSceneController.State = FightState.Sleeping;
@@ -213,9 +216,9 @@ public class FightSceneController : MonoBehaviour
 
     private void Fight(GameObject targetObj)
     {
-        if (targetObj.tag == "Character" && targetObj != CharacterObj
-                                         && targetObj.GetComponent<FightCharacter>().Type !=
-                                         CharacterObj.GetComponent<FightCharacter>().Type)
+        if (targetObj.GetComponent<FightCharacter>() && targetObj != CharacterObj
+            && targetObj.GetComponent<FightCharacter>().Type !=
+            CharacterObj.GetComponent<FightCharacter>().Type)
         {
             CharacterObj.GetComponent<FightCharacter>().TargetToHit = targetObj;
             NodesNav.StartMoveCharacter(CharacterObj);
@@ -229,17 +232,19 @@ public class FightSceneController : MonoBehaviour
 
     private void Shoot(GameObject targetObj)
     {
-        if (targetObj.tag == "Character" && targetObj != CharacterObj
-                                         && targetObj.GetComponent<FightCharacter>().Alive)
+        if (targetObj != CharacterObj && targetObj.GetComponent<FightCharacter>()
+            && targetObj.GetComponent<FightCharacter>().Alive)
         {
             Debug.Log("Shoot");
             var character = CharacterObj.GetComponent<FightCharacter>();
+            character.TargetToHit = targetObj;
+            character.Attack();
             // character.MakeShoot(targetObj, "Body");
             State = FightState.Sleeping;
             StateController.AvailablePhase[FightState.FightPhase] = false;
             StateController.AvailablePhase[FightState.ShootPhase] = false;
-            DeleteDeathCharacterFromQueue();
-            Debug.Log(CharactersQueue.Count);
+            //DeleteDeathCharacterFromQueue();
+            //Debug.Log(CharactersQueue.Count);
         }
     }
 
@@ -258,6 +263,7 @@ public class FightSceneController : MonoBehaviour
 
     public void DeleteDeathCharacterFromQueue(FightCharacter character)
     {
+        Debug.Log("Delete");
         var newQueue = new Queue<GameObject>();
         while (CharactersQueue.Count > 0)
         {
@@ -280,7 +286,7 @@ public class FightSceneController : MonoBehaviour
     private void CalculateAvailalePathToPoint(RaycastHit hit, bool isForFighting)
     {
         if (hit.transform != null &&
-            ((hit.transform.gameObject.tag == "Character" && isForFighting) || !isForFighting))
+            ((hit.transform.gameObject.GetComponent<FightCharacter>() && isForFighting) || !isForFighting))
         {
             if (isForFighting)
                 NodesNav.TryFindPath(currentCharacterNodeObj.GetComponent<FightNode>(),
