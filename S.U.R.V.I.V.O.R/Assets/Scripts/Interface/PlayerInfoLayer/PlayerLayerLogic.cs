@@ -14,12 +14,7 @@ public class PlayerLayerLogic : MonoBehaviour
     public Character CurrentCharacter
     {
         get => character;
-        set
-        {
-            UnsubscribeCharacterEvents();
-            character = value;
-            SubscribeCharacterEvents();
-        } 
+        set => character = value;
     }
     [SerializeField]
     private PlayerCharacteristicsPanel playerCharacteristicsPanel;
@@ -255,13 +250,17 @@ public class PlayerLayerLogic : MonoBehaviour
         else if (cloth != null && cell.PlacedItem != null)
         {
             if (cloth != cell.PlacedItem.GetComponent<Clothes>())
+            {
                 cell.PlaceItem(cloth.GetComponent<BaseItem>());
+                cell.DrawItem();
+            }
             else if (cloth == cell.PlacedItem.GetComponent<Clothes>())
                 cell.DrawItem();
         }
         else if (cloth != null && cell.PlacedItem == null)
         {
             cell.PlaceItem(cloth.GetComponent<BaseItem>());
+            cell.DrawItem();
         }
     }
 
@@ -278,6 +277,7 @@ public class PlayerLayerLogic : MonoBehaviour
     
     public void OnOpen()
     {
+        SubscribeCharacterEvents();
         if (!wasOpened)
             OnFirstOpen();
         PlaceAllItems();
@@ -287,10 +287,5 @@ public class PlayerLayerLogic : MonoBehaviour
     public void OnDisable()
     {
         UnsubscribeCharacterEvents();
-    }
-
-    private void OnEnable()
-    {
-        SubscribeCharacterEvents();
     }
 }

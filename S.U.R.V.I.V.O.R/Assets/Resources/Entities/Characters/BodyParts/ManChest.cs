@@ -12,7 +12,7 @@ public sealed class ManChest : BodyPart
         set
         {
             underwear = value;
-            OnClothesChanged.Invoke();
+            OnClothesChanged?.Invoke();
         }
     }
 
@@ -23,7 +23,7 @@ public sealed class ManChest : BodyPart
         set
         {
             jacket = value;
-            OnClothesChanged.Invoke();
+            OnClothesChanged?.Invoke();
         }
     }
     public Clothes Backpack { get; set; }
