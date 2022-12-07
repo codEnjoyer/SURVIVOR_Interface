@@ -5,16 +5,21 @@ using System;
 
 public class FightCharacter : MonoBehaviour
 {
-    public Entity Target { get; private set; }
+    public Entity Entity { get; private set; }
     public CharacterType Type { get; private set; }
 
-    public FightCharacter(Entity target, CharacterType type)
+    public void ApplyProperties(Entity target, CharacterType type, bool alive = true)
     {
-        Target = target;
+        Debug.Log("Apply");
+        Entity = target;
         Type = type;
+        Alive = alive;
+        Entity.Body.Died += OnDied;
+        Debug.Log(Entity.Body);
     }
 
-    public int Energy => Target.SpeedInFightScene;
+    public float Initiative => Entity.Initiative;
+    public int Energy => Entity.SpeedInFightScene;
     public bool Alive = true;
     public GameObject TargetToHit;
     public readonly float radius;
@@ -33,24 +38,22 @@ public class FightCharacter : MonoBehaviour
 
     public void Attack()
     {
-        Target.Attack(new List<BodyPart>(), 10);
+        transform.LookAt(TargetToHit.transform.position);
+        var bodyParts = TargetToHit.GetComponent<FightCharacter>().Entity.Body.BodyParts;
+        Entity.Attack(bodyParts, Vector3.Distance(gameObject.transform.position,
+                                                             TargetToHit.transform.position));
     }
 
-//     public void OnEnable()
-//     {
-//         Debug.Log(Target);
-//         Debug.Log(Target.Body);
-//         Target.Body.Died += OnDied;
-//     }
-//
-//     public void OnDisable()
-//     {
-//         Target.Body.Died -= OnDied;
-//     }
-//
-//     private void OnDied()
-//     {
-//         FightSceneController.Instance.DeleteDeathCharacterFromQueue(this);
-//         Destroy(gameObject);
-//     }
+    public void OnDisable()
+    {
+        Debug.Log("Disable");
+        Entity.Body.Died -= OnDied;
+    }
+
+    private void OnDied()
+    {
+        Debug.Log("I'm Died");
+        FightSceneController.Instance.DeleteDeathCharacterFromQueue(this);
+        Destroy(gameObject);
+    }
 }

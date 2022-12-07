@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 [Serializable]
 public abstract class Body : IAlive
@@ -11,8 +12,8 @@ public abstract class Body : IAlive
     protected abstract int CriticalLoses { get; }
     public BodyHealth Health { get; }
     
-    public float Hp => BodyParts.Sum(path => path.Hp);
-    public float TotalWeight => BodyParts.Sum(path => path.Weight);
+    public float Hp => BodyParts.Sum(part => part.Hp);
+    public float TotalWeight => BodyParts.Sum(part => part.Weight);
     public event Action Died;
 
     protected Body()
@@ -22,9 +23,14 @@ public abstract class Body : IAlive
 
     public void LossBodyParts()
     {
+        Debug.Log(Died?.GetInvocationList().Count());
+        Debug.Log(CriticalLoses);
         counterForNumberLostBodyParts++;
         if (counterForNumberLostBodyParts == CriticalLoses)
+        {
+            Debug.Log("LossPart " + counterForNumberLostBodyParts);
             Died?.Invoke();
+        }
     }
 
     public void TakeDamage(DamageInfo damage)

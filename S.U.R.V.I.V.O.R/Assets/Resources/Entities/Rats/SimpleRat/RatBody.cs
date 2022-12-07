@@ -9,7 +9,7 @@ public class RatBody : Body
     public RatBody()
     {
         chest = new RatChest(this);
-        BodyParts = new BodyPart[] {chest};
+        BodyParts = new List<BodyPart> {chest};
         CriticalLoses = 1;
     }
 }
