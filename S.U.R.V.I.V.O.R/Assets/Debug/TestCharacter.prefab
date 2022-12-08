@@ -111,8 +111,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b439abf238352b42a3b5b3c4fd3cbbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  body:
+    bodyParts:
+    - maxHp: 1
+      size: 0
   initiative: 10
   speedInFightScene: 10
   sprite: {fileID: 0}
   firstName: 1223
   surname: 1232
+  body:
+    bodyParts:
+    - maxHp: 367
+      size: 0

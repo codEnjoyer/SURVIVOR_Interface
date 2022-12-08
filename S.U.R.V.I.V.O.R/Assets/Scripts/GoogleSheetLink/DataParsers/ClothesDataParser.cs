@@ -3,7 +3,7 @@ using Unity.VisualScripting.Antlr3.Runtime;
 
 namespace GoogleSheetLink.DataParsers
 {
-    public static class ClothDataParser
+    public static class ClothesDataParser
     {
         public static ClothData Parse(string[] param)
         {

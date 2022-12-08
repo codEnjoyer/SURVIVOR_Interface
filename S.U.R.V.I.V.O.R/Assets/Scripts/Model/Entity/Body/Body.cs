@@ -10,6 +10,12 @@ public abstract class Body : IAlive
     private int currentCriticalLoses;
     private int maxCriticalLoses;
     protected List<BodyPart> bodyParts = new();
+    public BodyHealth Health { get; }
+
+    protected Body()
+    {
+        Health = new BodyHealth(this);
+    }
 
     protected int MaxCriticalLoses
     {
@@ -24,26 +30,16 @@ public abstract class Body : IAlive
     }
 
     public IEnumerable<BodyPart> BodyParts => bodyParts;
-    public BodyHealth Health { get; }
     public float Hp => BodyParts.Sum(part => part.Hp);
     public float TotalWeight => BodyParts.Sum(part => part.Weight);
     public event Action Died;
-
-    protected Body()
-    {
-        Health = new BodyHealth(this);
-    }
-
+    
     public void LossBodyParts(BodyPart bodyPart)
     {
-        Debug.Log(Died?.GetInvocationList().Count());
-        Debug.Log(MaxCriticalLoses);
-        
         bodyParts.Remove(bodyPart);
         currentCriticalLoses++;
-        if (currentCriticalLoses == MaxCriticalLoses)
+        if (currentCriticalLoses >= MaxCriticalLoses)
         {
-            Debug.Log($"{this.GetType()} Died");
             Died?.Invoke();
         }
     }

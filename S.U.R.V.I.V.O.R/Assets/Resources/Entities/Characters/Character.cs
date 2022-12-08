@@ -5,7 +5,7 @@ using System.Linq;
 
 public class Character : Entity
 {
-    
+    public readonly ManBody body = new ManBody();
     [SerializeField] private Sprite sprite; 
     [SerializeField] private string firstName;
     [SerializeField] private string surname;
@@ -39,7 +39,6 @@ public class Character : Entity
     
     public MeleeWeapon MeleeWeapon { get; set; }
     public readonly Skills skills = new Skills();
-    public readonly ManBody body = new ManBody();
 
     public event Action OnGunsChanged; 
 

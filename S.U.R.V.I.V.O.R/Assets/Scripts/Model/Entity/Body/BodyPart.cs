@@ -6,14 +6,15 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public abstract class BodyPart : IAlive
-{
+{ 
+    protected readonly List<Clothes> clothesList = new();
     public readonly Body body;
     public BodyPathHealth Health { get; }
     public abstract int MaxHp { get; }
     public abstract float Hp { get; protected set; }
     public abstract float Size { get; }
-    public abstract IEnumerable<Clothes> Clothes { get; }
-    public float Weight => Clothes.Sum(cloth => cloth.TotalWeight);
+    public IEnumerable<Clothes> GetClothes => clothesList;
+    public float Weight => GetClothes.Sum(cloth => cloth.TotalWeight);
     public event Action<BodyPart> OnZeroHp;
 
     public BodyPart(Body body)

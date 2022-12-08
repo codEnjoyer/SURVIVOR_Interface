@@ -55,7 +55,7 @@ public class PlayerLayerLogic : MonoBehaviour
 
         foreach (var cell in allCells)
         {
-            cell.currentCharacter = CurrentCharacter;
+            cell.CurrentCharacter = CurrentCharacter;
         }
 
 
@@ -92,15 +92,15 @@ public class PlayerLayerLogic : MonoBehaviour
         // CurrentCharacter.body.OnBootsChanged -= OnBootsChanged;
     }
     
-    private void OnHatChanged()
-    {
-        hatCell.DrawItem();
-    }
-    
-    private void OnBootsChanged()
-    {
-        bootsCell.DrawItem();
-    }
+    // private void OnHatChanged()
+    // {
+    //     hatCell.DrawItem();
+    // }
+    //
+    // private void OnBootsChanged()
+    // {
+    //     bootsCell.DrawItem();
+    // }
 
     private void OnWearChanged(ClothType type)
     {
@@ -112,6 +112,7 @@ public class PlayerLayerLogic : MonoBehaviour
         }
     }
 
+    /*
     private void OnUnderwearChanged()
     {
         underwearCell.DrawItem();
@@ -121,7 +122,6 @@ public class PlayerLayerLogic : MonoBehaviour
         jacketCell.DrawItem();
     }
     
-    /*
     private void OnPrimaryGunTaken()
     {
         CurrentCharacter.PrimaryGun = null;
@@ -228,6 +228,7 @@ public class PlayerLayerLogic : MonoBehaviour
         CheckClothCellAfterWindowOpen(CurrentCharacter.body.chest.Underwear, underwearCell);
         CheckClothCellAfterWindowOpen(CurrentCharacter.body.leftLeg.Boots, bootsCell);
         CheckClothCellAfterWindowOpen(CurrentCharacter.body.chest.Jacket, jacketCell);
+        CheckClothCellAfterWindowOpen(CurrentCharacter.body.chest.Vest, jacketCell);
         
         CheckGunSetAfterWindowOpen(CurrentCharacter.PrimaryGun,primaryGunSet);
         CheckGunSetAfterWindowOpen(CurrentCharacter.SecondaryGun,secondaryGunSet);
@@ -237,7 +238,6 @@ public class PlayerLayerLogic : MonoBehaviour
     {
         if (cloth == null) return;
         cell.PlaceItem(cloth.GetComponent<BaseItem>());
-        cell.ReDraw();
     }
 
     private void CheckGunSetAfterWindowOpen(Gun gun, GunInterfaceSet interfaceSet)

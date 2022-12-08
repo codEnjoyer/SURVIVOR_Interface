@@ -2573,7 +2573,6 @@ MonoBehaviour:
   LootAmount: 3
   inventoryController: {fileID: 1668062275}
   interfaceController: {fileID: 1243250765}
-  playerGroup: {fileID: 154339910}
   LootAmountButtonsLayer: {fileID: 607803248}
 --- !u!114 &497532390
 MonoBehaviour:
@@ -6013,7 +6012,6 @@ MonoBehaviour:
   LootAmount: 1
   inventoryController: {fileID: 1668062275}
   interfaceController: {fileID: 1243250765}
-  playerGroup: {fileID: 154339910}
   LootAmountButtonsLayer: {fileID: 607803248}
 --- !u!114 &1079412998
 MonoBehaviour:
@@ -11460,7 +11458,6 @@ MonoBehaviour:
   LootAmount: 2
   inventoryController: {fileID: 1668062275}
   interfaceController: {fileID: 1243250765}
-  playerGroup: {fileID: 154339910}
   LootAmountButtonsLayer: {fileID: 607803248}
 --- !u!114 &1688156537
 MonoBehaviour:
@@ -12255,7 +12252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasTransform: {fileID: 2050006519}
-  type: 0
+  type: 1
   currentInventory: {fileID: 1701586594}
 --- !u!1 &1782082705
 GameObject:

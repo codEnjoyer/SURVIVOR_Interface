@@ -23,7 +23,7 @@ public class Clothes : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    private void Awake()
+    private void Start()
     {
         inventory = new InventoryState(data.InventorySize);
         baseItem = gameObject.GetComponent<BaseItem>();

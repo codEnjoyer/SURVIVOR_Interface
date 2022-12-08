@@ -15,5 +15,4 @@ public sealed class ManLeg : BodyPart
     public override int MaxHp { get; }
     public override float Hp { get; protected set; }
     public override float Size { get; }
-    public override IEnumerable<Clothes> Clothes { get; }
 }

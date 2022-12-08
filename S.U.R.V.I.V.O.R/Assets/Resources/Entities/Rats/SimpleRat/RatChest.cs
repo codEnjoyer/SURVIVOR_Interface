@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
 public sealed class RatChest : BodyPart
@@ -12,5 +14,4 @@ public sealed class RatChest : BodyPart
     public override int MaxHp => 10;
     public override float Hp { get; protected set; }
     public override float Size => 100;
-    public override IEnumerable<Clothes> Clothes => null;
 }

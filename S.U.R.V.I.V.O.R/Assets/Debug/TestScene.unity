@@ -215,9 +215,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a54a6ecbda55489686c107cca910fa55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sheetName: GunModules
-  from: A2
-  to: P10
+  sheetName: Clothes
+  from: A1
+  to: M2
 --- !u!4 &979362508
 Transform:
   m_ObjectHideFlags: 0

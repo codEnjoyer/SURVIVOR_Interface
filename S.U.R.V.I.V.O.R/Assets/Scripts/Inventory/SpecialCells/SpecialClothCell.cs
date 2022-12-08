@@ -3,13 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+
 public class SpecialClothCell : SpecialCell
 {
     [SerializeField] private Transform canvasTransform;
     [SerializeField] private ClothType type;
     [SerializeField] private ItemGrid currentInventory;
     private Size zeroInventorySize;
-    public Character currentCharacter { get; set; }
+    private Character currentCharacter;
+
+    public Character CurrentCharacter
+    {
+        get => currentCharacter;
+        set { currentCharacter = value; }
+    }
 
     protected override void Awake()
     {
@@ -18,11 +25,12 @@ public class SpecialClothCell : SpecialCell
         currentInventory = GetComponentInChildren<RectTransform>().GetComponentInChildren<ItemGrid>();
     }
 
-    public void OnEnable()
+    void Start()
     {
         if (currentInventory != null)
             currentInventory.ChangeState(new InventoryState(zeroInventorySize));
     }
+
 
     public override void PlaceItem(BaseItem item)
     {
@@ -30,7 +38,7 @@ public class SpecialClothCell : SpecialCell
             item.Rotated();
         placedItem = item;
         bool isWeared;
-        currentCharacter.body.Wear(item.GetComponent<Clothes>(),false, out isWeared);
+        CurrentCharacter.body.Wear(item.GetComponent<Clothes>(), false, out isWeared);
         if (isWeared)
         {
             InventoryController.SelectedItem = null;
@@ -40,11 +48,11 @@ public class SpecialClothCell : SpecialCell
             GiveItem();
         }
     }
-    
+
     public override void GiveItem()
     {
         if (PlacedItem == null) return;
-        currentCharacter.body.Wear(PlacedItem.GetComponent<Clothes>(), true, out var isSuccessful);
+        CurrentCharacter.body.Wear(PlacedItem.GetComponent<Clothes>(), true, out var isSuccessful);
         if (!isSuccessful) return;
         PlacedItem.GetComponent<RectTransform>().sizeDelta = PlacedItem.OnAwakeRectTransformSize;
         PlacedItem.GetComponent<RectTransform>().localScale = PlacedItem.OnAwakeRectTransformScale;
@@ -56,13 +64,12 @@ public class SpecialClothCell : SpecialCell
     public void ReDraw()
     {
         DrawItem();
-        if(currentInventory != null)
-            UpdateInventory();
+        UpdateInventory();
     }
-    
     private void UpdateInventory()
     {
-        var item = currentCharacter.body.GetClothByType(type);
+        if (currentInventory == null) return;
+        var item = CurrentCharacter.body.GetClothByType(type);
         if (item != null)
             currentInventory.ChangeState(item.Inventory);
         else
