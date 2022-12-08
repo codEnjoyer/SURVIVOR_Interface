@@ -3,13 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
 public class ContextMenuItem : MonoBehaviour, IPointerClickHandler
 {
-    private List<IContextMenuAction> contextMenuActions; 
-    
+    private List<IContextMenuAction> contextMenuActions;
+
+    public UnityEvent Action;
+
     private void Start()
     {
         contextMenuActions = GetComponents<IContextMenuAction>().ToList();
@@ -17,12 +20,8 @@ public class ContextMenuItem : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            Debug.Log("click");
-            var position = Input.mousePosition;
-            ContextMenuController.Instance.Clear();
-            ContextMenuController.Instance.CreateContextMenu(contextMenuActions, new Vector2(position.x, position.y));
-        }
+        Debug.Log("click");
+        ContextMenuController.Instance.Clear();
+        ContextMenuController.Instance.CreateContextMenu(contextMenuActions, Input.mousePosition);
     }
 }
