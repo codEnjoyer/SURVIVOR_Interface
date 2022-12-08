@@ -12321,7 +12321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasTransform: {fileID: 2050006519}
-  type: 0
+  type: 1
   currentInventory: {fileID: 1701586594}
 --- !u!1 &1782082705
 GameObject:
