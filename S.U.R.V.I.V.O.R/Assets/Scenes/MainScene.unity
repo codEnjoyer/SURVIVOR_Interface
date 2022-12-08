@@ -166,7 +166,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2048833773}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &16677849
 GameObject:
@@ -1902,7 +1902,6 @@ GameObject:
   m_Component:
   - component: {fileID: 380155334}
   - component: {fileID: 380155336}
-  - component: {fileID: 380155335}
   m_Layer: 0
   m_Name: TurnController
   m_TagString: Untagged
@@ -1925,19 +1924,6 @@ Transform:
   m_Father: {fileID: 2048833773}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &380155335
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 380155333}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0f5c28537effd844908115ccedcbf1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turnEndButton: {fileID: 1324188164}
 --- !u!114 &380155336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1950,6 +1936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 779e7370226c68c4e97e23a26f3ff18f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turnEndButton: {fileID: 1324188164}
 --- !u!1 &382582765
 GameObject:
   m_ObjectHideFlags: 0
@@ -2209,7 +2196,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2048833773}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &434975904
 MonoBehaviour:
@@ -5108,51 +5095,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 857164311}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &878336097
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 878336098}
-  - component: {fileID: 878336099}
-  m_Layer: 0
-  m_Name: PlayerInfoController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &878336098
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 878336097}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2048833773}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &878336099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 878336097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a29117295d2408b41afec8dcc7d0a244, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MainGroup: {fileID: 0}
 --- !u!1 &883187973
 GameObject:
   m_ObjectHideFlags: 0
@@ -7364,7 +7306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f8364e0c595c564c9247d2577addeb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interfaceGroupLogicController: {fileID: 0}
+  interfaceGroupLogicController: {fileID: 1243250766}
   mainInfoPanelLayer: {fileID: 1466170884}
   groupButtonsLayer: {fileID: 302030226}
   groupInfoLayer: {fileID: 804987242}
@@ -9768,7 +9710,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2048833773}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1518125503
 MonoBehaviour:
@@ -11210,7 +11152,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2048833773}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1668062274
 MonoBehaviour:
@@ -13424,7 +13366,6 @@ Transform:
   m_Children:
   - {fileID: 380155334}
   - {fileID: 279836420}
-  - {fileID: 878336098}
   - {fileID: 1668062273}
   - {fileID: 11603916}
   - {fileID: 434975903}
