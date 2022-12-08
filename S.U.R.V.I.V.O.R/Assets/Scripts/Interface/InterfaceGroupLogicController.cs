@@ -5,7 +5,7 @@ using Player;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class InterfaceGruopLogicController : MonoBehaviour
+public class InterfaceGroupLogicController : MonoBehaviour
 {
     public Group currentGroup;
     [SerializeField] private PlayerLayerLogic FirstPlayerLayer;

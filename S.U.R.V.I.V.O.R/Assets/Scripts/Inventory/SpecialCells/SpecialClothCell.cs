@@ -35,7 +35,7 @@ public class SpecialClothCell : SpecialCell
 
     public void OnEnable()
     {
-        if (currentInventory != null)
+        if (currentInventory != null && PlacedItem == null)
             currentInventory.ChangeState(new InventoryState(zeroInventorySize));
     }
 
