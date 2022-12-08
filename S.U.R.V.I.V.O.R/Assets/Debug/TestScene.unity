@@ -217,7 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sheetName: Clothes
   from: A1
-  to: M2
+  to: M1
 --- !u!4 &979362508
 Transform:
   m_ObjectHideFlags: 0

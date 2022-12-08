@@ -15,7 +15,7 @@ namespace Interface.InterfaceStates
         {
             if (contr.CurrentPlayerLayer == contr.FirstPlayerLayer)
             {
-                contr.InterfaceGruopLogicController.OnFirstPlayerLayerOpen.Invoke();
+                contr.InterfaceGroupLogicController.OnFirstPlayerLayerOpen.Invoke();
             }
             Selector.Instance.DeActivate();
             memory = contr.CurrentPlayerLayer;

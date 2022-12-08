@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -5285827569045471981}
   - component: {fileID: -5650598128513766918}
   - component: {fileID: 2699428349745489799}
-  - component: {fileID: -7011620727257448786}
+  - component: {fileID: 2003939898543683051}
   m_Layer: 0
   m_Name: Jacket
   m_TagString: Untagged
@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a4c089bab1174640a6ddaf8a88be3a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemData: {fileID: 11400000, guid: 77a27b331942636409107f4440d25f7b, type: 2}
+  data: {fileID: 11400000, guid: 77a27b331942636409107f4440d25f7b, type: 2}
 --- !u!114 &-5650598128513766918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,7 +78,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7661a9c963b5b1944a31d2d25e5e4379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-7011620727257448786
+  Action:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &2003939898543683051
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

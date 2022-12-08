@@ -50,6 +50,8 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
         return false;
     }
 
+    public abstract void ReDraw();
+    
     public void DrawItem()
     {
         if (placedItem == null) return;
@@ -85,7 +87,7 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
     public void PlaceNullItem()
     {
         placedItem = null;
-        
+        ReDraw();
     }
 
     public abstract void GiveItem();

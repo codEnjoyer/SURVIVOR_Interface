@@ -6,7 +6,7 @@ using Player;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class InterfaceGruopLogicController : MonoBehaviour
+public class InterfaceGroupLogicController : MonoBehaviour
 {
     [SerializeField] private PlayerLayerLogic FirstPlayerLayer;
     [SerializeField] private PlayerLayerLogic SecondPlayerLayer;

@@ -35,4 +35,9 @@ public class SpecialGunModuleCell : SpecialCell
         return InventoryController.SelectedItem.GetComponent<GunModule>() &&
                InventoryController.SelectedItem.GetComponent<GunModule>().Data.ModuleType == type;
     }
+
+    public override void ReDraw()
+    {
+        throw new System.NotImplementedException();
+    }
 }

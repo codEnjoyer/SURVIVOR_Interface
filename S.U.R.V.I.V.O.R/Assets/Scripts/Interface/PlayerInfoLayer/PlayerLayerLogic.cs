@@ -10,12 +10,8 @@ using UnityEngine.UI;
 
 public class PlayerLayerLogic : MonoBehaviour
 {
-    private Character character;
-    public Character CurrentCharacter
-    {
-        get => character;
-        set => character = value;
-    }
+    public Character CurrentCharacter { get; set; }
+
     [SerializeField]
     private PlayerCharacteristicsPanel playerCharacteristicsPanel;
     [SerializeField]
@@ -68,11 +64,6 @@ public class PlayerLayerLogic : MonoBehaviour
         //nameTextBox.text = CurrentCharacter.FirstName;
     }
 
-    public void Start()
-    {
-        OnFirstOpen();
-    }
-
     private void SubscribeCharacterEvents()
     {
         if (CurrentCharacter == null) return;
@@ -91,162 +82,54 @@ public class PlayerLayerLogic : MonoBehaviour
         // CurrentCharacter.body.OnHatChanged -= OnHatChanged;
         // CurrentCharacter.body.OnBootsChanged -= OnBootsChanged;
     }
-    
-    // private void OnHatChanged()
-    // {
-    //     hatCell.DrawItem();
-    // }
-    //
-    // private void OnBootsChanged()
-    // {
-    //     bootsCell.DrawItem();
-    // }
-
     private void OnWearChanged(ClothType type)
     {
         switch (type)
         {
             case ClothType.Jacket:
-                jacketCell.ReDraw();
+                jacketCell.CheckNewClothes();
+                break;
+            case ClothType.Backpack:
+                backpackCell.CheckNewClothes();
+                break;
+            case ClothType.Pants:
+                pantsCell.CheckNewClothes();
+                break;
+            case ClothType.Vest:
+                vestCell.CheckNewClothes();
+                break;
+            case ClothType.Underwear:
+                underwearCell.CheckNewClothes();
+                break;
+            case ClothType.Boots:
+                bootsCell.CheckNewClothes();
+                break;
+            case ClothType.Hat:
+                hatCell.CheckNewClothes();
                 break;
         }
     }
-
-    /*
-    private void OnUnderwearChanged()
-    {
-        underwearCell.DrawItem();
-    }
-    private void OnGunsChanged()
-    {
-        jacketCell.DrawItem();
-    }
-    
-    private void OnPrimaryGunTaken()
-    {
-        CurrentCharacter.PrimaryGun = null;
-    }
-    
-    private void OnPrimaryGunPlaced()
-    {
-        CurrentCharacter.PrimaryGun = primaryGunSet.CurrentInterfaceSetGun;
-    }
-    
-    private void OnSecondaryGunTaken()
-    {
-        CurrentCharacter.SecondaryGun = null;
-    }
-    
-    private void OnSecondaryGunPlaced()
-    {
-        CurrentCharacter.SecondaryGun = secondaryGunSet.CurrentInterfaceSetGun;
-    }
-    
-
-    private void OnJacketTaken()
-    {
-        CurrentCharacter.body.chest.Jacket = null;
-        jacketInventory.ChangeState(new InventoryState(emptyInventorySize));
-    }
-
-    private void OnVestPlaced()
-    {
-        CurrentCharacter.body.chest.Vest = vestCell.PlacedItem.GetComponent<Clothes>();
-        vestInventory.ChangeState(vestCell.PlacedItem.GetComponent<Clothes>().Inventory);
-    }
-    
-    private void OnVestTaken()
-    {
-        CurrentCharacter.body.chest.Vest = null;
-        vestInventory.ChangeState(new InventoryState(emptyInventorySize));
-    }
-
-    private void OnBackpackPlaced()
-    {
-        CurrentCharacter.body.chest.Backpack = backpackCell.PlacedItem.GetComponent<Clothes>();
-        backpackInventory.ChangeState(backpackCell.PlacedItem.GetComponent<Clothes>().Inventory);
-    }
-    
-    private void OnBackpackTaken()
-    {
-        CurrentCharacter.body.chest.Backpack = null;
-        backpackInventory.ChangeState(new InventoryState(emptyInventorySize));
-    }
-    
-    private void OnPantsPlaced()
-    {
-        CurrentCharacter.body.leftLeg.Pants = pantsCell.PlacedItem.GetComponent<Clothes>();
-        CurrentCharacter.body.rightLeg.Pants = pantsCell.PlacedItem.GetComponent<Clothes>();
-        pantsInventory.ChangeState(pantsCell.PlacedItem.GetComponent<Clothes>().Inventory);
-    }
-    
-    private void OnPantsTaken()
-    {
-        CurrentCharacter.body.leftLeg.Pants = null;
-        CurrentCharacter.body.rightLeg.Pants = null;
-        pantsInventory.ChangeState(new InventoryState(emptyInventorySize));
-    }
-
-    private void OnHatPlaced()
-    {
-        CurrentCharacter.body.head.Hat = hatCell.PlacedItem.GetComponent<Clothes>();
-    }
-    
-    private void OnHatTaken()
-    {
-        CurrentCharacter.body.head.Hat = null;
-    }
-
-    private void OnBootsPlaced()
-    {
-        CurrentCharacter.body.leftLeg.Boots = bootsCell.PlacedItem.GetComponent<Clothes>();
-        CurrentCharacter.body.rightLeg.Boots = bootsCell.PlacedItem.GetComponent<Clothes>();
-    }
-    
-    private void OnBootsTaken()
-    {
-        CurrentCharacter.body.rightLeg.Boots = null;
-        CurrentCharacter.body.leftLeg.Boots = null;
-    }
-    
-    private void OnUnderwearPlaced()
-    {
-        CurrentCharacter.body.chest.Underwear = underwearCell.PlacedItem.GetComponent<Clothes>();
-    }
-    
-    private void OnUnderwearTaken()
-    {
-        CurrentCharacter.body.chest.Underwear = null;
-    }
-    */
-
     private void PlaceAllItems()
     {
-        CheckClothCellAfterWindowOpen(CurrentCharacter.body.chest.Backpack, backpackCell);
-        CheckClothCellAfterWindowOpen(CurrentCharacter.body.stomach.Pants, pantsCell);
-        CheckClothCellAfterWindowOpen(CurrentCharacter.body.head.Hat, hatCell);
-        CheckClothCellAfterWindowOpen(CurrentCharacter.body.chest.Underwear, underwearCell);
-        CheckClothCellAfterWindowOpen(CurrentCharacter.body.leftLeg.Boots, bootsCell);
-        CheckClothCellAfterWindowOpen(CurrentCharacter.body.chest.Jacket, jacketCell);
-        CheckClothCellAfterWindowOpen(CurrentCharacter.body.chest.Vest, jacketCell);
-        
-        CheckGunSetAfterWindowOpen(CurrentCharacter.PrimaryGun,primaryGunSet);
-        CheckGunSetAfterWindowOpen(CurrentCharacter.SecondaryGun,secondaryGunSet);
+        CheckCellAfterWindowOpen(CurrentCharacter.body.chest.Vest != null ? CurrentCharacter.body.chest.Vest.GetComponent<BaseItem>() : null,vestCell );
+        CheckCellAfterWindowOpen(CurrentCharacter.body.chest.Backpack != null ? CurrentCharacter.body.chest.Backpack.GetComponent<BaseItem>() : null, backpackCell);
+        CheckCellAfterWindowOpen(CurrentCharacter.body.stomach.Pants != null ? CurrentCharacter.body.stomach.Pants.GetComponent<BaseItem>() : null, pantsCell);
+        CheckCellAfterWindowOpen(CurrentCharacter.body.head.Hat != null ? CurrentCharacter.body.head.Hat.GetComponent<BaseItem>() : null, hatCell);
+        CheckCellAfterWindowOpen(CurrentCharacter.body.chest.Underwear != null ? CurrentCharacter.body.chest.Underwear.GetComponent<BaseItem>() : null, underwearCell);
+        CheckCellAfterWindowOpen(CurrentCharacter.body.leftLeg.Boots != null ? CurrentCharacter.body.leftLeg.Boots.GetComponent<BaseItem>() : null, bootsCell);
+        CheckCellAfterWindowOpen(CurrentCharacter.body.chest.Jacket != null ? CurrentCharacter.body.chest.Jacket.GetComponent<BaseItem>() : null, jacketCell);
+        CheckCellAfterWindowOpen(CurrentCharacter.PrimaryGun != null ? CurrentCharacter.PrimaryGun.GetComponent<BaseItem>() : null,primaryGunSet.gunSlot);
+        CheckCellAfterWindowOpen(CurrentCharacter.SecondaryGun != null ? CurrentCharacter.SecondaryGun.GetComponent<BaseItem>() : null,secondaryGunSet.gunSlot);
     }
 
-    private void CheckClothCellAfterWindowOpen(Clothes cloth, SpecialClothCell cell)
+    private void CheckCellAfterWindowOpen(BaseItem item, SpecialCell cell)
     {
-        if (cloth == null) return;
-        cell.PlaceItem(cloth.GetComponent<BaseItem>());
+        if (item == null)
+            cell.PlaceNullItem();
+        else
+            cell.PlaceItem(item);
     }
-
-    private void CheckGunSetAfterWindowOpen(Gun gun, GunInterfaceSet interfaceSet)
-    {
-        if (gun == null) return;
-        interfaceSet.gunSlot.PlaceItem(gun.GetComponent<BaseItem>());
-        interfaceSet.gunSlot.DrawItem();
-    }
-
+    
     public void OnDisable()
     {
         UnsubscribeCharacterEvents();
@@ -254,9 +137,9 @@ public class PlayerLayerLogic : MonoBehaviour
 
     public void OnEnable()
     {
-        SubscribeCharacterEvents();
         if (!wasOpened)
             OnFirstOpen();
+        SubscribeCharacterEvents();
         PlaceAllItems();
     }
 }

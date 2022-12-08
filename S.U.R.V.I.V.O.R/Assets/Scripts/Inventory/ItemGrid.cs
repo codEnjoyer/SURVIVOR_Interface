@@ -9,6 +9,8 @@ public class ItemGrid : MonoBehaviour
     
     public InventoryState curInventoryState { get; private set; }
     
+    public Character InventoryOwner { get; set; }
+    
     private Canvas canvas;
     [SerializeField] private InventoryGridBackground inventoryGridBG;
 
@@ -88,6 +90,7 @@ public class ItemGrid : MonoBehaviour
         var res = curInventoryState.PlaceItem(item, posX, posY, ref overlapItem);
         if (res)
         {
+            item.ItemOwner = InventoryOwner;
             var itemRectTransform = item.GetComponent<RectTransform>();
             itemRectTransform.SetParent(rectTransform);
         
@@ -102,6 +105,7 @@ public class ItemGrid : MonoBehaviour
 
     public void PlaceItem(BaseItem item, int posX, int posY)
     {
+        item.ItemOwner = InventoryOwner;
         var itemRectTransform = item.GetComponent<RectTransform>();
         itemRectTransform.SetParent(rectTransform);
         
@@ -120,6 +124,7 @@ public class ItemGrid : MonoBehaviour
     public BaseItem PickUpItem(int x, int y)
     {
         var item = curInventoryState.PickUpItem(x, y);
+        item.ItemOwner = null;
         instantiateItems.Remove(item);
         return item;
     }

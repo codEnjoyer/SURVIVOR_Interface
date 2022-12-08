@@ -25,7 +25,7 @@ public class InterfaceController : MonoBehaviour
     [SerializeField] private GameObject thirdPlayerLayer;
     [SerializeField] private GameObject fourthPlayerLayer;
 
-    public InterfaceGruopLogicController InterfaceGruopLogicController => interfaceGruopLogicController;
+    public InterfaceGroupLogicController InterfaceGroupLogicController => interfaceGroupLogicController;
     public GameObject MainInfoPanelLayer => mainInfoPanelLayer;
     public GameObject GroupButtonsLayer => groupButtonsLayer;
     public GameObject GroupInfoLayer => groupInfoLayer;
@@ -64,8 +64,8 @@ public class InterfaceController : MonoBehaviour
     {
         MainInfoPanelLayer.SetActive(value);
         GroupButtonsLayer.SetActive(value);
-        GroupInfoLayer.SetActive(value);
         CharactersButtonsLayer.SetActive(value);
+        GroupInfoLayer.SetActive(value);
         FirstPlayerLayer.SetActive(value);
         //SecondPlayerLayer.SetActive(value);
         //ThirdPlayerLayer.SetActive(value);

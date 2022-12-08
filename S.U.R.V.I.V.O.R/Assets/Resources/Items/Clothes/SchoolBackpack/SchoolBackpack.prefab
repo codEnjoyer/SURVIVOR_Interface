@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8073354101777460830
+--- !u!1 &6630877466564552865
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,87 +8,67 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 746332497264292580}
-  - component: {fileID: -7828054832626531359}
-  - component: {fileID: -2585351097747471090}
-  - component: {fileID: 2878904179127209077}
-  - component: {fileID: -2452630225899817238}
+  - component: {fileID: 1633925430698281986}
+  - component: {fileID: 5140252250065058909}
+  - component: {fileID: -4594976966681356657}
+  - component: {fileID: 2488022020709401235}
   m_Layer: 0
-  m_Name: Sawed-Off
+  m_Name: SchoolBackpack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &746332497264292580
-RectTransform:
+--- !u!4 &1633925430698281986
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8073354101777460830}
+  m_GameObject: {fileID: 6630877466564552865}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 298.32324}
+  m_LocalPosition: {x: 459.31213, y: 121.54849, z: 0.82283974}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 942.5058, y: 535.7769}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &-7828054832626531359
+--- !u!114 &5140252250065058909
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8073354101777460830}
+  m_GameObject: {fileID: 6630877466564552865}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a4c089bab1174640a6ddaf8a88be3a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemData: {fileID: 11400000, guid: d890512de0cd8dc49a8d2ea7396a92d5, type: 2}
---- !u!114 &-2585351097747471090
+  data: {fileID: 11400000, guid: e966c8f116fdb8d4e94e09765e654c21, type: 2}
+--- !u!114 &-4594976966681356657
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8073354101777460830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7661a9c963b5b1944a31d2d25e5e4379, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Action:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &2878904179127209077
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8073354101777460830}
+  m_GameObject: {fileID: 6630877466564552865}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3bf17f717442e2d4b91ee6b2417ae00a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-2452630225899817238
+--- !u!114 &2488022020709401235
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8073354101777460830}
+  m_GameObject: {fileID: 6630877466564552865}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bf17f717442e2d4b91ee6b2417ae00a, type: 3}
+  m_Script: {fileID: 11500000, guid: e375d5a9e6bc638488acde7779abeeb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 4ffc5444555306540acb14e1c6424aec, type: 2}

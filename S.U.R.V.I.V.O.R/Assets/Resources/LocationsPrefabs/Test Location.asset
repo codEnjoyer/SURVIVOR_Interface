@@ -29,6 +29,8 @@ MonoBehaviour:
     weightChance: 5
   - item: {fileID: -7828054832626531359, guid: 704f35796fa5065428db22cfffeadd51, type: 3}
     weightChance: 5
+  - item: {fileID: 5140252250065058909, guid: bf882990dcc2a8d4c802875db79e3a98, type: 3}
+    weightChance: 200
   fightChancesList:
   - fight: {fileID: 11400000, guid: d903b53a056813c478ecd771086b99c2, type: 2}
     weightChance: 1
