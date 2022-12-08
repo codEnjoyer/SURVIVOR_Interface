@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
-public sealed class ManStomach : BodyPart
+public sealed class ManHead : BodyPart
 {
-    public ManStomach(Body body) : base(body)
+    public Clothes Hat;
+
+    public ManHead(Body body) : base(body)
     {
     }
 

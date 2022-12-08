@@ -5,7 +5,7 @@ using Player;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class InterfaceGruopLogicController : MonoBehaviour
+public class InterfaceGroupLogicController : MonoBehaviour
 {
     public Group currentGroup;
     [SerializeField] private PlayerLayerLogic FirstPlayerLayer;
@@ -22,9 +22,8 @@ public class InterfaceGruopLogicController : MonoBehaviour
     
     public UnityEvent OnFirstPlayerLayerOpen = new();
     public UnityEvent OnGroupLayerOpen = new();
-    public void Start()
+    public void Awake()
     {
-        Debug.Log(currentGroup.currentGroupMembers[0]);
         FirstPlayerLayer.CurrentCharacter = currentGroup.currentGroupMembers[0];
         GroupFirstPlayerLayer.CurrentCharacter = currentGroup.currentGroupMembers[0];
         locationInventoryManager.group = currentGroup;
@@ -33,7 +32,5 @@ public class InterfaceGruopLogicController : MonoBehaviour
         ThirdPlayerLayer.CurrentCharacter = currentGroup.currentGroupMembers[2];
         FourthPlayerLayer.CurrentCharacter = currentGroup.currentGroupMembers[3];
         */
-        OnGroupLayerOpen.AddListener(GroupFirstPlayerLayer.OnOpen);
-        OnFirstPlayerLayerOpen.AddListener(FirstPlayerLayer.OnOpen);
     }
 }

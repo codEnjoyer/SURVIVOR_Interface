@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 public class GroupLocationText : MonoBehaviour
 {
-    private InterfaceGruopLogicController interfaceController;
+    private InterfaceGroupLogicController interfaceController;
 
     public void Awake()
     {
-        interfaceController = FindObjectOfType(typeof(InterfaceGruopLogicController)) as InterfaceGruopLogicController;
+        interfaceController = FindObjectOfType(typeof(InterfaceGroupLogicController)) as InterfaceGroupLogicController;
         GetComponent<Text>().text = interfaceController.currentGroup.location.Data.LocationName;
     }
 

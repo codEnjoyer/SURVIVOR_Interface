@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine.Events;
 
 public sealed class ManArm : BodyPart
 {

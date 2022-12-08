@@ -18,17 +18,23 @@ public abstract class Gun : MonoBehaviour, IWeapon
     public float AttackDistance => Data.FireDistance;
     public IReadOnlyCollection<GunModule> GunModules => gunModules;
 
+    public event Action OnModulesChanged;
     public bool AddGunModule(GunModule newGunModule)
     {
         if (Data.AvailableGunModules.Contains(newGunModule.Data.ModuleType)
             && !gunModules.Any(module => module.Data.ModuleType.Equals(newGunModule.Data.ModuleType)))
         {
             gunModules.Add(newGunModule);
+            OnModulesChanged?.Invoke();
             return true;
         }
 
         return false;
     }
 
-    public bool RemoveGunModule(GunModule gunModule) => gunModules.Remove(gunModule);
+    public bool RemoveGunModule(GunModule gunModule)
+    {
+        OnModulesChanged?.Invoke();
+        return gunModules.Remove(gunModule);
+    }
 }

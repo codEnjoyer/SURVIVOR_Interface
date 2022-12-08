@@ -14,12 +14,35 @@ public class Character : Entity
     public string FirstName => firstName;
     public string Surname => surname;
 
-    public Gun PrimaryGun { get; set; }
-    public Gun SecondaryGun { get; set; }
+    private Gun primaryGun;
+
+    public Gun PrimaryGun
+    {
+        get => primaryGun;
+        set
+        {
+            primaryGun = value;
+            OnGunsChanged?.Invoke();
+        }
+    }
+    
+    private Gun secondaryGun;
+    public Gun SecondaryGun
+    {
+        get => secondaryGun;
+        set
+        {
+            secondaryGun = value;
+            OnGunsChanged?.Invoke();
+        }
+    }
+    
     public MeleeWeapon MeleeWeapon { get; set; }
     public readonly Skills skills = new Skills();
     public readonly ManBody body = new ManBody();
-    
+
+    public event Action OnGunsChanged; 
+
     public override Body Body => body;
     public int Mobility => throw new NotImplementedException(); //Скорость передвижения на глобальной карте
     
