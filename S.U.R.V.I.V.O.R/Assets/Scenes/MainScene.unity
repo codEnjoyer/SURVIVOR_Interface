@@ -766,7 +766,6 @@ MonoBehaviour:
   firstTurnObject: {fileID: 775075723}
   secondTurnObject: {fileID: 340664874}
   thirdTurnObject: {fileID: 1244891097}
-  currentNode: {fileID: 1687752736}
 --- !u!114 &154339910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -779,8 +778,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc365e50704050649a7f3cdc97592230, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxOnGlobalMapGroupEndurance: 10
-  CurrentOnGlobalMapGroupEndurance: 10
+  maxOnGlobalMapGroupEndurance: 10
+  currentOnGlobalMapGroupEndurance: 10
   currentGroupMembers:
   - {fileID: 234525757738228535, guid: 57e839bd74f2726409759bc236374acd, type: 3}
 --- !u!114 &154339911
@@ -2224,7 +2223,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd15d339090e4eaf91c478dcd232d3a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groups:
+  - {fileID: 154339910}
   chosenGroup: {fileID: 154339910}
+  startNode: {fileID: 1687752736}
 --- !u!1 &443994103
 GameObject:
   m_ObjectHideFlags: 0
@@ -2575,7 +2577,6 @@ MonoBehaviour:
   LootAmount: 3
   inventoryController: {fileID: 1668062275}
   interfaceController: {fileID: 1243250765}
-  playerGroup: {fileID: 154339910}
   LootAmountButtonsLayer: {fileID: 607803248}
 --- !u!114 &497532390
 MonoBehaviour:
@@ -6006,7 +6007,6 @@ MonoBehaviour:
   LootAmount: 1
   inventoryController: {fileID: 1668062275}
   interfaceController: {fileID: 1243250765}
-  playerGroup: {fileID: 154339910}
   LootAmountButtonsLayer: {fileID: 607803248}
 --- !u!114 &1079412998
 MonoBehaviour:
@@ -7364,7 +7364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f8364e0c595c564c9247d2577addeb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interfaceGroupLogicController: {fileID: 1243250766}
+  interfaceGroupLogicController: {fileID: 0}
   mainInfoPanelLayer: {fileID: 1466170884}
   groupButtonsLayer: {fileID: 302030226}
   groupInfoLayer: {fileID: 804987242}
@@ -7385,7 +7385,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62f6b01ab4a648d47a02c0aac93ca0c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentGroup: {fileID: 154339910}
   FirstPlayerLayer: {fileID: 1120807950}
   SecondPlayerLayer: {fileID: 0}
   ThirdPlayerLayer: {fileID: 0}
@@ -7394,7 +7393,6 @@ MonoBehaviour:
   GroupSecondPlayerLayer: {fileID: 0}
   GroupThirdPlayerLayer: {fileID: 0}
   GroupFourthPlayerLayer: {fileID: 0}
-  locationInventoryManager: {fileID: 1426913594}
   OnFirstPlayerLayerOpen:
     m_PersistentCalls:
       m_Calls: []
@@ -8062,10 +8060,6 @@ PrefabInstance:
       propertyPath: nodes.Array.size
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7140779212959648733, guid: b629dac688e572746ac083273501009d, type: 3}
-      propertyPath: itemGrid
-      value: 
-      objectReference: {fileID: 1725873114}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b629dac688e572746ac083273501009d, type: 3}
 --- !u!1 &1324188163
@@ -8819,11 +8813,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1426913590}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88d23afa1791ca149be78fb5a41bec21, type: 3}
+  m_Script: {fileID: 11500000, guid: d7a09f34fa124e8d99d7f780f0595106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  group: {fileID: 0}
   text: {fileID: 1729742934}
+  itemGrid: {fileID: 1725873114}
 --- !u!1001 &1427509601
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11244,7 +11238,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasTransform: {fileID: 2050006519}
-  itemgridtotest: {fileID: 1393145680}
   IsPointerUnderInventory: 0
 --- !u!1 &1682808204
 GameObject:
@@ -11592,7 +11585,6 @@ MonoBehaviour:
   LootAmount: 2
   inventoryController: {fileID: 1668062275}
   interfaceController: {fileID: 1243250765}
-  playerGroup: {fileID: 154339910}
   LootAmountButtonsLayer: {fileID: 607803248}
 --- !u!114 &1688156537
 MonoBehaviour:

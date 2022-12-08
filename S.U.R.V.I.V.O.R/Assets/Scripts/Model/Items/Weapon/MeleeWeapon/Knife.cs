@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
+using Model.GameEntity;
+using Model.GameEntity.Skills;
 
 public class Knife : MeleeWeapon
 {

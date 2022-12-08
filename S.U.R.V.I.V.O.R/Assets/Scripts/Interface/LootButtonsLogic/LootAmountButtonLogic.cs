@@ -14,8 +14,6 @@ public class LootAmountButtonLogic : MonoBehaviour
     [SerializeField]
     private InterfaceController interfaceController;
     [SerializeField]
-    private Group playerGroup;
-    [SerializeField]
     private GameObject LootAmountButtonsLayer;
     void Start()
     {
@@ -25,13 +23,13 @@ public class LootAmountButtonLogic : MonoBehaviour
 
     private void OnButtonClick()
     {
-        //if(playerGroup.location.Data.CheckFight())
-         //   return;
+        if(Game.Instance.ChosenGroup.Location.Data.CheckFight())
+            return;
         interfaceController.SetGroupLayerActive();
         for (int i = 0; i < LootAmount; i++)
         {
-            inventoryController.SelectedItemGrid = LocationManager.Instance.ItemGrid;
-            inventoryController.AddItemToInventory(playerGroup.location.Data.GetLoot());
+            inventoryController.SelectedItemGrid = LocationInventory.Instance.LocationItemGrid;
+            inventoryController.AddItemToInventory(Game.Instance.ChosenGroup.Location.Data.GetLoot());
         }
     }
 }

@@ -2,21 +2,36 @@
 using System.Collections.Generic;
 using Player.GroupMovement;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Player
 {
+    [RequireComponent(typeof(GroupMovementLogic))]
     public class Group : MonoBehaviour
     {
-        public int MaxOnGlobalMapGroupEndurance;
-        public int CurrentOnGlobalMapGroupEndurance;
-        public List<Character> currentGroupMembers = new ();
+        [SerializeField] private int maxOnGlobalMapGroupEndurance = 10;
+        [SerializeField] private int currentOnGlobalMapGroupEndurance = 10;
+        [SerializeField] private List<Character> currentGroupMembers = new ();
         private int maxGroupMembers;
-    
-        public Location location => GetComponent<GroupMovementLogic>().CurrentNode.GetComponentInParent<Location>();
+
+        public int MaxOnGlobalMapGroupEndurance => maxOnGlobalMapGroupEndurance;
+        public int CurrentOnGlobalMapGroupEndurance => currentOnGlobalMapGroupEndurance;
+        public GroupMovementLogic GroupMovementLogic { get; private set; }
+        public Location Location => GroupMovementLogic.CurrentNode.Location;
+
+        public IEnumerable<Character> CurrentGroupMembers => currentGroupMembers;
+
+        public void SetCurrentOnGlobalMapGroupEndurance(int value) => currentOnGlobalMapGroupEndurance = value;
+
+        private void Awake()
+        {
+            GroupMovementLogic = GetComponent<GroupMovementLogic>();
+        }
 
         void Start()
         {
-            InputAggregator.OnTurnEndEvent += OnTurnEnd;
+            
+            TurnController.Instance.AddListener(OnTurnEnd);
             foreach (var character in currentGroupMembers)
             {
                 character.body.Died += () => currentGroupMembers.Remove(character);
@@ -65,12 +80,12 @@ namespace Player
 
         private void ResetAllTurnCharacteristics()
         {
-            CurrentOnGlobalMapGroupEndurance = MaxOnGlobalMapGroupEndurance;
+            currentOnGlobalMapGroupEndurance = maxOnGlobalMapGroupEndurance;
         }
 
         public void OnTurnEnd()
         {
-            if (CurrentOnGlobalMapGroupEndurance != MaxOnGlobalMapGroupEndurance)
+            if (currentOnGlobalMapGroupEndurance != maxOnGlobalMapGroupEndurance)
                 SubtractEnergy();
             SubtractSatiety();
             SubtractWater();

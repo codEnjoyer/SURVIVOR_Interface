@@ -4,10 +4,14 @@ using UnityEngine;
 
 namespace Graph_and_Map
 {
+    [RequireComponent(typeof(Location))]
     public class Node : MonoBehaviour, IKdTreePoint
     {
         public List<Node> neighborhoods = new ();
         private LineRenderer line;
+        private Location location;
+
+        public Location Location => location;
         public Vector2 PositionIn2D => transform.position.To2D();
         public void DrawEdges()
         {
@@ -36,6 +40,7 @@ namespace Graph_and_Map
 
         public void Awake()
         {
+            location = GetComponent<Location>();
             DrawEdges();
         }
     }
