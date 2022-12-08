@@ -9,13 +9,28 @@ public class SpecialClothCell : SpecialCell
     [SerializeField] private ClothType type;
     [SerializeField] private ItemGrid currentInventory;
     private Size zeroInventorySize;
-    public Character currentCharacter { get; set; }
+    private Character currentCharacter;
+
+    public Character CurrentCharacter
+    {
+        get => currentCharacter;
+        set
+        {
+            currentCharacter = value;
+            if (currentInventory != null)
+                currentInventory.InventoryOwner = CurrentCharacter;
+        }
+    }
+    private bool wasOpened;
 
     protected override void Awake()
     {
-        base.Awake();
-        zeroInventorySize = Resources.Load<Size>("InventorySizeObjects/0x0");
-        currentInventory = GetComponentInChildren<RectTransform>().GetComponentInChildren<ItemGrid>();
+        if (!wasOpened)
+        {
+            base.Awake();
+            zeroInventorySize = Resources.Load<Size>("InventorySizeObjects/0x0");
+            wasOpened = true;
+        }
     }
 
     public void OnEnable()
@@ -24,15 +39,18 @@ public class SpecialClothCell : SpecialCell
             currentInventory.ChangeState(new InventoryState(zeroInventorySize));
     }
 
+
     public override void PlaceItem(BaseItem item)
     {
         if (item.rotated)
             item.Rotated();
         placedItem = item;
         bool isWeared;
-        currentCharacter.body.Wear(item.GetComponent<Clothes>(),false, out isWeared);
+        CurrentCharacter.body.Wear(item.GetComponent<Clothes>(),false, out isWeared);
         if (isWeared)
         {
+            item.ItemOwner = CurrentCharacter;
+            Debug.Log(item.ItemOwner);
             InventoryController.SelectedItem = null;
         }
         else
@@ -44,7 +62,7 @@ public class SpecialClothCell : SpecialCell
     public override void GiveItem()
     {
         if (PlacedItem == null) return;
-        currentCharacter.body.Wear(PlacedItem.GetComponent<Clothes>(), true, out var isSuccessful);
+        CurrentCharacter.body.Wear(PlacedItem.GetComponent<Clothes>(), true, out var isSuccessful);
         if (!isSuccessful) return;
         PlacedItem.GetComponent<RectTransform>().sizeDelta = PlacedItem.OnAwakeRectTransformSize;
         PlacedItem.GetComponent<RectTransform>().localScale = PlacedItem.OnAwakeRectTransformScale;
@@ -53,7 +71,7 @@ public class SpecialClothCell : SpecialCell
         PlaceNullItem();
     }
 
-    public void ReDraw()
+    public override void ReDraw()
     {
         DrawItem();
         if(currentInventory != null)
@@ -62,7 +80,7 @@ public class SpecialClothCell : SpecialCell
     
     private void UpdateInventory()
     {
-        var item = currentCharacter.body.GetClothByType(type);
+        var item = CurrentCharacter.body.GetClothByType(type);
         if (item != null)
             currentInventory.ChangeState(item.Inventory);
         else

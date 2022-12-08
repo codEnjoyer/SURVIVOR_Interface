@@ -73,8 +73,8 @@ public class InterfaceController : MonoBehaviour
     {
         MainInfoPanelLayer.SetActive(value);
         GroupButtonsLayer.SetActive(value);
-        GroupInfoLayer.SetActive(value);
         CharactersButtonsLayer.SetActive(value);
+        GroupInfoLayer.SetActive(value);
         FirstPlayerLayer.SetActive(value);
         //SecondPlayerLayer.SetActive(value);
         //ThirdPlayerLayer.SetActive(value);

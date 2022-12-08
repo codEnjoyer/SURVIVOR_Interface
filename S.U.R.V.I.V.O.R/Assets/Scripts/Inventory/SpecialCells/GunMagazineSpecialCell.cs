@@ -37,4 +37,9 @@ public class GunMagazineSpecialCell : SpecialCell
         var magazine = InventoryController.SelectedItem.GetComponent<Magazine>();
         return  magazine && magazine.Data.Caliber == gunCell.PlacedItem.GetComponent<Gun>().Data.Caliber;
     }
+
+    public override void ReDraw()
+    {
+        throw new System.NotImplementedException();
+    }
 }

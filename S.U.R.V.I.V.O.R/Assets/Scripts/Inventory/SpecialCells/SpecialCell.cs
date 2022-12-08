@@ -50,6 +50,8 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
         return false;
     }
 
+    public abstract void ReDraw();
+    
     public void DrawItem()
     {
         var rectTransform = placedItem.gameObject.GetComponent<RectTransform>();

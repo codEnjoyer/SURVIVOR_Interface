@@ -32,8 +32,13 @@ public class SpecialGunCell : SpecialCell
         return InventoryController.SelectedItem.GetComponent<Gun>() != null &&
                InventoryController.SelectedItem.GetComponent<Gun>().Data.GunType == type;
     }
-    
-    
+
+    public override void ReDraw()
+    {
+        throw new System.NotImplementedException();
+    }
+
+
     private void ChangeCharacterGuns()
     {
         var currentGun = placedItem?.GetComponent<Gun>();
