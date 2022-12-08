@@ -82,54 +82,33 @@ public class PlayerLayerLogic : MonoBehaviour
         // CurrentCharacter.body.OnHatChanged -= OnHatChanged;
         // CurrentCharacter.body.OnBootsChanged -= OnBootsChanged;
     }
-    
-    private void OnHatChanged()
-    {
-        hatCell.DrawItem();
-    }
-    
-    private void OnBootsChanged()
-    {
-        bootsCell.DrawItem();
-    }
-
     private void OnWearChanged(ClothType type)
     {
         switch (type)
         {
             case ClothType.Jacket:
-                jacketCell.ReDraw();
+                jacketCell.CheckNewClothes();
                 break;
             case ClothType.Backpack:
-                backpackCell.ReDraw();
+                backpackCell.CheckNewClothes();
                 break;
             case ClothType.Pants:
-                pantsCell.ReDraw();
+                pantsCell.CheckNewClothes();
                 break;
             case ClothType.Vest:
-                vestCell.ReDraw();
+                vestCell.CheckNewClothes();
                 break;
             case ClothType.Underwear:
-                underwearCell.ReDraw();
+                underwearCell.CheckNewClothes();
                 break;
             case ClothType.Boots:
-                bootsCell.ReDraw();
+                bootsCell.CheckNewClothes();
                 break;
             case ClothType.Hat:
-                hatCell.ReDraw();
+                hatCell.CheckNewClothes();
                 break;
         }
     }
-
-    private void OnUnderwearChanged()
-    {
-        underwearCell.DrawItem();
-    }
-    private void OnGunsChanged()
-    {
-        jacketCell.DrawItem();
-    }
-
     private void PlaceAllItems()
     {
         CheckCellAfterWindowOpen(CurrentCharacter.body.chest.Vest != null ? CurrentCharacter.body.chest.Vest.GetComponent<BaseItem>() : null,vestCell );
@@ -158,9 +137,9 @@ public class PlayerLayerLogic : MonoBehaviour
 
     public void OnEnable()
     {
-        SubscribeCharacterEvents();
         if (!wasOpened)
             OnFirstOpen();
+        SubscribeCharacterEvents();
         PlaceAllItems();
     }
 }

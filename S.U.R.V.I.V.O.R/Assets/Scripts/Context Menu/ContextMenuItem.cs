@@ -20,7 +20,7 @@ public class ContextMenuItem : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("click");
+        if (eventData.button != PointerEventData.InputButton.Right) return;
         ContextMenuController.Instance.Clear();
         ContextMenuController.Instance.CreateContextMenu(contextMenuActions, Input.mousePosition);
     }

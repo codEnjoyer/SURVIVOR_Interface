@@ -57,7 +57,6 @@ public class SpecialClothCell : SpecialCell
         if (isWeared)
         {
             item.ItemOwner = CurrentCharacter;
-            Debug.Log(item.ItemOwner);
             InventoryController.SelectedItem = null;
         }
         else
@@ -65,10 +64,30 @@ public class SpecialClothCell : SpecialCell
             GiveItem();
         }
     }
-    
+
+    public void CheckNewClothes()
+    {
+        var wearedOnPlayerItem = WearedOnPlayerItem();
+        if (wearedOnPlayerItem == null || wearedOnPlayerItem == PlacedItem)
+        {
+            ReDraw();
+        }
+        else if (wearedOnPlayerItem != PlacedItem && PlacedItem != null)
+        {
+            GiveItem();
+            placedItem = wearedOnPlayerItem;
+            ReDraw();
+        }
+        else if (wearedOnPlayerItem != PlacedItem && PlacedItem == null)
+        {
+            placedItem = wearedOnPlayerItem;
+            ReDraw();
+        }
+    }
+
     public override void GiveItem()
     {
-        if (PlacedItem == null) return;
+        if (WearedOnPlayerItem() == null) return;
         CurrentCharacter.body.Wear(PlacedItem.GetComponent<Clothes>(), true, out var isSuccessful);
         if (!isSuccessful) return;
         PlacedItem.GetComponent<RectTransform>().sizeDelta = PlacedItem.OnAwakeRectTransformSize;
@@ -100,5 +119,28 @@ public class SpecialClothCell : SpecialCell
     {
         return InventoryController.SelectedItem.GetComponent<Clothes>() &&
                InventoryController.SelectedItem.GetComponent<Clothes>().Data.ClothType == type;
+    }
+
+    private BaseItem WearedOnPlayerItem()
+    {
+        switch (type)
+        {
+            case ClothType.Jacket:
+                return CurrentCharacter.body.chest.Jacket != null ? CurrentCharacter.body.chest.Jacket.GetComponent<BaseItem>() : null;
+            case ClothType.Backpack:
+                return CurrentCharacter.body.chest.Backpack != null ? CurrentCharacter.body.chest.Backpack.GetComponent<BaseItem>() : null;
+            case ClothType.Pants:
+                return CurrentCharacter.body.rightLeg.Pants != null ? CurrentCharacter.body.rightLeg.Pants.GetComponent<BaseItem>() : null;
+            case ClothType.Vest:
+                return CurrentCharacter.body.chest.Vest != null ? CurrentCharacter.body.chest.Vest.GetComponent<BaseItem>() : null;
+            case ClothType.Underwear:
+                return CurrentCharacter.body.chest.Underwear != null ? CurrentCharacter.body.chest.Underwear.GetComponent<BaseItem>() : null;
+            case ClothType.Boots:
+                return CurrentCharacter.body.rightLeg.Boots != null ? CurrentCharacter.body.rightLeg.Boots.GetComponent<BaseItem>() : null;
+            case ClothType.Hat:
+                return CurrentCharacter.body.head.Hat != null ? CurrentCharacter.body.head.Hat.GetComponent<BaseItem>() : null;
+        }
+
+        return null;
     }
 }

@@ -62,8 +62,8 @@ public class ContextMenuController : MonoBehaviour
         {
             var button = Instantiate(buttonPrefab, panel.transform, true);
             var buttonText = button.GetComponentInChildren(typeof(Text)) as Text;
-            buttonText.text = item.Text;
-            button.onClick.AddListener(delegate { item.Action(); });
+            buttonText.text = item.ButtonText;
+            button.onClick.AddListener(delegate { item.OnButtonClickAction(); });
             storedButtons.Add(button);
         }
 

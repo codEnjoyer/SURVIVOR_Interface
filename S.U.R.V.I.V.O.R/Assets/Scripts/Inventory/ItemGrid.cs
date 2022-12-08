@@ -91,7 +91,6 @@ public class ItemGrid : MonoBehaviour
         if (res)
         {
             item.ItemOwner = InventoryOwner;
-            Debug.Log(item.ItemOwner);
             var itemRectTransform = item.GetComponent<RectTransform>();
             itemRectTransform.SetParent(rectTransform);
         
@@ -107,7 +106,6 @@ public class ItemGrid : MonoBehaviour
     public void PlaceItem(BaseItem item, int posX, int posY)
     {
         item.ItemOwner = InventoryOwner;
-        Debug.Log(item.ItemOwner);
         var itemRectTransform = item.GetComponent<RectTransform>();
         itemRectTransform.SetParent(rectTransform);
         
@@ -127,7 +125,6 @@ public class ItemGrid : MonoBehaviour
     {
         var item = curInventoryState.PickUpItem(x, y);
         item.ItemOwner = null;
-        Debug.Log(item.ItemOwner);
         instantiateItems.Remove(item);
         return item;
     }

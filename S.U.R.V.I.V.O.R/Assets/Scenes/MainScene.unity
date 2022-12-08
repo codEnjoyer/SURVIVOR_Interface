@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44323984, g: 0.4924798, b: 0.57215095, a: 1}
+  m_IndirectSpecularColor: {r: 0.44324037, g: 0.49248022, b: 0.57215136, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -335,17 +335,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 47077319}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvasTransform: {fileID: 2050006519}
-  cellType: 7
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
+  type: 6
+  currentInventory: {fileID: 1897221141}
 --- !u!1 &74524614
 GameObject:
   m_ObjectHideFlags: 0
@@ -1173,6 +1168,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1387491164}
     m_Modifications:
+    - target: {fileID: 6139962565968454365, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
+      propertyPath: m_Name
+      value: BackpackInventoryGrid
+      objectReference: {fileID: 0}
     - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
       propertyPath: size
       value: 
@@ -2313,6 +2312,7 @@ GameObject:
   - component: {fileID: 444219834}
   - component: {fileID: 444219836}
   - component: {fileID: 444219835}
+  - component: {fileID: 444219838}
   - component: {fileID: 444219837}
   m_Layer: 5
   m_Name: SecondaryGun
@@ -2388,17 +2388,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 444219833}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: 73b4df179adf1fd44aa80a0050e98ae5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvasTransform: {fileID: 2050006519}
-  cellType: 0
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
+  type: 1
+--- !u!114 &444219838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 444219833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bfea5b6809c58a4b89775e94823cf23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunSlot: {fileID: 444219837}
+  magazineSlot: {fileID: 0}
+  springSlot: {fileID: 0}
+  shutterSlot: {fileID: 0}
+  scopeSlot: {fileID: 0}
+  gripSlot: {fileID: 0}
+  tacticalSlot: {fileID: 0}
+  supressorSlot: {fileID: 0}
 --- !u!1 &494645160
 GameObject:
   m_ObjectHideFlags: 0
@@ -2656,6 +2670,7 @@ GameObject:
   - component: {fileID: 501991161}
   - component: {fileID: 501991163}
   - component: {fileID: 501991162}
+  - component: {fileID: 501991165}
   - component: {fileID: 501991164}
   m_Layer: 5
   m_Name: PrimaryGun
@@ -2731,17 +2746,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 501991160}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: 3bfea5b6809c58a4b89775e94823cf23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunSlot: {fileID: 501991165}
+  magazineSlot: {fileID: 0}
+  springSlot: {fileID: 0}
+  shutterSlot: {fileID: 0}
+  scopeSlot: {fileID: 0}
+  gripSlot: {fileID: 0}
+  tacticalSlot: {fileID: 0}
+  supressorSlot: {fileID: 0}
+--- !u!114 &501991165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 501991160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73b4df179adf1fd44aa80a0050e98ae5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvasTransform: {fileID: 2050006519}
-  cellType: 0
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
+  type: 0
 --- !u!224 &514343869 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6139962566568014572, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
@@ -2959,17 +2988,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 567015688}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvasTransform: {fileID: 2050006519}
-  cellType: 4
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
+  type: 3
+  currentInventory: {fileID: 0}
 --- !u!1 &583950204
 GameObject:
   m_ObjectHideFlags: 0
@@ -3308,6 +3332,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1120807949}
     m_Modifications:
+    - target: {fileID: 6139962565968454365, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
+      propertyPath: m_Name
+      value: VestInventoryGrid
+      objectReference: {fileID: 0}
     - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
       propertyPath: size
       value: 
@@ -3527,17 +3555,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 663588895}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvasTransform: {fileID: 2050006519}
-  cellType: 6
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
+  type: 5
+  currentInventory: {fileID: 0}
 --- !u!1 &667553582
 GameObject:
   m_ObjectHideFlags: 0
@@ -3624,17 +3647,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 667553582}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvasTransform: {fileID: 2050006519}
-  cellType: 4
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
+  type: 3
+  currentInventory: {fileID: 0}
 --- !u!1 &672090594
 GameObject:
   m_ObjectHideFlags: 0
@@ -4790,17 +4808,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 825327537}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvasTransform: {fileID: 2050006519}
-  cellType: 1
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
+  type: 0
+  currentInventory: {fileID: 1393145680}
 --- !u!1 &856026683
 GameObject:
   m_ObjectHideFlags: 0
@@ -6088,7 +6101,6 @@ GameObject:
   - component: {fileID: 1086285283}
   - component: {fileID: 1086285285}
   - component: {fileID: 1086285284}
-  - component: {fileID: 1086285286}
   m_Layer: 5
   m_Name: MleeWeapon
   m_TagString: Untagged
@@ -6154,26 +6166,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1086285282}
   m_CullTransparentMesh: 1
---- !u!114 &1086285286
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1086285282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvasTransform: {fileID: 2050006519}
-  cellType: 0
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1089916147
 GameObject:
   m_ObjectHideFlags: 0
@@ -6474,17 +6466,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1092196054}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvasTransform: {fileID: 2050006519}
-  cellType: 3
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
+  type: 2
+  currentInventory: {fileID: 0}
 --- !u!1 &1102807571
 GameObject:
   m_ObjectHideFlags: 0
@@ -6620,8 +6607,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCharacteristicsPanel: {fileID: 529178208}
   emptyInventorySize: {fileID: 11400000, guid: f1f5456fc8a18d94aab7578f00222ad9, type: 2}
-  primaryGunSet: {fileID: 0}
-  secondaryGunSet: {fileID: 0}
+  primaryGunSet: {fileID: 1238882725}
+  secondaryGunSet: {fileID: 1500571674}
   meleeWeaponSet: {fileID: 0}
   nameTextBox: {fileID: 1636199731}
   hatCell: {fileID: 1222503106}
@@ -6631,10 +6618,6 @@ MonoBehaviour:
   jacketCell: {fileID: 1471617524}
   pantsCell: {fileID: 47077323}
   bootsCell: {fileID: 1092196058}
-  backpackInventory: {fileID: 1911857787}
-  vestInventory: {fileID: 722690233}
-  jacketInventory: {fileID: 1508683057}
-  pantsInventory: {fileID: 1897221141}
 --- !u!1 &1133044684
 GameObject:
   m_ObjectHideFlags: 0
@@ -7019,17 +7002,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1198560219}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvasTransform: {fileID: 2050006519}
-  cellType: 5
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
+  type: 4
+  currentInventory: {fileID: 977227881}
 --- !u!224 &1204949912 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6139962566568014572, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
@@ -7126,17 +7104,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1222503102}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvasTransform: {fileID: 2050006519}
-  cellType: 6
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
+  type: 5
+  currentInventory: {fileID: 0}
 --- !u!1 &1238882720
 GameObject:
   m_ObjectHideFlags: 0
@@ -7148,6 +7121,8 @@ GameObject:
   - component: {fileID: 1238882721}
   - component: {fileID: 1238882723}
   - component: {fileID: 1238882722}
+  - component: {fileID: 1238882725}
+  - component: {fileID: 1238882724}
   m_Layer: 5
   m_Name: PrimaryGun
   m_TagString: Untagged
@@ -7213,6 +7188,40 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1238882720}
   m_CullTransparentMesh: 1
+--- !u!114 &1238882724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238882720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73b4df179adf1fd44aa80a0050e98ae5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasTransform: {fileID: 2050006519}
+  type: 0
+--- !u!114 &1238882725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238882720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bfea5b6809c58a4b89775e94823cf23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunSlot: {fileID: 1238882724}
+  magazineSlot: {fileID: 0}
+  springSlot: {fileID: 0}
+  shutterSlot: {fileID: 0}
+  scopeSlot: {fileID: 0}
+  gripSlot: {fileID: 0}
+  tacticalSlot: {fileID: 0}
+  supressorSlot: {fileID: 0}
 --- !u!1001 &1241207025
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7355,7 +7364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f8364e0c595c564c9247d2577addeb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interfaceGruopLogicController: {fileID: 1243250766}
+  interfaceGroupLogicController: {fileID: 1243250766}
   mainInfoPanelLayer: {fileID: 1466170884}
   groupButtonsLayer: {fileID: 302030226}
   groupInfoLayer: {fileID: 804987242}
@@ -7596,6 +7605,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1387491164}
     m_Modifications:
+    - target: {fileID: 6139962565968454365, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
+      propertyPath: m_Name
+      value: JacketInventoryGrid
+      objectReference: {fileID: 0}
     - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
       propertyPath: size
       value: 
@@ -8262,17 +8275,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1329026377}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvasTransform: {fileID: 2050006519}
-  cellType: 3
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
+  type: 2
+  currentInventory: {fileID: 0}
 --- !u!1001 &1345357559
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8280,6 +8288,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1387491164}
     m_Modifications:
+    - target: {fileID: 6139962565968454365, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
+      propertyPath: m_Name
+      value: PantsInventoryGrid
+      objectReference: {fileID: 0}
     - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
       propertyPath: size
       value: 
@@ -8616,8 +8628,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCharacteristicsPanel: {fileID: 308258944}
   emptyInventorySize: {fileID: 11400000, guid: f1f5456fc8a18d94aab7578f00222ad9, type: 2}
-  primaryGunSet: {fileID: 0}
-  secondaryGunSet: {fileID: 0}
+  primaryGunSet: {fileID: 501991164}
+  secondaryGunSet: {fileID: 444219838}
   meleeWeaponSet: {fileID: 0}
   nameTextBox: {fileID: 195431913}
   hatCell: {fileID: 663588899}
@@ -8627,10 +8639,6 @@ MonoBehaviour:
   jacketCell: {fileID: 825327541}
   pantsCell: {fileID: 1938125681}
   bootsCell: {fileID: 1329026381}
-  backpackInventory: {fileID: 1701586594}
-  vestInventory: {fileID: 977227881}
-  jacketInventory: {fileID: 1393145680}
-  pantsInventory: {fileID: 661788975}
 --- !u!114 &1393145680 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
@@ -8823,6 +8831,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1120807949}
     m_Modifications:
+    - target: {fileID: 6139962565968454365, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
+      propertyPath: m_Name
+      value: BackpackInventoryGrid
+      objectReference: {fileID: 0}
     - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
       propertyPath: size
       value: 
@@ -9073,6 +9085,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1120807949}
     m_Modifications:
+    - target: {fileID: 6139962565968454365, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
+      propertyPath: m_Name
+      value: JacketInventoryGrid
+      objectReference: {fileID: 0}
     - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
       propertyPath: size
       value: 
@@ -9281,17 +9297,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1464470127}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvasTransform: {fileID: 2050006519}
-  cellType: 2
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
+  type: 1
+  currentInventory: {fileID: 1911857787}
 --- !u!1 &1466170884
 GameObject:
   m_ObjectHideFlags: 0
@@ -9415,17 +9426,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1471617520}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvasTransform: {fileID: 2050006519}
-  cellType: 1
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
+  type: 0
+  currentInventory: {fileID: 1508683057}
 --- !u!1 &1495650631
 GameObject:
   m_ObjectHideFlags: 0
@@ -9513,6 +9519,8 @@ GameObject:
   - component: {fileID: 1500571671}
   - component: {fileID: 1500571673}
   - component: {fileID: 1500571672}
+  - component: {fileID: 1500571674}
+  - component: {fileID: 1500571675}
   m_Layer: 5
   m_Name: SecondaryGun
   m_TagString: Untagged
@@ -9578,6 +9586,40 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500571670}
   m_CullTransparentMesh: 1
+--- !u!114 &1500571674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500571670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bfea5b6809c58a4b89775e94823cf23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunSlot: {fileID: 1500571675}
+  magazineSlot: {fileID: 0}
+  springSlot: {fileID: 0}
+  shutterSlot: {fileID: 0}
+  scopeSlot: {fileID: 0}
+  gripSlot: {fileID: 0}
+  tacticalSlot: {fileID: 0}
+  supressorSlot: {fileID: 0}
+--- !u!114 &1500571675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500571670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73b4df179adf1fd44aa80a0050e98ae5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasTransform: {fileID: 2050006519}
+  type: 0
 --- !u!1 &1508588818
 GameObject:
   m_ObjectHideFlags: 0
@@ -9680,7 +9722,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1508981055
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9835,17 +9877,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1525192898}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvasTransform: {fileID: 2050006519}
-  cellType: 5
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
+  type: 4
+  currentInventory: {fileID: 722690233}
 --- !u!1 &1526479704
 GameObject:
   m_ObjectHideFlags: 0
@@ -11022,6 +11059,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1120807949}
     m_Modifications:
+    - target: {fileID: 6139962565968454365, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
+      propertyPath: m_Name
+      value: PantsInventoryGrid
+      objectReference: {fileID: 0}
     - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
       propertyPath: size
       value: 
@@ -12341,17 +12382,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1771033298}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvasTransform: {fileID: 2050006519}
-  cellType: 0
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
+  type: 1
+  currentInventory: {fileID: 1701586594}
 --- !u!1 &1782082705
 GameObject:
   m_ObjectHideFlags: 0
@@ -13254,17 +13290,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1938125677}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852607604010a7d48b797c4108f50243, type: 3}
+  m_Script: {fileID: 11500000, guid: b134b40db9e14f64cb954d746aa11245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvasTransform: {fileID: 2050006519}
-  cellType: 1
-  OnItemPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnItemTaked:
-    m_PersistentCalls:
-      m_Calls: []
+  type: 6
+  currentInventory: {fileID: 661788975}
 --- !u!1 &2013968916
 GameObject:
   m_ObjectHideFlags: 0
@@ -14107,6 +14138,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1387491164}
     m_Modifications:
+    - target: {fileID: 6139962565968454365, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
+      propertyPath: m_Name
+      value: VestInventoryGrid
+      objectReference: {fileID: 0}
     - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
       propertyPath: size
       value: 
