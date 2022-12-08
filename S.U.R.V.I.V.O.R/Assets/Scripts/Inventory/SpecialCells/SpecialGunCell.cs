@@ -28,14 +28,13 @@ public class SpecialGunCell : SpecialCell
 
     protected override bool CanInsertIntoSlot()
     {
-        var x = InventoryController.SelectedItem.GetComponent<Gun>();
         return InventoryController.SelectedItem.GetComponent<Gun>() != null &&
                InventoryController.SelectedItem.GetComponent<Gun>().Data.GunType == type;
     }
 
     public override void ReDraw()
     {
-        throw new System.NotImplementedException();
+        DrawItem();
     }
 
 

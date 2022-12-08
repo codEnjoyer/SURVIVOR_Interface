@@ -27,14 +27,21 @@ public class SpecialClothCell : SpecialCell
     {
         if (!wasOpened)
         {
-            base.Awake();
-            zeroInventorySize = Resources.Load<Size>("InventorySizeObjects/0x0");
-            wasOpened = true;
+            OnFirstOpen();
         }
     }
 
+    private void OnFirstOpen()
+    {
+        base.Awake();
+        zeroInventorySize = Resources.Load<Size>("InventorySizeObjects/0x0");
+        wasOpened = true;
+    }
+    
     public void OnEnable()
     {
+        if(!wasOpened)
+            OnFirstOpen();
         if (currentInventory != null && PlacedItem == null)
             currentInventory.ChangeState(new InventoryState(zeroInventorySize));
     }

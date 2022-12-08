@@ -54,8 +54,8 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
     
     public void DrawItem()
     {
-        var rectTransform = placedItem.gameObject.GetComponent<RectTransform>();
         if (placedItem == null) return;
+        var rectTransform = placedItem.gameObject.GetComponent<RectTransform>();
         placedItem.gameObject.SetActive(true);
         rectTransform.SetParent(GetComponent<RectTransform>());
         rectTransform.anchoredPosition = new Vector2(0,0);
@@ -87,7 +87,7 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
     public void PlaceNullItem()
     {
         placedItem = null;
-        
+        ReDraw();
     }
 
     public abstract void GiveItem();
