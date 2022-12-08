@@ -33,5 +33,6 @@ public class InventoryHighlight : MonoBehaviour
     {
         if(targetGrid == null) return;
         highlighter.SetParent(targetGrid.GetComponent<RectTransform>());
+        highlighter.SetAsLastSibling();
     }
 }
