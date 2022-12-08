@@ -121,7 +121,7 @@ public class FightSceneController : MonoBehaviour
     public void CreateCharactersList()
     {
         var data = FightSceneLoader.CurrentData;
-        foreach (var entity in data.group)
+        foreach (var entity in data.ally)
         {
             var obj = Instantiate(characterPrefab, spawnPoints[0] + new Vector3(0, 1.22f, 0), Quaternion.identity);
             obj.AddComponent<FightCharacter>().ApplyProperties(entity, CharacterType.Ally);

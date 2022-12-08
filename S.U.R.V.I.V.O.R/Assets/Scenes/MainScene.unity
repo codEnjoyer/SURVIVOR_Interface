@@ -2223,7 +2223,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd15d339090e4eaf91c478dcd232d3a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groups: []
+  groups:
+  - {fileID: 154339910}
   chosenGroup: {fileID: 154339910}
   startNode: {fileID: 1687752736}
 --- !u!1 &443994103
@@ -7363,7 +7364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f8364e0c595c564c9247d2577addeb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interfaceGroupLogicController: {fileID: 1243250766}
+  interfaceGroupLogicController: {fileID: 0}
   mainInfoPanelLayer: {fileID: 1466170884}
   groupButtonsLayer: {fileID: 302030226}
   groupInfoLayer: {fileID: 804987242}
@@ -8059,12 +8060,7 @@ PrefabInstance:
       propertyPath: nodes.Array.size
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7140779212959648733, guid: b629dac688e572746ac083273501009d, type: 3}
-      propertyPath: itemGrid
-      value: 
-      objectReference: {fileID: 1725873114}
-    m_RemovedComponents:
-    - {fileID: 7140779212959648733, guid: b629dac688e572746ac083273501009d, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b629dac688e572746ac083273501009d, type: 3}
 --- !u!1 &1324188163
 GameObject:

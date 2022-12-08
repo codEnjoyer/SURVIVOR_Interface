@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Model.GameEntity;
+using Model.GameEntity.Skills;
 
 public class Character : Entity
 {
-    public readonly ManBody body = new ManBody();
+    public readonly ManBody body = new ();
     [SerializeField] private Sprite sprite; 
     [SerializeField] private string firstName;
     [SerializeField] private string surname;

@@ -15,7 +15,7 @@ public class InterfaceController : MonoBehaviour
 
     private State memoryState;
 
-    [SerializeField] private InterfaceGruopLogicController interfaceGruopLogicController;
+    [SerializeField] private InterfaceGroupLogicController interfaceGroupLogicController;
     [SerializeField] private GameObject mainInfoPanelLayer;
     [SerializeField] private GameObject groupButtonsLayer;
     [SerializeField] private GameObject groupInfoLayer;

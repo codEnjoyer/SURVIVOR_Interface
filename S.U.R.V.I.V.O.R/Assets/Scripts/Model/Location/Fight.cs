@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
+using Model.GameEntity;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
-using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(fileName = "New FightData", menuName = "Data/Fight Data", order = 50)]
 public class Fight: ScriptableObject

@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine.Events;
+using Model.GameEntity;
 
-public sealed class ManHead : BodyPart
+
+public sealed class ManHead : BodyPart, IWearClothes
 {
-    public Clothes Hat;
-
-    public ManHead(Body body) : base(body)
+    public Clothes Hat { get; set; }
+    public ManHead(Body body) : base(body) {}
+    public void WearOrUnWear(Clothes clothToWear, bool shouldUnWear, out bool isSuccessful)
     {
+        throw new NotImplementedException();
     }
 
-    public override int MaxHp { get; }
-    public override float Hp { get; protected set; }
-    public override float Size { get; }
+    public IEnumerable<Clothes> GetClothes()
+    {
+        throw new NotImplementedException();
+    }
 }

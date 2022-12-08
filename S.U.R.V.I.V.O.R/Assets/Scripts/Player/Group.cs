@@ -30,7 +30,8 @@ namespace Player
 
         void Start()
         {
-            InputAggregator.OnTurnEndEvent += OnTurnEnd;
+            
+            TurnController.Instance.AddListener(OnTurnEnd);
             foreach (var character in currentGroupMembers)
             {
                 character.body.Died += () => currentGroupMembers.Remove(character);
