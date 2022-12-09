@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(BaseItem))]
-[RequireComponent(typeof(IWearable))]
+[RequireComponent(typeof(Wearable))]
 public class Clothes : MonoBehaviour
 {
     [SerializeField] private ClothData data;

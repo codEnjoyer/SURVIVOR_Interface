@@ -21,8 +21,6 @@ public class ItemGrid : MonoBehaviour
     private Vector2 positionOnGrid;
     private Vector2Int tileGridPosition;
 
-    private readonly List<BaseItem> instantiateItems = new List<BaseItem>();
-
     private RectTransform rectTransform;
 
     public int GridSizeWidth => curInventoryState.Size.Width;
@@ -56,7 +54,6 @@ public class ItemGrid : MonoBehaviour
         
         foreach (var item in curInventoryState.GetItems)
         {
-            instantiateItems.Add(item);
             item.gameObject.SetActive(true);
             var position = GetPositionOnGrid(item, item.OnGridPositionX, item.OnGridPositionY);
             item.GetComponent<RectTransform>().SetParent(transform);
@@ -66,10 +63,8 @@ public class ItemGrid : MonoBehaviour
     
     private void DestroyAllItems()
     {
-        foreach (var item in instantiateItems)
+        foreach (var item in curInventoryState.GetItems)
             item.gameObject.SetActive(false);
-
-        instantiateItems.Clear();
     }
 
     public Vector2Int GetTileGridPosition(Vector2 mousePosition)
@@ -96,13 +91,13 @@ public class ItemGrid : MonoBehaviour
         
             var position = GetPositionOnGrid(item, posX, posY);
             itemRectTransform.localPosition = position;
-            
-            instantiateItems.Add(item);  
         }
 
         return res;
     }
 
+    public bool InsertItem(BaseItem itemToInsert) => curInventoryState.InsertItem(itemToInsert);
+    
     public void PlaceItem(BaseItem item, int posX, int posY)
     {
         item.ItemOwner = InventoryOwner;
@@ -111,12 +106,11 @@ public class ItemGrid : MonoBehaviour
         
         var position = GetPositionOnGrid(item, posX, posY);
         itemRectTransform.localPosition = position;
-        
-        instantiateItems.Add(item);
 
         curInventoryState.PlaceItem(item, posX, posY);
     }
-
+    
+    
     public Vector2 GetPositionOnGrid(BaseItem item, int posX, int posY) => 
         new(posX * TileSize + TileSize * item.Width / 2, -(posY * TileSize + TileSize * item.Height / 2));
 
@@ -125,17 +119,15 @@ public class ItemGrid : MonoBehaviour
     {
         var item = curInventoryState.PickUpItem(x, y);
         item.ItemOwner = null;
-        instantiateItems.Remove(item);
         return item;
     }
 
     public void Clear()
     {
-        foreach (var item in instantiateItems)
+        foreach (var item in curInventoryState.GetItems)
         {
             Destroy(item.gameObject);
         }
-        instantiateItems?.Clear();
         curInventoryState?.Clear();
     }
     
