@@ -41,29 +41,29 @@ public class ContextMenuController : MonoBehaviour
         }
     }
 
-    public void CreateContextMenu(List<IContextMenuAction> items, Vector2 position)
+    public void CreateContextMenu(List<IContextMenuAction> items, Vector2 mousePosition)
     {
         panel.transform.SetParent(canvas.transform);
         panel.transform.SetAsLastSibling();
-        var inScreen = BoundaryCheckScreen(position);
+        var inScreen = BoundaryCheckScreen(mousePosition);
         if (!inScreen.Item1 && inScreen.Item2)
-            position.x -= panel.rect.width;
+            mousePosition.x -= panel.rect.width;
         else if (inScreen.Item1 && !inScreen.Item2)
-            position.y += panel.rect.height;
+            mousePosition.y += panel.rect.height;
         else if (!inScreen.Item1 && !inScreen.Item2)
         {
-            position.x -= panel.rect.width;
-            position.y += panel.rect.height;
+            mousePosition.x -= panel.rect.width;
+            mousePosition.y += panel.rect.height;
         }
 
-        panel.anchoredPosition = position;
+        panel.anchoredPosition = mousePosition;
 
         foreach (var item in items)
         {
             var button = Instantiate(buttonPrefab, panel.transform, true);
             var buttonText = button.GetComponentInChildren(typeof(Text)) as Text;
             buttonText.text = item.ButtonText;
-            button.onClick.AddListener(delegate { item.OnButtonClickAction(); });
+            button.onClick.AddListener(delegate { item.OnButtonClickAction(mousePosition); });
             storedButtons.Add(button);
         }
 

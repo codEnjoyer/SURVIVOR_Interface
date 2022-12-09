@@ -93,7 +93,7 @@ public class SpecialClothCell : SpecialCell
         PlacedItem.GetComponent<RectTransform>().sizeDelta = PlacedItem.OnAwakeRectTransformSize;
         PlacedItem.GetComponent<RectTransform>().localScale = PlacedItem.OnAwakeRectTransformScale;
         PlacedItem.GetComponent<RectTransform>().SetParent(canvasTransform);
-        InventoryController.PickUpItem(PlacedItem);
+        InventoryController.PickUpItemFromSpecialCell(PlacedItem);
         PlaceNullItem();
     }
 
