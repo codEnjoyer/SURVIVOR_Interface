@@ -59,3 +59,7 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+.idea
+S.U.R.V.I.V.O.R/.idea
+S.U.R.V.I.V.O.R/.vscode
+S.U.R.V.I.V.O.R/.vsconfig

@@ -1,13 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Player;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class InterfaceGroupLogicController : MonoBehaviour
 {
-    public Group currentGroup;
     [SerializeField] private PlayerLayerLogic FirstPlayerLayer;
     [SerializeField] private PlayerLayerLogic SecondPlayerLayer;
     [SerializeField] private PlayerLayerLogic ThirdPlayerLayer;
@@ -17,16 +17,14 @@ public class InterfaceGroupLogicController : MonoBehaviour
     [SerializeField] private PlayerLayerLogic GroupSecondPlayerLayer;
     [SerializeField] private PlayerLayerLogic GroupThirdPlayerLayer;
     [SerializeField] private PlayerLayerLogic GroupFourthPlayerLayer;
-
-    [SerializeField] private LocationInventoryManager locationInventoryManager;
+    
     
     public UnityEvent OnFirstPlayerLayerOpen = new();
     public UnityEvent OnGroupLayerOpen = new();
     public void Awake()
     {
-        FirstPlayerLayer.CurrentCharacter = currentGroup.currentGroupMembers[0];
-        GroupFirstPlayerLayer.CurrentCharacter = currentGroup.currentGroupMembers[0];
-        locationInventoryManager.group = currentGroup;
+        FirstPlayerLayer.CurrentCharacter = Game.Instance.ChosenGroup.CurrentGroupMembers.First();
+        GroupFirstPlayerLayer.CurrentCharacter = Game.Instance.ChosenGroup.CurrentGroupMembers.First();
         /*
         SecondPlayerLayer.CurrentCharacter = currentGroup.currentGroupMembers[1];
         ThirdPlayerLayer.CurrentCharacter = currentGroup.currentGroupMembers[2];

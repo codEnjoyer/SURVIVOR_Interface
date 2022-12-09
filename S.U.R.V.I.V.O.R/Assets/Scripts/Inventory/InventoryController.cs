@@ -10,7 +10,8 @@ using Random = UnityEngine.Random;
 
 public class InventoryController : MonoBehaviour
 {
-    [HideInInspector] private ItemGrid selectedItemGrid;
+    public static InventoryController Instance { get; private set; }
+    private ItemGrid selectedItemGrid;
     public ItemGrid SelectedItemGrid
     {
         get => selectedItemGrid;
@@ -65,12 +66,17 @@ public class InventoryController : MonoBehaviour
     private InventoryHighlight inventoryHighlight;
     private BaseItem itemToHighlight;
     private Vector2Int? previousPosition;
-    public ItemGrid itemgridtotest;
     public bool IsPointerUnderInventory;
 
     private void Awake()
     {
-        inventoryHighlight = GetComponent<InventoryHighlight>();
+        if (Instance == null)
+        {
+            Instance = this;
+            inventoryHighlight = GetComponent<InventoryHighlight>();
+        }
+        else if (Instance == this)
+            Destroy(gameObject);
     }
 
     private void Update()

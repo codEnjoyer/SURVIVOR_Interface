@@ -149,7 +149,6 @@ namespace GoogleSheetLink
             if (componentType == null)
                 throw new Exception(@$"Указанный компонент {componentName} не был найден");
 
-            var component = obj.AddComponent(componentType);
             var parserName = $"{nameof(GoogleSheetLink)}.{nameof(DataParsers)}.{mainComponentName}DataParser";
             var parserType = Type.GetType(parserName);
             if (parserType == null)
@@ -160,11 +159,14 @@ namespace GoogleSheetLink
             var parse = parserType.GetMethod("Parse", BindingFlags.Public | BindingFlags.Static);
             if (parse == null)
                 throw new Exception(@"Парсер данных не содержит метода Parse");
+            
             var componentData = parse.Invoke(null, new object[] {param});
             var componentDataField = componentType.GetField("data", BindingFlags.Instance | BindingFlags.NonPublic);
             if (componentDataField == null)
                 throw new Exception(
                     @$"Не найдено data поле. Убедитесь, что указанный компонент содержит приватное поле data");
+            
+            var component = obj.AddComponent(componentType);
             componentDataField.SetValue(component, componentData);
             return (Object) componentData;
         }

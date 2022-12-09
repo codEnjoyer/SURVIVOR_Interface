@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Model.GameEntity;
 
 public class RatBody : Body
 {
@@ -8,6 +9,6 @@ public class RatBody : Body
     {
         Chest = new RatChest(this);
         bodyParts.Add(Chest);
-        MaxCriticalLoses = 1;
+        MaxCriticalLoses = bodyParts.Count;
     }
 }

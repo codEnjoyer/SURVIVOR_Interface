@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Model.GameEntity;
+using Model.GameEntity.Skills;
 
 public interface IWeapon
 {

@@ -166,7 +166,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2048833773}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &16677849
 GameObject:
@@ -766,7 +766,6 @@ MonoBehaviour:
   firstTurnObject: {fileID: 775075723}
   secondTurnObject: {fileID: 340664874}
   thirdTurnObject: {fileID: 1244891097}
-  currentNode: {fileID: 1687752736}
 --- !u!114 &154339910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -779,8 +778,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc365e50704050649a7f3cdc97592230, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxOnGlobalMapGroupEndurance: 10
-  CurrentOnGlobalMapGroupEndurance: 10
+  maxOnGlobalMapGroupEndurance: 10
+  currentOnGlobalMapGroupEndurance: 10
   currentGroupMembers:
   - {fileID: 234525757738228535, guid: 57e839bd74f2726409759bc236374acd, type: 3}
 --- !u!114 &154339911
@@ -1903,7 +1902,6 @@ GameObject:
   m_Component:
   - component: {fileID: 380155334}
   - component: {fileID: 380155336}
-  - component: {fileID: 380155335}
   m_Layer: 0
   m_Name: TurnController
   m_TagString: Untagged
@@ -1926,19 +1924,6 @@ Transform:
   m_Father: {fileID: 2048833773}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &380155335
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 380155333}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0f5c28537effd844908115ccedcbf1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turnEndButton: {fileID: 1324188164}
 --- !u!114 &380155336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1951,6 +1936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 779e7370226c68c4e97e23a26f3ff18f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turnEndButton: {fileID: 1324188164}
 --- !u!1 &382582765
 GameObject:
   m_ObjectHideFlags: 0
@@ -2210,7 +2196,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2048833773}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &434975904
 MonoBehaviour:
@@ -2224,7 +2210,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd15d339090e4eaf91c478dcd232d3a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groups:
+  - {fileID: 154339910}
   chosenGroup: {fileID: 154339910}
+  startNode: {fileID: 1687752736}
 --- !u!1 &443994103
 GameObject:
   m_ObjectHideFlags: 0
@@ -2575,7 +2564,6 @@ MonoBehaviour:
   LootAmount: 3
   inventoryController: {fileID: 1668062275}
   interfaceController: {fileID: 1243250765}
-  playerGroup: {fileID: 154339910}
   LootAmountButtonsLayer: {fileID: 607803248}
 --- !u!114 &497532390
 MonoBehaviour:
@@ -5107,51 +5095,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 857164311}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &878336097
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 878336098}
-  - component: {fileID: 878336099}
-  m_Layer: 0
-  m_Name: PlayerInfoController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &878336098
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 878336097}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2048833773}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &878336099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 878336097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a29117295d2408b41afec8dcc7d0a244, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MainGroup: {fileID: 0}
 --- !u!1 &883187973
 GameObject:
   m_ObjectHideFlags: 0
@@ -6006,7 +5949,6 @@ MonoBehaviour:
   LootAmount: 1
   inventoryController: {fileID: 1668062275}
   interfaceController: {fileID: 1243250765}
-  playerGroup: {fileID: 154339910}
   LootAmountButtonsLayer: {fileID: 607803248}
 --- !u!114 &1079412998
 MonoBehaviour:
@@ -7385,7 +7327,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62f6b01ab4a648d47a02c0aac93ca0c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentGroup: {fileID: 154339910}
   FirstPlayerLayer: {fileID: 1120807950}
   SecondPlayerLayer: {fileID: 0}
   ThirdPlayerLayer: {fileID: 0}
@@ -7394,7 +7335,6 @@ MonoBehaviour:
   GroupSecondPlayerLayer: {fileID: 0}
   GroupThirdPlayerLayer: {fileID: 0}
   GroupFourthPlayerLayer: {fileID: 0}
-  locationInventoryManager: {fileID: 1426913594}
   OnFirstPlayerLayerOpen:
     m_PersistentCalls:
       m_Calls: []
@@ -8062,10 +8002,6 @@ PrefabInstance:
       propertyPath: nodes.Array.size
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7140779212959648733, guid: b629dac688e572746ac083273501009d, type: 3}
-      propertyPath: itemGrid
-      value: 
-      objectReference: {fileID: 1725873114}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b629dac688e572746ac083273501009d, type: 3}
 --- !u!1 &1324188163
@@ -8819,11 +8755,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1426913590}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88d23afa1791ca149be78fb5a41bec21, type: 3}
+  m_Script: {fileID: 11500000, guid: d7a09f34fa124e8d99d7f780f0595106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  group: {fileID: 0}
   text: {fileID: 1729742934}
+  itemGrid: {fileID: 1725873114}
 --- !u!1001 &1427509601
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9774,7 +9710,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2048833773}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1518125503
 MonoBehaviour:
@@ -11216,7 +11152,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2048833773}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1668062274
 MonoBehaviour:
@@ -11244,7 +11180,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasTransform: {fileID: 2050006519}
-  itemgridtotest: {fileID: 1393145680}
   IsPointerUnderInventory: 0
 --- !u!1 &1682808204
 GameObject:
@@ -11592,7 +11527,6 @@ MonoBehaviour:
   LootAmount: 2
   inventoryController: {fileID: 1668062275}
   interfaceController: {fileID: 1243250765}
-  playerGroup: {fileID: 154339910}
   LootAmountButtonsLayer: {fileID: 607803248}
 --- !u!114 &1688156537
 MonoBehaviour:
@@ -13432,7 +13366,6 @@ Transform:
   m_Children:
   - {fileID: 380155334}
   - {fileID: 279836420}
-  - {fileID: 878336098}
   - {fileID: 1668062273}
   - {fileID: 11603916}
   - {fileID: 434975903}

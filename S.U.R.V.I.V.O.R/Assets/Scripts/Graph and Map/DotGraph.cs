@@ -30,7 +30,6 @@ namespace Graph_and_Map
             }
             else if (Instance == this)
                 Destroy(gameObject);
-            DontDestroyOnLoad(gameObject);
         }
 
         private void Start()

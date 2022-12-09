@@ -1,99 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Model.GameEntity;
+using Model.GameEntity.Health;
 using UnityEngine;
 
-public class ManBody : Body
+[Serializable]
+public class ManBody : Body, IWearClothes
 {
-    public readonly ManHead head;
-    public readonly ManChest chest;
-    public readonly ManStomach stomach;
-    public readonly ManArm leftArm;
-    public readonly ManArm rightArm;
-    public readonly ManLeg leftLeg;
-    public readonly ManLeg rightLeg;
-    
+    private int energy;
+    private int hunger;
+    private int water;
+
+    private int maxEnergy = 10;
+    private int maxHunger = 10;
+    private int maxWater = 10;
+
+    private IWearClothes[] wearClothesBodyPart;
 
     public ManBody()
     {
-        head = new ManHead(this);
-        chest = new ManChest(this);
-        stomach = new ManStomach(this);
-        leftArm = new ManArm(this);
-        rightArm = new ManArm(this);
-        leftLeg = new ManLeg(this);
-        rightLeg = new ManLeg(this);
+        Head = new ManHead(this);
+        Chest = new ManChest(this);
+        Stomach = new ManStomach(this);
+        LeftArm = new ManArm(this);
+        RightArm = new ManArm(this);
+        LeftLeg = new ManLeg(this);
+        RightLeg = new ManLeg(this);
 
-        bodyParts.AddRange(new List<BodyPart> {head, chest, stomach, leftArm, rightArm, leftLeg, rightLeg});
-        Energy = MaxEnergy;
-        Hunger = MaxHunger;
-        Water = MaxWater;
+        bodyParts.AddRange(new List<BodyPart> {Head, Chest, Stomach, LeftArm, RightArm, LeftLeg, RightLeg});
+        Energy = maxEnergy;
+        Hunger = maxHunger;
+        Water = maxWater;
+        MaxCriticalLoses = bodyParts.Count;
         
-    }
-
-    public const int MaxEnergy = 10;
-    public const int MaxHunger = 10;
-    public const int MaxWater = 10;
-    private int energy;
-
-    public int Energy
-    {
-        get => energy;
-        set
-        {
-            if (value <= 0)
-            {
-                energy = 0;
-                PlayerTired?.Invoke(Health);
-            }
-            else if (value > MaxEnergy)
-                energy = MaxEnergy;
-            else
-                energy = value;
-
-            EnergyChange?.Invoke(energy);
-        }
-    }
-
-    private int hunger;
-
-    public int Hunger
-    {
-        get => hunger;
-        set
-        {
-            if (value <= 0)
-            {
-                hunger = 0;
-                PlayerHungry?.Invoke(Health);
-            }
-            else if (value > MaxHunger)
-                hunger = MaxHunger;
-            else
-                hunger = value;
-
-            HungerChange?.Invoke(hunger);
-        }
-    }
-
-    private int water;
-
-    public int Water
-    {
-        get => water;
-        set
-        {
-            if (value <= 0)
-            {
-                water = 0;
-                PlayerThirsty?.Invoke(Health);
-            }
-            else if (value > MaxWater)
-                water = MaxWater;
-            else
-                water = value;
-
-            WaterChange?.Invoke(water);
-        }
+        wearClothesBodyPart = bodyParts.OfType<IWearClothes>().ToArray();
     }
 
     public event Action<Health> PlayerTired;
@@ -106,45 +47,114 @@ public class ManBody : Body
 
     public event Action<ClothType> WearChanged;
 
+    public ManHead Head { get; }
+    public ManChest Chest { get; }
+    public ManStomach Stomach { get; }
+    public ManArm LeftArm { get; }
+    public ManArm RightArm { get; }
+    public ManLeg LeftLeg { get; }
+    public ManLeg RightLeg { get; }
+
+
+    public int Energy
+    {
+        get => energy;
+        set
+        {
+            if (value <= 0)
+            {
+                energy = 0;
+                PlayerTired?.Invoke(Health);
+            }
+            else if (value > maxEnergy)
+                energy = maxEnergy;
+            else
+                energy = value;
+
+            EnergyChange?.Invoke(energy);
+        }
+    }
+
+    public int Hunger
+    {
+        get => hunger;
+        set
+        {
+            if (value <= 0)
+            {
+                hunger = 0;
+                PlayerHungry?.Invoke(Health);
+            }
+            else if (value > maxHunger)
+                hunger = maxHunger;
+            else
+                hunger = value;
+
+            HungerChange?.Invoke(hunger);
+        }
+    }
+
+    public int Water
+    {
+        get => water;
+        set
+        {
+            if (value <= 0)
+            {
+                water = 0;
+                PlayerThirsty?.Invoke(Health);
+            }
+            else if (value > maxWater)
+                water = maxWater;
+            else
+                water = value;
+
+            WaterChange?.Invoke(water);
+        }
+    }
+
+
     public void Eat(Meal meal)
     {
         throw new NotImplementedException();
     }
 
-    public void Wear(Clothes clothToWear,bool shouldUnwear ,out bool isSuccessful)
+    public void WearOrUnWear(Clothes clothToWear, bool shouldUnWear, out bool isSuccessful)
     {
-        var valueToWear = shouldUnwear ? null : clothToWear;
+        var valueToWear = shouldUnWear ? null : clothToWear;
         if (clothToWear == null)
         {
             isSuccessful = false;
             return;
         }
+
         switch (clothToWear.Data.ClothType)
         {
             case ClothType.Backpack:
-                chest.Backpack = valueToWear;
+                Chest.Backpack = valueToWear;
                 break;
             case ClothType.Boots:
-                leftLeg.Boots = valueToWear;
-                rightLeg.Boots = valueToWear;
+                LeftLeg.Boots = valueToWear;
+                RightLeg.Boots = valueToWear;
                 break;
             case ClothType.Pants:
-                leftLeg.Pants = valueToWear;
-                rightLeg.Pants = valueToWear;
+                LeftLeg.Pants = valueToWear;
+                RightLeg.Pants = valueToWear;
                 break;
             case ClothType.Hat:
-                head.Hat = valueToWear;
+                Head.Hat = valueToWear;
                 break;
             case ClothType.Jacket:
-                chest.Jacket = valueToWear;
+                Chest.Jacket = valueToWear;
                 break;
             case ClothType.Underwear:
-                chest.Underwear = valueToWear;
+                Chest.Underwear = valueToWear;
                 break;
             case ClothType.Vest:
-                chest.Vest = valueToWear;
+                Chest.Vest = valueToWear;
                 break;
         }
+
         isSuccessful = true;
         WearChanged?.Invoke(clothToWear.Data.ClothType);
     }
@@ -154,21 +164,26 @@ public class ManBody : Body
         switch (type)
         {
             case ClothType.Backpack:
-                return chest.Backpack;
+                return Chest.Backpack;
             case ClothType.Boots:
-                return rightLeg.Boots;
+                return RightLeg.Boots;
             case ClothType.Pants:
-                return rightLeg.Pants;
+                return RightLeg.Pants;
             case ClothType.Hat:
-                return head.Hat;
+                return Head.Hat;
             case ClothType.Jacket:
-                return chest.Jacket;
+                return Chest.Jacket;
             case ClothType.Underwear:
-                return chest.Underwear;
+                return Chest.Underwear;
             case ClothType.Vest:
-                return chest.Vest;
+                return Chest.Vest;
         }
 
         return default;
+    }
+
+    public IEnumerable<Clothes> GetClothes()
+    {
+        throw new NotImplementedException();
     }
 }

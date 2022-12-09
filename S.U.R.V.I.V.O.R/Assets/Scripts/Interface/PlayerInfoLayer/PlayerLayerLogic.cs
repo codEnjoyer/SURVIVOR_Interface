@@ -111,13 +111,13 @@ public class PlayerLayerLogic : MonoBehaviour
     }
     private void PlaceAllItems()
     {
-        CheckCellAfterWindowOpen(CurrentCharacter.body.chest.Vest != null ? CurrentCharacter.body.chest.Vest.GetComponent<BaseItem>() : null,vestCell );
-        CheckCellAfterWindowOpen(CurrentCharacter.body.chest.Backpack != null ? CurrentCharacter.body.chest.Backpack.GetComponent<BaseItem>() : null, backpackCell);
-        CheckCellAfterWindowOpen(CurrentCharacter.body.stomach.Pants != null ? CurrentCharacter.body.stomach.Pants.GetComponent<BaseItem>() : null, pantsCell);
-        CheckCellAfterWindowOpen(CurrentCharacter.body.head.Hat != null ? CurrentCharacter.body.head.Hat.GetComponent<BaseItem>() : null, hatCell);
-        CheckCellAfterWindowOpen(CurrentCharacter.body.chest.Underwear != null ? CurrentCharacter.body.chest.Underwear.GetComponent<BaseItem>() : null, underwearCell);
-        CheckCellAfterWindowOpen(CurrentCharacter.body.leftLeg.Boots != null ? CurrentCharacter.body.leftLeg.Boots.GetComponent<BaseItem>() : null, bootsCell);
-        CheckCellAfterWindowOpen(CurrentCharacter.body.chest.Jacket != null ? CurrentCharacter.body.chest.Jacket.GetComponent<BaseItem>() : null, jacketCell);
+        CheckCellAfterWindowOpen(CurrentCharacter.body.Chest.Vest != null ? CurrentCharacter.body.Chest.Vest.GetComponent<BaseItem>() : null,vestCell );
+        CheckCellAfterWindowOpen(CurrentCharacter.body.Chest.Backpack != null ? CurrentCharacter.body.Chest.Backpack.GetComponent<BaseItem>() : null, backpackCell);
+        CheckCellAfterWindowOpen(CurrentCharacter.body.Stomach.Pants != null ? CurrentCharacter.body.Stomach.Pants.GetComponent<BaseItem>() : null, pantsCell);
+        CheckCellAfterWindowOpen(CurrentCharacter.body.Head.Hat != null ? CurrentCharacter.body.Head.Hat.GetComponent<BaseItem>() : null, hatCell);
+        CheckCellAfterWindowOpen(CurrentCharacter.body.Chest.Underwear != null ? CurrentCharacter.body.Chest.Underwear.GetComponent<BaseItem>() : null, underwearCell);
+        CheckCellAfterWindowOpen(CurrentCharacter.body.LeftLeg.Boots != null ? CurrentCharacter.body.LeftLeg.Boots.GetComponent<BaseItem>() : null, bootsCell);
+        CheckCellAfterWindowOpen(CurrentCharacter.body.Chest.Jacket != null ? CurrentCharacter.body.Chest.Jacket.GetComponent<BaseItem>() : null, jacketCell);
         CheckCellAfterWindowOpen(CurrentCharacter.PrimaryGun != null ? CurrentCharacter.PrimaryGun.GetComponent<BaseItem>() : null,primaryGunSet.gunSlot);
         CheckCellAfterWindowOpen(CurrentCharacter.SecondaryGun != null ? CurrentCharacter.SecondaryGun.GetComponent<BaseItem>() : null,secondaryGunSet.gunSlot);
     }

@@ -1,19 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine.Events;
+﻿using Model.GameEntity;
+
 
 public sealed class ManArm : BodyPart
 {
-    public ManArm(Body body) : base(body)
-    {
-        MaxHp = 100;
-        Hp = MaxHp;
-        Size = 100;
-        Clothes = null;
-    }
-
-    public override int MaxHp { get; }
-    public override float Hp { get; protected set; }
-    public override float Size { get; }
-    public override IEnumerable<Clothes> Clothes { get; }
+    public ManArm(Body body) : base(body) {}
 }

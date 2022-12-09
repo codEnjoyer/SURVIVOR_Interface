@@ -19,7 +19,7 @@ public class IWearable : MonoBehaviour, IContextMenuAction
     }
     public void OnButtonClickAction(Vector2 mousePosition)
     {
-        currentClothes.GetComponent<BaseItem>().ItemOwner.body.Wear(currentClothes,false,out var isSucessful);
+        currentClothes.GetComponent<BaseItem>().ItemOwner.body.WearOrUnWear(currentClothes,false,out var isSucessful);
 
         if (!isSucessful)
             Debug.Log($"Одежда {currentClothes} не может быть надета");
