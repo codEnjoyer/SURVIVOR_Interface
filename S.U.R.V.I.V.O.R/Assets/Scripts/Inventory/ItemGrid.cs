@@ -87,6 +87,11 @@ public class ItemGrid : MonoBehaviour
 
     public bool PlaceItem(BaseItem item, int posX, int posY, ref BaseItem overlapItem)
     {
+        if (item.GetComponent<IContextMenuAction>() != null)
+        {
+            item.GetComponent<IContextMenuAction>().ItemPickedUp += OnItemPickedUp;
+        }
+        
         var res = curInventoryState.PlaceItem(item, posX, posY, ref overlapItem);
         if (res)
         {
@@ -106,8 +111,12 @@ public class ItemGrid : MonoBehaviour
 
     public void PlaceItem(BaseItem item, int posX, int posY)
     {
+        if (item.GetComponent<IContextMenuAction>() != null)
+        {
+            item.GetComponent<IContextMenuAction>().ItemPickedUp += OnItemPickedUp;
+        }
+        
         item.ItemOwner = InventoryOwner;
-        Debug.Log(item.ItemOwner);
         var itemRectTransform = item.GetComponent<RectTransform>();
         itemRectTransform.SetParent(rectTransform);
         
@@ -119,6 +128,13 @@ public class ItemGrid : MonoBehaviour
         curInventoryState.PlaceItem(item, posX, posY);
     }
 
+    private void OnItemPickedUp(BaseItem item)
+    {
+        instantiateItems.Remove(item); 
+        curInventoryState.OnItemPickedUp(item);
+        item.GetComponent<IContextMenuAction>().ItemPickedUp -= OnItemPickedUp;
+    }
+    
     public Vector2 GetPositionOnGrid(BaseItem item, int posX, int posY) => 
         new(posX * TileSize + TileSize * item.Width / 2, -(posY * TileSize + TileSize * item.Height / 2));
 
@@ -126,6 +142,10 @@ public class ItemGrid : MonoBehaviour
     public BaseItem PickUpItem(int x, int y)
     {
         var item = curInventoryState.PickUpItem(x, y);
+        if (item.GetComponent<IContextMenuAction>() != null)
+        {
+            item.GetComponent<IContextMenuAction>().ItemPickedUp -= OnItemPickedUp;
+        }
         item.ItemOwner = null;
         Debug.Log(item.ItemOwner);
         instantiateItems.Remove(item);

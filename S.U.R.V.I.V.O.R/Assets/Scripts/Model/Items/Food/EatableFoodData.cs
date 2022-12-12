@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "New EatableFoodData", menuName = "Data/Food Data", order = 50)]
+[CreateAssetMenu(fileName = "New EatableFoodData", menuName = "Data/Eatable Food Data", order = 50)]
 public class EatableFoodData: ScriptableObject
 {
     [SerializeField] private int deltaHunger;

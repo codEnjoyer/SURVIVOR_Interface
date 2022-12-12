@@ -146,24 +146,31 @@ public class ManBody : Body, IWearClothes
         return default;
     }
 
-    public bool PlaceItemToInventory(BaseItem itemToPlace, out BaseItem returnedItem)
+    public bool PlaceItemToInventory(BaseItem itemToPlace)
     {
-        var clothes = GetClothes();
+        var clothes = GetClothes().Distinct();
         foreach (var cloth in clothes)
         {
-            if (cloth.Inventory.InsertItem(cloth.GetComponent<BaseItem>()))
+            if (cloth != null && cloth.Inventory!= null && cloth.Inventory.InsertItem(itemToPlace.GetComponent<BaseItem>()))
             {
-                returnedItem = null;
                 return true;
             }
         }
-        returnedItem = itemToPlace;
         if (!LocationInventory.Instance.LocationItemGrid.InsertItem(itemToPlace)) Object.Destroy(itemToPlace);
         return false;
     }
     
     public IEnumerable<Clothes> GetClothes()
     {
-        return wearClothesBodyPart.SelectMany(bodyPart => bodyPart.GetClothes());
+        var clothes = new List<Clothes>();
+        foreach (var bodyPart in wearClothesBodyPart)
+        {
+            foreach (var cloth in bodyPart.GetClothes())
+            {
+                clothes.Add(cloth);
+            }
+        }
+
+        return clothes;
     }
 }

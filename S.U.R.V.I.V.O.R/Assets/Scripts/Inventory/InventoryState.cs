@@ -63,20 +63,12 @@ public class InventoryState
         item.OnGridPositionY = posY;
 
         storedItems.Add(item);
-
-        if (item.GetComponent<IContextMenuAction>() != null)
-        {
-            item.GetComponent<IContextMenuAction>().ItemPickedUp += OnItemPickedUp;
-        }
     }
 
-    private void OnItemPickedUp(BaseItem item)
+    public void OnItemPickedUp(BaseItem item)
     {
         RemoveGridReference(item);
         storedItems.Remove(item);
-        var component = item.GetComponent<IContextMenuAction>();
-        if (component != null)
-            component.ItemPickedUp -= OnItemPickedUp;
     }
     
     private void RemoveGridReference(BaseItem item)

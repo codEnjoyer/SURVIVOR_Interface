@@ -3,12 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(ContextMenuItem))]
 public class Wearable : MonoBehaviour, IContextMenuAction
 {
     public string ButtonText { get; private set; }
 
-    public Character Character{ get; set; }
-    
     private Clothes currentClothes;
     
 

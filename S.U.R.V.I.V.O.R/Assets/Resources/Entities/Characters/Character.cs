@@ -46,10 +46,11 @@ public class Character : Entity
         body.Hunger += food.Data.DeltaHunger;
     }
     
-    public void Cook(CookableFood food)
+    public IEnumerable<GameObject> Cook(CookableFood food)
     {
         var cookedObjects = food.ObjectToSpawnAfterCook.Select(Instantiate);
         Destroy(food.gameObject);
+        return cookedObjects;
     }
     
     public MeleeWeapon MeleeWeapon { get; set; }
