@@ -4,6 +4,7 @@ using System.Linq;
 using Model.GameEntity;
 using Model.GameEntity.Health;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 [Serializable]
 public class ManBody : Body, IWearClothes
@@ -44,7 +45,6 @@ public class ManBody : Body, IWearClothes
     public event Action<int> EnergyChange;
     public event Action<int> HungerChange;
     public event Action<int> WaterChange;
-
     public event Action<ClothType> WearChanged;
 
     public ManHead Head { get; }
@@ -113,50 +113,14 @@ public class ManBody : Body, IWearClothes
         }
     }
 
-
-    public void Eat(Meal meal)
+    public void WearOrUnWear(Clothes clothesToWear, bool shouldUnWear, out bool isSuccessful)
     {
-        throw new NotImplementedException();
-    }
-
-    public void WearOrUnWear(Clothes clothToWear, bool shouldUnWear, out bool isSuccessful)
-    {
-        var valueToWear = shouldUnWear ? null : clothToWear;
-        if (clothToWear == null)
+        isSuccessful = false;
+        foreach (var clothes in wearClothesBodyPart)
         {
-            isSuccessful = false;
-            return;
+            clothes.WearOrUnWear(clothesToWear,shouldUnWear, out isSuccessful);
         }
-
-        switch (clothToWear.Data.ClothType)
-        {
-            case ClothType.Backpack:
-                Chest.Backpack = valueToWear;
-                break;
-            case ClothType.Boots:
-                LeftLeg.Boots = valueToWear;
-                RightLeg.Boots = valueToWear;
-                break;
-            case ClothType.Pants:
-                LeftLeg.Pants = valueToWear;
-                RightLeg.Pants = valueToWear;
-                break;
-            case ClothType.Hat:
-                Head.Hat = valueToWear;
-                break;
-            case ClothType.Jacket:
-                Chest.Jacket = valueToWear;
-                break;
-            case ClothType.Underwear:
-                Chest.Underwear = valueToWear;
-                break;
-            case ClothType.Vest:
-                Chest.Vest = valueToWear;
-                break;
-        }
-
-        isSuccessful = true;
-        WearChanged?.Invoke(clothToWear.Data.ClothType);
+        WearChanged?.Invoke(clothesToWear.Data.ClothType);
     }
 
     public Clothes GetClothByType(ClothType type)
@@ -182,8 +146,31 @@ public class ManBody : Body, IWearClothes
         return default;
     }
 
+    public bool PlaceItemToInventory(BaseItem itemToPlace)
+    {
+        var clothes = GetClothes().Distinct();
+        foreach (var cloth in clothes)
+        {
+            if (cloth != null && cloth.Inventory!= null && cloth.Inventory.InsertItem(itemToPlace.GetComponent<BaseItem>()))
+            {
+                return true;
+            }
+        }
+        if (!LocationInventory.Instance.LocationItemGrid.InsertItem(itemToPlace)) Object.Destroy(itemToPlace);
+        return false;
+    }
+    
     public IEnumerable<Clothes> GetClothes()
     {
-        throw new NotImplementedException();
+        var clothes = new List<Clothes>();
+        foreach (var bodyPart in wearClothesBodyPart)
+        {
+            foreach (var cloth in bodyPart.GetClothes())
+            {
+                clothes.Add(cloth);
+            }
+        }
+
+        return clothes;
     }
 }

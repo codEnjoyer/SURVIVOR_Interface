@@ -4,7 +4,7 @@ using Model.GameEntity.Health;
 
 namespace Model.GameEntity
 {
-    public class BodyPart : IAlive
+    public abstract class BodyPart : IAlive
     {
         public readonly Body body;
         public readonly BodyPathHealth health;

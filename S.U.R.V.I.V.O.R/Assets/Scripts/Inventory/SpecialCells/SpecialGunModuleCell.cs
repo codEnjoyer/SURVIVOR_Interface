@@ -23,7 +23,7 @@ public class SpecialGunModuleCell : SpecialCell
         PlacedItem.GetComponent<RectTransform>().localScale = PlacedItem.OnAwakeRectTransformScale;
         PlacedItem.GetComponent<RectTransform>().SetParent(canvasTransform);
         
-        InventoryController.PickUpItem(PlacedItem);
+        InventoryController.PickUpItemFromSpecialCell(PlacedItem);
 
         PlaceNullItem();
         

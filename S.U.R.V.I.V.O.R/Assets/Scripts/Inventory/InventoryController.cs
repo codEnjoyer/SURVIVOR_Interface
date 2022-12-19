@@ -101,7 +101,8 @@ public class InventoryController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && IsPointerUnderInventory)
         {
-            var tileGridPosition = GetTileGridPosition();
+            var mousePosition = Input.mousePosition;
+            var tileGridPosition = GetTileGridPosition(mousePosition);
 
             if (SelectedItem == null)
             {
@@ -116,12 +117,13 @@ public class InventoryController : MonoBehaviour
         HandleHighlight();
     }
 
-    public void PickUpItem(BaseItem item)
+    public void PickUpItemFromSpecialCell(BaseItem item)
     {
         SelectedItem = item;
         ChangeRectTransform();
     }
-
+    
+    
     private void ChangeRectTransform()
     {
         if (SelectedItem == null) return;
@@ -168,7 +170,8 @@ public class InventoryController : MonoBehaviour
 
     private void HandleHighlight()
     {
-        var positionOnGrid = GetTileGridPosition();
+        var mousePosition = Input.mousePosition;
+        var positionOnGrid = GetTileGridPosition(mousePosition);
         if (previousPosition == positionOnGrid) return;
         if (SelectedItem == null)
         {
@@ -193,9 +196,8 @@ public class InventoryController : MonoBehaviour
         }
     }
 
-    private Vector2Int GetTileGridPosition()
+    private Vector2Int GetTileGridPosition(Vector3 mousePosition)
     {
-        var mousePosition = Input.mousePosition;
         if (SelectedItem != null)
         {
             mousePosition.x -= (SelectedItem.Width - 1) * ItemGrid.TileSize / 2;

@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using Model.GameEntity;
 
 
-public sealed class ManHead : BodyPart, IWearClothes
+public sealed class ManHead : BodyPathWearableClothes
 {
-    public Clothes Hat { get; set; }
-    public ManHead(Body body) : base(body) {}
-    public void WearOrUnWear(Clothes clothToWear, bool shouldUnWear, out bool isSuccessful)
-    {
-        throw new NotImplementedException();
-    }
+    public Clothes Hat => clothesDict[ClothType.Hat];
 
-    public IEnumerable<Clothes> GetClothes()
+    public ManHead(Body body) : base(body)
     {
-        throw new NotImplementedException();
+        clothesDict = new Dictionary<ClothType, Clothes>
+        {
+            {ClothType.Hat,null}
+        };
     }
 }

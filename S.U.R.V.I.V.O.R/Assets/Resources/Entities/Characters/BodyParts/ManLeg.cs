@@ -4,23 +4,18 @@ using Model.GameEntity;
 using UnityEngine.Events;
 
 
-public sealed class ManLeg : BodyPart, IWearClothes
+public sealed class ManLeg : BodyPathWearableClothes
 {
-    public Clothes Boots { get; set; }
+    public Clothes Boots => clothesDict[ClothType.Boots];
 
-    public Clothes Pants { get; set; }
-    
+    public Clothes Pants => clothesDict[ClothType.Pants];
+
     public ManLeg(Body body) : base(body)
     {
-    }
-
-    public void WearOrUnWear(Clothes clothToWear, bool shouldUnWear, out bool isSuccessful)
-    {
-        throw new NotImplementedException();
-    }
-
-    public IEnumerable<Clothes> GetClothes()
-    {
-        throw new NotImplementedException();
+        clothesDict = new Dictionary<ClothType, Clothes>
+        {
+            {ClothType.Pants,null},
+            {ClothType.Boots,null}
+        };
     }
 }

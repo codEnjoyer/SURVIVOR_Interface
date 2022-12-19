@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class ContextMenuController : MonoBehaviour
@@ -41,29 +42,31 @@ public class ContextMenuController : MonoBehaviour
         }
     }
 
-    public void CreateContextMenu(List<IContextMenuAction> items, Vector2 position)
+    public void CreateContextMenu(List<IContextMenuAction> items, Vector2 mousePosition)
     {
+        var scaleFactor = canvas.scaleFactor;
         panel.transform.SetParent(canvas.transform);
         panel.transform.SetAsLastSibling();
-        var inScreen = BoundaryCheckScreen(position);
+        var inScreen = BoundaryCheckScreen(mousePosition);
         if (!inScreen.Item1 && inScreen.Item2)
-            position.x -= panel.rect.width;
+            mousePosition.x -= panel.rect.width * scaleFactor;
         else if (inScreen.Item1 && !inScreen.Item2)
-            position.y += panel.rect.height;
+            mousePosition.y += panel.rect.height * scaleFactor;
         else if (!inScreen.Item1 && !inScreen.Item2)
         {
-            position.x -= panel.rect.width;
-            position.y += panel.rect.height;
+            mousePosition.x -= panel.rect.width * scaleFactor;
+            mousePosition.y += panel.rect.height * scaleFactor;
         }
 
-        panel.anchoredPosition = position;
+        panel.anchoredPosition = mousePosition / scaleFactor;
 
         foreach (var item in items)
         {
             var button = Instantiate(buttonPrefab, panel.transform, true);
+            button.transform.localScale = Vector3.one;
             var buttonText = button.GetComponentInChildren(typeof(Text)) as Text;
             buttonText.text = item.ButtonText;
-            button.onClick.AddListener(delegate { item.OnButtonClickAction(); });
+            button.onClick.AddListener(delegate { item.OnButtonClickAction(mousePosition); });
             storedButtons.Add(button);
         }
 
@@ -98,16 +101,21 @@ public class ContextMenuController : MonoBehaviour
 
     private bool BoundaryCheckMouse(Vector2 mousePosition)
     {
+        var scaleFactor = canvas.scaleFactor;
         var position = this.panel.position;
         var rect = this.panel.rect;
+        rect.size *= scaleFactor;
         return ((mousePosition.x > position.x) && (mousePosition.x < position.x + rect.width)) &&
                ((mousePosition.y < position.y) && (mousePosition.y > position.y - rect.height));
     }
     
     private (bool, bool) BoundaryCheckScreen(Vector2 mousePosition)
     {
+        var scaleFactor = canvas.scaleFactor;
         var rect = canvas.GetComponent<RectTransform>().rect;
         var panelRect = this.panel.rect;
-        return ((mousePosition.x > 0 && mousePosition.x + panelRect.width < rect.width), (mousePosition.y< rect.height && mousePosition.y - panelRect.height > 0));
+        panelRect.size *= scaleFactor;
+        rect.size *= scaleFactor;
+        return ((mousePosition.x > 0 && mousePosition.x + panelRect.width < rect.width), (mousePosition.y < rect.height && mousePosition.y - panelRect.height > 0));
     }
 }

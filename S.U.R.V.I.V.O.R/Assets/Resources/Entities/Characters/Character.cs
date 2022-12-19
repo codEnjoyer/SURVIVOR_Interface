@@ -39,6 +39,20 @@ public class Character : Entity
         }
     }
     
+    public void Eat(EatableFood food)
+    {
+        body.Energy += food.Data.DeltaEnergy;
+        body.Water += food.Data.DeltaWater;
+        body.Hunger += food.Data.DeltaHunger;
+    }
+    
+    public IEnumerable<GameObject> Cook(CookableFood food)
+    {
+        var cookedObjects = food.ObjectToSpawnAfterCook.Select(Instantiate);
+        Destroy(food.gameObject);
+        return cookedObjects;
+    }
+    
     public MeleeWeapon MeleeWeapon { get; set; }
     public readonly Skills skills = new Skills();
 
