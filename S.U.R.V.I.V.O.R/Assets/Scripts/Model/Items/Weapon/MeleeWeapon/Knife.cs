@@ -8,9 +8,9 @@ using Model.GameEntity.Skills;
 
 public class Knife : MeleeWeapon
 {
-    public int Damage { get; set; }
+    public DamageInfo Damage { get; set; }
 
-    public Knife(int damage)
+    public Knife(DamageInfo damage)
     {
         Damage = damage;
     }
@@ -23,6 +23,6 @@ public class Knife : MeleeWeapon
             return;
 
         var target = targets.First();
-        target.TakeDamage(new DamageInfo(Damage));
+        target.TakeDamage(Damage);
     }
 }

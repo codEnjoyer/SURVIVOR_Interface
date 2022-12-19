@@ -10,27 +10,28 @@ namespace Model.GameEntity
         public readonly BodyPathHealth health;
         private int maxHp;
         private float size;
+        private int significance;
 
         public int MaxHp
         {
             get => maxHp;
-            private set
+            set
             {
-                if (value <= 0)
-                    throw new ConstraintException("Максимальное здоровье не может быть ниже нуля!");
-                maxHp = value;
+                maxHp = Math.Max(1, value);
+                Hp = Math.Min(maxHp, Hp);
             }
         }
 
         public float Size
         {
             get => size;
-            private set
-            {
-                if (value <= 0)
-                    throw new ConstraintException("Размер части тела не может быть ниже нуля!");
-                size = value;
-            }
+            set => size = Math.Max(1, value);
+        }
+
+        public int Significance
+        {
+            get => significance;
+            set => significance = Math.Max(1, value);
         }
 
         public float Hp { get; private set; }

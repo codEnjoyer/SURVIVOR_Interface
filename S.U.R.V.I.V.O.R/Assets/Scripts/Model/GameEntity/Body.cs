@@ -17,6 +17,7 @@ namespace Model.GameEntity
         {
             Health = new BodyHealth(this);
         }
+
         protected int MaxCriticalLoses
         {
             get => maxCriticalLoses;
@@ -32,11 +33,11 @@ namespace Model.GameEntity
         public IEnumerable<BodyPart> BodyParts => bodyParts;
         public float Hp => BodyParts.Sum(part => part.Hp);
         public event Action Died;
-    
+
         public void LossBodyParts(BodyPart bodyPart)
         {
             bodyParts.Remove(bodyPart);
-            currentCriticalLoses++;
+            currentCriticalLoses += bodyPart.Significance;
             if (currentCriticalLoses >= MaxCriticalLoses)
             {
                 Died?.Invoke();
