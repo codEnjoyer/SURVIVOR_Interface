@@ -2,7 +2,7 @@
 {
     public class Skills
     {
-        private readonly Strength strength;
+        public readonly Strength strength;
 
         public Skills(Character character)
         {

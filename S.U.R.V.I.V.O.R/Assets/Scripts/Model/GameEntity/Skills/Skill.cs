@@ -17,6 +17,7 @@ namespace Model.GameEntity.Skills
             Name = name;
             Description = description;
             MaxLevel = maxLevel;
+            CurrentLevel = 0;
         }
 
         public int MaxLevel
@@ -32,14 +33,16 @@ namespace Model.GameEntity.Skills
         public int CurrentLevel
         {
             get => currentLevel;
-            protected set => currentLevel = Math.Min(MaxLevel, Math.Max(1, value));
+            protected set => currentLevel = Math.Min(MaxLevel, Math.Max(0, value));
         }
 
         public float LevelProgress
         {
             get => levelProgress;
-            set => levelProgress = Math.Min(0, Math.Max(1, value));
+            set => levelProgress = Math.Min(1, Math.Max(0, value));
         }
+
+        public bool IsFinishLevelProgress => Math.Abs(LevelProgress - 1) < 0.000001;
 
 
         public abstract void Development();
