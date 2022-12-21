@@ -5,22 +5,24 @@ namespace Model.GameEntity.Skills
 {
     public class Strength : Skill, IDrawableSkillLevel
     {
-        private readonly Body body;
-
-        class StrengthLevel : BaseLevel
+        class StrengthLevel
         {
-            public int additionalHp;
-            public int additionalPortableWeight;
-            public int additionalMeleeDamage;
+            public int NeededExperienceToLevelUp { get; set; }
+            public int AdditionalHp { get; set; }
+            public int AdditionalPortableWeight { get; set; }
+            public int AdditionalMeleeDamage { get; set; }
 
-            public StrengthLevel(int necessaryExperienceToLevelUp, int additionalHp, int additionalPortableWeight,
-                int additionalMeleeDamage) : base(necessaryExperienceToLevelUp)
+            public StrengthLevel(int neededExperienceToLevelUp, int additionalHp, int additionalPortableWeight,
+                int additionalMeleeDamage)
             {
-                this.additionalHp = additionalHp;
-                this.additionalPortableWeight = additionalPortableWeight;
-                this.additionalMeleeDamage = additionalMeleeDamage;
+                NeededExperienceToLevelUp = NeededExperienceToLevelUp;
+                AdditionalHp = additionalHp;
+                AdditionalPortableWeight = additionalPortableWeight;
+                AdditionalMeleeDamage = additionalMeleeDamage;
             }
         }
+
+        private readonly Body body;
 
         private readonly Dictionary<int, StrengthLevel> skillCharacteristic = new()
         {
@@ -33,12 +35,12 @@ namespace Model.GameEntity.Skills
             this.body = body;
         }
 
-        public override void AddExperience()
+        public string GetLevelInformation()
         {
             throw new NotImplementedException();
         }
 
-        public string GetLevelInformation()
+        public override void Development()
         {
             throw new NotImplementedException();
         }
