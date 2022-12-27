@@ -15,10 +15,10 @@ public static class NodesNav
 
     public static Vector3 CurrentTargetPoint;
 
+    public const float innerRadius = 0.6f;   //From NodesNetTool
+
     private static int currentPathNodeIndex;
 
-
-    private const float innerRadius = 0.6f;   //From NodesNetTool
     public static void InitializeNodesLists(GameObject graph)
     {
         Nodes = new List<GameObject>();
@@ -44,9 +44,9 @@ public static class NodesNav
         obstacleNode.GetComponent<Renderer>().enabled = true;
     }
 
-    public static GameObject GetNearestNode(Vector3 point)
+    public static GameObject GetNearestNode(Vector3 point, float radiusRate = 3)
     {
-        var colliders = Physics.OverlapSphere(point, innerRadius * 3);
+        var colliders = Physics.OverlapSphere(point, innerRadius * radiusRate);
         var minDistance = float.MaxValue;
         GameObject nearestNode = colliders[0].transform.gameObject;
         foreach(var collider in colliders)
@@ -70,7 +70,7 @@ public static class NodesNav
     {
         AvailableNodes = new Dictionary<FightNode, FightNode>();
         var character = characterObj.GetComponent<FightCharacter>();
-        var maxNodesDistance = characterObj.GetComponent<FightCharacter>().Energy;
+        var maxNodesDistance = characterObj.GetComponent<FightCharacter>().RemainingEnergy;
         var startNode = GetNearestNode(characterObj.transform.position).GetComponent<FightNode>();
         WidthSearch(startNode, maxNodesDistance);
         foreach(var node in AvailableNodes)
@@ -107,8 +107,6 @@ public static class NodesNav
                 }
             }
         }
-
-        Debug.Log(AvailableNodes.Count());
     }
 
     public static void CleanAreasLists()
@@ -129,9 +127,10 @@ public static class NodesNav
         AvailableNodes.Clear();
     }
 
-    public static FightNode GetNearestNodeNearEnemy(GameObject enemyObj, Vector3 hitPoint)
+    public static FightNode GetNearestNodeNearEnemy(GameObject enemyObj, Vector3 hitPoint, float radius = float.NaN)
     {
-        var colliders = Physics.OverlapSphere(Projection(enemyObj.transform.position), innerRadius * 3);
+        radius = (radius is float.NaN) ? enemyObj.GetComponent<FightCharacter>().radius : radius;
+        var colliders = Physics.OverlapSphere(Projection(enemyObj.transform.position), innerRadius * radius);
         var nearestNode = colliders[0].GetComponent<FightNode>();
         var minDistance = float.MaxValue;
         foreach (var collider in colliders)
@@ -167,8 +166,10 @@ public static class NodesNav
             }
 
             if (!AvailableNodes.ContainsKey(currentNode))
+            {
+                Path.Clear();
                 return false;
-            
+            }
             resultPath.Add(currentNode.transform.position);
             currentNode = AvailableNodes[currentNode];
         }
@@ -177,6 +178,7 @@ public static class NodesNav
     public static void StartMoveCharacter(GameObject characterObj)
     {
         currentPathNodeIndex = Path.Count - 1;
+        characterObj.GetComponent<FightCharacter>().RemainingEnergy -= Path.Count - 1;
     }
 
     public static bool IsEndMoveCharacter()

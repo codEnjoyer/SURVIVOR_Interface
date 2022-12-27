@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Model.GameEntity;
 
+
 public class RatBody : Body
 {
     public RatChest Chest { get; private set; }

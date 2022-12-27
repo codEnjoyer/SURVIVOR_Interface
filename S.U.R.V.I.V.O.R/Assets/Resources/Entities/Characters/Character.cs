@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
 using Model.GameEntity;
 using Model.GameEntity.Skills;
+using UnityEngine;
 
 public class Character : Entity
 {
@@ -16,6 +16,7 @@ public class Character : Entity
     public string FirstName => firstName;
     public string Surname => surname;
 
+    
     private Gun primaryGun;
 
     public Gun PrimaryGun
@@ -69,6 +70,5 @@ public class Character : Entity
     public override void Attack(IEnumerable<BodyPart> targets, float distance)
     {
         targets.First().TakeDamage(new DamageInfo(15f));
-        Debug.Log(targets.First().Hp);
     }
 }

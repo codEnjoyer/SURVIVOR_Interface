@@ -21,12 +21,13 @@ public class FightSceneController : MonoBehaviour
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private GameObject graph;
     [SerializeField] private EventSystem eventSystem;
-    [SerializeField] private List<Vector3> spawnPoints;
+    [SerializeField] private List<GameObject> spawnPointsObjects;
     [SerializeField] private GameObject characterPrefab;
     [SerializeField] private GameObject ratPrefab;
-    private static Queue<GameObject> CharactersQueue = new Queue<GameObject>();
+    private static Queue<GameObject> CharactersQueue;
     private GameObject currentCharacterNodeObj;
-
+    private List<Vector3> allySpawnPoints;
+    private List<Vector3> enemySpawnPoints;
 
     void Awake()
     {
@@ -41,6 +42,7 @@ public class FightSceneController : MonoBehaviour
 
     private void Init()
     {
+        CreateSpawnPointsLists();
         CreateCharactersList();
         InitializeCharacters();
         NodesNav.InitializeNodesLists(graph);
@@ -48,10 +50,12 @@ public class FightSceneController : MonoBehaviour
         StateController.MakeAvailablePhases();
         CharacterObj = CharactersQueue.Dequeue();
         AI.CurrentCharacterObj = CharacterObj;
+        Debug.Log(CharactersQueue.Count);
+        Debug.Log(CharacterObj);
         DrawAreas();
         State = FightState.Sleeping;
-
-        currentCharacterNodeObj = NodesNav.GetNearestNode(CharacterObj.transform.position);
+        SetNearestNodeToCurrentCharacter();
+        
         Sign.transform.position = CharacterObj.transform.position + new Vector3(0, 1.3f, 0);
         Sign.transform.parent = CharacterObj.transform;
     }
@@ -118,12 +122,26 @@ public class FightSceneController : MonoBehaviour
         }
     }
 
-    public void CreateCharactersList()
+    private void CreateSpawnPointsLists()
+    {
+        allySpawnPoints = spawnPointsObjects
+                            .Where(p => p.GetComponent<FightSpawnPoint>().Type == CharacterType.Ally)
+                            .Select(p => p.transform.position)
+                            .ToList();
+        enemySpawnPoints = spawnPointsObjects
+                            .Where(p => p.GetComponent<FightSpawnPoint>().Type == CharacterType.Enemy)
+                            .Select(p => p.transform.position)
+                            .ToList();
+    }
+
+    private void CreateCharactersList()
     {
         var data = FightSceneLoader.CurrentData;
         foreach (var entity in data.ally)
         {
-            var obj = Instantiate(characterPrefab, spawnPoints[0] + new Vector3(0, 1.22f, 0), Quaternion.identity);
+            var obj = Instantiate(characterPrefab, new Vector3(0,0,0), Quaternion.identity);
+            var objHeight = obj.GetComponent<MeshRenderer>().bounds.size.y;
+            obj.transform.position = allySpawnPoints[0] + new Vector3(0, objHeight / 2, 0);
             obj.AddComponent<FightCharacter>().ApplyProperties(entity, CharacterType.Ally);
             obj.GetComponent<Renderer>().material.color = Color.green;
             Characters.Add(obj);
@@ -131,9 +149,11 @@ public class FightSceneController : MonoBehaviour
 
         foreach (var entity in data.enemies)
         {
-            var temp = Instantiate(entity, spawnPoints[1] + new Vector3(0, 1.22f, 0), Quaternion.identity);
-            var obj = temp.gameObject;
-            obj.AddComponent<FightCharacter>().ApplyProperties(temp, CharacterType.Enemy);
+            var entityObj = Instantiate(entity, new Vector3(0,0,0), Quaternion.identity);
+            var obj = entityObj.gameObject;
+            var objHeight = obj.GetComponent<MeshRenderer>().bounds.size.y;
+            obj.transform.position = enemySpawnPoints[0] + new Vector3(0, objHeight / 2, 0);
+            obj.AddComponent<FightCharacter>().ApplyProperties(entityObj, CharacterType.Enemy);
             obj.GetComponent<Renderer>().material.color = Color.red;
             Characters.Add(obj);
         }
@@ -145,6 +165,7 @@ public class FightSceneController : MonoBehaviour
 
     private void InitializeCharacters()
     {
+        CharactersQueue = new Queue<GameObject>();
         for (var i = 0; i < Characters.Count; i++)
         {
             var component = Characters[i].GetComponent<FightCharacter>();
@@ -169,7 +190,7 @@ public class FightSceneController : MonoBehaviour
             character.TargetToHit = null;
             //DeleteDeathCharacterFromQueue();
         }
-
+        DrawAreas();
         FightSceneController.State = FightState.Sleeping;
         Debug.Log("Sleeping Phase");
     }
@@ -194,11 +215,11 @@ public class FightSceneController : MonoBehaviour
 
     private GameObject GetNextCharacter()
     {
+        CharacterObj.GetComponent<FightCharacter>().ResetEnergy();
         var nextCharacter = CharactersQueue.Dequeue();
         while (nextCharacter == null || !nextCharacter.GetComponent<FightCharacter>().Alive)
         {
             nextCharacter = CharactersQueue.Dequeue();
-            Debug.Log("OK");
         }
 
         return nextCharacter;
@@ -206,7 +227,8 @@ public class FightSceneController : MonoBehaviour
 
     private void MoveCharacter()
     {
-        if (NodesNav.Path.Count != 0)
+        if (NodesNav.Path.Count != 0
+            && StateController.AvailablePhase[FightState.MovePhase])
         {
             State = FightState.Moving;
             NodesNav.StartMoveCharacter(CharacterObj);
@@ -220,7 +242,10 @@ public class FightSceneController : MonoBehaviour
     {
         if (targetObj.GetComponent<FightCharacter>() && targetObj != CharacterObj
             && targetObj.GetComponent<FightCharacter>().Type !=
-            CharacterObj.GetComponent<FightCharacter>().Type)
+            CharacterObj.GetComponent<FightCharacter>().Type
+            && StateController.AvailablePhase[FightState.FightPhase]
+            && NodesNav.Path.Count != 0
+            && NodesNav.Path.Count <= CharacterObj.GetComponent<FightCharacter>().RemainingEnergy + 1)
         {
             CharacterObj.GetComponent<FightCharacter>().TargetToHit = targetObj;
             NodesNav.StartMoveCharacter(CharacterObj);
@@ -235,12 +260,12 @@ public class FightSceneController : MonoBehaviour
     private void Shoot(GameObject targetObj)
     {
         if (targetObj != CharacterObj && targetObj.GetComponent<FightCharacter>()
-            && targetObj.GetComponent<FightCharacter>().Alive)
+            && targetObj.GetComponent<FightCharacter>().Alive
+            && StateController.AvailablePhase[FightState.ShootPhase])
         {
             Debug.Log("Shoot");
             var character = CharacterObj.GetComponent<FightCharacter>();
-            character.TargetToHit = targetObj;
-            character.Attack();
+            character.MakeShoot(targetObj);
             // character.MakeShoot(targetObj, "Body");
             State = FightState.Sleeping;
             StateController.AvailablePhase[FightState.FightPhase] = false;
@@ -250,18 +275,6 @@ public class FightSceneController : MonoBehaviour
         }
     }
 
-    private void DeleteDeathCharacterFromQueue()
-    {
-        var newQueue = new Queue<GameObject>();
-        while (CharactersQueue.Count > 0)
-        {
-            var charObj = CharactersQueue.Dequeue();
-            if (charObj != null && charObj.GetComponent<FightCharacter>().Alive)
-                newQueue.Enqueue(charObj);
-        }
-
-        CharactersQueue = newQueue;
-    }
 
     public void DeleteDeathCharacterFromQueue(FightCharacter character)
     {
@@ -277,12 +290,23 @@ public class FightSceneController : MonoBehaviour
         CharactersQueue = newQueue;
     }
 
-    private void DrawAreas()
+    public void SetNearestNodeToCurrentCharacter()
+    {
+        currentCharacterNodeObj = NodesNav.GetNearestNode(CharacterObj.transform.position);
+    }
+
+    public void DrawAreas()
     {
         NodesNav.CleanAreasLists();
-        foreach (var otherCharacterObj in CharactersQueue)
-            NodesNav.FindObstacleNode(otherCharacterObj);
-        NodesNav.FindAvailableArea(CharacterObj);
+        if(StateController.AvailablePhase[FightState.MovePhase] 
+            || StateController.AvailablePhase[FightState.FightPhase])
+        {
+            foreach (var otherCharacterObj in CharactersQueue)
+            {
+                NodesNav.FindObstacleNode(otherCharacterObj);
+            }
+            NodesNav.FindAvailableArea(CharacterObj);
+        }
     }
 
     private void CalculateAvailalePathToPoint(RaycastHit hit, bool isForFighting)

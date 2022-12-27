@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:S.U.R.V.I.V.O.R/Assets/Resources/WhiteGeks.png.meta
 guid: a4721f4e78bc9c3439baef825916547f
+========
+guid: 190aaa409dd5d814181eb2746d8b90bc
+>>>>>>>> db94d451222e7b69505e47fc0368688523449427:S.U.R.V.I.V.O.R/Assets/Resources/Items/Food/Grechka/BuckwheatBoiledPacket/FullPAKET.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,6 +73,33 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
+<<<<<<<< HEAD:S.U.R.V.I.V.O.R/Assets/Resources/WhiteGeks.png.meta
+========
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+>>>>>>>> db94d451222e7b69505e47fc0368688523449427:S.U.R.V.I.V.O.R/Assets/Resources/Items/Food/Grechka/BuckwheatBoiledPacket/FullPAKET.png.meta
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
