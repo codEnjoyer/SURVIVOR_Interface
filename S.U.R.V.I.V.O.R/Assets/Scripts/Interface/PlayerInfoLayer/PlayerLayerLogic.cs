@@ -24,13 +24,13 @@ public class PlayerLayerLogic : MonoBehaviour
 
     [SerializeField] private Text nameTextBox;
     
-    [SerializeField] private SpecialCell hatCell;
-    [SerializeField] private SpecialCell underwearCell;
-    [SerializeField] private SpecialCell backpackCell;
-    [SerializeField] private SpecialCell vestCell;
-    [SerializeField] private SpecialCell jacketCell;
-    [SerializeField] private SpecialCell pantsCell;
-    [SerializeField] private SpecialCell bootsCell;
+    [SerializeField] private SpecialClothCell hatCell;
+    [SerializeField] private SpecialClothCell underwearCell;
+    [SerializeField] private SpecialClothCell backpackCell;
+    [SerializeField] private SpecialClothCell vestCell;
+    [SerializeField] private SpecialClothCell jacketCell;
+    [SerializeField] private SpecialClothCell pantsCell;
+    [SerializeField] private SpecialClothCell bootsCell;
 
     [SerializeField] private ItemGrid backpackInventory;
     [SerializeField] private ItemGrid vestInventory;
@@ -45,7 +45,16 @@ public class PlayerLayerLogic : MonoBehaviour
         pantsInventory.ChangeState(new InventoryState(emptyInventorySize));
         
         playerCharacteristicsPanel.Player = CurrentCharacter;
-        nameTextBox.text = CurrentCharacter.Name;
+        
+        primaryGunSet.Player = CurrentCharacter;
+        primaryGunSet.GunPlaced.AddListener(OnPrimaryGunPlaced);
+        primaryGunSet.GunTaken.AddListener(OnPrimaryGunTaken);
+        
+        secondaryGunSet.Player = CurrentCharacter;
+        secondaryGunSet.GunPlaced.AddListener(OnSecondaryGunPlaced);
+        secondaryGunSet.GunTaken.AddListener(OnSecondaryGunTaken);
+        
+        nameTextBox.text = CurrentCharacter.FirstName;
         
         jacketCell.OnItemPlaced.AddListener(OnJacketPlaced);
         jacketCell.OnItemTaked.AddListener(OnJacketTaken);
@@ -69,6 +78,26 @@ public class PlayerLayerLogic : MonoBehaviour
         bootsCell.OnItemTaked.AddListener(OnBootsTaken);
     }
 
+    private void OnPrimaryGunTaken()
+    {
+        CurrentCharacter.PrimaryGun = null;
+    }
+    
+    private void OnPrimaryGunPlaced()
+    {
+        CurrentCharacter.PrimaryGun = primaryGunSet.CurrentInterfaceSetGun;
+    }
+    
+    private void OnSecondaryGunTaken()
+    {
+        CurrentCharacter.SecondaryGun = null;
+    }
+    
+    private void OnSecondaryGunPlaced()
+    {
+        CurrentCharacter.SecondaryGun = secondaryGunSet.CurrentInterfaceSetGun;
+    }
+    
     private void OnJacketPlaced()
     {
         CurrentCharacter.body.chest.Jacket = jacketCell.PlacedItem.GetComponent<Clothes>();
@@ -153,7 +182,7 @@ public class PlayerLayerLogic : MonoBehaviour
     
     private void UpdateAllInventories()
     {
-        if (CurrentCharacter.body.chest.Jacket != null)
+        if (jacketCell.PlacedItem != null)
         {
             jacketInventory.ChangeState(jacketCell.PlacedItem.GetComponent<Clothes>().Inventory);
         }
@@ -169,29 +198,46 @@ public class PlayerLayerLogic : MonoBehaviour
         {
             pantsInventory.ChangeState(pantsCell.PlacedItem.GetComponent<Clothes>().Inventory);
         }
+        //TODO если вещи в спец слоте нету, то вместо инвенторя отрисовать замочек
     }
 
     private void PlaceAllItems()
     {
-        if (CurrentCharacter.body.chest.Jacket != null)
-            jacketCell.PlaceItem(CurrentCharacter.body.chest.Jacket.gameObject.GetComponent<BaseItem>());
-        if (CurrentCharacter.body.chest.Vest != null)
-            vestCell.PlaceItem(CurrentCharacter.body.chest.Vest.gameObject.GetComponent<BaseItem>());
-        if (CurrentCharacter.body.chest.Backpack != null)
-            backpackCell.PlaceItem(CurrentCharacter.body.chest.Backpack.gameObject.GetComponent<BaseItem>());
-        if (CurrentCharacter.body.leftLeg.Pants != null)
-            pantsCell.PlaceItem(CurrentCharacter.body.leftLeg.Pants.gameObject.GetComponent<BaseItem>());
-        if (CurrentCharacter.body.head.Hat != null)
-            hatCell.PlaceItem(CurrentCharacter.body.head.Hat.gameObject.GetComponent<BaseItem>());
-        if (CurrentCharacter.body.chest.Underwear != null)
-            underwearCell.PlaceItem(CurrentCharacter.body.chest.Underwear.gameObject.GetComponent<BaseItem>());
-        if (CurrentCharacter.body.leftLeg.Boots != null)
-            bootsCell.PlaceItem(CurrentCharacter.body.leftLeg.Boots.gameObject.GetComponent<BaseItem>());
+        CheckClothCellAfterWindowOpen(CurrentCharacter.body.chest.Jacket, jacketCell);
+        CheckClothCellAfterWindowOpen(CurrentCharacter.body.chest.Backpack, backpackCell);
+        CheckClothCellAfterWindowOpen(CurrentCharacter.body.leftLeg.Pants, pantsCell);
+        CheckClothCellAfterWindowOpen(CurrentCharacter.body.head.Hat, hatCell);
+        CheckClothCellAfterWindowOpen(CurrentCharacter.body.chest.Underwear, underwearCell);
+        CheckClothCellAfterWindowOpen(CurrentCharacter.body.leftLeg.Boots, bootsCell);
+        
+        CheckGunSetAfterWindowOpen(CurrentCharacter.PrimaryGun,primaryGunSet);
+        CheckGunSetAfterWindowOpen(CurrentCharacter.SecondaryGun,secondaryGunSet);
     }
 
+    private void CheckClothCellAfterWindowOpen(Clothes cloth, SpecialCell cell)
+    {
+        if (cloth != null)
+            cell.PlaceItem(cloth.gameObject.GetComponent<BaseItem>());
+        else
+            cell.PlaceNullItem();
+    }
+
+    private void CheckGunSetAfterWindowOpen(Gun gun, GunInterfaceSet interfaceSet)
+    {
+        if (gun != null)
+            interfaceSet.gunSlot.PlaceItem(gun.gameObject.GetComponent<BaseItem>());
+        else
+            interfaceSet.gunSlot.PlaceNullItem();
+    }
+
+    private void CheckClothInventoryAfterWindowOpen(ItemGrid inventory, SpecialCell cell)
+    {
+
+    }
+    
     public void OnOpen()
     {
         PlaceAllItems();
-        UpdateAllInventories();
+        UpdateAllInventories();//ОБЯЗАТЕЛЬНО ПОСЛЕ РАЗМЕЩЕНИЯ ПРЕДМЕТОВ, В МЕТОДЕ ИДЕТ ПРОВЕРКА НА РАЗМЕЩЕНИЕ ПРЕДМЕТА В КЛЕТКЕ, А НЕ НА ОДЕЖДУ ПЕРСОНАЖА
     }
 }

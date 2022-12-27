@@ -55,7 +55,6 @@ public class InterfaceController : MonoBehaviour
         PlayerLayerActive = new PlayerLayerActive(this, interfaceStateMachine);
         SetActiveInterface(true);
         SetActiveInterface(false);
-        
         Selector.Instance.Activate();
         
         interfaceStateMachine.Initialize(NothingActive);
@@ -74,9 +73,9 @@ public class InterfaceController : MonoBehaviour
         GroupInfoLayer.SetActive(value);
         CharactersButtonsLayer.SetActive(value);
         FirstPlayerLayer.SetActive(value);
-        SecondPlayerLayer.SetActive(value);
-        ThirdPlayerLayer.SetActive(value);
-        FourthPlayerLayer.SetActive(value);
+        //SecondPlayerLayer.SetActive(value);
+        //ThirdPlayerLayer.SetActive(value);
+        //FourthPlayerLayer.SetActive(value);
     }
 
     public void SetCharactersPanelActive()
@@ -101,8 +100,7 @@ public class InterfaceController : MonoBehaviour
 
     private void SetPlayerLayerActive(GameObject characterLayer)
     {
-        if(interfaceStateMachine.CurrentState == PlayerLayerActive 
-           && CurrentPlayerLayer == characterLayer)
+        if(interfaceStateMachine.CurrentState == PlayerLayerActive && CurrentPlayerLayer == characterLayer)
             interfaceStateMachine.ChangeState(CharacterPanelActive);
         else
         {
@@ -114,7 +112,6 @@ public class InterfaceController : MonoBehaviour
 
     public void ChooseFirstPlayer()
     {
-        interfaceGruopLogicController.OnFirstPlayerLayerOpen.Invoke();
         SetPlayerLayerActive(firstPlayerLayer);
     }
     public void ChooseSecondPlayer() => SetPlayerLayerActive(secondPlayerLayer);

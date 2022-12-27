@@ -61,8 +61,8 @@ public class InventoryState
             }
         }
 
-        item.onGridPositionX = posX;
-        item.onGridPositionY = posY;
+        item.OnGridPositionX = posX;
+        item.OnGridPositionY = posY;
 
         storedItems.Add(item);
     }
@@ -73,7 +73,7 @@ public class InventoryState
         {
             for (int iy = 0; iy < item.Height; iy++)
             {
-                inventoryItemSlot[item.onGridPositionX + ix, item.onGridPositionY + iy] = null;
+                inventoryItemSlot[item.OnGridPositionX + ix, item.OnGridPositionY + iy] = null;
             }
         }
     }

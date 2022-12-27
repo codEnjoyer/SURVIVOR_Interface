@@ -5,102 +5,104 @@ using System.Drawing.Printing;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-public enum SpecialCellType
+
+public enum ClothType
 {
-    None,
     Jacket,
     Backpack,
     Boots,
     Underwear,
     Vest,
     Hat,
-    Pants,
-    PrimaryGun,
-    SecondaryGun,
-    MeleeWeapon
+    Pants
 }
-public class SpecialCell : MonoBehaviour, IPointerClickHandler
+    
+public enum GunType
 {
-    private InventoryController inventoryController;
-    public BodyPart bodyPart;
+    PrimaryGun,
+    SecondaryGun
+}
     
-    [SerializeField] 
-    private Transform canvasTransform;
-    
-    [SerializeField]
-    private SpecialCellType cellType;
-    
-    private RectTransform rectTransform;
-    private Vector3 itemSize;
-    private Vector3 itemScale;
-    private BaseItem placedItem;
-    public SpecialCellType CellType => cellType;
-    public BaseItem PlacedItem => placedItem;
+public enum GunModuleType
+{
+    Grip,
+    Spring,
+    Shutter,
+    Scope,
+    Suppressor,
+    Tactical
+}
 
+public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+{
+    protected InventoryController InventoryController { get; private set; }
+    protected BaseItem placedItem;
+    private bool isPointerOverCell;
+    public BaseItem PlacedItem => placedItem;
+    
     public UnityEvent OnItemPlaced = new ();
     public UnityEvent OnItemTaked = new ();
+    
 
     private void Awake()
     {
-        inventoryController = FindObjectOfType(typeof(InventoryController)) as InventoryController;
-        rectTransform = GetComponent<RectTransform>();
+        InventoryController = FindObjectOfType(typeof(InventoryController)) as InventoryController;
     }
 
-    private bool CanInsertIntoSlot()
+    protected virtual bool CanInsertIntoSlot()
     {
-        return inventoryController.selectedItem.SpecialCellType == CellType;
+        return false;
     }
     
-    public virtual void OnPointerClick(PointerEventData eventData)
+    public void Update()
     {
-        if (placedItem == null && inventoryController.selectedItem != null)
+        if (Input.GetMouseButtonDown(0) && isPointerOverCell)
         {
-            if (CanInsertIntoSlot())
+            if (placedItem == null && InventoryController.SelectedItem != null)
             {
-                PlaceItem(inventoryController.selectedItem);
+                if (CanInsertIntoSlot())
+                {
+                    PlaceItem(InventoryController.SelectedItem);
+                }
+            }
+            else if (InventoryController.SelectedItem == null)
+            {
+                GiveItem();
             }
         }
-        else if (inventoryController.selectedItem == null)
-        {
-            GiveItem();
-        }
-    }
-    
-    public void PlaceItem(BaseItem item)
-    {
-        if (item.rotated)
-            item.Rotated();
-        placedItem = item;
-        var itemRectTransform = placedItem.GetComponent<RectTransform>();
-        itemRectTransform.SetParent(rectTransform);
-        itemRectTransform.localPosition = new Vector2(0,0);
-        ChangeItemSize(placedItem.GetComponent<RectTransform>());
-        inventoryController.selectedItem = null;
-        OnItemPlaced.Invoke();
-    }
-    
-    private void GiveItem()
-    {
-        placedItem.GetComponent<RectTransform>().sizeDelta = itemSize;
-        placedItem.GetComponent<RectTransform>().localScale = itemScale;
-        placedItem.GetComponent<RectTransform>().SetParent(canvasTransform);
-        inventoryController.PickUpItem(placedItem);
-        OnItemTaked.Invoke();
-        placedItem = null;
     }
 
-    private void ChangeItemSize(RectTransform transform)
+    public abstract void PlaceItem(BaseItem item);
+
+    public void PlaceNullItem()
     {
-        itemSize = transform.sizeDelta;
-        itemScale = transform.localScale;
-        transform.localScale = new Vector3(1, 1, 1);
-        if (transform.sizeDelta.x * itemScale.x > rectTransform.sizeDelta.x * rectTransform.localScale.x)
+        placedItem = null;
+        
+    }
+
+    public abstract void GiveItem();
+
+    protected void ChangeItemSize(RectTransform transform, RectTransform cellTransform)
+    {
+        if (placedItem.OnAwakeRectTransformSize.x * placedItem.OnAwakeRectTransformScale.x > cellTransform.sizeDelta.x * cellTransform.localScale.x)
         {
-            transform.sizeDelta = new Vector2(rectTransform.sizeDelta.x * itemScale.x,itemSize.y * itemScale.y/(itemSize.x * itemScale.x/rectTransform.sizeDelta.x * rectTransform.localScale.x));
+            transform.sizeDelta = new Vector2(cellTransform.sizeDelta.x * placedItem.OnAwakeRectTransformScale.x,placedItem.OnAwakeRectTransformSize.y * placedItem.OnAwakeRectTransformScale.y/(placedItem.OnAwakeRectTransformSize.x * placedItem.OnAwakeRectTransformScale.x/cellTransform.sizeDelta.x * cellTransform.localScale.x));
+            transform.localScale = new Vector3(1, 1, 1);
         }
-        if (transform.sizeDelta.x * itemScale.x > rectTransform.sizeDelta.x * rectTransform.localScale.x)
+        if (placedItem.OnAwakeRectTransformSize.y * placedItem.OnAwakeRectTransformScale.y > cellTransform.sizeDelta.y * cellTransform.localScale.y)
         {
-            transform.sizeDelta = new Vector2(itemSize.x * itemScale.x/(itemSize.y * itemScale.y/rectTransform.sizeDelta.y * rectTransform.localScale.y),rectTransform.sizeDelta.y * rectTransform.localScale.y);
+            transform.sizeDelta = new Vector2(placedItem.OnAwakeRectTransformSize.x * placedItem.OnAwakeRectTransformScale.x/(placedItem.OnAwakeRectTransformSize.y * placedItem.OnAwakeRectTransformScale.y/cellTransform.sizeDelta.y * cellTransform.localScale.y),cellTransform.sizeDelta.y * cellTransform.localScale.y);
+            transform.localScale = new Vector3(1, 1, 1);
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        isPointerOverCell = true;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        isPointerOverCell = false;
     }
 }

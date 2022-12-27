@@ -6,16 +6,17 @@ using UnityEngine;
 public class Clothes : MonoBehaviour
 {
     [SerializeField] private ClothData data;
+    [SerializeField] private InventoryState inventory;
+    
     private BaseItem baseItem;
-    [SerializeField]
-    private InventoryState inventory;
     public float CurrentArmor { get; private set; }
 
     public InventoryState Inventory => inventory;
+    public ClothData Data => data;
 
     public float TotalWeight => baseItem.Weight + inventory.GetItems.Sum(item => item.Weight);
 
-    public float CalculateBlockedDamage(Shoot shoot)
+    public float CalculateBlockedDamage(DamageInfo damageInfo)
     {
         //TODO расчитать колличество заблокированного урона
         throw new NotImplementedException();

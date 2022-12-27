@@ -15,6 +15,7 @@ public abstract class Health
 
     public void DeleteProperty(HealthProperty property)
     {
+        var l = new List<Health>();
         HealthProperties.Remove(property);
         property.FinalAction(this);
     }
