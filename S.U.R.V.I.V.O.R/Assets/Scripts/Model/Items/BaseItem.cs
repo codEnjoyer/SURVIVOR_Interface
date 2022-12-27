@@ -10,7 +10,9 @@ public class BaseItem : MonoBehaviour
     [FormerlySerializedAs("itemData")] [SerializeField] private BaseItemData data;
     public int OnGridPositionX { get; set; }
     public int OnGridPositionY { get; set; }
-
+    
+    public Character ItemOwner { get; set; }
+    
     public Vector3 OnAwakeRectTransformSize { get; set; }
     
     public Vector3 OnAwakeRectTransformScale { get; set; }

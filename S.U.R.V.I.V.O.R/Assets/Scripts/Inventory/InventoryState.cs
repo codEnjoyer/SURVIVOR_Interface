@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 [Serializable]
 public class InventoryState
@@ -23,10 +24,7 @@ public class InventoryState
     {
         var returnedItem = inventoryItemSlot[x, y];
         if (returnedItem == null) return null;
-        RemoveGridReference(returnedItem);
-
-        storedItems.Remove(returnedItem);
-
+        OnItemPickedUp(returnedItem);
         inventoryItemSlot[x, y] = null;
         return returnedItem;
     }
@@ -67,6 +65,12 @@ public class InventoryState
         storedItems.Add(item);
     }
 
+    public void OnItemPickedUp(BaseItem item)
+    {
+        RemoveGridReference(item);
+        storedItems.Remove(item);
+    }
+    
     private void RemoveGridReference(BaseItem item)
     {
         for (int ix = 0; ix < item.Width; ix++)
@@ -105,6 +109,17 @@ public class InventoryState
     }
     
     public BaseItem GetItem(int x, int y) => inventoryItemSlot[x, y];
+
+    public bool InsertItem(BaseItem itemToInsert)
+    {
+        var positionOnGrid = FindSpaceForObject(itemToInsert);
+        if (positionOnGrid == null)
+        {
+            return false;
+        }
+        PlaceItem(itemToInsert, positionOnGrid.Value.x, positionOnGrid.Value.y);
+        return true;
+    }
     
     public Vector2Int? FindSpaceForObject(BaseItem itemToInsert)
     {

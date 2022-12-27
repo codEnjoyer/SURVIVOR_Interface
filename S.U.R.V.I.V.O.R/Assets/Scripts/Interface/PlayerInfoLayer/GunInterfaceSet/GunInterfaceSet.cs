@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 public class GunInterfaceSet : MonoBehaviour
 {
-    public Character Player { get; set; }
+    public Character CurrentCharacter { get; set; }
     public Gun CurrentInterfaceSetGun { get; set; }
     [SerializeField]
     public SpecialGunCell gunSlot;
@@ -28,10 +28,7 @@ public class GunInterfaceSet : MonoBehaviour
 
     private List<SpecialGunModuleCell> allSlots;
 
-    public UnityEvent GunPlaced = new ();
-    public UnityEvent GunTaken = new ();
-    
-    public void Awake()
+    public void Start()
     {
         allSlots = new List<SpecialGunModuleCell>
         {
@@ -42,23 +39,38 @@ public class GunInterfaceSet : MonoBehaviour
             tacticalSlot,
             gripSlot,
         };
-        gunSlot.OnItemPlaced.AddListener(OnGunPlaced);
-        gunSlot.OnItemTaked.AddListener(OnGunTaken);
+
+        gunSlot.currentCharacter = CurrentCharacter;
+        
+        //CurrentCharacter.OnGunsChanged += OnGunsChanged;
     }
 
+    private void OnGunsChanged()
+    {
+        gunSlot.DrawItem();
+        //TODO Доделать отрисовку всех модулей
+    }
+
+    public void CheckAfterWindowOpen()
+    {
+        if (gunSlot.PlacedItem != null)
+        {
+            gunSlot.DrawItem();
+        }
+    }
+    
+    /*
     private void OnGunPlaced()
     {
         CurrentInterfaceSetGun = gunSlot.PlacedItem.GetComponent<Gun>();
         CheckGunAvailableModules();
         UpdateAllSlots();
-        GunPlaced.Invoke();
     }
 
     private void OnGunTaken()
     {
         CurrentInterfaceSetGun = null;
         ClearAllSlots();
-        GunTaken.Invoke();
     }
 
     private void CheckGunAvailableModules()
@@ -108,4 +120,5 @@ public class GunInterfaceSet : MonoBehaviour
             magazineSlot.PlaceItem(gun.CurrentMagazine.GetComponent<BaseItem>()); 
         }
     }
+    */
 }

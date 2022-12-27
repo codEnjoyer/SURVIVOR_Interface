@@ -9,7 +9,7 @@
 
         public override void Enter()
         {
-            contr.InterfaceGruopLogicController.OnGroupLayerOpen.Invoke();
+            contr.InterfaceGroupLogicController.OnGroupLayerOpen.Invoke();
             Selector.Instance.DeActivate();
             contr.GroupInfoLayer.SetActive(true);
             contr.MainInfoPanelLayer.SetActive(true);

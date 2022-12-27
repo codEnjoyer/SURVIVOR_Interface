@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
+using Model.GameEntity;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
-using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(fileName = "New FightData", menuName = "Data/Fight Data", order = 50)]
 public class Fight: ScriptableObject
@@ -11,7 +10,7 @@ public class Fight: ScriptableObject
 
     public void Initialization()
     {
-        var data = new FightData(enemies, Game.Instance.ChosenGroup.currentGroupMembers);
+        var data = new FightData(enemies, Game.Instance.ChosenGroup.CurrentGroupMembers);
         FightSceneLoader.SendDataToLoader(data);
         FightSceneLoader.Load(sceneName);
     }

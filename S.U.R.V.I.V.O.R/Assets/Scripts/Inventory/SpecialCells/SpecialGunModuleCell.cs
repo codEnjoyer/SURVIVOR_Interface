@@ -6,23 +6,14 @@ public class SpecialGunModuleCell : SpecialCell
 {
     [SerializeField] private Transform canvasTransform;
     [SerializeField] private GunModuleType type;
-    public ICollection<GunModule> gunModules;
+    public Gun gun;
     public override void PlaceItem(BaseItem item)
     {
         if (item.rotated)
             item.Rotated();
         placedItem = item;
-        var itemRectTransform = placedItem.GetComponent<RectTransform>();
-        itemRectTransform.SetParent(GetComponent<RectTransform>());
-        itemRectTransform.localPosition = new Vector2(0,0);
-        
-        ChangeItemSize(itemRectTransform,GetComponent<RectTransform>());
-        
         InventoryController.SelectedItem = null;
-        
-        OnItemPlaced.Invoke();
-        
-        gunModules.Add(placedItem.GetComponent<GunModule>());
+        gun.AddGunModule(placedItem.GetComponent<GunModule>());
     }
 
     public override void GiveItem()
@@ -32,18 +23,21 @@ public class SpecialGunModuleCell : SpecialCell
         PlacedItem.GetComponent<RectTransform>().localScale = PlacedItem.OnAwakeRectTransformScale;
         PlacedItem.GetComponent<RectTransform>().SetParent(canvasTransform);
         
-        InventoryController.PickUpItem(PlacedItem);
+        InventoryController.PickUpItemFromSpecialCell(PlacedItem);
 
-        OnItemTaked.Invoke();
-        
         PlaceNullItem();
         
-        gunModules.Remove(placedItem.GetComponent<GunModule>());
+        gun.RemoveGunModule(placedItem.GetComponent<GunModule>());
     }
 
     protected override bool CanInsertIntoSlot()
     {
         return InventoryController.SelectedItem.GetComponent<GunModule>() &&
                InventoryController.SelectedItem.GetComponent<GunModule>().Data.ModuleType == type;
+    }
+
+    public override void ReDraw()
+    {
+        throw new System.NotImplementedException();
     }
 }

@@ -39,12 +39,8 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
     protected BaseItem placedItem;
     private bool isPointerOverCell;
     public BaseItem PlacedItem => placedItem;
-    
-    public UnityEvent OnItemPlaced = new ();
-    public UnityEvent OnItemTaked = new ();
-    
 
-    private void Awake()
+    protected virtual void Awake()
     {
         InventoryController = FindObjectOfType(typeof(InventoryController)) as InventoryController;
     }
@@ -52,6 +48,20 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
     protected virtual bool CanInsertIntoSlot()
     {
         return false;
+    }
+
+    public abstract void ReDraw();
+    
+    public void DrawItem()
+    {
+        if (placedItem == null) return;
+        var rectTransform = placedItem.gameObject.GetComponent<RectTransform>();
+        placedItem.gameObject.SetActive(true);
+        rectTransform.SetParent(GetComponent<RectTransform>());
+        rectTransform.anchoredPosition = new Vector2(0,0);
+        placedItem.GetComponent<RectTransform>().sizeDelta = placedItem.OnAwakeRectTransformSize;
+        placedItem.GetComponent<RectTransform>().localScale = placedItem.OnAwakeRectTransformScale;
+        ChangeItemSize(placedItem.gameObject.GetComponent<RectTransform>(),GetComponent<RectTransform>());
     }
     
     public void Update()
@@ -77,7 +87,7 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
     public void PlaceNullItem()
     {
         placedItem = null;
-        
+        ReDraw();
     }
 
     public abstract void GiveItem();

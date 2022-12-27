@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(BaseItem))]
+[RequireComponent(typeof(Wearable))]
 public class Clothes : MonoBehaviour
 {
     [SerializeField] private ClothData data;
@@ -22,7 +23,7 @@ public class Clothes : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    private void Awake()
+    private void Start()
     {
         inventory = new InventoryState(data.InventorySize);
         baseItem = gameObject.GetComponent<BaseItem>();
