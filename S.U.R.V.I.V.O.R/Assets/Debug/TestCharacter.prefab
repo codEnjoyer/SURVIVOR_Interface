@@ -113,3 +113,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initiative: 10
   speedInFightScene: 10
+  sprite: {fileID: 21300000, guid: 89ff57b97afb46b4998ab4cfd8ace0e1, type: 3}
+  firstName: "\u0418\u0432\u0430\u043D"
+  surname: "\u0418\u0432\u0430\u043D\u043E\u0432"

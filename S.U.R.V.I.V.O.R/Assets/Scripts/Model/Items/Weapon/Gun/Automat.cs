@@ -1,26 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Model.GameEntity;
+using Model.GameEntity.Skills;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 [RequireComponent(typeof(BaseItem))]
-public class Automat: MonoBehaviour, IGun
+public class Automat : Gun
 {
     [SerializeField] private GunData data;
-    [SerializeField] private Magazine currentMagazine;
-    [SerializeField] private List<GunModule> gunModule;
+    
+    public override GunData Data => data;
 
-    public bool IsFirstGun => true;
-    public GunData Data => data;
-    public ICollection<GunModule> GunModules => gunModule;
-    public float AttackDistance => 100;
-
-    public void Attack(List<BodyPart> targets, float distance, Skills skills)
+    public override Magazine Reload(Magazine magazine)
     {
-        throw new NotImplementedException();
+        if (currentMagazine == null)
+        {
+            currentMagazine = magazine;
+            return null;
+        }
+
+        var result = currentMagazine;
+        currentMagazine = magazine;
+        return result;
     }
-    public Magazine Reload(Magazine magazine)
+
+    public override void Attack(List<BodyPart> targets, float distance, Skills skills)
     {
         throw new NotImplementedException();
     }
 }
-

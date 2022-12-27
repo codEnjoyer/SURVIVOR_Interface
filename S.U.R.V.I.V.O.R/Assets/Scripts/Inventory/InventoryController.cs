@@ -5,11 +5,13 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class InventoryController : MonoBehaviour
 {
-    [HideInInspector] private ItemGrid selectedItemGrid;
+    public static InventoryController Instance { get; private set; }
+    private ItemGrid selectedItemGrid;
     public ItemGrid SelectedItemGrid
     {
         get => selectedItemGrid;
@@ -20,8 +22,42 @@ public class InventoryController : MonoBehaviour
         }
     }
 
-    public BaseItem selectedItem;
+    private BaseItem selectedItem;
 
+    public BaseItem SelectedItem
+    {
+        get => selectedItem;
+        set
+        {
+            if (selectedItem != null)//Вещь на курсоре есть
+            {
+                switch (value)
+                {
+                    case null://Кладем вещь с курсора в ячейку
+                        selectedItem.GetComponent<Image>().raycastTarget = true;
+                        break;
+                    case not null://Меняем вещи местами
+                        selectedItem.GetComponent<Image>().raycastTarget = true;
+                        value.GetComponent<Image>().raycastTarget = false;
+                        break;
+                }
+            }
+            else
+            {
+                switch (value)//Вещи на курсоре нет
+                {
+                    case null://Ничего не происходит
+                        break;
+                    case not null://Берем вещь из ячейки
+                        value.GetComponent<Image>().raycastTarget = false;
+                        break;
+                }
+            }
+
+            selectedItem = value;
+        }
+    }
+    
     private BaseItem overlapItem;
     private RectTransform rectTransform;
     
@@ -30,17 +66,22 @@ public class InventoryController : MonoBehaviour
     private InventoryHighlight inventoryHighlight;
     private BaseItem itemToHighlight;
     private Vector2Int? previousPosition;
-    public ItemGrid itemgridtotest;
     public bool IsPointerUnderInventory;
 
     private void Awake()
     {
-        inventoryHighlight = GetComponent<InventoryHighlight>();
+        if (Instance == null)
+        {
+            Instance = this;
+            inventoryHighlight = GetComponent<InventoryHighlight>();
+        }
+        else if (Instance == this)
+            Destroy(gameObject);
     }
 
     private void Update()
     {
-        if (selectedItem != null)
+        if (SelectedItem != null)
             rectTransform.position = Input.mousePosition;
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -60,9 +101,10 @@ public class InventoryController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && IsPointerUnderInventory)
         {
-            var tileGridPosition = GetTileGridPosition();
+            var mousePosition = Input.mousePosition;
+            var tileGridPosition = GetTileGridPosition(mousePosition);
 
-            if (selectedItem == null)
+            if (SelectedItem == null)
             {
                 PickUpItem(tileGridPosition);
             }
@@ -75,37 +117,38 @@ public class InventoryController : MonoBehaviour
         HandleHighlight();
     }
 
-    public void PickUpItem(BaseItem item)
+    public void PickUpItemFromSpecialCell(BaseItem item)
     {
-        selectedItem = item;
+        SelectedItem = item;
         ChangeRectTransform();
     }
-
+    
+    
     private void ChangeRectTransform()
     {
-        if (selectedItem == null) return;
-        rectTransform = selectedItem.GetComponent<RectTransform>();
+        if (SelectedItem == null) return;
+        rectTransform = SelectedItem.GetComponent<RectTransform>();
         rectTransform.SetParent(canvasTransform);
     }
     
     private void PickUpItem(Vector2Int tileGridPosition)
     {
-        selectedItem = selectedItemGrid.PickUpItem(tileGridPosition.x, tileGridPosition.y);
+        SelectedItem = selectedItemGrid.PickUpItem(tileGridPosition.x, tileGridPosition.y);
         ChangeRectTransform();
     }
 
     private void PlaceItem(Vector2Int tileGridPosition)
     {
-        var complete = selectedItemGrid.PlaceItem(selectedItem, tileGridPosition.x, tileGridPosition.y,
+        var complete = selectedItemGrid.PlaceItem(SelectedItem, tileGridPosition.x, tileGridPosition.y,
             ref overlapItem);
         if (complete)
         {
-            selectedItem = null;
+            SelectedItem = null;
             if (overlapItem != null)
             {
-                selectedItem = overlapItem;
+                SelectedItem = overlapItem;
                 overlapItem = null;
-                rectTransform = selectedItem.GetComponent<RectTransform>();
+                rectTransform = SelectedItem.GetComponent<RectTransform>();
                 rectTransform.SetAsLastSibling();
             }
         }
@@ -114,22 +157,23 @@ public class InventoryController : MonoBehaviour
     private void ThrowItemAtLocation() // Перемещение предмета в инвентарь локации при нажатии на пустое пространство
     {
         var locationItemGrid = GameObject.FindGameObjectWithTag("LocationItemGrid").GetComponent<ItemGrid>();
-        var positionOnGrid = locationItemGrid.FindSpaceForObject(selectedItem);
-        locationItemGrid.PlaceItem(selectedItem, positionOnGrid.Value.x, positionOnGrid.Value.y);
-        selectedItem = null;
+        var positionOnGrid = locationItemGrid.FindSpaceForObject(SelectedItem);
+        locationItemGrid.PlaceItem(SelectedItem, positionOnGrid.Value.x, positionOnGrid.Value.y);
+        SelectedItem = null;
     }
 
     private void RotateItem()
     {
-        if (selectedItem == null) return;
-        selectedItem.Rotated();
+        if (SelectedItem == null) return;
+        SelectedItem.Rotated();
     }
 
     private void HandleHighlight()
     {
-        var positionOnGrid = GetTileGridPosition();
+        var mousePosition = Input.mousePosition;
+        var positionOnGrid = GetTileGridPosition(mousePosition);
         if (previousPosition == positionOnGrid) return;
-        if (selectedItem == null)
+        if (SelectedItem == null)
         {
             itemToHighlight = selectedItemGrid.GetItem(positionOnGrid.x, positionOnGrid.y);
             if (itemToHighlight != null)
@@ -146,19 +190,18 @@ public class InventoryController : MonoBehaviour
         else
         {
             inventoryHighlight.Show(selectedItemGrid.BoundryCheck(positionOnGrid.x, positionOnGrid.y,
-                selectedItem.Width, selectedItem.Height));
-            inventoryHighlight.SetSize(selectedItem);
-            inventoryHighlight.SetPosition(selectedItemGrid, selectedItem, positionOnGrid.x, positionOnGrid.y);
+                SelectedItem.Width, SelectedItem.Height));
+            inventoryHighlight.SetSize(SelectedItem);
+            inventoryHighlight.SetPosition(selectedItemGrid, SelectedItem, positionOnGrid.x, positionOnGrid.y);
         }
     }
 
-    private Vector2Int GetTileGridPosition()
+    private Vector2Int GetTileGridPosition(Vector3 mousePosition)
     {
-        var mousePosition = Input.mousePosition;
-        if (selectedItem != null)
+        if (SelectedItem != null)
         {
-            mousePosition.x -= (selectedItem.Width - 1) * ItemGrid.TileSize / 2;
-            mousePosition.y += (selectedItem.Height - 1) * ItemGrid.TileSize / 2;
+            mousePosition.x -= (SelectedItem.Width - 1) * ItemGrid.TileSize / 2;
+            mousePosition.y += (SelectedItem.Height - 1) * ItemGrid.TileSize / 2;
         }
 
         return selectedItemGrid.GetTileGridPosition(mousePosition);
@@ -166,10 +209,10 @@ public class InventoryController : MonoBehaviour
 
     public void AddItemToInventory(BaseItem item)
     {
-        if (selectedItem != null) return;
+        if (SelectedItem != null) return;
         CreateItem(item);
-        var itemToInsert = selectedItem;
-        selectedItem = null;
+        var itemToInsert = SelectedItem;
+        SelectedItem = null;
         InsertItem(itemToInsert);
         selectedItemGrid = null;
     }
@@ -187,11 +230,11 @@ public class InventoryController : MonoBehaviour
 
     private void CreateItem(BaseItem item)
     {
-        if (selectedItem != null) return;
+        if (SelectedItem != null) return;
         var inventoryItem = Instantiate(item);
-        selectedItem = inventoryItem;
+        SelectedItem = inventoryItem;
         rectTransform = inventoryItem.GetComponent<RectTransform>();
         rectTransform.SetParent(canvasTransform);
-        inventoryItem.Set(inventoryItem.ItemData);
+        inventoryItem.Set(inventoryItem.Data);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Extension;
 using Graph_and_Map;
 using Player.GroupMovement.GroupMovementStates;
 using UnityEngine;
@@ -20,8 +21,8 @@ namespace Player.GroupMovement
         [SerializeField] private GameObject firstTurnObject;
         [SerializeField] private GameObject secondTurnObject;
         [SerializeField] private GameObject thirdTurnObject;
-        [SerializeField] private Node currentNode;
 
+        private Node currentNode;
         private LineRenderer firstTurnObjectLineRenderer;
         private LineRenderer secondTurnObjectLineRenderer;
         private LineRenderer thirdTurnObjectLineRenderer;
@@ -32,8 +33,18 @@ namespace Player.GroupMovement
         private const float Delta = 0.1f;
         private float progress;
         private Queue<Node> way = new();
-        
-        public Node CurrentNode => currentNode;
+
+        public Node CurrentNode
+        {
+            get => currentNode;
+            private set
+            {
+                currentNode = value;
+                LocationChange?.Invoke(currentNode.Location.Data.LocationName);
+            }
+        }
+
+        public event Action<string> LocationChange;
 
         private List<Node> GetPath() => PathFinder.FindShortestWay(currentNode, DotGraph.Instance.GetNearestNode());
 
@@ -50,14 +61,14 @@ namespace Player.GroupMovement
             if (IsNearly())
             {
                 currentNode = targetNode;
-                LocationCahnge?.Invoke(currentNode.GetComponent<Location>().Data.LocationName);
+                LocationChange?.Invoke(currentNode.Location.Data.LocationName);
                 progress = 0;
                 if (way.Count == 0 || group.CurrentOnGlobalMapGroupEndurance == 0)
                     movementSm.ChangeState(Sleeping);
                 else
                 {
                     targetNode = way.Dequeue();
-                    group.CurrentOnGlobalMapGroupEndurance -= 1;
+                    group.SetCurrentOnGlobalMapGroupEndurance(group.CurrentOnGlobalMapGroupEndurance - 1);
                 }
             }
         }
@@ -68,7 +79,7 @@ namespace Player.GroupMovement
             var targetPos = targetNode.PositionIn2D;
             return Vector2.Distance(curPos, targetPos) <= Delta;
         }
-        
+
         public void DrawPath()
         {
             var path = GetPath();
@@ -164,7 +175,7 @@ namespace Player.GroupMovement
             if (movementSm.CurrentState == Sleeping)
                 movementSm.ChangeState(WaitingTarget);
         }
-        
+
         #region MonoBehaviourCallBack
 
         private void Awake()
@@ -185,6 +196,7 @@ namespace Player.GroupMovement
 
         private void Start()
         {
+            currentNode = Game.Instance.StartNode;
             if (currentNode == null)
                 Debug.Log("Нет стартовой ноды!");
             else
@@ -210,7 +222,5 @@ namespace Player.GroupMovement
         private void FixedUpdate() => movementSm.CurrentState.FixedUpdate();
 
         #endregion
-        
-        public event Action<string> LocationCahnge;
     }
 }

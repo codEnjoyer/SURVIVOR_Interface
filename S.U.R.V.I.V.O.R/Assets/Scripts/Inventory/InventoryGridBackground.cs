@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class InventoryGridBackground : MonoBehaviour
 {
-    private List<Transform> listSlots= new List<Transform>();
+    private List<Transform> listSlots = new List<Transform>();
+
     public void DrawBackground(ItemGrid itemGrid)
     {
         var slot = transform.Find("Slot");
@@ -14,7 +15,7 @@ public class InventoryGridBackground : MonoBehaviour
 
         if (listSlots.Count > 0)
             DestroyAllSlots();
-        
+
         for (int y = 0; y < itemGrid.GridSizeHeight; y++)
         {
             for (int x = 0; x < itemGrid.GridSizeWidth; x++)
@@ -26,17 +27,18 @@ public class InventoryGridBackground : MonoBehaviour
         }
 
         GetComponent<GridLayoutGroup>().cellSize = new Vector2(ItemGrid.TileSize, ItemGrid.TileSize);
-        GetComponent<RectTransform>().sizeDelta = new Vector2(itemGrid.GridSizeWidth,  itemGrid.GridSizeHeight) * ItemGrid.TileSize;
+        GetComponent<RectTransform>().sizeDelta =
+            new Vector2(itemGrid.GridSizeWidth, itemGrid.GridSizeHeight) * ItemGrid.TileSize;
         GetComponent<RectTransform>().anchoredPosition = itemGrid.GetComponent<RectTransform>().anchoredPosition;
     }
-    
+
     private void DestroyAllSlots()
     {
         foreach (var slot in listSlots)
         {
             Destroy(slot.gameObject);
         }
-        
+
         listSlots.Clear();
     }
 }

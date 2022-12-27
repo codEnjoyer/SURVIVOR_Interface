@@ -3,15 +3,17 @@ using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(BaseItem))]
+[RequireComponent(typeof(Wearable))]
 public class Clothes : MonoBehaviour
 {
     [SerializeField] private ClothData data;
+    [SerializeField] private InventoryState inventory;
+    
     private BaseItem baseItem;
-    [SerializeField]
-    private InventoryState inventory;
     public float CurrentArmor { get; private set; }
 
     public InventoryState Inventory => inventory;
+    public ClothData Data => data;
 
     public float TotalWeight => baseItem.Weight + inventory.GetItems.Sum(item => item.Weight);
 
@@ -21,7 +23,7 @@ public class Clothes : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    private void Awake()
+    private void Start()
     {
         inventory = new InventoryState(data.InventorySize);
         baseItem = gameObject.GetComponent<BaseItem>();

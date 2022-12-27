@@ -40,6 +40,14 @@ public static class AI
                     return new Decision(FightState.FightPhase, oppObj);
             }
         }
+        if(StateController.AvailablePhase[FightState.MovePhase])
+        {
+            foreach(var oppObj in opponents)
+            {
+                if(TryGoToOpponent(oppObj))
+                    return new Decision(FightState.MovePhase);
+            }
+        }
         return new Decision(FightState.EndTurnPhase);
     }
 
@@ -50,5 +58,31 @@ public static class AI
         return NodesNav.TryFindPath(NodesNav.GetNearestNode(currentCharacterPos).GetComponent<FightNode>(),
             NodesNav.GetNearestNodeNearEnemy(oppObj, oppObjPos
             + Vector3.ClampMagnitude(currentCharacterPos - oppObjPos, 0.2f)));
+    }
+
+    private static bool TryGoToOpponent(GameObject oppObj)
+    {
+        var currentCharacterPos = CurrentCharacterObj.transform.position;
+        var directionToOpp = Vector3.ClampMagnitude((oppObj.transform.position 
+            - currentCharacterPos) * 10,
+            NodesNav.innerRadius * 2 * CurrentCharacterObj.GetComponent<FightCharacter>().RemainingEnergy);
+        
+        var searchPoint = currentCharacterPos + directionToOpp;
+        var colliders = Physics.OverlapSphere(searchPoint, NodesNav.innerRadius * 6)
+            .Where(c => c.transform.GetComponent<FightNode>() && 
+                    NodesNav.AvailableNodes.ContainsKey(c.transform.GetComponent<FightNode>()))
+            .OrderBy(c => Vector3.Distance(searchPoint, c.transform.position))
+            .ToList();
+
+        foreach(var collider in colliders)
+        {
+            var isPathFounded = NodesNav.TryFindPath(
+                NodesNav.GetNearestNode(currentCharacterPos).GetComponent<FightNode>(),
+                collider.transform.gameObject.GetComponent<FightNode>());
+            if (isPathFounded)
+                return true;
+        }
+        return false;
+
     }
 }

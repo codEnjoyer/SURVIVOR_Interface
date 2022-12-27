@@ -5,7 +5,7 @@ using UnityEngine;
 public class FightChance
 {
     [SerializeField] private Fight fight;
-    [SerializeField] private int weightChance = 1;
+    [SerializeField] [Min(1)] private int weightChance = 1;
     
     public Fight Fight => fight;
     public int WeightChance => weightChance;
