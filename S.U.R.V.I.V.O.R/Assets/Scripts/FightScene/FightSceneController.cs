@@ -137,7 +137,7 @@ public class FightSceneController : MonoBehaviour
     private void CreateCharactersList()
     {
         var data = FightSceneLoader.CurrentData;
-        foreach (var entity in data.group)
+        foreach (var entity in data.ally)
         {
             var obj = Instantiate(characterPrefab, new Vector3(0,0,0), Quaternion.identity);
             var objHeight = obj.GetComponent<MeshRenderer>().bounds.size.y;

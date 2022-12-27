@@ -10,4 +10,12 @@ public class Equipable : MonoBehaviour, IContextMenuAction
     {
         Debug.Log("Equip");
     }
+
+    public string ButtonText { get; }
+    public void OnButtonClickAction(Vector2 mousePosition)
+    {
+        throw new NotImplementedException();
+    }
+
+    public event Action<BaseItem> ItemPickedUp;
 }

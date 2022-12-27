@@ -1,6 +1,9 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Model.GameEntity;
 using Model.GameEntity.Skills;
+using UnityEngine;
 
 public class Character : Entity
 {
