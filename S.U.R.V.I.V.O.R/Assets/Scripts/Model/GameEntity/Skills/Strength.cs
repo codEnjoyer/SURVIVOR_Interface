@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Model.GameEntity.Skills
 {
-    public class Strength : Skill, IDrawableSkillLevel
+    public class Strength : Skill, IDrawableSkill
     {
         class StrengthLevel
         {
