@@ -55,7 +55,12 @@ public class Character : Entity
     }
     
     public MeleeWeapon MeleeWeapon { get; set; }
-    public readonly Skills skills = new Skills();
+    public readonly Skills skills;
+
+    public Character()
+    {
+        skills = new Skills(this);
+    }
 
     public event Action OnGunsChanged; 
 
