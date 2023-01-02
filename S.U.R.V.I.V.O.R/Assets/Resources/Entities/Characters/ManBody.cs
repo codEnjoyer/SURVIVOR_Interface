@@ -34,7 +34,7 @@ public class ManBody : Body, IWearClothes
         Hunger = maxHunger;
         Water = maxWater;
         MaxCriticalLoses = bodyParts.Count;
-        
+
         wearClothesBodyPart = bodyParts.OfType<IWearClothes>().ToArray();
     }
 
@@ -141,31 +141,34 @@ public class ManBody : Body, IWearClothes
         var clothes = GetClothes();
         foreach (var cloth in clothes)
         {
-            if (cloth != null && cloth.Inventory != null && cloth.Inventory.InsertItem(itemToPlace))    
-            {
+            if (cloth.Inventory.InsertItem(itemToPlace))
                 return true;
-            }
         }
-        if (!LocationInventory.Instance.LocationInventoryGrid.InsertItem(itemToPlace)) Object.Destroy(itemToPlace);
+
+        if (LocationInventory.Instance.LocationInventoryGrid.InsertItem(itemToPlace))
+            return true;
+        Object.Destroy(itemToPlace);
         return false;
     }
 
     public bool Wear(Clothes clothesToWear)
     {
-        var result = wearClothesBodyPart.Any(x => x.Wear(clothesToWear));
-        WearChanged?.Invoke(clothesToWear.Data.ClothType);
-        return result;
+        var isSuccess = wearClothesBodyPart.Any(x => x.Wear(clothesToWear));
+        if (isSuccess) WearChanged?.Invoke(clothesToWear.Data.ClothType);
+        return isSuccess;
     }
-    
+
 
     public Clothes UnWear(ClothType clothType)
     {
-        WearChanged?.Invoke(clothType);
         foreach (var bodyPart in wearClothesBodyPart)
         {
             var clothes = bodyPart.UnWear(clothType);
             if (clothes is not null)
+            {
+                WearChanged?.Invoke(clothType);
                 return clothes;
+            }
         }
 
         return null;
@@ -176,10 +179,7 @@ public class ManBody : Body, IWearClothes
         var clothes = new List<Clothes>();
         foreach (var bodyPart in wearClothesBodyPart)
         {
-            foreach (var cloth in bodyPart.GetClothes())
-            {
-                clothes.Add(cloth);
-            }
+            clothes.AddRange(bodyPart.GetClothes());
         }
 
         return clothes.Distinct().Where(x => x is not null);

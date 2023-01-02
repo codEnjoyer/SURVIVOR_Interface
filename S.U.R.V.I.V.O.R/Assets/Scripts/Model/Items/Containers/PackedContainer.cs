@@ -9,6 +9,7 @@ public class PackedContainer : MonoBehaviour
 
     public IEnumerable<BaseItem> Unpack()
     {
+        GetComponent<BaseItem>().Destroy();
         return data.PackedItems;
     }
 }
