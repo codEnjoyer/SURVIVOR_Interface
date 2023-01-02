@@ -11,9 +11,11 @@ public class Game: MonoBehaviour
     [SerializeField] private List<Group> groups;
     [SerializeField] private Group chosenGroup;
     [SerializeField] private Node startNode;
+    [SerializeField] private Canvas mainCanvas;
     public event Action<Group, Group> ChosenGroupChange;
     public Group ChosenGroup => chosenGroup;
     public Node StartNode => startNode;
+    public Canvas MainCanvas => mainCanvas;
     public IEnumerable<Group> Group => groups;
     private void SetChosenGroup(Group newGroup)
     {

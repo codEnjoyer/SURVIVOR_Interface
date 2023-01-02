@@ -13,22 +13,27 @@ public class Unpackable : MonoBehaviour, IContextMenuAction
     private PackedContainer packedContainer;
 
     private InventoryController inventoryController;
-    
+
     public void Awake()
     {
         ButtonText = "Распаковать";
         packedContainer = GetComponent<PackedContainer>();
     }
+
     public void OnButtonClickAction(Vector2 mousePosition)
     {
         var itemOwner = packedContainer.GetComponent<BaseItem>().ItemOwner;
-        foreach (var packed in packedContainer.Unpack())
+        var unPackedItems = packedContainer.Unpack();
+        
+        foreach (var packed in unPackedItems)
         {
-            if (!itemOwner.body.PlaceItemToInventory(Instantiate(packed).GetComponent<BaseItem>()))
+            var isSuccess = itemOwner.body.PlaceItemToInventory(Instantiate(packed));
+
+            if (!isSuccess)
             {
-                Debug.Log($"Вам некуда положить один из предметов, получившихся в результате распаковки, он был уничтожен");
+                Debug.Log(
+                    $"Вам некуда положить один из предметов, получившихся в результате распаковки, он был уничтожен");
             }
-            
         }
     }
 }

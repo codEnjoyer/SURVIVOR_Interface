@@ -12,7 +12,7 @@ public class BaseItem : MonoBehaviour
     public int OnGridPositionY { get; set; }
 
     public InventoryGrid InventoryGrid => transform.GetComponentInParent<InventoryGrid>();
-    
+
     public Character ItemOwner { get; set; }
     
     public Vector3 OnAwakeRectTransformSize { get; set; }
@@ -35,23 +35,26 @@ public class BaseItem : MonoBehaviour
         
         gameObject.AddComponent<Image>().sprite = data.Icon;
         gameObject.GetComponent<Image>().raycastTarget = false;
+        
+        var rt = gameObject.GetComponent<RectTransform>();
+        var scaleFactor = Game.Instance.MainCanvas.scaleFactor;
+        var size = new Vector2(data.Size.Width * InventoryGrid.TileSize * scaleFactor,
+            data.Size.Height * InventoryGrid.TileSize * scaleFactor);
+        rt.sizeDelta = size;
+        OnAwakeRectTransformScale = rt.localScale;
+        OnAwakeRectTransformSize = rt.sizeDelta;
     }
-
-    public void Set(BaseItemData itemData)
-     {
-         var rt = gameObject.GetComponent<RectTransform>();
-         var scaleFactor = GetComponentInParent<Canvas>().scaleFactor;
-         var size = new Vector2(itemData.Size.Width * InventoryGrid.TileSize * scaleFactor,
-             itemData.Size.Height * InventoryGrid.TileSize * scaleFactor);
-         rt.sizeDelta = size;
-         OnAwakeRectTransformScale = rt.localScale;
-         OnAwakeRectTransformSize = rt.sizeDelta;
-     }
-
+    
     public void Rotated()
     {
         rotated = !rotated;
         var rectTransform = GetComponent<RectTransform>();
         rectTransform.rotation = Quaternion.Euler(0, 0, rotated ? 90 : 0);
+    }
+
+    public void Destroy()
+    {
+        InventoryGrid.PickUpItem(this);
+        Destroy(gameObject);
     }
 }
