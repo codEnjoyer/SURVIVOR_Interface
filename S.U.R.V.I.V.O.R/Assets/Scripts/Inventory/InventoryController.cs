@@ -11,13 +11,13 @@ using Random = UnityEngine.Random;
 public class InventoryController : MonoBehaviour
 {
     public static InventoryController Instance { get; private set; }
-    private ItemGrid selectedItemGrid;
-    public ItemGrid SelectedItemGrid
+    private InventoryGrid selectedInventoryGrid;
+    public InventoryGrid SelectedInventoryGrid
     {
-        get => selectedItemGrid;
+        get => selectedInventoryGrid;
         set
         {
-            selectedItemGrid = value;
+            selectedInventoryGrid = value;
             inventoryHighlight.SetParent(value);
         }
     }
@@ -89,7 +89,7 @@ public class InventoryController : MonoBehaviour
             RotateItem();
         }
 
-        if (selectedItemGrid == null)
+        if (selectedInventoryGrid == null)
         {
             inventoryHighlight.Show(false);
             // if (selectedItem != null && Input.GetMouseButtonDown(0))
@@ -133,13 +133,13 @@ public class InventoryController : MonoBehaviour
     
     private void PickUpItem(Vector2Int tileGridPosition)
     {
-        SelectedItem = selectedItemGrid.PickUpItem(tileGridPosition.x, tileGridPosition.y);
+        SelectedItem = selectedInventoryGrid.PickUpItem(tileGridPosition.x, tileGridPosition.y);
         ChangeRectTransform();
     }
 
     private void PlaceItem(Vector2Int tileGridPosition)
     {
-        var complete = selectedItemGrid.PlaceItem(SelectedItem, tileGridPosition.x, tileGridPosition.y,
+        var complete = selectedInventoryGrid.PlaceItem(SelectedItem, tileGridPosition.x, tileGridPosition.y,
             ref overlapItem);
         if (complete)
         {
@@ -156,7 +156,7 @@ public class InventoryController : MonoBehaviour
 
     private void ThrowItemAtLocation() // Перемещение предмета в инвентарь локации при нажатии на пустое пространство
     {
-        var locationItemGrid = GameObject.FindGameObjectWithTag("LocationItemGrid").GetComponent<ItemGrid>();
+        var locationItemGrid = GameObject.FindGameObjectWithTag("LocationItemGrid").GetComponent<InventoryGrid>();
         var positionOnGrid = locationItemGrid.FindSpaceForObject(SelectedItem);
         locationItemGrid.PlaceItem(SelectedItem, positionOnGrid.Value.x, positionOnGrid.Value.y);
         SelectedItem = null;
@@ -175,12 +175,12 @@ public class InventoryController : MonoBehaviour
         if (previousPosition == positionOnGrid) return;
         if (SelectedItem == null)
         {
-            itemToHighlight = selectedItemGrid.GetItem(positionOnGrid.x, positionOnGrid.y);
+            itemToHighlight = selectedInventoryGrid.GetItem(positionOnGrid.x, positionOnGrid.y);
             if (itemToHighlight != null)
             {
                 inventoryHighlight.Show(true);
                 inventoryHighlight.SetSize(itemToHighlight);
-                inventoryHighlight.SetPosition(selectedItemGrid, itemToHighlight);
+                inventoryHighlight.SetPosition(selectedInventoryGrid, itemToHighlight);
             }
             else
             {
@@ -189,10 +189,10 @@ public class InventoryController : MonoBehaviour
         }
         else
         {
-            inventoryHighlight.Show(selectedItemGrid.BoundryCheck(positionOnGrid.x, positionOnGrid.y,
+            inventoryHighlight.Show(selectedInventoryGrid.BoundryCheck(positionOnGrid.x, positionOnGrid.y,
                 SelectedItem.Width, SelectedItem.Height));
             inventoryHighlight.SetSize(SelectedItem);
-            inventoryHighlight.SetPosition(selectedItemGrid, SelectedItem, positionOnGrid.x, positionOnGrid.y);
+            inventoryHighlight.SetPosition(selectedInventoryGrid, SelectedItem, positionOnGrid.x, positionOnGrid.y);
         }
     }
 
@@ -200,11 +200,11 @@ public class InventoryController : MonoBehaviour
     {
         if (SelectedItem != null)
         {
-            mousePosition.x -= (SelectedItem.Width - 1) * ItemGrid.TileSize / 2;
-            mousePosition.y += (SelectedItem.Height - 1) * ItemGrid.TileSize / 2;
+            mousePosition.x -= (SelectedItem.Width - 1) * InventoryGrid.TileSize / 2;
+            mousePosition.y += (SelectedItem.Height - 1) * InventoryGrid.TileSize / 2;
         }
 
-        return selectedItemGrid.GetTileGridPosition(mousePosition);
+        return selectedInventoryGrid.GetTileGridPosition(mousePosition);
     }
 
     public void AddItemToInventory(BaseItem item)
@@ -214,18 +214,18 @@ public class InventoryController : MonoBehaviour
         var itemToInsert = SelectedItem;
         SelectedItem = null;
         InsertItem(itemToInsert);
-        selectedItemGrid = null;
+        selectedInventoryGrid = null;
     }
 
     private void InsertItem(BaseItem itemToInsert)
     {
-        var positionOnGrid = selectedItemGrid.FindSpaceForObject(itemToInsert);
+        var positionOnGrid = selectedInventoryGrid.FindSpaceForObject(itemToInsert);
         if (positionOnGrid == null)
         {
             Destroy(itemToInsert);
             return;
         }
-        selectedItemGrid.PlaceItem(itemToInsert, positionOnGrid.Value.x, positionOnGrid.Value.y);
+        selectedInventoryGrid.PlaceItem(itemToInsert, positionOnGrid.Value.x, positionOnGrid.Value.y);
     }
 
     private void CreateItem(BaseItem item)

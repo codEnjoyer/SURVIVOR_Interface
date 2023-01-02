@@ -113,16 +113,6 @@ public class ManBody : Body, IWearClothes
         }
     }
 
-    public void WearOrUnWear(Clothes clothesToWear, bool shouldUnWear, out bool isSuccessful)
-    {
-        isSuccessful = false;
-        foreach (var clothes in wearClothesBodyPart)
-        {
-            clothes.WearOrUnWear(clothesToWear,shouldUnWear, out isSuccessful);
-        }
-        WearChanged?.Invoke(clothesToWear.Data.ClothType);
-    }
-
     public Clothes GetClothByType(ClothType type)
     {
         switch (type)
@@ -148,18 +138,39 @@ public class ManBody : Body, IWearClothes
 
     public bool PlaceItemToInventory(BaseItem itemToPlace)
     {
-        var clothes = GetClothes().Distinct();
+        var clothes = GetClothes();
         foreach (var cloth in clothes)
         {
-            if (cloth != null && cloth.Inventory!= null && cloth.Inventory.InsertItem(itemToPlace.GetComponent<BaseItem>()))
+            if (cloth != null && cloth.Inventory != null && cloth.Inventory.InsertItem(itemToPlace))    
             {
                 return true;
             }
         }
-        if (!LocationInventory.Instance.LocationItemGrid.InsertItem(itemToPlace)) Object.Destroy(itemToPlace);
+        if (!LocationInventory.Instance.LocationInventoryGrid.InsertItem(itemToPlace)) Object.Destroy(itemToPlace);
         return false;
     }
+
+    public bool Wear(Clothes clothesToWear)
+    {
+        var result = wearClothesBodyPart.Any(x => x.Wear(clothesToWear));
+        WearChanged?.Invoke(clothesToWear.Data.ClothType);
+        return result;
+    }
     
+
+    public Clothes UnWear(ClothType clothType)
+    {
+        WearChanged?.Invoke(clothType);
+        foreach (var bodyPart in wearClothesBodyPart)
+        {
+            var clothes = bodyPart.UnWear(clothType);
+            if (clothes is not null)
+                return clothes;
+        }
+
+        return null;
+    }
+
     public IEnumerable<Clothes> GetClothes()
     {
         var clothes = new List<Clothes>();
@@ -171,6 +182,6 @@ public class ManBody : Body, IWearClothes
             }
         }
 
-        return clothes;
+        return clothes.Distinct().Where(x => x is not null);
     }
 }

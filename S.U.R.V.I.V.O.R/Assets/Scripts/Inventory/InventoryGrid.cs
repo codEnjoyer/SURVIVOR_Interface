@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 
-public class ItemGrid : MonoBehaviour
+public class InventoryGrid : MonoBehaviour
 {
-    [SerializeField] private Size size;
+    [FormerlySerializedAs("size")] [SerializeField] private Size initializeSize;
     
     public InventoryState curInventoryState { get; private set; }
     
@@ -32,8 +33,8 @@ public class ItemGrid : MonoBehaviour
     {
         canvas = GetComponentInParent<Canvas>();
         rectTransform = GetComponent<RectTransform>();
-        curInventoryState = new InventoryState(size);
-        Init(size.Width, size.Height);
+        curInventoryState = new InventoryState(initializeSize);
+        Init(initializeSize.Width, initializeSize.Height);
     }
 
     private void Init(int width, int height)
@@ -87,11 +88,6 @@ public class ItemGrid : MonoBehaviour
 
     public bool PlaceItem(BaseItem item, int posX, int posY, ref BaseItem overlapItem)
     {
-        if (item.GetComponent<IContextMenuAction>() != null)
-        {
-            item.GetComponent<IContextMenuAction>().ItemPickedUp += OnItemPickedUp;
-        }
-        
         var res = curInventoryState.PlaceItem(item, posX, posY, ref overlapItem);
         if (res)
         {
@@ -111,11 +107,6 @@ public class ItemGrid : MonoBehaviour
 
     public void PlaceItem(BaseItem item, int posX, int posY)
     {
-        if (item.GetComponent<IContextMenuAction>() != null)
-        {
-            item.GetComponent<IContextMenuAction>().ItemPickedUp += OnItemPickedUp;
-        }
-        
         item.ItemOwner = InventoryOwner;
         var itemRectTransform = item.GetComponent<RectTransform>();
         itemRectTransform.SetParent(rectTransform);
@@ -132,7 +123,6 @@ public class ItemGrid : MonoBehaviour
     {
         instantiateItems.Remove(item); 
         curInventoryState.OnItemPickedUp(item);
-        item.GetComponent<IContextMenuAction>().ItemPickedUp -= OnItemPickedUp;
     }
     
     public Vector2 GetPositionOnGrid(BaseItem item, int posX, int posY) => 
@@ -142,14 +132,19 @@ public class ItemGrid : MonoBehaviour
     public BaseItem PickUpItem(int x, int y)
     {
         var item = curInventoryState.PickUpItem(x, y);
-        if (item.GetComponent<IContextMenuAction>() != null)
-        {
-            item.GetComponent<IContextMenuAction>().ItemPickedUp -= OnItemPickedUp;
-        }
         item.ItemOwner = null;
         Debug.Log(item.ItemOwner);
         instantiateItems.Remove(item);
         return item;
+    }
+    
+    public void PickUpItem(BaseItem item)
+    {
+        if (item is null)
+            return;
+        item.ItemOwner = null;
+        instantiateItems.Remove(item);
+        curInventoryState.PickUpItem(item.OnGridPositionX, item.OnGridPositionY);
     }
 
     public void Clear()
@@ -161,7 +156,22 @@ public class ItemGrid : MonoBehaviour
         instantiateItems?.Clear();
         curInventoryState?.Clear();
     }
-    public bool InsertItem(BaseItem itemToInsert) => curInventoryState.InsertItem(itemToInsert);
+    public bool InsertItem(BaseItem itemToInsert)
+    {
+        var isSuccsess = curInventoryState.InsertItem(itemToInsert);
+        if (!isSuccsess)
+            return false;
+        
+        itemToInsert.ItemOwner = InventoryOwner;
+        var itemRectTransform = itemToInsert.GetComponent<RectTransform>();
+        itemRectTransform.SetParent(rectTransform);
+        
+        var position = GetPositionOnGrid(itemToInsert, itemToInsert.OnGridPositionX, itemToInsert.OnGridPositionY);
+        itemRectTransform.localPosition = position;
+        
+        instantiateItems.Add(itemToInsert);
+        return true;
+    }
     public bool BoundryCheck(int posX, int posY, int width, int height) => curInventoryState.BoundryCheck(posX, posY, width, height);
 
     public Vector2Int? FindSpaceForObject(BaseItem itemToInsert) => curInventoryState.FindSpaceForObject(itemToInsert);

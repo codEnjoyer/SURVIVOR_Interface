@@ -7,7 +7,7 @@ public class PackedContainer : MonoBehaviour
 {
     [SerializeField] private PackedContainerData data;
 
-    public IEnumerable<GameObject> Unpack()
+    public IEnumerable<BaseItem> Unpack()
     {
         return data.PackedItems;
     }

@@ -19,7 +19,6 @@ public class Cookable : MonoBehaviour, IContextMenuAction
     }
     public void OnButtonClickAction(Vector2 mousePosition)
     {
-        ItemPickedUp?.Invoke(cookableFood.GetComponent<BaseItem>());
         var itemOwner = cookableFood.GetComponent<BaseItem>().ItemOwner;
         var foodAfterCook = itemOwner.Cook(cookableFood);
         foreach (var food in foodAfterCook)
@@ -30,6 +29,4 @@ public class Cookable : MonoBehaviour, IContextMenuAction
             }
         }
     }
-
-    public event Action<BaseItem> ItemPickedUp;
 }

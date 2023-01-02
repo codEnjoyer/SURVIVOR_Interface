@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -8,16 +9,30 @@ public class InventoryState
 {
     private Size size;
     private BaseItem[,] inventoryItemSlot;
-    private List<BaseItem> storedItems;
 
     public Size Size => size;
-    public IEnumerable<BaseItem> GetItems => storedItems;
+    public IEnumerable<BaseItem> GetItems
+    {
+        get
+        {
+            var array = new BaseItem[inventoryItemSlot.GetLength(0) * inventoryItemSlot.GetLength(1)];
+            var i = 0;
+            foreach (var item in inventoryItemSlot)
+            {
+                array[i] = item;
+                i++;
+            }
+
+            return array.Distinct().Where(x => x is not null);
+        }
+    }
+
+    public event Action<InventoryState> InvetoryStateChange;
 
     public InventoryState(Size size)
     {
         this.size = size;
         inventoryItemSlot = new BaseItem[size.Width, size.Height];
-        storedItems = new List<BaseItem>();
     }
     
     public BaseItem PickUpItem(int x, int y)
@@ -26,6 +41,7 @@ public class InventoryState
         if (returnedItem == null) return null;
         OnItemPickedUp(returnedItem);
         inventoryItemSlot[x, y] = null;
+        InvetoryStateChange?.Invoke(this);
         return returnedItem;
     }
     
@@ -61,14 +77,12 @@ public class InventoryState
 
         item.OnGridPositionX = posX;
         item.OnGridPositionY = posY;
-
-        storedItems.Add(item);
+        InvetoryStateChange?.Invoke(this);
     }
 
     public void OnItemPickedUp(BaseItem item)
     {
         RemoveGridReference(item);
-        storedItems.Remove(item);
     }
     
     private void RemoveGridReference(BaseItem item)
@@ -117,6 +131,9 @@ public class InventoryState
         {
             return false;
         }
+
+        itemToInsert.OnGridPositionX = positionOnGrid.Value.x;
+        itemToInsert.OnGridPositionY = positionOnGrid.Value.y;
         PlaceItem(itemToInsert, positionOnGrid.Value.x, positionOnGrid.Value.y);
         return true;
     }
@@ -150,7 +167,6 @@ public class InventoryState
 
     public void Clear()
     {
-        storedItems.Clear();
         for(var i = 0; i < inventoryItemSlot.GetLength(0); i++)
         for (int j = 0; j < inventoryItemSlot.GetLength(1); j++)
             inventoryItemSlot[i, j] = null;
