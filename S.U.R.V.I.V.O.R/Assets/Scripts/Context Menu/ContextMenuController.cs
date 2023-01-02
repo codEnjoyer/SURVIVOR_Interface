@@ -48,16 +48,10 @@ public class ContextMenuController : MonoBehaviour
         panel.transform.SetParent(canvas.transform);
         panel.transform.SetAsLastSibling();
         var inScreen = BoundaryCheckScreen(mousePosition);
-        if (!inScreen.Item1 && inScreen.Item2)
-            mousePosition.x -= panel.rect.width * scaleFactor;
-        else if (inScreen.Item1 && !inScreen.Item2)
+        if (!inScreen.Item2)
             mousePosition.y += panel.rect.height * scaleFactor;
-        else if (!inScreen.Item1 && !inScreen.Item2)
-        {
-            mousePosition.x -= panel.rect.width * scaleFactor;
-            mousePosition.y += panel.rect.height * scaleFactor;
-        }
-
+        mousePosition.x = Math.Clamp(mousePosition.x, 0, canvas.GetComponent<RectTransform>().rect.width - panel.rect.width);
+        
         panel.anchoredPosition = mousePosition / scaleFactor;
 
         foreach (var item in items)
