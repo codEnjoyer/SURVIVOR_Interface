@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44324037, g: 0.49248022, b: 0.57215136, a: 1}
+  m_IndirectSpecularColor: {r: 0.44323984, g: 0.4924798, b: 0.57215095, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1173,6 +1173,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
       propertyPath: size
+      value: 
+      objectReference: {fileID: 11400000, guid: ec5739c161e0b8b4abb019da6498ab19, type: 2}
+    - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
+      propertyPath: initializeSize
       value: 
       objectReference: {fileID: 11400000, guid: ec5739c161e0b8b4abb019da6498ab19, type: 2}
     - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
@@ -3326,6 +3330,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
       propertyPath: size
+      value: 
+      objectReference: {fileID: 11400000, guid: 135fb0ef0996a9a4e99b149ffccbcdea, type: 2}
+    - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
+      propertyPath: initializeSize
       value: 
       objectReference: {fileID: 11400000, guid: 135fb0ef0996a9a4e99b149ffccbcdea, type: 2}
     - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
@@ -7554,6 +7562,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 8b525eebaf435754f977cc620a355862, type: 2}
     - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
+      propertyPath: initializeSize
+      value: 
+      objectReference: {fileID: 11400000, guid: 8b525eebaf435754f977cc620a355862, type: 2}
+    - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
       propertyPath: inventoryGridBG
       value: 
       objectReference: {fileID: 1045959707}
@@ -8233,6 +8245,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 8b525eebaf435754f977cc620a355862, type: 2}
     - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
+      propertyPath: initializeSize
+      value: 
+      objectReference: {fileID: 11400000, guid: 8b525eebaf435754f977cc620a355862, type: 2}
+    - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
       propertyPath: inventoryGridBG
       value: 
       objectReference: {fileID: 227953143}
@@ -8759,7 +8775,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1729742934}
-  itemGrid: {fileID: 1725873114}
+  inventoryGrid: {fileID: 1725873114}
 --- !u!1001 &1427509601
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8773,6 +8789,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
       propertyPath: size
+      value: 
+      objectReference: {fileID: 11400000, guid: ec5739c161e0b8b4abb019da6498ab19, type: 2}
+    - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
+      propertyPath: initializeSize
       value: 
       objectReference: {fileID: 11400000, guid: ec5739c161e0b8b4abb019da6498ab19, type: 2}
     - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
@@ -9027,6 +9047,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
       propertyPath: size
+      value: 
+      objectReference: {fileID: 11400000, guid: 8b525eebaf435754f977cc620a355862, type: 2}
+    - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
+      propertyPath: initializeSize
       value: 
       objectReference: {fileID: 11400000, guid: 8b525eebaf435754f977cc620a355862, type: 2}
     - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
@@ -11001,6 +11025,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
       propertyPath: size
+      value: 
+      objectReference: {fileID: 11400000, guid: 8b525eebaf435754f977cc620a355862, type: 2}
+    - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
+      propertyPath: initializeSize
       value: 
       objectReference: {fileID: 11400000, guid: 8b525eebaf435754f977cc620a355862, type: 2}
     - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
@@ -14079,6 +14107,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 8b525eebaf435754f977cc620a355862, type: 2}
     - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
+      propertyPath: initializeSize
+      value: 
+      objectReference: {fileID: 11400000, guid: 8b525eebaf435754f977cc620a355862, type: 2}
+    - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
       propertyPath: inventoryGridBG
       value: 
       objectReference: {fileID: 2075775752}
@@ -14245,6 +14277,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
       propertyPath: size
+      value: 
+      objectReference: {fileID: 11400000, guid: 77257501f5d08e0488df00b817aba511, type: 2}
+    - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}
+      propertyPath: initializeSize
       value: 
       objectReference: {fileID: 11400000, guid: 77257501f5d08e0488df00b817aba511, type: 2}
     - target: {fileID: 6139962565968454366, guid: 8fd433874763936428da3d4bee0636ad, type: 3}

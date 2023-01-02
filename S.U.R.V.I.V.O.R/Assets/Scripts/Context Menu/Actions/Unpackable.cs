@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -20,16 +21,14 @@ public class Unpackable : MonoBehaviour, IContextMenuAction
     }
     public void OnButtonClickAction(Vector2 mousePosition)
     {
-        ItemPickedUp?.Invoke(packedContainer.GetComponent<BaseItem>());
         var itemOwner = packedContainer.GetComponent<BaseItem>().ItemOwner;
         foreach (var packed in packedContainer.Unpack())
         {
-            if (!itemOwner.body.PlaceItemToInventory(packed.GetComponent<BaseItem>()))
+            if (!itemOwner.body.PlaceItemToInventory(Instantiate(packed).GetComponent<BaseItem>()))
             {
                 Debug.Log($"Вам некуда положить один из предметов, получившихся в результате распаковки, он был уничтожен");
             }
+            
         }
     }
-
-    public event Action<BaseItem> ItemPickedUp;
 }

@@ -10,6 +10,8 @@ public class BaseItem : MonoBehaviour
     [FormerlySerializedAs("itemData")] [SerializeField] private BaseItemData data;
     public int OnGridPositionX { get; set; }
     public int OnGridPositionY { get; set; }
+
+    public InventoryGrid InventoryGrid => transform.GetComponentInParent<InventoryGrid>();
     
     public Character ItemOwner { get; set; }
     
@@ -39,8 +41,8 @@ public class BaseItem : MonoBehaviour
      {
          var rt = gameObject.GetComponent<RectTransform>();
          var scaleFactor = GetComponentInParent<Canvas>().scaleFactor;
-         var size = new Vector2(itemData.Size.Width * ItemGrid.TileSize * scaleFactor,
-             itemData.Size.Height * ItemGrid.TileSize * scaleFactor);
+         var size = new Vector2(itemData.Size.Width * InventoryGrid.TileSize * scaleFactor,
+             itemData.Size.Height * InventoryGrid.TileSize * scaleFactor);
          rt.sizeDelta = size;
          OnAwakeRectTransformScale = rt.localScale;
          OnAwakeRectTransformSize = rt.sizeDelta;

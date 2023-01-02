@@ -16,6 +16,4 @@ public class Equipable : MonoBehaviour, IContextMenuAction
     {
         throw new NotImplementedException();
     }
-
-    public event Action<BaseItem> ItemPickedUp;
 }

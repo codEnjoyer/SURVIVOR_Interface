@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Model.GameEntity
@@ -9,23 +10,30 @@ namespace Model.GameEntity
         }
 
         protected Dictionary<ClothType, Clothes> clothesDict;
-        
-        public void WearOrUnWear(Clothes clothesToWear, bool shouldUnWear, out bool isSuccessful)
+
+        public bool Wear(Clothes clothesToWear)
         {
-            if (clothesToWear == null)
-            {
-                isSuccessful = false;
-                return;
-            }
-        
-            if (clothesDict.ContainsKey(clothesToWear.Data.ClothType))
-            {
-                var valueToWear = shouldUnWear ? null : clothesToWear;
-                clothesDict[clothesToWear.Data.ClothType] = valueToWear;
-            }
-        
-            isSuccessful = true;
+            if (clothesToWear == null || !clothesDict.ContainsKey(clothesToWear.Data.ClothType)) 
+                return false;
+            
+            clothesDict[clothesToWear.Data.ClothType] = clothesToWear;
+            return true;
         }
+
+        public Clothes UnWear(ClothType clothType)
+        {
+            try
+            {
+                var removedClothes = clothesDict[clothType];
+                clothesDict[clothType] = null;
+                return removedClothes;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
         public IEnumerable<Clothes> GetClothes() => clothesDict.Values;
     }
 }

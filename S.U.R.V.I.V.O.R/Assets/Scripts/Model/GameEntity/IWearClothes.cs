@@ -4,7 +4,9 @@ namespace Model.GameEntity
 {
     public interface IWearClothes
     {
-        public void WearOrUnWear(Clothes clothesToWear, bool shouldUnWear, out bool isSuccessful);
+        public bool Wear(Clothes clothesToWear);
+        public Clothes UnWear(ClothType clothType);
+        
         public IEnumerable<Clothes> GetClothes();
         
     }

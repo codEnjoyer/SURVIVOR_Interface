@@ -19,11 +19,8 @@ public class Eatable : MonoBehaviour, IContextMenuAction
     }
     public void OnButtonClickAction(Vector2 mousePosition)
     {
-        ItemPickedUp?.Invoke(eatableFood.GetComponent<BaseItem>());
         var itemOwner = eatableFood.GetComponent<BaseItem>().ItemOwner;
         itemOwner.Eat(eatableFood);
         Debug.Log($"Вам некуда положить один из предметов, получившихся в результате готовки, он был уничтожен");
     }
-
-    public event Action<BaseItem> ItemPickedUp;
 }
