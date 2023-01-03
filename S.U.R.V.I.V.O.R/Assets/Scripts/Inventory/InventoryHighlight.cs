@@ -8,17 +8,17 @@ public class InventoryHighlight : MonoBehaviour
 
     public void SetSize(BaseItem targetItem)
     {
-        var size = new Vector2(targetItem.Width * ItemGrid.TileSize,
-            targetItem.Height * ItemGrid.TileSize);
+        var size = new Vector2(targetItem.Width * InventoryGrid.TileSize,
+            targetItem.Height * InventoryGrid.TileSize);
         highlighter.sizeDelta = size;
     }
 
-    public void SetPosition(ItemGrid targetGrid, BaseItem targetItem)
+    public void SetPosition(InventoryGrid targetGrid, BaseItem targetItem)
     {
         SetPosition(targetGrid, targetItem, targetItem.OnGridPositionX, targetItem.OnGridPositionY);
     }
 
-    public void SetPosition(ItemGrid targetGrid, BaseItem targetItem, int posX, int posY)
+    public void SetPosition(InventoryGrid targetGrid, BaseItem targetItem, int posX, int posY)
     {
         var position = targetGrid.GetPositionOnGrid(targetItem, posX, posY);
         highlighter.localPosition = position;
@@ -29,7 +29,7 @@ public class InventoryHighlight : MonoBehaviour
         highlighter.gameObject.SetActive(state);
     }
 
-    public void SetParent(ItemGrid targetGrid)
+    public void SetParent(InventoryGrid targetGrid)
     {
         if(targetGrid == null) return;
         highlighter.SetParent(targetGrid.GetComponent<RectTransform>());

@@ -15,7 +15,7 @@ public class Clothes : MonoBehaviour
     public InventoryState Inventory => inventory;
     public ClothData Data => data;
 
-    public float TotalWeight => baseItem.Weight + inventory.GetItems.Sum(item => item.Weight);
+    public float TotalWeight => baseItem.Weight + inventory.GetItems().Sum(item => item.Weight);
 
     public float CalculateBlockedDamage(DamageInfo damageInfo)
     {

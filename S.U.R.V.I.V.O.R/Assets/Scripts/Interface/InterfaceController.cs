@@ -14,8 +14,7 @@ public class InterfaceController : MonoBehaviour
     public PlayerLayerActive PlayerLayerActive { get; private set; }
 
     private State memoryState;
-
-    [SerializeField] private InterfaceGroupLogicController interfaceGroupLogicController;
+    
     [SerializeField] private GameObject mainInfoPanelLayer;
     [SerializeField] private GameObject groupButtonsLayer;
     [SerializeField] private GameObject groupInfoLayer;
@@ -24,8 +23,14 @@ public class InterfaceController : MonoBehaviour
     [SerializeField] private GameObject secondPlayerLayer;
     [SerializeField] private GameObject thirdPlayerLayer;
     [SerializeField] private GameObject fourthPlayerLayer;
-
-    public InterfaceGroupLogicController InterfaceGroupLogicController => interfaceGroupLogicController;
+    
+    
+    [SerializeField] private CharactersPlateLayerLogic charactersPlateLayerLogic;
+    private PlayerLayerLogic firstPlayerLayerLogic => firstPlayerLayer.GetComponent<PlayerLayerLogic>();
+    private PlayerLayerLogic secondPlayerLayerLogic => secondPlayerLayer.GetComponent<PlayerLayerLogic>();
+    private PlayerLayerLogic thirdfPlayerLayerLogic => thirdPlayerLayer.GetComponent<PlayerLayerLogic>();
+    private PlayerLayerLogic fourthPlayerLayerLogic => fourthPlayerLayer.GetComponent<PlayerLayerLogic>();
+    
     public GameObject MainInfoPanelLayer => mainInfoPanelLayer;
     public GameObject GroupButtonsLayer => groupButtonsLayer;
     public GameObject GroupInfoLayer => groupInfoLayer;
@@ -37,20 +42,16 @@ public class InterfaceController : MonoBehaviour
 
     public GameObject CurrentPlayerLayer { get; private set; }
 
-
-    void Awake()
+    private bool IsFirstFrameSkiped;
+    
+    public void Awake()
     {
         NothingActive = new NothingActive(this, interfaceStateMachine);
         CharacterPanelActive = new CharacterPanelActive(this, interfaceStateMachine);
         GroupLayerActive = new GroupLayerActive(this, interfaceStateMachine);
         PlayerLayerActive = new PlayerLayerActive(this, interfaceStateMachine);
         Selector.Instance.Activate();
-    }
-
-    private void Start()
-    {
-        SetActiveInterface(true);
-        SetActiveInterface(false);
+        InitializeInterface();
         interfaceStateMachine.Initialize(NothingActive);
     }
 
@@ -60,16 +61,27 @@ public class InterfaceController : MonoBehaviour
             interfaceStateMachine.ChangeState(NothingActive);
     }
 
-    private void SetActiveInterface(bool value)
+    private void InitializeInterface()
     {
-        MainInfoPanelLayer.SetActive(value);
-        GroupButtonsLayer.SetActive(value);
-        CharactersButtonsLayer.SetActive(value);
-        GroupInfoLayer.SetActive(value);
-        FirstPlayerLayer.SetActive(value);
-        //SecondPlayerLayer.SetActive(value);
-        //ThirdPlayerLayer.SetActive(value);
-        //FourthPlayerLayer.SetActive(value);
+        MainInfoPanelLayer.SetActive(true);
+        GroupButtonsLayer.SetActive(true);
+        CharactersButtonsLayer.SetActive(true);
+        GroupInfoLayer.SetActive(true);
+        
+        FirstPlayerLayer.SetActive(true);
+        SecondPlayerLayer.SetActive(true);
+        ThirdPlayerLayer.SetActive(true);
+        FourthPlayerLayer.SetActive(true);
+
+        MainInfoPanelLayer.SetActive(false);
+        GroupButtonsLayer.SetActive(false);
+        CharactersButtonsLayer.SetActive(false);
+        GroupInfoLayer.SetActive(false);
+        
+        FirstPlayerLayer.SetActive(false);
+        SecondPlayerLayer.SetActive(false);
+        ThirdPlayerLayer.SetActive(false);
+        FourthPlayerLayer.SetActive(false);
     }
 
     public void SetCharactersPanelActive()

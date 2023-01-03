@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1633925430698281986}
   - component: {fileID: 5140252250065058909}
-  - component: {fileID: -4594976966681356657}
   - component: {fileID: 2488022020709401235}
+  - component: {fileID: 6433104850600073937}
+  - component: {fileID: -4594976966681356657}
   m_Layer: 0
   m_Name: SchoolBackpack
   m_TagString: Untagged
@@ -47,18 +48,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: e966c8f116fdb8d4e94e09765e654c21, type: 2}
---- !u!114 &-4594976966681356657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6630877466564552865}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bf17f717442e2d4b91ee6b2417ae00a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2488022020709401235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,3 +61,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 4ffc5444555306540acb14e1c6424aec, type: 2}
+--- !u!114 &6433104850600073937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6630877466564552865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7661a9c963b5b1944a31d2d25e5e4379, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Action:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &-4594976966681356657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6630877466564552865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bf17f717442e2d4b91ee6b2417ae00a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

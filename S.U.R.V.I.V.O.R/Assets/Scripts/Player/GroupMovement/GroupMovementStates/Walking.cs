@@ -18,7 +18,7 @@
 
         public override void Exit()
         {
-            LocationInventory.Instance.LocationItemGrid.Clear();
+            LocationInventory.Instance.LocationInventoryGrid.Clear();
         }
     }
 }

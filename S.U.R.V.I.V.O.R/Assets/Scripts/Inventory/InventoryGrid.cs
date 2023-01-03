@@ -1,51 +1,58 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 
-public class ItemGrid : MonoBehaviour
+public class InventoryGrid : MonoBehaviour
 {
-    [SerializeField] private Size size;
-    
-    public InventoryState curInventoryState { get; private set; }
-    
-    public Character InventoryOwner { get; set; }
-    
-    private Canvas canvas;
+    [FormerlySerializedAs("size")] [SerializeField]
+    private Size initializeSize;
+
     [SerializeField] private InventoryGridBackground inventoryGridBG;
 
-    public InventoryGridBackground InventoryGridBg => inventoryGridBG;
+    private Canvas canvas;
+    private InventoryState curInventoryState;
 
     public const float TileSize = 40;
 
     private Vector2 positionOnGrid;
     private Vector2Int tileGridPosition;
 
-    private readonly List<BaseItem> instantiateItems = new List<BaseItem>();
-
     private RectTransform rectTransform;
 
+    private IEnumerable<BaseItem> storedItems = new List<BaseItem>();
     public int GridSizeWidth => curInventoryState.Size.Width;
     public int GridSizeHeight => curInventoryState.Size.Height;
+
+    public Character InventoryOwner { get; set; }
 
     private void Awake()
     {
         canvas = GetComponentInParent<Canvas>();
         rectTransform = GetComponent<RectTransform>();
-        curInventoryState = new InventoryState(size);
-        Init(size.Width, size.Height);
-    }
-
-    private void Init(int width, int height)
-    {
+        curInventoryState = new InventoryState(initializeSize);
         inventoryGridBG.DrawBackground(this);
-        rectTransform.sizeDelta = new Vector2(width * TileSize, height * TileSize);
+        rectTransform.sizeDelta =
+            new Vector2(initializeSize.Width * TileSize, initializeSize.Height * TileSize);
+        curInventoryState.PlaceItemEvent += OnPlaceItem;
+        curInventoryState.PickUpItemEvent += OnPickedItem;
     }
-
+    
     public void ChangeState(InventoryState inventoryState)
     {
+        if (curInventoryState != null)
+        {
+            curInventoryState.PlaceItemEvent -= OnPlaceItem;
+            curInventoryState.PickUpItemEvent -= OnPickedItem;
+            storedItems = curInventoryState.GetItems();
+        }
         curInventoryState = inventoryState;
-        GetComponent<RectTransform>().sizeDelta = new Vector2(inventoryState.Size.Width * TileSize, inventoryState.Size.Height  * TileSize);
+        curInventoryState.PlaceItemEvent += OnPlaceItem;
+        curInventoryState.PickUpItemEvent += OnPickedItem;
+        GetComponent<RectTransform>().sizeDelta =
+            new Vector2(inventoryState.Size.Width * TileSize, inventoryState.Size.Height * TileSize);
         RedrawGrid();
         inventoryGridBG.DrawBackground(this);
     }
@@ -53,23 +60,20 @@ public class ItemGrid : MonoBehaviour
     private void RedrawGrid()
     {
         DestroyAllItems();
-        
-        foreach (var item in curInventoryState.GetItems)
+
+        foreach (var item in curInventoryState.GetItems())
         {
-            instantiateItems.Add(item);
             item.gameObject.SetActive(true);
             var position = GetPositionOnGrid(item, item.OnGridPositionX, item.OnGridPositionY);
             item.GetComponent<RectTransform>().SetParent(transform);
             item.GetComponent<RectTransform>().localPosition = position;
         }
     }
-    
+
     private void DestroyAllItems()
     {
-        foreach (var item in instantiateItems)
+        foreach (var item in storedItems)
             item.gameObject.SetActive(false);
-
-        instantiateItems.Clear();
     }
 
     public Vector2Int GetTileGridPosition(Vector2 mousePosition)
@@ -87,23 +91,15 @@ public class ItemGrid : MonoBehaviour
 
     public bool PlaceItem(BaseItem item, int posX, int posY, ref BaseItem overlapItem)
     {
-        if (item.GetComponent<IContextMenuAction>() != null)
-        {
-            item.GetComponent<IContextMenuAction>().ItemPickedUp += OnItemPickedUp;
-        }
-        
         var res = curInventoryState.PlaceItem(item, posX, posY, ref overlapItem);
         if (res)
         {
             item.ItemOwner = InventoryOwner;
-            Debug.Log(item.ItemOwner);
             var itemRectTransform = item.GetComponent<RectTransform>();
             itemRectTransform.SetParent(rectTransform);
-        
+
             var position = GetPositionOnGrid(item, posX, posY);
             itemRectTransform.localPosition = position;
-            
-            instantiateItems.Add(item);  
         }
 
         return res;
@@ -111,64 +107,66 @@ public class ItemGrid : MonoBehaviour
 
     public void PlaceItem(BaseItem item, int posX, int posY)
     {
-        if (item.GetComponent<IContextMenuAction>() != null)
-        {
-            item.GetComponent<IContextMenuAction>().ItemPickedUp += OnItemPickedUp;
-        }
-        
         item.ItemOwner = InventoryOwner;
         var itemRectTransform = item.GetComponent<RectTransform>();
         itemRectTransform.SetParent(rectTransform);
-        
+
         var position = GetPositionOnGrid(item, posX, posY);
         itemRectTransform.localPosition = position;
-        
-        instantiateItems.Add(item);
+
 
         curInventoryState.PlaceItem(item, posX, posY);
     }
 
-    private void OnItemPickedUp(BaseItem item)
-    {
-        instantiateItems.Remove(item); 
-        curInventoryState.OnItemPickedUp(item);
-        item.GetComponent<IContextMenuAction>().ItemPickedUp -= OnItemPickedUp;
-    }
-    
-    public Vector2 GetPositionOnGrid(BaseItem item, int posX, int posY) => 
+    public Vector2 GetPositionOnGrid(BaseItem item, int posX, int posY) =>
         new(posX * TileSize + TileSize * item.Width / 2, -(posY * TileSize + TileSize * item.Height / 2));
 
 
     public BaseItem PickUpItem(int x, int y)
     {
         var item = curInventoryState.PickUpItem(x, y);
-        if (item.GetComponent<IContextMenuAction>() != null)
-        {
-            item.GetComponent<IContextMenuAction>().ItemPickedUp -= OnItemPickedUp;
-        }
-        item.ItemOwner = null;
-        Debug.Log(item.ItemOwner);
-        instantiateItems.Remove(item);
+        if (item is not null)
+            item.ItemOwner = null;
         return item;
     }
 
-    public void Clear()
+    public void PickUpItem(BaseItem item)
     {
-        foreach (var item in instantiateItems)
-        {
-            Destroy(item.gameObject);
-        }
-        instantiateItems?.Clear();
-        curInventoryState?.Clear();
+        if (item is null)
+            return;
+        item.ItemOwner = null;
+        curInventoryState.PickUpItem(item.OnGridPositionX, item.OnGridPositionY);
     }
+
+    public void DestroyItem(BaseItem item)
+    {
+        PickUpItem(item);
+        Destroy(item.gameObject);
+    }
+
+    public void Clear() => curInventoryState?.Clear();
+
     public bool InsertItem(BaseItem itemToInsert) => curInventoryState.InsertItem(itemToInsert);
-    public bool BoundryCheck(int posX, int posY, int width, int height) => curInventoryState.BoundryCheck(posX, posY, width, height);
+
+    public bool BoundryCheck(int posX, int posY, int width, int height) =>
+        curInventoryState.BoundryCheck(posX, posY, width, height);
 
     public Vector2Int? FindSpaceForObject(BaseItem itemToInsert) => curInventoryState.FindSpaceForObject(itemToInsert);
 
     public BaseItem GetItem(int x, int y) => curInventoryState.GetItem(x, y);
 
-    public IEnumerable<BaseItem> GetItems => curInventoryState.GetItems;
-    
+    public IEnumerable<BaseItem> GetItems() => curInventoryState.GetItems();
 
+    private void OnPlaceItem(BaseItem placedItem)
+    {
+        var position = GetPositionOnGrid(placedItem, placedItem.OnGridPositionX, placedItem.OnGridPositionY);
+        var rt = placedItem.GetComponent<RectTransform>();
+        rt.SetParent(transform);
+        rt.localPosition = position;
+    }
+
+    private void OnPickedItem(BaseItem pickedUpItem)
+    {
+        pickedUpItem.GetComponent<RectTransform>().SetParent(canvas.transform);
+    }
 }

@@ -13,10 +13,6 @@ namespace Interface.InterfaceStates
 
         public override void Enter()
         {
-            if (contr.CurrentPlayerLayer == contr.FirstPlayerLayer)
-            {
-                contr.InterfaceGroupLogicController.OnFirstPlayerLayerOpen.Invoke();
-            }
             Selector.Instance.DeActivate();
             memory = contr.CurrentPlayerLayer;
             memory.SetActive(true);

@@ -11,7 +11,8 @@ using UnityEngine.UI;
 public class PlayerLayerLogic : MonoBehaviour
 {
     public Character CurrentCharacter { get; set; }
-
+    [SerializeField] private int numberOfCharacter;
+    
     [SerializeField]
     private PlayerCharacteristicsPanel playerCharacteristicsPanel;
     [SerializeField]
@@ -22,8 +23,7 @@ public class PlayerLayerLogic : MonoBehaviour
     private GunInterfaceSet secondaryGunSet;
     [SerializeField]
     private GunInterfaceSet meleeWeaponSet;
-
-    private bool wasOpened;
+    
     
     [SerializeField] private Text nameTextBox;
     
@@ -35,9 +35,11 @@ public class PlayerLayerLogic : MonoBehaviour
     [SerializeField] private SpecialClothCell pantsCell;
     [SerializeField] private SpecialClothCell bootsCell;
 
-    public void OnFirstOpen()
+    public void Awake()
     {
-        wasOpened = true;
+        var x = Game.Instance.ChosenGroup.CurrentGroupMembers.ToArray()[numberOfCharacter];
+        CurrentCharacter = x;
+        
         var allCells = new List<SpecialClothCell>
         {
             hatCell,
@@ -61,7 +63,7 @@ public class PlayerLayerLogic : MonoBehaviour
 
         secondaryGunSet.CurrentCharacter = CurrentCharacter;
 
-        //nameTextBox.text = CurrentCharacter.FirstName;
+        nameTextBox.text = $"{CurrentCharacter.FirstName} {CurrentCharacter.Surname}";
     }
 
     private void SubscribeCharacterEvents()
@@ -74,13 +76,6 @@ public class PlayerLayerLogic : MonoBehaviour
     {        
         if (CurrentCharacter == null) return;
         CurrentCharacter.body.WearChanged -= OnWearChanged;
-        // CurrentCharacter.body.OnJacketChanged -= OnJacketChanged;
-        // CurrentCharacter.body.OnVestChanged -= OnVestChanged;
-        // CurrentCharacter.body.OnBackpackChanged -= OnBackpackChanged;
-        // CurrentCharacter.body.OnUnderwearChanged -= OnUnderwearChanged;
-        // CurrentCharacter.body.OnPantsChanged -= OnPantsChanged;
-        // CurrentCharacter.body.OnHatChanged -= OnHatChanged;
-        // CurrentCharacter.body.OnBootsChanged -= OnBootsChanged;
     }
     private void OnWearChanged(ClothType type)
     {
@@ -137,8 +132,6 @@ public class PlayerLayerLogic : MonoBehaviour
 
     public void OnEnable()
     {
-        if (!wasOpened)
-            OnFirstOpen();
         SubscribeCharacterEvents();
         PlaceAllItems();
     }
