@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Model.GameEntity.Health;
+using UnityEngine;
 
 namespace Model.GameEntity
 {
@@ -37,6 +38,7 @@ namespace Model.GameEntity
         public void LossBodyParts(BodyPart bodyPart)
         {
             bodyParts.Remove(bodyPart);
+            Debug.Log(bodyPart.Significance);
             currentCriticalLoses += bodyPart.Significance;
             if (currentCriticalLoses >= MaxCriticalLoses)
             {

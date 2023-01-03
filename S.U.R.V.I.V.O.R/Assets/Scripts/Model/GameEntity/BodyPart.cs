@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using Model.GameEntity.Health;
+using UnityEngine;
 
 namespace Model.GameEntity
 {
@@ -10,7 +11,7 @@ namespace Model.GameEntity
         public readonly BodyPathHealth health;
         private int maxHp;
         private float size;
-        private int significance;
+        private int significance = 10; // Temporary!!!
 
         public int MaxHp
         {
@@ -59,6 +60,7 @@ namespace Model.GameEntity
         protected void TakeDamage(float damage)
         {
             Hp -= damage;
+            Debug.Log(Hp);
             if (Hp <= 0)
             {
                 OnZeroHp?.Invoke(this);
