@@ -63,7 +63,7 @@ public class PlayerLayerLogic : MonoBehaviour
 
         secondaryGunSet.CurrentCharacter = CurrentCharacter;
 
-        //nameTextBox.text = CurrentCharacter.FirstName;
+        nameTextBox.text = $"{CurrentCharacter.FirstName} {CurrentCharacter.Surname}";
     }
 
     private void SubscribeCharacterEvents()
@@ -76,13 +76,6 @@ public class PlayerLayerLogic : MonoBehaviour
     {        
         if (CurrentCharacter == null) return;
         CurrentCharacter.body.WearChanged -= OnWearChanged;
-        // CurrentCharacter.body.OnJacketChanged -= OnJacketChanged;
-        // CurrentCharacter.body.OnVestChanged -= OnVestChanged;
-        // CurrentCharacter.body.OnBackpackChanged -= OnBackpackChanged;
-        // CurrentCharacter.body.OnUnderwearChanged -= OnUnderwearChanged;
-        // CurrentCharacter.body.OnPantsChanged -= OnPantsChanged;
-        // CurrentCharacter.body.OnHatChanged -= OnHatChanged;
-        // CurrentCharacter.body.OnBootsChanged -= OnBootsChanged;
     }
     private void OnWearChanged(ClothType type)
     {
