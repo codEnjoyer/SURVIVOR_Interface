@@ -23,11 +23,11 @@ public class Wearable : MonoBehaviour, IContextMenuAction
     public void OnButtonClickAction(Vector2 mousePosition)
     {
         var inventory = item.InventoryGrid;
-        var isSuccessful = item.ItemOwner.body.Wear(currentClothes);
+        var character = item.ItemOwner;
+        inventory.PickUpItem(item);
+        var isSuccessful = character.body.Wear(currentClothes);
 
         if (!isSuccessful)
-            Debug.Log($"Одежда {currentClothes} не может быть надета");
-        else
-            inventory.PickUpItem(item);
+            inventory.InsertItem(item);
     }
 }

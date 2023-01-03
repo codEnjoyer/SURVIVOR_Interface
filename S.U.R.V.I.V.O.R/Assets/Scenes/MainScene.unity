@@ -8239,6 +8239,7 @@ GameObject:
   - component: {fileID: 832580328}
   - component: {fileID: 832580330}
   - component: {fileID: 832580329}
+  - component: {fileID: 832580331}
   m_Layer: 5
   m_Name: LocationInfoPanel
   m_TagString: Untagged
@@ -8306,6 +8307,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 832580327}
   m_CullTransparentMesh: 1
+--- !u!114 &832580331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 832580327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f177e53d55ac728468c3e6290677903d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locationName: {fileID: 0}
+  gunString: {fileID: 0}
+  ammoString: {fileID: 0}
+  medicineString: {fileID: 0}
+  clothesString: {fileID: 0}
+  materialsString: {fileID: 0}
 --- !u!1 &839689484
 GameObject:
   m_ObjectHideFlags: 0
