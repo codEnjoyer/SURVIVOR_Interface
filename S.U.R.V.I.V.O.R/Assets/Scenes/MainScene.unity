@@ -3729,6 +3729,7 @@ MonoBehaviour:
   - {fileID: 154339910}
   chosenGroup: {fileID: 154339910}
   startNode: {fileID: 1687752736}
+  mainCanvas: {fileID: 2050006522}
   interfaceController: {fileID: 1243250765}
   inventoryController: {fileID: 1668062275}
   contextMenuController: {fileID: 1518125503}
@@ -13874,7 +13875,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1729742934}
-  itemGrid: {fileID: 1725873114}
+  inventoryGrid: {fileID: 1725873114}
 --- !u!1001 &1427509601
 PrefabInstance:
   m_ObjectHideFlags: 0
