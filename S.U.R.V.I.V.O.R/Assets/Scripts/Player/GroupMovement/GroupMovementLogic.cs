@@ -40,11 +40,11 @@ namespace Player.GroupMovement
             private set
             {
                 currentNode = value;
-                LocationChange?.Invoke(currentNode.Location.Data.LocationName);
+                LocationChange?.Invoke(currentNode.Location);
             }
         }
 
-        public event Action<string> LocationChange;
+        public event Action<Location> LocationChange;
 
         private List<Node> GetPath() => PathFinder.FindShortestWay(currentNode, DotGraph.Instance.GetNearestNode());
 
@@ -61,7 +61,7 @@ namespace Player.GroupMovement
             if (IsNearly())
             {
                 currentNode = targetNode;
-                LocationChange?.Invoke(currentNode.Location.Data.LocationName);
+                LocationChange?.Invoke(currentNode.Location);
                 progress = 0;
                 if (way.Count == 0 || group.CurrentOnGlobalMapGroupEndurance == 0)
                     movementSm.ChangeState(Sleeping);

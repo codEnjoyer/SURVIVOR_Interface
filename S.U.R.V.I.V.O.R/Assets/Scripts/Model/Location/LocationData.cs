@@ -16,11 +16,14 @@ public class LocationData : ScriptableObject
     private BaseItem[] itemChances;
     private Fight[] fightChances;
 
+    public IEnumerable<ItemChance> AllItemsChances => chancesList;
+    public int LengthOfMainArray;
     public string LocationName => locationName;
 
     private void OnEnable()
     {
         itemChances = new BaseItem[chancesList.Sum(i => i.WeightChance)];
+        LengthOfMainArray = itemChances.Length;
         var index = 0;
         foreach (var chance in chancesList)
             for (var i = 0; i < chance.WeightChance; i++)

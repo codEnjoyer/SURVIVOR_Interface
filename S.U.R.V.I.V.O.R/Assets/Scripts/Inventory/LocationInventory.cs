@@ -24,12 +24,12 @@ public class LocationInventory : MonoBehaviour
 
     public void Start()
     {
-        OnLocationChanged(Game.Instance.ChosenGroup.Location.Data.LocationName);
+        OnLocationChanged(Game.Instance.ChosenGroup.Location);
         Game.Instance.ChosenGroup.GroupMovementLogic.LocationChange += OnLocationChanged;
         Game.Instance.ChosenGroupChange += OnChosenGroupChange;
     }
 
-    private void OnLocationChanged(string value) => text.text = value;
+    private void OnLocationChanged(Location loc) => text.text = loc.name;
 
     private void OnChosenGroupChange(Group currentGroup, Group newGroup)
     {
