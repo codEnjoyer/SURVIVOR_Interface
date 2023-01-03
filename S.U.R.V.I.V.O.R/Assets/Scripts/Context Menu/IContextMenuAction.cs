@@ -9,6 +9,4 @@ public interface IContextMenuAction
     public string ButtonText { get; }
     
     public void OnButtonClickAction(Vector2 mousePosition);
-
-    public event Action<BaseItem> ItemPickedUp;
 }

@@ -34,7 +34,7 @@ public class ManBody : Body, IWearClothes
         Hunger = maxHunger;
         Water = maxWater;
         MaxCriticalLoses = bodyParts.Count;
-        
+
         wearClothesBodyPart = bodyParts.OfType<IWearClothes>().ToArray();
     }
 
@@ -113,16 +113,6 @@ public class ManBody : Body, IWearClothes
         }
     }
 
-    public void WearOrUnWear(Clothes clothesToWear, bool shouldUnWear, out bool isSuccessful)
-    {
-        isSuccessful = false;
-        foreach (var clothes in wearClothesBodyPart)
-        {
-            clothes.WearOrUnWear(clothesToWear,shouldUnWear, out isSuccessful);
-        }
-        WearChanged?.Invoke(clothesToWear.Data.ClothType);
-    }
-
     public Clothes GetClothByType(ClothType type)
     {
         switch (type)
@@ -148,29 +138,50 @@ public class ManBody : Body, IWearClothes
 
     public bool PlaceItemToInventory(BaseItem itemToPlace)
     {
-        var clothes = GetClothes().Distinct();
+        var clothes = GetClothes();
         foreach (var cloth in clothes)
         {
-            if (cloth != null && cloth.Inventory!= null && cloth.Inventory.InsertItem(itemToPlace.GetComponent<BaseItem>()))
-            {
+            if (cloth.Inventory.InsertItem(itemToPlace))
                 return true;
-            }
         }
-        if (!LocationInventory.Instance.LocationItemGrid.InsertItem(itemToPlace)) Object.Destroy(itemToPlace);
+
+        if (LocationInventory.Instance.LocationInventoryGrid.InsertItem(itemToPlace))
+            return true;
+        Object.Destroy(itemToPlace);
         return false;
     }
-    
+
+    public bool Wear(Clothes clothesToWear)
+    {
+        var isSuccess = wearClothesBodyPart.Any(x => x.Wear(clothesToWear));
+        if (isSuccess) WearChanged?.Invoke(clothesToWear.Data.ClothType);
+        return isSuccess;
+    }
+
+
+    public Clothes UnWear(ClothType clothType)
+    {
+        foreach (var bodyPart in wearClothesBodyPart)
+        {
+            var clothes = bodyPart.UnWear(clothType);
+            if (clothes is not null)
+            {
+                WearChanged?.Invoke(clothType);
+                return clothes;
+            }
+        }
+
+        return null;
+    }
+
     public IEnumerable<Clothes> GetClothes()
     {
         var clothes = new List<Clothes>();
         foreach (var bodyPart in wearClothesBodyPart)
         {
-            foreach (var cloth in bodyPart.GetClothes())
-            {
-                clothes.Add(cloth);
-            }
+            clothes.AddRange(bodyPart.GetClothes());
         }
 
-        return clothes;
+        return clothes.Distinct().Where(x => x is not null);
     }
 }

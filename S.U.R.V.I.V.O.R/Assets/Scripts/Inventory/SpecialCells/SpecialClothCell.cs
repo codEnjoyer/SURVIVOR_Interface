@@ -7,7 +7,7 @@ public class SpecialClothCell : SpecialCell
 {
     [SerializeField] private Transform canvasTransform;
     [SerializeField] private ClothType type;
-    [SerializeField] private ItemGrid currentInventory;
+    [SerializeField] private InventoryGrid currentInventory;
     private Size zeroInventorySize;
     private Character currentCharacter;
 
@@ -52,8 +52,7 @@ public class SpecialClothCell : SpecialCell
         if (item.rotated)
             item.Rotated();
         placedItem = item;
-        bool isWeared;
-        CurrentCharacter.body.WearOrUnWear(item.GetComponent<Clothes>(),false, out isWeared);
+        bool isWeared = CurrentCharacter.body.Wear(item.GetComponent<Clothes>());
         if (isWeared)
         {
             item.ItemOwner = CurrentCharacter;
@@ -88,8 +87,8 @@ public class SpecialClothCell : SpecialCell
     public override void GiveItem()
     {
         if (WearedOnPlayerItem() == null) return;
-        CurrentCharacter.body.WearOrUnWear(PlacedItem.GetComponent<Clothes>(), true, out var isSuccessful);
-        if (!isSuccessful) return;
+        var removedClothes = CurrentCharacter.body.UnWear(PlacedItem.GetComponent<Clothes>().Data.ClothType);
+        if (removedClothes is null) return;
         PlacedItem.GetComponent<RectTransform>().sizeDelta = PlacedItem.OnAwakeRectTransformSize;
         PlacedItem.GetComponent<RectTransform>().localScale = PlacedItem.OnAwakeRectTransformScale;
         PlacedItem.GetComponent<RectTransform>().SetParent(canvasTransform);

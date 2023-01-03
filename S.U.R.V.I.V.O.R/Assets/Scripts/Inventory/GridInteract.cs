@@ -4,27 +4,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(ItemGrid))]
+[RequireComponent(typeof(InventoryGrid))]
 public class GridInteract : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private InventoryController inventoryController;
-    private ItemGrid itemGrid;
+    private InventoryGrid inventoryGrid;
 
     private void Awake()
     {
         inventoryController = FindObjectOfType(typeof(InventoryController)) as InventoryController;
-        itemGrid = GetComponent<ItemGrid>();
+        inventoryGrid = GetComponent<InventoryGrid>();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        inventoryController.SelectedItemGrid = itemGrid;
+        inventoryController.SelectedInventoryGrid = inventoryGrid;
         inventoryController.IsPointerUnderInventory = true;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        inventoryController.SelectedItemGrid = null;
+        inventoryController.SelectedInventoryGrid = null;
         inventoryController.IsPointerUnderInventory = false;
     }
 }

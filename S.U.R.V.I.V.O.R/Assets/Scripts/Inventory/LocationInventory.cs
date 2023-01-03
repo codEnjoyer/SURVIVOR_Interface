@@ -9,8 +9,8 @@ public class LocationInventory : MonoBehaviour
     public static LocationInventory Instance { get; private set; }
 
     [SerializeField] private Text text;
-    [SerializeField] private ItemGrid itemGrid;
-    public ItemGrid LocationItemGrid => itemGrid;
+    [FormerlySerializedAs("itemGrid")] [SerializeField] private InventoryGrid inventoryGrid;
+    public InventoryGrid LocationInventoryGrid => inventoryGrid;
 
     void Awake()
     {

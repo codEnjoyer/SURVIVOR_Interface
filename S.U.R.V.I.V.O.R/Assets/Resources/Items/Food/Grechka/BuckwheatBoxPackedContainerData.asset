@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: BuckwheatBoxPackedContainerData
   m_EditorClassIdentifier: 
   packedItems:
-  - {fileID: 6109797689476464371, guid: 5c935cc212f0ef8499905be2cc21f408, type: 3}
-  - {fileID: 6109797689476464371, guid: 5c935cc212f0ef8499905be2cc21f408, type: 3}
-  - {fileID: 6109797689476464371, guid: 5c935cc212f0ef8499905be2cc21f408, type: 3}
+  - {fileID: -7246616232913779961, guid: 5c935cc212f0ef8499905be2cc21f408, type: 3}
+  - {fileID: -7246616232913779961, guid: 5c935cc212f0ef8499905be2cc21f408, type: 3}
+  - {fileID: -7246616232913779961, guid: 5c935cc212f0ef8499905be2cc21f408, type: 3}
