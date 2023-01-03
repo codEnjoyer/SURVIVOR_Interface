@@ -11,13 +11,15 @@ public class TurnController : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
         {
             Instance = this;
             Init();
         }
-        else if (Instance == this)
-            Destroy(gameObject);
     }
 
     private void Init()

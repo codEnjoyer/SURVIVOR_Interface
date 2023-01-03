@@ -37,7 +37,14 @@ namespace Editor
             DrawEdges();
             UsePositionHandle();
             if (Event.current.Equals(Event.KeyboardEvent("k")))
+            {
                 PutNodeInMousePosition();
+            }
+            if (Event.current.Equals(Event.KeyboardEvent("u")))
+            {
+                foreach (var node in graph)
+                    node.GetComponent<Location>().UpdatePrefab();
+            }
         }
 
         private void PutNodeInMousePosition()
