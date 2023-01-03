@@ -24,7 +24,7 @@ public class FightSceneController : MonoBehaviour
     [SerializeField] private List<GameObject> spawnPointsObjects;
     [SerializeField] private GameObject characterPrefab;
     [SerializeField] private GameObject ratPrefab;
-    private static Queue<GameObject> CharactersQueue;
+    public static Queue<GameObject> CharactersQueue {get; private set;}
     private GameObject currentCharacterNodeObj;
     private List<Vector3> allySpawnPoints;
     private List<Vector3> enemySpawnPoints;
@@ -34,10 +34,14 @@ public class FightSceneController : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            Init();
         }
         else if (Instance == this)
             Destroy(gameObject); 
+    }
+
+    private void Start() 
+    {
+        Init();
     }
 
     private void Init()
@@ -46,6 +50,8 @@ public class FightSceneController : MonoBehaviour
         CreateCharactersList();
         InitializeCharacters();
         NodesNav.InitializeNodesLists(graph);
+        Debug.Log(UIController.Instance);
+        UIController.Instance.CreateQueueCards();
 
         StateController.MakeAvailablePhases();
         CharacterObj = CharactersQueue.Dequeue();
@@ -141,7 +147,8 @@ public class FightSceneController : MonoBehaviour
         {
             var obj = Instantiate(characterPrefab, new Vector3(0,0,0), Quaternion.identity);
             var objHeight = obj.GetComponent<MeshRenderer>().bounds.size.y;
-            obj.transform.position = allySpawnPoints[0] + new Vector3(0, objHeight / 2, 0);
+            obj.transform.position = allySpawnPoints[allySpawnPoints.Count - 1] + new Vector3(0, objHeight / 2, 0);
+            allySpawnPoints.RemoveAt(allySpawnPoints.Count - 1);
             obj.AddComponent<FightCharacter>().ApplyProperties(entity, CharacterType.Ally);
             obj.GetComponent<Renderer>().material.color = Color.green;
             Characters.Add(obj);
@@ -152,7 +159,8 @@ public class FightSceneController : MonoBehaviour
             var entityObj = Instantiate(entity, new Vector3(0,0,0), Quaternion.identity);
             var obj = entityObj.gameObject;
             var objHeight = obj.GetComponent<MeshRenderer>().bounds.size.y;
-            obj.transform.position = enemySpawnPoints[0] + new Vector3(0, objHeight / 2, 0);
+            obj.transform.position = enemySpawnPoints[enemySpawnPoints.Count - 1] + new Vector3(0, objHeight / 2, 0);
+            enemySpawnPoints.RemoveAt(enemySpawnPoints.Count - 1);
             obj.AddComponent<FightCharacter>().ApplyProperties(entityObj, CharacterType.Enemy);
             obj.GetComponent<Renderer>().material.color = Color.red;
             Characters.Add(obj);
@@ -209,6 +217,8 @@ public class FightSceneController : MonoBehaviour
         StateController.MakeAvailablePhases();
         currentCharacterNodeObj = NodesNav.GetNearestNode(CharacterObj.transform.position);
         DrawAreas();
+
+        UIController.Instance.ChangeActiveCard();
         State = FightState.Sleeping;
         Debug.Log("Sleeping");
     }
