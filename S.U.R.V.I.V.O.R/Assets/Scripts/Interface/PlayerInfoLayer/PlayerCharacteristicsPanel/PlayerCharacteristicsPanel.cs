@@ -24,11 +24,16 @@ public class PlayerCharacteristicsPanel : MonoBehaviour
     [SerializeField] private Text food;
     [SerializeField] private Text water;
     [SerializeField] private Text energy;
+    [SerializeField] private Text name;
     [SerializeField] private GameObject healthProgressBar;
 
-    public void Start()
+    public void Awake()
     {
+        name.text = $"{Player.FirstName} {Player.Surname}";
         Photo.sprite = Player.Sprite;
+        food.text = player.body.Hunger.ToString();
+        water.text = player.body.Water.ToString();
+        energy.text = player.body.Energy.ToString();
     }
 
     private void OnFoodChanged(int value) => food.text = value.ToString();

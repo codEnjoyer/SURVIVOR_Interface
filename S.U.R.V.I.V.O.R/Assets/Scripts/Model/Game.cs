@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Graph_and_Map;
 using Player;
+using Player.GroupMovement;
 using UnityEngine;
 
 public class Game: MonoBehaviour
@@ -11,6 +12,14 @@ public class Game: MonoBehaviour
     [SerializeField] private List<Group> groups;
     [SerializeField] private Group chosenGroup;
     [SerializeField] private Node startNode;
+    
+    [SerializeField] private InterfaceController interfaceController;
+    [SerializeField] private InventoryController inventoryController;
+    [SerializeField] private ContextMenuController contextMenuController;
+    [SerializeField] private TurnController turnController;
+    [SerializeField] private GroupsMovementController groupsMovementController;
+    [SerializeField] private Selector selector;
+    private MonoBehaviour[] allControllers;
     public event Action<Group, Group> ChosenGroupChange;
     public Group ChosenGroup => chosenGroup;
     public Node StartNode => startNode;
@@ -36,9 +45,14 @@ public class Game: MonoBehaviour
     private void Init()
     {
         groups = new List<Group>();
-        if(chosenGroup == null)
+        if(chosenGroup != null)
             groups.Add(chosenGroup);
-    }
+        
+        allControllers = new MonoBehaviour[] {interfaceController, inventoryController, contextMenuController , turnController , selector, groupsMovementController};
 
-    
+        foreach (var controller in allControllers)
+        {
+            controller.gameObject.SetActive(true);
+        }
+    }
 }
