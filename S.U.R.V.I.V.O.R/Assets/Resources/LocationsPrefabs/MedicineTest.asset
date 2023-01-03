@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c73c94283b9401b97df2a11d9d26027, type: 3}
   m_Name: MedicineTest
   m_EditorClassIdentifier: 
+  prefab: {fileID: 2388390418329069640, guid: e83739466e62f9640bbd337c7002d93e, type: 3}
+  locationName: "\u041C\u0435\u0434\u0438\u0446\u0438\u043D\u0441\u043A\u0430\u044F
+    \u043B\u043E\u043A\u0430\u0446\u0438\u044F"
   chancesList:
   - item: {fileID: 1452853661885659746, guid: 802e3318c45bda1429de16db5a12cb94, type: 3}
     weightChance: 1
@@ -32,6 +35,4 @@ MonoBehaviour:
   fightChancesList:
   - fight: {fileID: 11400000, guid: d903b53a056813c478ecd771086b99c2, type: 2}
     weightChance: 1
-  locationName: "\u041C\u0435\u0434\u0438\u0446\u0438\u043D\u0441\u043A\u0430\u044F
-    \u043B\u043E\u043A\u0430\u0446\u0438\u044F"
   fightChance: 1

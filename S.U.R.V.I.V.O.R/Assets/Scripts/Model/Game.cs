@@ -20,23 +20,18 @@ public class Game : MonoBehaviour
     [SerializeField] private TurnController turnController;
     [SerializeField] private GroupsMovementController groupsMovementController;
     [SerializeField] private Selector selector;
+    
     private MonoBehaviour[] allControllers;
     public event Action<Group, Group> ChosenGroupChange;
     public Group ChosenGroup => chosenGroup;
     public Node StartNode => startNode;
     public Canvas MainCanvas => mainCanvas;
-    public IEnumerable<Group> Group => groups;
-
+    public IEnumerable<Group> Groups => groups;
     public InterfaceController InterfaceController => interfaceController;
-
     public InventoryController InventoryController => inventoryController;
-
     public ContextMenuController ContextMenuController => contextMenuController;
-
     public TurnController TurnController => turnController;
-
     public GroupsMovementController GroupsMovementController => groupsMovementController;
-
     public Selector Selector => selector;
 
     private void SetChosenGroup(Group newGroup)
