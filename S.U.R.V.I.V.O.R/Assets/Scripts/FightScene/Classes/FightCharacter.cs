@@ -17,7 +17,6 @@ public class FightCharacter : MonoBehaviour
         Entity = target;
         Type = type;
         Alive = alive;
-        Debug.Log(Entity.Body);
         RemainingEnergy = Energy;
     }
 
@@ -80,6 +79,7 @@ public class FightCharacter : MonoBehaviour
     private void OnDied()
     {
         FightSceneController.Instance.DeleteDeathCharacterFromQueue(this);
+        UIController.Instance.DeleteDeathCharacterCard(this);
         Destroy(gameObject);
     }
 }
