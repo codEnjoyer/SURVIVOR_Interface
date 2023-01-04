@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3763918663941373874}
   - component: {fileID: -385978895092590874}
   - component: {fileID: 739726032757525600}
-  - component: {fileID: 3961868351744292357}
   m_Layer: 0
   m_Name: Ak-74
   m_TagString: Untagged
@@ -52,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a4c089bab1174640a6ddaf8a88be3a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemData: {fileID: 11400000, guid: f7b449fabf9aae74386858fd735eb529, type: 2}
+  data: {fileID: 11400000, guid: f7b449fabf9aae74386858fd735eb529, type: 2}
 --- !u!114 &-385978895092590874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,9 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56e3639dac334d9e8e1b6f2517931f11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 0}
-  currentMagazine: {fileID: 0}
-  gunModule: []
+  data: {fileID: 11400000, guid: 1c8cfdab325ea3b4798c8764da0c8614, type: 2}
 --- !u!222 &739726032757525600
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -76,17 +73,3 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3994759378867550104}
   m_CullTransparentMesh: 1
---- !u!114 &3961868351744292357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3994759378867550104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56e3639dac334d9e8e1b6f2517931f11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: {fileID: 0}
-  gunModule: []
