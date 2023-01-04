@@ -13,7 +13,7 @@ namespace Model.GameEntity
 
         public bool Wear(Clothes clothesToWear)
         {
-            if (clothesToWear == null || !clothesDict.ContainsKey(clothesToWear.Data.ClothType)) 
+            if (clothesToWear == null || !clothesDict.ContainsKey(clothesToWear.Data.ClothType) || clothesDict[clothesToWear.Data.ClothType] != null) 
                 return false;
             
             clothesDict[clothesToWear.Data.ClothType] = clothesToWear;

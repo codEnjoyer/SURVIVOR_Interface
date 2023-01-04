@@ -17,7 +17,7 @@ public class ManBody : Body, IWearClothes
     private int maxHunger = 10;
     private int maxWater = 10;
 
-    private IWearClothes[] wearClothesBodyPart;
+    private IWearClothes[] wearClothesBodyParts;
 
     public ManBody()
     {
@@ -35,7 +35,7 @@ public class ManBody : Body, IWearClothes
         Water = maxWater;
         MaxCriticalLoses = bodyParts.Count;
 
-        wearClothesBodyPart = bodyParts.OfType<IWearClothes>().ToArray();
+        wearClothesBodyParts = bodyParts.OfType<IWearClothes>().ToArray();
     }
 
     public event Action<Health> PlayerTired;
@@ -153,7 +153,12 @@ public class ManBody : Body, IWearClothes
 
     public bool Wear(Clothes clothesToWear)
     {
-        var isSuccess = wearClothesBodyPart.Any(x => x.Wear(clothesToWear));
+        var isSuccess = false;
+        foreach (var wearClothesBodyPart in wearClothesBodyParts)
+        {
+            if (wearClothesBodyPart.Wear(clothesToWear))
+                isSuccess = true;
+        }
         if (isSuccess) WearChanged?.Invoke(clothesToWear.Data.ClothType);
         return isSuccess;
     }
@@ -161,23 +166,24 @@ public class ManBody : Body, IWearClothes
 
     public Clothes UnWear(ClothType clothType)
     {
-        foreach (var bodyPart in wearClothesBodyPart)
+        Clothes clothes = null;
+        foreach (var bodyPart in wearClothesBodyParts)
         {
-            var clothes = bodyPart.UnWear(clothType);
+            var x = bodyPart.UnWear(clothType);
+            if (x is not null)
+                clothes = x;
             if (clothes is not null)
             {
                 WearChanged?.Invoke(clothType);
-                return clothes;
             }
-        }
-
-        return null;
+        }   
+        return clothes;
     }
 
     public IEnumerable<Clothes> GetClothes()
     {
         var clothes = new List<Clothes>();
-        foreach (var bodyPart in wearClothesBodyPart)
+        foreach (var bodyPart in wearClothesBodyParts)
         {
             clothes.AddRange(bodyPart.GetClothes());
         }

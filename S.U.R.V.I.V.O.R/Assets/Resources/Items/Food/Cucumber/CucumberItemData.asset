@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86c6575d931043aba537c27e7472d109, type: 3}
-  m_Name: ConservedPork
+  m_Name: CucumberItemData
   m_EditorClassIdentifier: 
-  size: {fileID: 11400000, guid: f96ee0805e6e16542933c370432f2c83, type: 2}
-  icon: {fileID: 21300000, guid: 3fc375c8a7d64e240859cf2cb9a66f8c, type: 3}
-  description: "\u041A\u043E\u043D\u0441\u0435\u0440\u0432\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u0430\u044F
-    \u0441\u0432\u0438\u043D\u0438\u043D\u0430"
-  weight: 0.1
+  name: "\u041E\u0433\u0443\u0440\u0435\u0446"
+  description: "\u041E\u0441\u0432\u0435\u0436\u0430\u0435\u0442"
+  size: {fileID: 11400000, guid: e7b5ab7e04ef7ec4a9ac1e62cb6d4507, type: 2}
+  icon: {fileID: 21300000, guid: 36a2dd5beb6f1304387b1acc5db50c91, type: 3}
+  weight: 0.15

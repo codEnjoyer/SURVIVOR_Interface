@@ -13,4 +13,10 @@ public class EatableFoodData: ScriptableObject
 
     public int DeltaEnergy => deltaEnergy;
     
+    public EatableFoodData(int deltaWater, int deltaHunger, int deltaEnergy)
+    {
+        this.deltaHunger = deltaHunger;
+        this.deltaWater = deltaWater;
+        this.deltaEnergy = deltaEnergy;
+    }
 }
