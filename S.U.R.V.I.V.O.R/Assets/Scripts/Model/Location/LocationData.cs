@@ -7,18 +7,25 @@ using Random = System.Random;
 [CreateAssetMenu(fileName = "New LocationData", menuName = "Data/Location Data", order = 50)]
 public class LocationData : ScriptableObject
 {
-    [SerializeField] private List<ItemChance> chancesList;
-    [SerializeField] private List<FightChance> fightChancesList;
+    [Header("Отображение")] [SerializeField]
+    private GameObject prefab;
+
     [SerializeField] private string locationName;
+
+    [Header("Основные данные")] [SerializeField]
+    private List<ItemChance> chancesList;
+
+    [SerializeField] private List<FightChance> fightChancesList;
     [SerializeField] [Range(0, 1)] private float fightChance;
 
     private static readonly Random rnd = new();
     private BaseItem[] itemChances;
     private Fight[] fightChances;
 
+    public int LengthOfMainArray { get; private set; }
     public IEnumerable<ItemChance> AllItemsChances => chancesList;
-    public int LengthOfMainArray;
     public string LocationName => locationName;
+    public GameObject Prefab => prefab;
 
     private void OnEnable()
     {

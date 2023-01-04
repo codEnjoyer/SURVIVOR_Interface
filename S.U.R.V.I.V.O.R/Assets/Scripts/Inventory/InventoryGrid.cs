@@ -144,7 +144,12 @@ public class InventoryGrid : MonoBehaviour
         Destroy(item.gameObject);
     }
 
-    public void Clear() => curInventoryState?.Clear();
+    public void Clear()
+    {
+        foreach (var item in  curInventoryState.GetItems())
+            Destroy(item.gameObject);
+        curInventoryState?.Clear();
+    }
 
     public bool InsertItem(BaseItem itemToInsert) => curInventoryState.InsertItem(itemToInsert);
 

@@ -42,7 +42,7 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
 
     protected virtual void Awake()
     {
-        InventoryController = FindObjectOfType(typeof(InventoryController)) as InventoryController;
+        InventoryController = Game.Instance.InventoryController;
     }
 
     protected virtual bool CanInsertIntoSlot()
