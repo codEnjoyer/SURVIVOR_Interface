@@ -53,6 +53,9 @@ public class LocationInfoPanel : MonoBehaviour
         {
             {typeof(IWeapon),0},
             {typeof(Clothes),0},
+            {typeof(Material),0},
+            {typeof(Medicine),0},
+            {typeof(AmmoBox),0},
             {typeof(EatableFood),0}
         };
         foreach (var key in chancesDict.Keys.ToArray())
@@ -66,10 +69,10 @@ public class LocationInfoPanel : MonoBehaviour
             }
         }
         gunString.Redraw(resultDict[typeof(IWeapon)] ,colors);
-        // ammoString.Redraw(CalculateAmountOfLootableObjectsOfType<AmmoBox>(loc),colors);
-        // medicineString.Redraw(CalculateAmountOfLootableObjectsOfType<Medicine>(loc),colors);
+        ammoString.Redraw(resultDict[typeof(AmmoBox)],colors);
+        medicineString.Redraw(resultDict[typeof(Medicine)],colors);
         clothesString.Redraw(resultDict[typeof(Clothes)],colors);
-        // materialsString.Redraw(CalculateAmountOfLootableObjectsOfType<Magazine>(loc),colors);
+        materialsString.Redraw(resultDict[typeof(Material)],colors);
         foodString.Redraw(resultDict[typeof(EatableFood)],colors);
     }
     
