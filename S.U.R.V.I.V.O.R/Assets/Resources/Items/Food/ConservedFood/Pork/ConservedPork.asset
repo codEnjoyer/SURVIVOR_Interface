@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6575d931043aba537c27e7472d109, type: 3}
+  m_Name: ConservedPork
+  m_EditorClassIdentifier: 
+  name: "\u041A\u043E\u043D\u0441\u0435\u0440\u0432\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u0430\u044F
+    \u0441\u0432\u0438\u043D\u0438\u043D\u0430"
+  description: "\u041A\u043E\u043D\u0441\u0435\u0440\u0432\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u0430\u044F
+    \u0441\u0432\u0438\u043D\u0438\u043D\u0430"
+  size: {fileID: 11400000, guid: f96ee0805e6e16542933c370432f2c83, type: 2}
+  icon: {fileID: 21300000, guid: 3fc375c8a7d64e240859cf2cb9a66f8c, type: 3}
+  weight: 0.1

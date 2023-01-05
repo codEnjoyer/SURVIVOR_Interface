@@ -84,6 +84,20 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public abstract void PlaceItem(BaseItem item);
 
+    public void UpdateItem(BaseItem newItem)
+    {
+        if (newItem == placedItem)
+        {
+            ReDraw();
+        }
+        else
+        {
+            placedItem = newItem;
+            ReDraw();
+        }
+    }
+
+
     public void PlaceNullItem()
     {
         placedItem = null;

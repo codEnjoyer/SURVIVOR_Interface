@@ -119,10 +119,7 @@ public class PlayerLayerLogic : MonoBehaviour
 
     private void CheckCellAfterWindowOpen(BaseItem item, SpecialCell cell)
     {
-        if (item == null)
-            cell.PlaceNullItem();
-        else
-            cell.PlaceItem(item);
+        cell.UpdateItem(item);
     }
     
     public void OnDisable()

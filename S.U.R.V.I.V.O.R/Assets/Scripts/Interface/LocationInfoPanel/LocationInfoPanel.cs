@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Player;
 using UnityEngine;
 using UnityEngine.UI;
@@ -43,32 +44,78 @@ public class LocationInfoPanel : MonoBehaviour
     private void OnLocationChange(Location loc)
     {
         locationName.text = loc.Data.LocationName;
-        gunString.Redraw(CalculateAmountOfLootableObjectsOfType<IWeapon>(loc),colors);
-        ammoString.Redraw(CalculateAmountOfLootableObjectsOfType<AmmoBox>(loc),colors);
-        medicineString.Redraw(CalculateAmountOfLootableObjectsOfType<Medicine>(loc),colors);
-        clothesString.Redraw(CalculateAmountOfLootableObjectsOfType<Clothes>(loc),colors);
-        materialsString.Redraw(CalculateAmountOfLootableObjectsOfType<Magazine>(loc),colors);
-        foodString.Redraw(CalculateAmountOfLootableObjectsOfType<EatableFood>(loc) + CalculateAmountOfLootableObjectsOfType<CookableFood>(loc),colors);
-    }
-
-    private float CalculateAmountOfLootableObjectsOfType<T>(Location loc)
-    {
-        var lenOfMainArray = float.Parse(loc.Data.LengthOfMainArray.ToString());
-        var acceptedChances = 0;
-        var itemsChance = loc.Data.AllItemsChances;
-        foreach (var pair in itemsChance)
+        var chancesDict = new Dictionary<Type, float>();
+        foreach (var pair in loc.Data.AllItemsChances)
         {
-            if (pair.Item.gameObject.GetComponent<T>() != null)
+                chancesDict = SumDictionaries(CalculateGameObjectChances(pair.Item.gameObject, pair.WeightChance), chancesDict);  
+        }
+        var resultDict = new Dictionary<Type, float>
+        {
+            {typeof(IWeapon),0},
+            {typeof(Clothes),0},
+            {typeof(Material),0},
+            {typeof(Medicine),0},
+            {typeof(AmmoBox),0},
+            {typeof(EatableFood),0}
+        };
+        foreach (var key in chancesDict.Keys.ToArray())
+        {
+            foreach (var resultKey in resultDict.Keys.ToArray())
             {
-                acceptedChances += pair.WeightChance;
+                if (key == resultKey || resultKey.IsAssignableFrom(key))
+                {
+                    resultDict[resultKey] += chancesDict[key]/loc.Data.LengthOfMainArray;
+                }
             }
         }
-        return acceptedChances/lenOfMainArray;
+        gunString.Redraw(resultDict[typeof(IWeapon)] ,colors);
+        ammoString.Redraw(resultDict[typeof(AmmoBox)],colors);
+        medicineString.Redraw(resultDict[typeof(Medicine)],colors);
+        clothesString.Redraw(resultDict[typeof(Clothes)],colors);
+        materialsString.Redraw(resultDict[typeof(Material)],colors);
+        foodString.Redraw(resultDict[typeof(EatableFood)],colors);
     }
     
-    // Update is called once per frame
-    void Update()
+    private Dictionary<Type, float> CalculateGameObjectChances(GameObject obj, float chance)
     {
+        var resultDic = new Dictionary<Type, float>();
+        foreach (var component in obj.GetComponents<Component>())
+        {
+            var type = component.GetType();
+            if (type == typeof(PackedContainer))
+            {
+                foreach (var packedObjectComponent in (component as PackedContainer)?.ShowUnpackedItemsTypes()!)
+                {
+                    resultDic = SumDictionaries(resultDic, CalculateGameObjectChances(packedObjectComponent.gameObject,chance));
+                }
+            }
+            else
+            {
+                if (!resultDic.ContainsKey(type)) resultDic[type] = 0;
+                resultDic[type] = chance;  
+            }
+        }
+
+        return resultDic;
+    }
+    
+    
+    private Dictionary<K, float> SumDictionaries<K>(Dictionary<K, float> dic1, Dictionary<K, float> dic2)
+    {
+        var dic3 = new Dictionary<K, float>();
         
+        foreach (var key in dic1.Keys.ToArray())
+        {
+            if (!dic3.ContainsKey(key)) dic3[key] = 0f;
+            dic3[key] = dic1[key];
+        }
+        
+        foreach (var key in dic2.Keys.ToArray())
+        {
+            if (!dic3.ContainsKey(key)) dic3[key] = 0f;
+            dic3[key] = dic2[key];
+        }
+        
+        return dic3;
     }
 }
