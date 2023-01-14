@@ -12,7 +12,15 @@ public class Equipable : MonoBehaviour, IContextMenuAction
     }
 
     public string ButtonText { get; }
-    public void OnButtonClickAction(Vector2 mousePosition)
+    
+    public bool Extendable { get; }
+
+    public void OnButtonClickAction<T>(T value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public IEnumerable GetValues()
     {
         throw new NotImplementedException();
     }

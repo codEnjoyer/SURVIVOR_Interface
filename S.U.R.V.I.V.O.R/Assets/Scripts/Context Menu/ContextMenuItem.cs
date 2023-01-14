@@ -11,8 +11,6 @@ public class ContextMenuItem : MonoBehaviour, IPointerClickHandler
 {
     private List<IContextMenuAction> contextMenuActions;
 
-    public UnityEvent Action;
-
     private void Start()
     {
         contextMenuActions = GetComponents<IContextMenuAction>().ToList();

@@ -6,14 +6,15 @@ TagManager:
   tags:
   - Node
   - LocationItemGrid
+  - MinimapCamera
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Minimap
   - Water
   - UI
-  - 
+  - Map
   - 
   - 
   - 

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1749647496620782735}
   - component: {fileID: 7603093425823307006}
   m_Layer: 5
-  m_Name: ContextMenuButton
+  m_Name: ExtendedMenuButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

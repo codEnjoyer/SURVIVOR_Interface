@@ -8,6 +8,8 @@ using UnityEngine.EventSystems;
 public class Wearable : MonoBehaviour, IContextMenuAction
 {
     public string ButtonText { get; private set; }
+    
+    public bool Extendable { get; private set;}
 
     private Clothes currentClothes;
 
@@ -17,17 +19,30 @@ public class Wearable : MonoBehaviour, IContextMenuAction
     public void Awake()
     {
         ButtonText = "Надеть";
+        Extendable = true;
         currentClothes = GetComponent<Clothes>();
         item = GetComponent<BaseItem>();
     }
-    public void OnButtonClickAction(Vector2 mousePosition)
+
+
+    public void OnButtonClickAction<T>(T value)
     {
         var inventory = item.InventoryGrid;
-        var character = item.ItemOwner;
+        var character = value as Character;
         inventory.PickUpItem(item);
         var isSuccessful = character.body.Wear(currentClothes);
-
+        
         if (!isSuccessful)
             inventory.InsertItem(item);
+    }
+
+    public IEnumerable GetValues()
+    {
+        var result = new List<Tuple<Character, string>>();
+        foreach (var character in Game.Instance.ChosenGroup.CurrentGroupMembers)
+        {
+            result.Add(new Tuple<Character, string>(character, $"{character.FirstName} {character.Surname}"));
+        }
+        return result;
     }
 }
