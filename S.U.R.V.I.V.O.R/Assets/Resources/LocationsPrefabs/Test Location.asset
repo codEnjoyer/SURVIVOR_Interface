@@ -26,7 +26,7 @@ MonoBehaviour:
   - item: {fileID: -7405737862124459891, guid: 8d15a65b6ccba254688180f73882d70d, type: 3}
     weightChance: 20
   - item: {fileID: -5285827569045471981, guid: 69096a30b242b044eadb5735a8306d1c, type: 3}
-    weightChance: 500
+    weightChance: 50
   - item: {fileID: -1140472903213426159, guid: 0b8d92835dcd31544a2425f5a2302e00, type: 3}
     weightChance: 5
   - item: {fileID: -7828054832626531359, guid: 704f35796fa5065428db22cfffeadd51, type: 3}

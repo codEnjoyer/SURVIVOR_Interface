@@ -9,6 +9,8 @@ using UnityEngine;
 public class Unpackable : MonoBehaviour, IContextMenuAction
 {
     public string ButtonText { get; private set; }
+    
+    public bool Extendable { get; private set; }
 
     private PackedContainer packedContainer;
 
@@ -17,10 +19,11 @@ public class Unpackable : MonoBehaviour, IContextMenuAction
     public void Awake()
     {
         ButtonText = "Распаковать";
+        Extendable = false;
         packedContainer = GetComponent<PackedContainer>();
     }
 
-    public void OnButtonClickAction(Vector2 mousePosition)
+    public void OnButtonClickAction<T>(T value)
     {
         var itemOwner = packedContainer.GetComponent<BaseItem>().ItemOwner;
         var unPackedItems = packedContainer.Unpack();
@@ -35,5 +38,10 @@ public class Unpackable : MonoBehaviour, IContextMenuAction
                     $"Вам некуда положить один из предметов, получившихся в результате распаковки, он был уничтожен");
             }
         }
+    }
+
+    public IEnumerable GetValues()
+    {
+        throw new NotImplementedException();
     }
 }
