@@ -38,8 +38,8 @@ public class BaseItem : MonoBehaviour
         
         var rt = gameObject.GetComponent<RectTransform>();
         var scaleFactor = Game.Instance.MainCanvas.scaleFactor;
-        var size = new Vector2(data.Size.Width * InventoryGrid.TileSize * scaleFactor,
-            data.Size.Height * InventoryGrid.TileSize * scaleFactor);
+        var size = new Vector2(((data.Size.Width * InventoryGrid.TileSize) - data.Size.Width - 1) * scaleFactor,
+            ((data.Size.Height * InventoryGrid.TileSize) - data.Size.Height - 1) * scaleFactor);
         rt.sizeDelta = size;
         OnAwakeRectTransformScale = rt.localScale;
         OnAwakeRectTransformSize = rt.sizeDelta;

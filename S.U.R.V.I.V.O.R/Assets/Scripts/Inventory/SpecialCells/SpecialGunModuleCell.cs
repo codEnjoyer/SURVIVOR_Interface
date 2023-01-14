@@ -6,14 +6,24 @@ public class SpecialGunModuleCell : SpecialCell
 {
     [SerializeField] private Transform canvasTransform;
     [SerializeField] private GunModuleType type;
-    public Gun gun;
+    private Gun currentGun;
+
+    public Gun CurrentGun
+    {
+        get => currentGun;
+        set
+        {
+            currentGun = value;
+        }
+    }
+
     public override void PlaceItem(BaseItem item)
     {
         if (item.rotated)
             item.Rotated();
         placedItem = item;
         InventoryController.SelectedItem = null;
-        gun.AddGunModule(placedItem.GetComponent<GunModule>());
+        CurrentGun.AddGunModule(placedItem.GetComponent<GunModule>());
     }
 
     public override void GiveItem()
@@ -27,7 +37,7 @@ public class SpecialGunModuleCell : SpecialCell
 
         PlaceNullItem();
         
-        gun.RemoveGunModule(placedItem.GetComponent<GunModule>());
+        CurrentGun.RemoveGunModule(placedItem.GetComponent<GunModule>());
     }
 
     protected override bool CanInsertIntoSlot()

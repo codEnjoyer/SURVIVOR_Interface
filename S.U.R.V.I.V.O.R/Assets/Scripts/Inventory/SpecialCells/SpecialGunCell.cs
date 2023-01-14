@@ -6,7 +6,40 @@ public class SpecialGunCell : SpecialCell
 {
     [SerializeField] private Transform canvasTransform;
     [SerializeField] private GunType type;
-    public Character currentCharacter { get; set; }
+    [SerializeField]
+    private GunMagazineSpecialCell magazineSlot;
+    [SerializeField]
+    private SpecialGunModuleCell springSlot;
+    [SerializeField]
+    private SpecialGunModuleCell shutterSlot;
+    [SerializeField]
+    private SpecialGunModuleCell scopeSlot;
+    [SerializeField]
+    private SpecialGunModuleCell gripSlot;
+    [SerializeField]
+    private SpecialGunModuleCell tacticalSlot;
+    [SerializeField]
+    private SpecialGunModuleCell supressorSlot;
+
+    private List<SpecialGunModuleCell> allSlots;
+    
+    private Character currentCharacter;
+
+    public Character CurrentCharacter
+    {
+        get => currentCharacter;
+        set
+        {
+            currentCharacter = value;
+            Init();
+        }
+    }
+
+    public override void Init()
+    {
+        base.Init();
+    }
+    
     public override void PlaceItem(BaseItem item)
     {
         if (item.rotated)
@@ -18,18 +51,20 @@ public class SpecialGunCell : SpecialCell
 
     public override void GiveItem()
     {
-        if (PlacedItem == null) return;
+        if (placedItem == null) return;
         PlacedItem.GetComponent<RectTransform>().sizeDelta = PlacedItem.OnAwakeRectTransformSize;
         PlacedItem.GetComponent<RectTransform>().localScale = PlacedItem.OnAwakeRectTransformScale;
         PlacedItem.GetComponent<RectTransform>().SetParent(canvasTransform);
         InventoryController.PickUpItemFromSpecialCell(PlacedItem);
         PlaceNullItem();
+        ChangeCharacterGuns();
     }
 
     protected override bool CanInsertIntoSlot()
     {
-        return InventoryController.SelectedItem.GetComponent<Gun>() != null &&
-               InventoryController.SelectedItem.GetComponent<Gun>().Data.GunType == type;
+        var x = InventoryController.SelectedItem.GetComponent<Gun>() != null &&
+                InventoryController.SelectedItem.GetComponent<Gun>().Data.GunType == type;
+        return x;
     }
 
     public override void ReDraw()
@@ -44,10 +79,10 @@ public class SpecialGunCell : SpecialCell
         switch (type)
         {
             case GunType.PrimaryGun:
-                currentCharacter.PrimaryGun = currentGun;
+                CurrentCharacter.PrimaryGun = currentGun;
                 break;
             case GunType.SecondaryGun:
-                currentCharacter.SecondaryGun = currentGun;
+                CurrentCharacter.SecondaryGun = currentGun;
                 break;
         }  
     }

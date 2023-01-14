@@ -10,19 +10,32 @@ using UnityEngine.UI;
 
 public class PlayerLayerLogic : MonoBehaviour
 {
-    public Character CurrentCharacter { get; set; }
-    [SerializeField] private int numberOfCharacter;
+    private Character currentCharacter;
     
+    public Character CurrentCharacter
+    {
+        get => currentCharacter;
+        set
+        {
+            var x = value;
+            UnsubscribeCharacterEvents();
+            currentCharacter = value;
+            SubscribeCharacterEvents();
+            Init(currentCharacter);
+        }
+    }
+
+    [SerializeField] private BodyIndicator bodyIndicator;
     [SerializeField]
     private PlayerCharacteristicsPanel playerCharacteristicsPanel;
     [SerializeField]
     private Size emptyInventorySize;
     [SerializeField]
-    private GunInterfaceSet primaryGunSet;
+    private SpecialGunCell primaryGunSlot;
     [SerializeField]
-    private GunInterfaceSet secondaryGunSet;
+    private SpecialGunCell secondaryGunSlot;
     [SerializeField]
-    private GunInterfaceSet meleeWeaponSet;
+    private SpecialGunCell meleeWeaponSet;
     
     
     [SerializeField] private Text nameTextBox;
@@ -35,10 +48,9 @@ public class PlayerLayerLogic : MonoBehaviour
     [SerializeField] private SpecialClothCell pantsCell;
     [SerializeField] private SpecialClothCell bootsCell;
 
-    public void Awake()
+    public void Init(Character characterToInit)
     {
-        var x = Game.Instance.ChosenGroup.CurrentGroupMembers.ToArray()[numberOfCharacter];
-        CurrentCharacter = x;
+        currentCharacter = characterToInit;
         
         var allCells = new List<SpecialClothCell>
         {
@@ -50,57 +62,80 @@ public class PlayerLayerLogic : MonoBehaviour
             pantsCell,
             bootsCell
         };
-
+        
         foreach (var cell in allCells)
         {
-            cell.CurrentCharacter = CurrentCharacter;
+            if (cell!=null)
+            {
+                cell.CurrentCharacter = CurrentCharacter;
+            }
         }
 
-
-        playerCharacteristicsPanel.Player = CurrentCharacter;
+        if(bodyIndicator != null)
+            bodyIndicator.Character = currentCharacter;
+        if (playerCharacteristicsPanel != null)
+            playerCharacteristicsPanel.Player = CurrentCharacter;
+        if (primaryGunSlot!=null)
+            primaryGunSlot.CurrentCharacter = CurrentCharacter;
+        if (secondaryGunSlot!=null)
+            secondaryGunSlot.CurrentCharacter = CurrentCharacter;
+        if (nameTextBox != null)
+            nameTextBox.text = $"{CurrentCharacter.FirstName} {CurrentCharacter.Surname}";
         
-        primaryGunSet.CurrentCharacter = CurrentCharacter;
-
-        secondaryGunSet.CurrentCharacter = CurrentCharacter;
-
-        nameTextBox.text = $"{CurrentCharacter.FirstName} {CurrentCharacter.Surname}";
+        PlaceAllItems();
     }
 
     private void SubscribeCharacterEvents()
     {
         if (CurrentCharacter == null) return;
         CurrentCharacter.body.WearChanged += OnWearChanged;
+        CurrentCharacter.OnGunsChanged += OnGunsChanged;
     }
 
     private void UnsubscribeCharacterEvents()
     {        
         if (CurrentCharacter == null) return;
         CurrentCharacter.body.WearChanged -= OnWearChanged;
+        CurrentCharacter.OnGunsChanged -= OnGunsChanged;
     }
+
+    private void OnGunsChanged(GunType type)
+    {
+        switch (type)
+        {
+            case GunType.PrimaryGun:
+                primaryGunSlot.CheckNewItem(currentCharacter.PrimaryGun.GetComponent<BaseItem>());
+                break;
+            case GunType.SecondaryGun:
+                secondaryGunSlot.CheckNewItem(currentCharacter.SecondaryGun.GetComponent<BaseItem>());
+                break;
+        }
+    }
+    
     private void OnWearChanged(ClothType type)
     {
         switch (type)
         {
             case ClothType.Jacket:
-                jacketCell.CheckNewClothes();
+                jacketCell.CheckNewItem(currentCharacter.body.Chest.Jacket?.GetComponent<BaseItem>());
                 break;
             case ClothType.Backpack:
-                backpackCell.CheckNewClothes();
+                backpackCell.CheckNewItem(currentCharacter.body.Chest.Backpack?.GetComponent<BaseItem>());
                 break;
             case ClothType.Pants:
-                pantsCell.CheckNewClothes();
+                pantsCell.CheckNewItem(currentCharacter.body.LeftLeg.Pants?.GetComponent<BaseItem>());
                 break;
             case ClothType.Vest:
-                vestCell.CheckNewClothes();
+                vestCell.CheckNewItem(currentCharacter.body.Chest.Vest?.GetComponent<BaseItem>());
                 break;
             case ClothType.Underwear:
-                underwearCell.CheckNewClothes();
+                underwearCell.CheckNewItem(currentCharacter.body.Chest.Underwear?.GetComponent<BaseItem>());
                 break;
             case ClothType.Boots:
-                bootsCell.CheckNewClothes();
+                bootsCell.CheckNewItem(currentCharacter.body.LeftLeg.Boots?.GetComponent<BaseItem>());
                 break;
             case ClothType.Hat:
-                hatCell.CheckNewClothes();
+                hatCell.CheckNewItem(currentCharacter.body.Head.Hat?.GetComponent<BaseItem>());
                 break;
         }
     }
@@ -108,18 +143,21 @@ public class PlayerLayerLogic : MonoBehaviour
     {
         CheckCellAfterWindowOpen(CurrentCharacter.body.Chest.Vest != null ? CurrentCharacter.body.Chest.Vest.GetComponent<BaseItem>() : null,vestCell );
         CheckCellAfterWindowOpen(CurrentCharacter.body.Chest.Backpack != null ? CurrentCharacter.body.Chest.Backpack.GetComponent<BaseItem>() : null, backpackCell);
-        CheckCellAfterWindowOpen(CurrentCharacter.body.Stomach.Pants != null ? CurrentCharacter.body.Stomach.Pants.GetComponent<BaseItem>() : null, pantsCell);
+        CheckCellAfterWindowOpen(CurrentCharacter.body.LeftLeg.Pants != null ? CurrentCharacter.body.LeftLeg.Pants.GetComponent<BaseItem>() : null, pantsCell);
         CheckCellAfterWindowOpen(CurrentCharacter.body.Head.Hat != null ? CurrentCharacter.body.Head.Hat.GetComponent<BaseItem>() : null, hatCell);
         CheckCellAfterWindowOpen(CurrentCharacter.body.Chest.Underwear != null ? CurrentCharacter.body.Chest.Underwear.GetComponent<BaseItem>() : null, underwearCell);
         CheckCellAfterWindowOpen(CurrentCharacter.body.LeftLeg.Boots != null ? CurrentCharacter.body.LeftLeg.Boots.GetComponent<BaseItem>() : null, bootsCell);
         CheckCellAfterWindowOpen(CurrentCharacter.body.Chest.Jacket != null ? CurrentCharacter.body.Chest.Jacket.GetComponent<BaseItem>() : null, jacketCell);
-        CheckCellAfterWindowOpen(CurrentCharacter.PrimaryGun != null ? CurrentCharacter.PrimaryGun.GetComponent<BaseItem>() : null,primaryGunSet.gunSlot);
-        CheckCellAfterWindowOpen(CurrentCharacter.SecondaryGun != null ? CurrentCharacter.SecondaryGun.GetComponent<BaseItem>() : null,secondaryGunSet.gunSlot);
+        if (primaryGunSlot != null)
+            CheckCellAfterWindowOpen(CurrentCharacter.PrimaryGun != null ? CurrentCharacter.PrimaryGun.GetComponent<BaseItem>() : null,primaryGunSlot);
+        if (secondaryGunSlot != null)
+            CheckCellAfterWindowOpen(CurrentCharacter.SecondaryGun != null ? CurrentCharacter.SecondaryGun.GetComponent<BaseItem>() : null,secondaryGunSlot);
     }
 
     private void CheckCellAfterWindowOpen(BaseItem item, SpecialCell cell)
     {
-        cell.UpdateItem(item);
+        if (cell != null)
+            cell.UpdateItem(item);
     }
     
     public void OnDisable()
@@ -130,6 +168,7 @@ public class PlayerLayerLogic : MonoBehaviour
     public void OnEnable()
     {
         SubscribeCharacterEvents();
-        PlaceAllItems();
+        if (currentCharacter != null)
+            PlaceAllItems();
     }
 }

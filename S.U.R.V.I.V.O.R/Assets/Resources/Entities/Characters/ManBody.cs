@@ -172,11 +172,11 @@ public class ManBody : Body, IWearClothes
             var x = bodyPart.UnWear(clothType);
             if (x is not null)
                 clothes = x;
-            if (clothes is not null)
-            {
-                WearChanged?.Invoke(clothType);
-            }
         }   
+        if (clothes is not null)
+        {
+            WearChanged?.Invoke(clothType);
+        }
         return clothes;
     }
 

@@ -17,6 +17,7 @@ public class PlayerCharacteristicsPanel : MonoBehaviour
             Unsubscribe();
             player = value;
             Subscribe();
+            Init();
         }
     }
 
@@ -27,10 +28,11 @@ public class PlayerCharacteristicsPanel : MonoBehaviour
     [SerializeField] private Text name;
     [SerializeField] private GameObject healthProgressBar;
 
-    public void Awake()
+    public void Init()
     {
         name.text = $"{Player.FirstName} {Player.Surname}";
-        Photo.sprite = Player.Sprite;
+        if (Photo != null)
+            Photo.sprite = Player.Sprite;
         food.text = player.body.Hunger.ToString();
         water.text = player.body.Water.ToString();
         energy.text = player.body.Energy.ToString();
@@ -45,7 +47,7 @@ public class PlayerCharacteristicsPanel : MonoBehaviour
     public void OnHealthChanged()
     {
     }
-    
+
     private void Subscribe()
     {
         if(player is null) return;

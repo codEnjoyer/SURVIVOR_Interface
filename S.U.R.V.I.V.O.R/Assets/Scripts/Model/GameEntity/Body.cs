@@ -38,7 +38,6 @@ namespace Model.GameEntity
         public void LossBodyParts(BodyPart bodyPart)
         {
             bodyParts.Remove(bodyPart);
-            Debug.Log(bodyPart.Significance);
             currentCriticalLoses += bodyPart.Significance;
             if (currentCriticalLoses >= MaxCriticalLoses)
             {

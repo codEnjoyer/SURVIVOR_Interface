@@ -17,36 +17,26 @@ public class SpecialClothCell : SpecialCell
         set
         {
             currentCharacter = value;
-            if (currentInventory != null)
-                currentInventory.InventoryOwner = CurrentCharacter;
+            Init();
         }
     }
     private bool wasOpened;
 
-    protected override void Awake()
+    public override void Init()
     {
-        if (!wasOpened)
-        {
-            OnFirstOpen();
-        }
-    }
-
-    private void OnFirstOpen()
-    {
-        base.Awake();
+        base.Init();
         zeroInventorySize = Resources.Load<Size>("InventorySizeObjects/0x0");
-        wasOpened = true;
+        if (currentInventory != null)
+            currentInventory.InventoryOwner = CurrentCharacter;
     }
+    
     
     public void OnEnable()
     {
-        if(!wasOpened)
-            OnFirstOpen();
         if (currentInventory != null && PlacedItem == null)
             currentInventory.ChangeState(new InventoryState(zeroInventorySize));
     }
-
-
+    
     public override void PlaceItem(BaseItem item)
     {
         if (item.rotated)
@@ -64,29 +54,9 @@ public class SpecialClothCell : SpecialCell
         }
     }
 
-    public void CheckNewClothes()
-    {
-        var wearedOnPlayerItem = WearedOnPlayerItem();
-        if (wearedOnPlayerItem == null || wearedOnPlayerItem == PlacedItem)
-        {
-            ReDraw();
-        }
-        else if (wearedOnPlayerItem != PlacedItem && PlacedItem != null)
-        {
-            GiveItem();
-            placedItem = wearedOnPlayerItem;
-            ReDraw();
-        }
-        else if (wearedOnPlayerItem != PlacedItem && PlacedItem == null)
-        {
-            placedItem = wearedOnPlayerItem;
-            ReDraw();
-        }
-    }
-
     public override void GiveItem()
     {
-        if (WearedOnPlayerItem() == null) return;
+        if (placedItem == null) return;
         var removedClothes = CurrentCharacter.body.UnWear(PlacedItem.GetComponent<Clothes>().Data.ClothType);
         if (removedClothes is null) return;
         PlacedItem.GetComponent<RectTransform>().sizeDelta = PlacedItem.OnAwakeRectTransformSize;
@@ -119,28 +89,5 @@ public class SpecialClothCell : SpecialCell
     {
         return InventoryController.SelectedItem.GetComponent<Clothes>() &&
                InventoryController.SelectedItem.GetComponent<Clothes>().Data.ClothType == type;
-    }
-
-    private BaseItem WearedOnPlayerItem()
-    {
-        switch (type)
-        {
-            case ClothType.Jacket:
-                return CurrentCharacter.body.Chest.Jacket != null ? CurrentCharacter.body.Chest.Jacket.GetComponent<BaseItem>() : null;
-            case ClothType.Backpack:
-                return CurrentCharacter.body.Chest.Backpack != null ? CurrentCharacter.body.Chest.Backpack.GetComponent<BaseItem>() : null;
-            case ClothType.Pants:
-                return CurrentCharacter.body.RightLeg.Pants != null ? CurrentCharacter.body.RightLeg.Pants.GetComponent<BaseItem>() : null;
-            case ClothType.Vest:
-                return CurrentCharacter.body.Chest.Vest != null ? CurrentCharacter.body.Chest.Vest.GetComponent<BaseItem>() : null;
-            case ClothType.Underwear:
-                return CurrentCharacter.body.Chest.Underwear != null ? CurrentCharacter.body.Chest.Underwear.GetComponent<BaseItem>() : null;
-            case ClothType.Boots:
-                return CurrentCharacter.body.RightLeg.Boots != null ? CurrentCharacter.body.RightLeg.Boots.GetComponent<BaseItem>() : null;
-            case ClothType.Hat:
-                return CurrentCharacter.body.Head.Hat != null ? CurrentCharacter.body.Head.Hat.GetComponent<BaseItem>() : null;
-        }
-
-        return null;
     }
 }

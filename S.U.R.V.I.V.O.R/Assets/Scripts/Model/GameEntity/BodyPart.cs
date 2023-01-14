@@ -35,7 +35,22 @@ namespace Model.GameEntity
             set => significance = Math.Max(1, value);
         }
 
-        public float Hp { get; private set; }
+        private float hp;
+        public float Hp
+        {
+            get => hp;
+            private set
+            {
+                if (value <= 0)
+                {
+                    OnZeroHp?.Invoke(this);
+                    body.LossBodyParts(this);
+                    return;
+                }
+                hp = value;
+            }
+        }
+
         public event Action<BodyPart> OnZeroHp;
 
         protected BodyPart(Body body, int maxHp = 100, int size = 100)
@@ -60,12 +75,6 @@ namespace Model.GameEntity
         protected void TakeDamage(float damage)
         {
             Hp -= damage;
-            Debug.Log(Hp);
-            if (Hp <= 0)
-            {
-                OnZeroHp?.Invoke(this);
-                body.LossBodyParts(this);
-            }
         }
 
         public void Healing(HealInfo heal)

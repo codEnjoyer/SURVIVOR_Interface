@@ -40,9 +40,10 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
     private bool isPointerOverCell;
     public BaseItem PlacedItem => placedItem;
 
-    protected virtual void Awake()
+    public virtual void Init()
     {
-        InventoryController = Game.Instance.InventoryController;
+        if (InventoryController == null)
+            InventoryController = Game.Instance.InventoryController;
     }
 
     protected virtual bool CanInsertIntoSlot()
@@ -83,19 +84,36 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
     }
 
     public abstract void PlaceItem(BaseItem item);
-
-    public void UpdateItem(BaseItem newItem)
+    
+    public virtual void UpdateItem(BaseItem item)
     {
-        if (newItem == placedItem)
+        if (placedItem == null)
         {
-            ReDraw();
+            if (item != null)
+            {
+                item.gameObject.SetActive(true);
+                placedItem = item;
+            }
         }
         else
         {
-            placedItem = newItem;
-            ReDraw();
+            if (item != placedItem) //item != null and placeItem != null and placeItem == item
+            {
+            //    ReDraw();
+            //}
+            //else // item != null and placedItem != null
+            //{
+                placedItem.gameObject.SetActive(false);
+                PlaceNullItem();
+                if (item != null)
+                {
+                    placedItem = item;
+                }
+            }
         }
+        ReDraw();
     }
+
 
 
     public void PlaceNullItem()
@@ -120,6 +138,25 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
         }
     }
 
+    public void CheckNewItem(BaseItem item)
+    {
+        if (item == null || item == PlacedItem)
+        {
+            ReDraw();
+        }
+        else if (item != PlacedItem && PlacedItem != null)
+        {
+            placedItem.gameObject.SetActive(false);
+            placedItem = item;
+            ReDraw();
+        }
+        else if (item != PlacedItem && PlacedItem == null)
+        {
+            placedItem = item;
+            ReDraw();
+        }
+    }
+    
     public void OnPointerEnter(PointerEventData eventData)
     {
         isPointerOverCell = true;

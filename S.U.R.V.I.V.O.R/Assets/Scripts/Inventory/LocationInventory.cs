@@ -29,7 +29,11 @@ public class LocationInventory : MonoBehaviour
         Game.Instance.ChosenGroupChange += OnChosenGroupChange;
     }
 
-    private void OnLocationChanged(Location loc) => text.text = loc.name;
+    private void OnLocationChanged(Location loc)
+    {
+        if (text != null)
+            text.text = loc.name;
+    }
 
     private void OnChosenGroupChange(Group currentGroup, Group newGroup)
     {

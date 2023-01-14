@@ -15,7 +15,7 @@ public class InventoryGrid : MonoBehaviour
     private Canvas canvas;
     private InventoryState curInventoryState;
 
-    public const float TileSize = 40;
+    public const float TileSize = 28;
 
     private Vector2 positionOnGrid;
     private Vector2Int tileGridPosition;
@@ -119,7 +119,7 @@ public class InventoryGrid : MonoBehaviour
     }
 
     public Vector2 GetPositionOnGrid(BaseItem item, int posX, int posY) =>
-        new(posX * TileSize + TileSize * item.Width / 2, -(posY * TileSize + TileSize * item.Height / 2));
+        new(posX * TileSize - posX + 0.5f + (TileSize-1) * item.Width / 2, -(posY * TileSize - posY + 0.5f + (TileSize-1) * item.Height / 2));
 
 
     public BaseItem PickUpItem(int x, int y)

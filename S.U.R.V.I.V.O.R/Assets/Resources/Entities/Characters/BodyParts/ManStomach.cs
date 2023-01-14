@@ -5,8 +5,6 @@ using UnityEngine.Events;
 
 public sealed class ManStomach : BodyPathWearableClothes
 {
-    public Clothes Pants { get; set; }
-    
     public ManStomach(Body body) : base(body)
     {
         clothesDict = new Dictionary<ClothType, Clothes>

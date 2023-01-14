@@ -25,7 +25,7 @@ public class Character : Entity
         set
         {
             primaryGun = value;
-            OnGunsChanged?.Invoke();
+            OnGunsChanged?.Invoke(GunType.PrimaryGun);
         }
     }
     
@@ -36,7 +36,7 @@ public class Character : Entity
         set
         {
             secondaryGun = value;
-            OnGunsChanged?.Invoke();
+            OnGunsChanged?.Invoke(GunType.SecondaryGun);
         }
     }
     
@@ -62,7 +62,7 @@ public class Character : Entity
         skills = new Skills(this);
     }
 
-    public event Action OnGunsChanged; 
+    public event Action<GunType> OnGunsChanged; 
 
     public override Body Body => body;
     public int Mobility => throw new NotImplementedException(); //Скорость передвижения на глобальной карте

@@ -14,9 +14,9 @@ public class CharactersPlateLayerLogic : MonoBehaviour
     {
         var playersArray = Game.Instance.ChosenGroup.CurrentGroupMembers.ToArray();
         FirstPlayerPanel.Player = playersArray[0];
-        //SecondPlayerPanel.Player = playersArray[1];
-        //ThirdPlayerPanel.Player = playersArray[2];
-        //FourthPlayerPanel.Player = playersArray[3];
+        SecondPlayerPanel.Player = playersArray[1];
+        ThirdPlayerPanel.Player = playersArray[2];
+        FourthPlayerPanel.Player = playersArray[3];
     }
 
     // Update is called once per frame

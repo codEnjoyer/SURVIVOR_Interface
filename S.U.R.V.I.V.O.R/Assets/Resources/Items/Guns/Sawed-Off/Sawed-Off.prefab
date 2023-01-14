@@ -10,9 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 746332497264292580}
   - component: {fileID: -7828054832626531359}
-  - component: {fileID: -2585351097747471090}
-  - component: {fileID: 2878904179127209077}
-  - component: {fileID: -2452630225899817238}
   m_Layer: 0
   m_Name: Sawed-Off
   m_TagString: Untagged
@@ -52,43 +49,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a4c089bab1174640a6ddaf8a88be3a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemData: {fileID: 11400000, guid: d890512de0cd8dc49a8d2ea7396a92d5, type: 2}
---- !u!114 &-2585351097747471090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8073354101777460830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7661a9c963b5b1944a31d2d25e5e4379, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Action:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &2878904179127209077
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8073354101777460830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bf17f717442e2d4b91ee6b2417ae00a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &-2452630225899817238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8073354101777460830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bf17f717442e2d4b91ee6b2417ae00a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: d890512de0cd8dc49a8d2ea7396a92d5, type: 2}

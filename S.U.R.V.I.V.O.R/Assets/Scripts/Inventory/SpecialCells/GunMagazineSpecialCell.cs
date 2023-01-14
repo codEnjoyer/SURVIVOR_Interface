@@ -17,6 +17,11 @@ public class GunMagazineSpecialCell : SpecialCell
         gunCell.PlacedItem.GetComponent<Gun>().Reload(PlacedItem.GetComponent<Magazine>());
     }
 
+    public override void UpdateItem(BaseItem newItem)
+    {
+        throw new System.NotImplementedException();
+    }
+
     public override void GiveItem()
     {
         if (PlacedItem == null) return;
