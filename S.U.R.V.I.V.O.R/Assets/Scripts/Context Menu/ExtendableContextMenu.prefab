@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 5390504042451836046}
   - component: {fileID: 1149124565375978619}
   - component: {fileID: 886242217498034162}
-  - component: {fileID: 8435356148695246772}
+  - component: {fileID: -3080471259287499116}
   m_Layer: 5
-  m_Name: ContextMenu
+  m_Name: ExtendableContextMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104,7 +104,7 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
---- !u!114 &8435356148695246772
+--- !u!114 &-3080471259287499116
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

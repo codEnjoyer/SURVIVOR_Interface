@@ -7,6 +7,8 @@ using UnityEngine;
 public class Cookable : MonoBehaviour, IContextMenuAction
 {
     public string ButtonText { get; private set; }
+    
+    public bool Extendable { get; private set; }
 
     private CookableFood cookableFood;
 
@@ -15,9 +17,10 @@ public class Cookable : MonoBehaviour, IContextMenuAction
     public void Awake()
     {
         ButtonText = "Приготовить";
+        Extendable = false;
         cookableFood = GetComponent<CookableFood>();
     }
-    public void OnButtonClickAction(Vector2 mousePosition)
+    public void OnButtonClickAction<T>(T value)
     {
         var itemOwner = cookableFood.GetComponent<BaseItem>().ItemOwner;
         var foodAfterCook = itemOwner.Cook(cookableFood);
@@ -28,5 +31,10 @@ public class Cookable : MonoBehaviour, IContextMenuAction
                 Debug.Log($"Вам некуда положить один из предметов, получившихся в результате готовки, он был уничтожен");
             }
         }
+    }
+
+    public IEnumerable GetValues()
+    {
+        throw new NotImplementedException();
     }
 }

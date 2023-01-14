@@ -103,8 +103,9 @@ public class InventoryController : MonoBehaviour
                 PlaceItem(tileGridPosition);
             }
         }
-
+        
         HandleHighlight();
+        inventoryHighlight.transform.SetParent(inventoryHighlight.transform.parent);
     }
 
     public void PickUpItemFromSpecialCell(BaseItem item)
@@ -162,6 +163,8 @@ public class InventoryController : MonoBehaviour
     {
         var mousePosition = Input.mousePosition;
         var positionOnGrid = GetTileGridPosition(mousePosition);
+        if (!selectedInventoryGrid.PositionCheck(positionOnGrid.x, positionOnGrid.y))
+            return;
         if (previousPosition == positionOnGrid) return;
         if (SelectedItem == null)
         {
@@ -171,6 +174,8 @@ public class InventoryController : MonoBehaviour
                 inventoryHighlight.Show(true);
                 inventoryHighlight.SetSize(itemToHighlight);
                 inventoryHighlight.SetPosition(selectedInventoryGrid, itemToHighlight);
+                inventoryHighlight.transform.SetAsLastSibling();
+                inventoryHighlight.SetParent(selectedInventoryGrid);
             }
             else
             {

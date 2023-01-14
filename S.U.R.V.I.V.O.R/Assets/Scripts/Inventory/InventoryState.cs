@@ -99,7 +99,7 @@ public class InventoryState
         }
     }
 
-    bool PositionCheck(int posX, int posY) => posX >= 0 && posY >= 0 && posX < size.Width && posY < size.Height;
+    public bool PositionCheck(int posX, int posY) => posX >= 0 && posY >= 0 && posX < size.Width && posY < size.Height;
 
     public bool BoundryCheck(int posX, int posY, int width, int height) =>
         PositionCheck(posX, posY) && PositionCheck(posX + width - 1, posY + height - 1);

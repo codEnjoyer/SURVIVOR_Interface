@@ -153,6 +153,8 @@ public class InventoryGrid : MonoBehaviour
 
     public bool InsertItem(BaseItem itemToInsert) => curInventoryState.InsertItem(itemToInsert);
 
+    public bool PositionCheck(int posX, int posY) => curInventoryState.PositionCheck(posX, posY);
+
     public bool BoundryCheck(int posX, int posY, int width, int height) =>
         curInventoryState.BoundryCheck(posX, posY, width, height);
 
