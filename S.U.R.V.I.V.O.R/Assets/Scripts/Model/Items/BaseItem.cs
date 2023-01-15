@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
+using Interface;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using Image = UnityEngine.UI.Image;
 
-public class BaseItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class BaseItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [FormerlySerializedAs("itemData")] [SerializeField]
     private BaseItemData data;
@@ -60,6 +61,8 @@ public class BaseItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         Destroy(gameObject);
     }
 
+    #region TooltipRegin
+
     private bool mouseEnter;
     const float Seconds = 0.5f;
 
@@ -75,10 +78,19 @@ public class BaseItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         Tooltip.Instance.HideTooltip();
     }
 
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        mouseEnter = false;
+        Tooltip.Instance.HideTooltip();
+    }
+
+
     IEnumerator ShowTooltipCoroutine()
     {
         yield return new WaitForSeconds(Seconds);
-        if (mouseEnter)
+        if (mouseEnter && !ContextMenuController.Instance.IsActive)
             Tooltip.Instance.ShowTooltip(data.Name);
     }
+
+    #endregion
 }

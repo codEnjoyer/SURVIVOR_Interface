@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class CameraController : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
+public class CameraController : MonoBehaviour
 {
     private CameraControlActions cameraActions;
     private InputAction movement;
@@ -243,15 +243,5 @@ public class CameraController : MonoBehaviour, IPointerUpHandler, IPointerDownHa
         if (Physics.Raycast(positionRay, out hit, Mathf.Infinity))
             return hit.point;
         return new Vector3();
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        Selector.Instance.Activate();
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        Selector.Instance.DeActivate();
     }
 }
