@@ -3,25 +3,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(ContextMenuItem))]
 public class Equipable : MonoBehaviour, IContextMenuAction
 {
-    public string Text { get; }
-    public void Action()
+    public string ButtonText { get; private set; }
+    
+    public bool Extendable { get; private set;}
+
+    private Gun currentGun;
+
+    private BaseItem item;
+    
+
+    public void Awake()
     {
-        Debug.Log("Equip");
+        ButtonText = "Экипировать";
+        Extendable = true;
+        currentGun = GetComponent<Gun>();
+        item = GetComponent<BaseItem>();
     }
 
-    public string ButtonText { get; }
-    
-    public bool Extendable { get; }
 
     public void OnButtonClickAction<T>(T value)
     {
-        throw new NotImplementedException();
-    }
-
-    public IEnumerable GetValues()
-    {
-        throw new NotImplementedException();
+        var inventory = item.InventoryGrid;
+        var character = value as Character;
+        inventory.PickUpItem(item);
+        switch (currentGun.Data.GunType)
+        {
+            case GunType.PrimaryGun:
+                character.PrimaryGun = currentGun;
+                break;
+            case GunType.SecondaryGun:
+                character.SecondaryGun = currentGun;
+                break;
+        }
     }
 }

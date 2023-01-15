@@ -35,14 +35,4 @@ public class Wearable : MonoBehaviour, IContextMenuAction
         if (!isSuccessful)
             inventory.InsertItem(item);
     }
-
-    public IEnumerable GetValues()
-    {
-        var result = new List<Tuple<Character, string>>();
-        foreach (var character in Game.Instance.ChosenGroup.CurrentGroupMembers)
-        {
-            result.Add(new Tuple<Character, string>(character, $"{character.FirstName} {character.Surname}"));
-        }
-        return result;
-    }
 }

@@ -6,7 +6,6 @@ using Model.GameEntity.Skills;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
-[RequireComponent(typeof(BaseItem))]
 public class Automat : Gun
 {
     [SerializeField] private GunData data;

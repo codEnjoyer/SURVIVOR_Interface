@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6575d931043aba537c27e7472d109, type: 3}
+  m_Name: KapustaItemData
+  m_EditorClassIdentifier: 
+  name: "\u041A\u043E\u0447\u0430\u043D \u043A\u0430\u043F\u0443\u0441\u0442\u044B"
+  description: "\u0421\u044B\u0442\u043D\u0430\u044F \u0438 \u043F\u043E\u043B\u0435\u0437\u043D\u0430\u044F
+    \u0435\u0434\u0430"
+  size: {fileID: 11400000, guid: 22130596a438f8042bfba3730b663856, type: 2}
+  icon: {fileID: 21300000, guid: e57bf5372edd0894da77fb82c282fbad, type: 3}
+  weight: 1.5

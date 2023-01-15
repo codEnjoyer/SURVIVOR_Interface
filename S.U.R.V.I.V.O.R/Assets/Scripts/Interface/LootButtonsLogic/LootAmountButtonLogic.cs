@@ -28,8 +28,11 @@ public class LootAmountButtonLogic : MonoBehaviour
         interfaceController.SetGroupLayerActive();
         for (int i = 0; i < LootAmount; i++)
         {
-            inventoryController.SelectedInventoryGrid = LocationInventory.Instance.LocationInventoryGrid;
-            inventoryController.AddItemToInventory(Game.Instance.ChosenGroup.Location.Data.GetLoot());
+            foreach (var item in Game.Instance.ChosenGroup.Loot())
+            {
+                inventoryController.SelectedInventoryGrid = LocationInventory.Instance.LocationInventoryGrid;
+                inventoryController.AddItemToInventory(item);
+            }
         }
     }
 }
