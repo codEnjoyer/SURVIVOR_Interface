@@ -32,7 +32,7 @@ public class LocationInfoPanel : MonoBehaviour
             new (161, 188, 55),
             new (108, 183, 56),
         };
-        OnLocationChange(Game.Instance.ChosenGroup.GroupMovementLogic.CurrentNode.Location);
+        OnLocationChange(Game.Instance.ChosenGroup.Location);
     }
 
     private void OnChosenGroupChange(Group oldGroup, Group newGroup)

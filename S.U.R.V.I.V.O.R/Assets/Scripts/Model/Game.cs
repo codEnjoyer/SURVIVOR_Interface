@@ -23,6 +23,8 @@ public class Game : MonoBehaviour
         }
     }
 
+    public bool OnPause { get; private set; }
+
     [SerializeField] private List<Group> groups;
     [SerializeField] private Group chosenGroup;
     [SerializeField] private Node startNode;
@@ -89,5 +91,22 @@ public class Game : MonoBehaviour
         {
             controller.gameObject.SetActive(true);
         }
+    }
+
+
+    public void Resume()
+    {
+        OnPause = false;
+        Selector.Instance.Activate();
+        MinimapController.Instance.isActive = true;
+        CameraController.Instance.isActive = true;
+    }
+
+    public void Pause()
+    {
+        OnPause = true;
+        Selector.Instance.DeActivate();
+        MinimapController.Instance.isActive = false;
+        CameraController.Instance.isActive = false;
     }
 }

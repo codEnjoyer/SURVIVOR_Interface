@@ -17,7 +17,6 @@ public class Location : MonoBehaviour, ISerializationCallbackReceiver
 
     public void UpdatePrefab()
     {
-        //
         if (data != null && data.Prefab != null)
         {
             GetComponent<MeshFilter>().mesh = data.Prefab.GetComponent<MeshFilter>().sharedMesh;
