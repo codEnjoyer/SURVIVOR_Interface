@@ -141,6 +141,8 @@ public class FightSceneController : MonoBehaviour
     private void CreateCharactersList()
     {
         var data = FightSceneLoader.CurrentData;
+        Debug.Log(allySpawnPoints.Count);
+        Debug.Log(enemySpawnPoints.Count);
         foreach (var entity in data.ally)
         {
             var obj = Instantiate(characterPrefab, new Vector3(0,0,0), Quaternion.identity);
