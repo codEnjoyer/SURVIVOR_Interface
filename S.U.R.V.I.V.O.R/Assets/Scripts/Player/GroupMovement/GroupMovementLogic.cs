@@ -204,10 +204,7 @@ namespace Player.GroupMovement
             secondTurnObjectLineRenderer = secondTurnObject.GetComponent<LineRenderer>();
             thirdTurnObjectLineRenderer = thirdTurnObject.GetComponent<LineRenderer>();
             movementSm.Initialize(Sleeping);
-        }
-
-        private void Start()
-        {
+            
             currentNode = Game.Instance.StartNode;
             if (currentNode == null)
                 Debug.Log("Нет стартовой ноды!");
@@ -217,7 +214,6 @@ namespace Player.GroupMovement
                 targetNode = currentNode;
             }
         }
-
         private void Update()
         {
             if (Input.GetMouseButtonDown(0) && movementSm.CurrentState == WaitingTarget &&
