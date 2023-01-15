@@ -13,6 +13,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject groupCharacterCardPrefab;
     [SerializeField] private GameObject queuePanel;
     [SerializeField] private GameObject groupPanel;
+    [SerializeField] private Camera camera;
     private Queue<GameObject> cardsQueue = new Queue<GameObject>();
     private List<GameObject> groupCards = new List<GameObject>();
 
@@ -122,6 +123,32 @@ public class UIController : MonoBehaviour
                 newQueue.Enqueue(currentCard);
         }
         cardsQueue = newQueue;
+    }
+
+    public void DrawDamage(GameObject target, float damage)
+    {
+        var textPanel = new GameObject();
+        textPanel.AddComponent<TextMesh>();
+        textPanel.GetComponent<TextMesh>().text = damage.ToString();
+        textPanel.GetComponent<TextMesh>().color = Color.red;
+        textPanel.transform.position = target.transform.position - transform.right * 1f + transform.up * 2f;
+        textPanel.transform.SetParent(target.transform);
+        textPanel.transform
+            .LookAt(new Vector3(camera.transform.position.x, textPanel.transform.position.y,
+                camera.transform.position.z));
+        textPanel.transform.Rotate(new Vector3(0, 180f, 0));
+        StartCoroutine(DeleteDamageTextPanel(textPanel));
+    }
+
+    private IEnumerator DeleteDamageTextPanel(GameObject textPanel)
+    {
+        for (var i = 0; i < 5; i++)
+        {
+            yield return new WaitForSeconds(0.1f);
+            textPanel.transform.Translate(Vector3.up * 0.15f);
+        }
+
+        Destroy(textPanel);
     }
 
     private void ShiftCards(int startShiftIndex = 0)
