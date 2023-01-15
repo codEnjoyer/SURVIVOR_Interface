@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c73c94283b9401b97df2a11d9d26027, type: 3}
+  m_Name: Road
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 5380161055964985592, guid: 9eb9b12380f07644bb2be4e6429649b5, type: 3}
+  locationName: 
+  chancesList:
+  - item: {fileID: 8548521006887280039, guid: e3380e16e33218745bbae364675c69ff, type: 3}
+    weightChance: 1
+  fightChancesList: []
+  fightChance: 0
