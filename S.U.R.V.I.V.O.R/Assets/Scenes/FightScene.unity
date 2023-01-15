@@ -98122,6 +98122,9 @@ MonoBehaviour:
   - {fileID: 1226310678}
   - {fileID: 318099430}
   - {fileID: 588323151}
+  - {fileID: 1577858484}
+  - {fileID: 1784623219}
+  - {fileID: 1652699842}
   characterPrefab: {fileID: 3004767863623703735, guid: 57e839bd74f2726409759bc236374acd, type: 3}
   ratPrefab: {fileID: 6953240871029818446, guid: 9449a94c99a31054a9c99b121af8906b, type: 3}
 --- !u!4 &1978437330
