@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Interface.InterfaceStates;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -50,6 +51,13 @@ public class InterfaceController : MonoBehaviour
         CharacterPanelActive = new CharacterPanelActive(this, interfaceStateMachine);
         GroupLayerActive = new GroupLayerActive(this, interfaceStateMachine);
         PlayerLayerActive = new PlayerLayerActive(this, interfaceStateMachine);
+
+        var gMemebers = Game.Instance.ChosenGroup.CurrentGroupMembers.ToArray(); 
+        firstPlayerLayerLogic.Init(gMemebers[0]);
+        secondPlayerLayerLogic.Init(gMemebers[1]);
+        thirdfPlayerLayerLogic.Init(gMemebers[2]);
+        fourthPlayerLayerLogic.Init(gMemebers[3]);
+        
         Selector.Instance.Activate();
         InitializeInterface();
         interfaceStateMachine.Initialize(NothingActive);
@@ -122,6 +130,5 @@ public class InterfaceController : MonoBehaviour
 
     public void ChooseSecondPlayer() => SetPlayerLayerActive(secondPlayerLayer);
     public void ChooseThirdPlayer() => SetPlayerLayerActive(thirdPlayerLayer);
-
     public void ChooseFourthPlayer() => SetPlayerLayerActive(fourthPlayerLayer);
 }

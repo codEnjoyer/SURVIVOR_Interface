@@ -45,6 +45,7 @@ public class Character : Entity
         body.Energy += food.Data.DeltaEnergy;
         body.Water += food.Data.DeltaWater;
         body.Hunger += food.Data.DeltaHunger;
+        food.GetComponent<BaseItem>().Destroy();
     }
     
     public IEnumerable<GameObject> Cook(CookableFood food)
@@ -62,6 +63,12 @@ public class Character : Entity
         skills = new Skills(this);
     }
 
+    public BaseItem Loot(LocationData infoAboutLocation)
+    {
+        //TODO Добавить опыт к навыку лутания в зависмости от редкости найденной вещи
+        return infoAboutLocation.GetLoot();
+    }
+    
     public event Action<GunType> OnGunsChanged; 
 
     public override Body Body => body;

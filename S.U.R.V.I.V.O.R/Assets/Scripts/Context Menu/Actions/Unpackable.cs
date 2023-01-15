@@ -39,9 +39,4 @@ public class Unpackable : MonoBehaviour, IContextMenuAction
             }
         }
     }
-
-    public IEnumerable GetValues()
-    {
-        throw new NotImplementedException();
-    }
 }

@@ -32,9 +32,4 @@ public class Cookable : MonoBehaviour, IContextMenuAction
             }
         }
     }
-
-    public IEnumerable GetValues()
-    {
-        throw new NotImplementedException();
-    }
 }

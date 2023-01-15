@@ -104,10 +104,10 @@ public class PlayerLayerLogic : MonoBehaviour
         switch (type)
         {
             case GunType.PrimaryGun:
-                primaryGunSlot.CheckNewItem(currentCharacter.PrimaryGun.GetComponent<BaseItem>());
+                primaryGunSlot.CheckNewItem(currentCharacter.PrimaryGun?.GetComponent<BaseItem>());
                 break;
             case GunType.SecondaryGun:
-                secondaryGunSlot.CheckNewItem(currentCharacter.SecondaryGun.GetComponent<BaseItem>());
+                secondaryGunSlot.CheckNewItem(currentCharacter.SecondaryGun?.GetComponent<BaseItem>());
                 break;
         }
     }

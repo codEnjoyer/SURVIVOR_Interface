@@ -148,11 +148,13 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
         {
             placedItem.gameObject.SetActive(false);
             placedItem = item;
+            item.gameObject.SetActive(true);
             ReDraw();
         }
         else if (item != PlacedItem && PlacedItem == null)
         {
             placedItem = item;
+            placedItem.gameObject.SetActive(true);
             ReDraw();
         }
     }

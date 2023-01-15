@@ -13,5 +13,13 @@ public interface IContextMenuAction
 
     public void OnButtonClickAction<T>([CanBeNull] T value);
 
-    public IEnumerable GetValues();
+    public virtual IEnumerable GetValues()
+    {
+        var result = new List<Tuple<Character, string>>();
+        foreach (var character in Game.Instance.ChosenGroup.CurrentGroupMembers)
+        {
+            result.Add(new Tuple<Character, string>(character, $"{character.FirstName} {character.Surname}"));
+        }
+        return result;
+    }
 }
