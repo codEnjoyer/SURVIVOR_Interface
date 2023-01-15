@@ -23,8 +23,11 @@ public class PlayerCharacteristicsPanel : MonoBehaviour
 
     [SerializeField] private Image Photo;
     [SerializeField] private Text food;
+    [SerializeField] static SegmentProgressBar foodProgressBar;
     [SerializeField] private Text water;
+    [SerializeField] static SegmentProgressBar waterProgressBar;
     [SerializeField] private Text energy;
+    [SerializeField] static SegmentProgressBar energyProgressBar;
     [SerializeField] private Text name;
     [SerializeField] private GameObject healthProgressBar;
 
@@ -34,15 +37,36 @@ public class PlayerCharacteristicsPanel : MonoBehaviour
         if (Photo != null)
             Photo.sprite = Player.Sprite;
         food.text = player.body.Hunger.ToString();
+        if (foodProgressBar != null)
+            foodProgressBar.Init();
         water.text = player.body.Water.ToString();
+        if (waterProgressBar != null)
+            waterProgressBar.Init();
         energy.text = player.body.Energy.ToString();
+        if (energyProgressBar != null)
+            energyProgressBar.Init();
     }
 
-    private void OnFoodChanged(int value) => food.text = value.ToString();
+    private void OnFoodChanged(int value)
+    {
+        food.text = value.ToString();
+        if (foodProgressBar != null)
+            foodProgressBar.SetValue(value);
+    }
 
-    private void OnWaterChanged(int value) => water.text = value.ToString();
+    private void OnWaterChanged(int value)
+    {
+        water.text = value.ToString();
+        if (waterProgressBar != null)
+            waterProgressBar.SetValue(value);
+    }
 
-    private void OnEnergyChanged(int value) => energy.text = value.ToString();
+    private void OnEnergyChanged(int value)
+    {
+        energy.text = value.ToString();
+        if (energyProgressBar != null)
+            energyProgressBar.SetValue(value);
+    }
 
     public void OnHealthChanged()
     {

@@ -13,7 +13,7 @@ public class SegmentProgressBar : MonoBehaviour
     [SerializeField] private int maxValue = 10;
     [SerializeField] private int value;
 
-    private void Awake()
+    public void Init()
     {
         for(var i = 0; i < maxValue; i++)
         {
