@@ -12,7 +12,7 @@ public class ContextMenuController : MonoBehaviour
     [SerializeField] private GameObject extendedMenuPrefab;
     [SerializeField] private Button extendedMenuButtonPrefab;
     private readonly List<Button> storedButtons = new List<Button>();
-    private bool isActive;
+    public bool IsActive { get; private set; }
     private RectTransform extendedMenu;
     private float scaleFactor;
 
@@ -144,18 +144,18 @@ public class ContextMenuController : MonoBehaviour
 
     private void Show()
     {
-        if (isActive)
+        if (IsActive)
             return;
         mainMenu.gameObject.SetActive(true);
-        isActive = true;
+        IsActive = true;
     }
 
     private void Close()
     {
-        if (!isActive)
+        if (!IsActive)
             return;
         mainMenu.gameObject.SetActive(false);
-        isActive = false;
+        IsActive = false;
     }
 
     private bool BoundaryCheckMouse(Vector2 mousePosition, Transform menu)
