@@ -35,11 +35,6 @@ public class SpecialGunCell : SpecialCell
         }
     }
 
-    public override void Init()
-    {
-        base.Init();
-    }
-    
     public override void PlaceItem(BaseItem item)
     {
         if (item.rotated)
