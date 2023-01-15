@@ -26,6 +26,7 @@ public class Equipable : MonoBehaviour, IContextMenuAction
 
     public void OnButtonClickAction<T>(T value)
     {
+        currentGun.gameObject.SetActive(false);
         var inventory = item.InventoryGrid;
         var character = value as Character;
         inventory.PickUpItem(item);

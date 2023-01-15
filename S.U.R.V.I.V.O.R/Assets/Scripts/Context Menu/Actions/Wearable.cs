@@ -27,12 +27,16 @@ public class Wearable : MonoBehaviour, IContextMenuAction
 
     public void OnButtonClickAction<T>(T value)
     {
+        item.gameObject.SetActive(false);
         var inventory = item.InventoryGrid;
         var character = value as Character;
         inventory.PickUpItem(item);
         var isSuccessful = character.body.Wear(currentClothes);
         
         if (!isSuccessful)
+        {
             inventory.InsertItem(item);
+            item.gameObject.SetActive(true);
+        }
     }
 }
