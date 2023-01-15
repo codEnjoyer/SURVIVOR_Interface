@@ -40,7 +40,12 @@ public class Selector : MonoBehaviour
     }
 
     public void Activate() => isActivate = true;
-    public void DeActivate() => isActivate = false;
+    public void DeActivate()
+    {
+        draw = false;
+        startPos = endPos = Vector2.zero;
+        isActivate = false;
+    }
 
     private void Select()
     {

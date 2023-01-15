@@ -40,11 +40,6 @@ namespace Editor
             {
                 PutNodeInMousePosition();
             }
-            if (Event.current.Equals(Event.KeyboardEvent("u")))
-            {
-                foreach (var node in graph)
-                    node.GetComponent<Location>().UpdatePrefab();
-            }
         }
 
         private void PutNodeInMousePosition()

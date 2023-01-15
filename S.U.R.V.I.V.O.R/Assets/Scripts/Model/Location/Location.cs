@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class Location : MonoBehaviour
+public class Location : MonoBehaviour, ISerializationCallbackReceiver
 {
     [SerializeField] private LocationData data;
     public LocationData Data => data;
@@ -35,5 +35,14 @@ public class Location : MonoBehaviour
         var z = transform.position.z;
 
         transform.position = new Vector3(x, y, z);
+    }
+
+    public void OnBeforeSerialize()
+    {
+        UpdatePrefab();
+    }
+
+    public void OnAfterDeserialize()
+    {
     }
 }

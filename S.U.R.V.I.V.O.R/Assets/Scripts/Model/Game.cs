@@ -7,7 +7,21 @@ using UnityEngine;
 
 public class Game : MonoBehaviour
 {
-    public static Game Instance { get; private set; }
+    private static Game instance;
+
+    public static Game Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<Game>();
+                instance.Init();
+            }
+
+            return instance;
+        }
+    }
 
     [SerializeField] private List<Group> groups;
     [SerializeField] private Group chosenGroup;
@@ -20,7 +34,7 @@ public class Game : MonoBehaviour
     [SerializeField] private TurnController turnController;
     [SerializeField] private GroupsMovementController groupsMovementController;
     [SerializeField] private Selector selector;
-    
+
     private MonoBehaviour[] allControllers;
     public event Action<Group, Group> ChosenGroupChange;
     public Group ChosenGroup => chosenGroup;
@@ -45,10 +59,12 @@ public class Game : MonoBehaviour
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
+            return;
         }
-        else
+
+        if (instance == null)
         {
-            Instance = this;
+            instance = this;
             Init();
         }
     }
