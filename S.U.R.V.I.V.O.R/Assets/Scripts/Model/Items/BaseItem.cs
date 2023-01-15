@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
-using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
-using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
 
 public class BaseItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
