@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f60254c73b0f4f848ec67d688da95f86, type: 3}
   m_Name: LukEatableFoodData
   m_EditorClassIdentifier: 
-  deltaHunger: 3
-  deltaWater: 1
+  deltaHunger: 1
+  deltaWater: 3
   deltaEnergy: 0

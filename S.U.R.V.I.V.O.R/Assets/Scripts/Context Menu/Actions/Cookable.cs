@@ -7,28 +7,42 @@ using UnityEngine;
 public class Cookable : MonoBehaviour, IContextMenuAction
 {
     public string ButtonText { get; private set; }
-    
+
     public bool Extendable { get; private set; }
 
     private CookableFood cookableFood;
 
     private InventoryController inventoryController;
-    
+
     public void Awake()
     {
         ButtonText = "Приготовить";
-        Extendable = false;
+        Extendable = true;
+        inventoryController = InventoryController.Instance;
         cookableFood = GetComponent<CookableFood>();
     }
+
     public void OnButtonClickAction<T>(T value)
     {
+        var character = value as Character;
         var itemOwner = cookableFood.GetComponent<BaseItem>().ItemOwner;
-        var foodAfterCook = itemOwner.Cook(cookableFood);
-        foreach (var food in foodAfterCook)
+        var foodAfterCook = character.Cook(cookableFood);
+
+        foreach (var packed in foodAfterCook)
         {
-            if (!itemOwner.body.PlaceItemToInventory(food.GetComponent<BaseItem>()))
+            bool isSuccess;
+            if (itemOwner != null)
+                isSuccess = itemOwner.body.PlaceItemToInventory(Instantiate(packed));
+            else
             {
-                Debug.Log($"Вам некуда положить один из предметов, получившихся в результате готовки, он был уничтожен");
+                inventoryController.ThrowItemAtLocation(Instantiate(packed));
+                isSuccess = true;
+            }
+
+            if (!isSuccess)
+            {
+                Debug.Log(
+                    $"Вам некуда положить один из предметов, получившихся в результате распаковки, он был уничтожен");
             }
         }
     }

@@ -38,13 +38,13 @@ public class PlayerCharacteristicsPanel : MonoBehaviour
             Photo.sprite = Player.Sprite;
         food.text = player.body.Hunger.ToString();
         if (foodProgressBar != null)
-            foodProgressBar.Init();
+            foodProgressBar.Init(player.body.Hunger);
         water.text = player.body.Water.ToString();
         if (waterProgressBar != null)
-            waterProgressBar.Init();
+            waterProgressBar.Init(player.body.Water);
         energy.text = player.body.Energy.ToString();
         if (energyProgressBar != null)
-            energyProgressBar.Init();
+            energyProgressBar.Init(player.body.Energy);
     }
 
     private void OnFoodChanged(int value)

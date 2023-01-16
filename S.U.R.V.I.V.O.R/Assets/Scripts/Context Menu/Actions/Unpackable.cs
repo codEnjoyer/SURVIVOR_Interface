@@ -20,6 +20,7 @@ public class Unpackable : MonoBehaviour, IContextMenuAction
     {
         ButtonText = "Распаковать";
         Extendable = false;
+        inventoryController = InventoryController.Instance;
         packedContainer = GetComponent<PackedContainer>();
     }
 
@@ -30,7 +31,14 @@ public class Unpackable : MonoBehaviour, IContextMenuAction
         
         foreach (var packed in unPackedItems)
         {
-            var isSuccess = itemOwner.body.PlaceItemToInventory(Instantiate(packed));
+            bool isSuccess;
+            if (itemOwner != null)
+                isSuccess = itemOwner.body.PlaceItemToInventory(Instantiate(packed));
+            else
+            {
+                inventoryController.ThrowItemAtLocation(Instantiate(packed));
+                isSuccess = true;
+            }
 
             if (!isSuccess)
             {

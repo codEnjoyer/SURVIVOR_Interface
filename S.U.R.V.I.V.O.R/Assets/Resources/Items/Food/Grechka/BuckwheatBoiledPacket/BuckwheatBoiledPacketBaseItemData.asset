@@ -16,5 +16,5 @@ MonoBehaviour:
     \u0433\u0440\u0435\u0447\u043A\u043E\u0439"
   description: "\u041E\u0447\u0435\u043D\u044C \u043F\u0438\u0442\u0430\u0442\u0435\u043B\u044C\u043D\u044B\u0439"
   size: {fileID: 11400000, guid: 902a373d2ce74ec4383ddd2eb14a6150, type: 2}
-  icon: {fileID: 21300000, guid: 190aaa409dd5d814181eb2746d8b90bc, type: 3}
+  icon: {fileID: 21300000, guid: f385026a2b0815f45ba4f9d63d4ec164, type: 3}
   weight: 0.3

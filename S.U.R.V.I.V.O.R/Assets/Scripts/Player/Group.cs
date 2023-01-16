@@ -13,6 +13,13 @@ namespace Player
         [SerializeField] private int currentOnGlobalMapGroupEndurance = 10;
         [SerializeField] private List<Character> currentGroupMembers = new ();
         private int maxGroupMembers;
+        private bool isLootAllowedOnThisTurn = true;
+
+        public bool IsLootAllowedOnThisTurn
+        {
+            get => isLootAllowedOnThisTurn;
+            set => isLootAllowedOnThisTurn = value;
+        }
 
         public int MaxOnGlobalMapGroupEndurance => maxOnGlobalMapGroupEndurance;
 
@@ -46,10 +53,13 @@ namespace Player
 
         public IEnumerable<BaseItem> Loot()
         {
-            SubtractEnergy();
-            foreach (var character in currentGroupMembers)
+            if (isLootAllowedOnThisTurn)
             {
-                yield return character.Loot(Location.Data);
+                SubtractEnergy();
+                foreach (var character in currentGroupMembers)
+                {
+                    yield return character.Loot(Location.Data);
+                }
             }
         }
 
@@ -105,6 +115,7 @@ namespace Player
             AddExtraEnergy();
             ResetAllTurnCharacteristics();
             GroupMovementLogic.OnTurnEnd();
+            isLootAllowedOnThisTurn = true;
             //Вычислить все характеристки при окончании хода
         }
     }

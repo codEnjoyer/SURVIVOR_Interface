@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f60254c73b0f4f848ec67d688da95f86, type: 3}
-  m_Name: SalamiEatableFoodData
+  m_Script: {fileID: 11500000, guid: e282f9abd5904a2d951926c44a1a75fd, type: 3}
+  m_Name: SairaConservedFoodData
   m_EditorClassIdentifier: 
-  deltaHunger: 3
-  deltaWater: -1
-  deltaEnergy: 1
+  itemToSpawnAfterConserveOpen: {fileID: 8626197531867915135, guid: 0c1250cdd1978654ab77d8944038b4b2, type: 3}

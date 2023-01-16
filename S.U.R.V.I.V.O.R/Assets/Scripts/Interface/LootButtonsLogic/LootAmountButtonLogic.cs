@@ -32,5 +32,7 @@ public class LootAmountButtonLogic : MonoBehaviour
                 inventoryController.AddItemToInventory(item);
             }
         }
+
+        Game.Instance.ChosenGroup.IsLootAllowedOnThisTurn = false;
     }
 }

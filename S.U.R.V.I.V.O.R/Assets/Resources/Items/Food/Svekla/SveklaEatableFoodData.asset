@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f60254c73b0f4f848ec67d688da95f86, type: 3}
   m_Name: SveklaEatableFoodData
   m_EditorClassIdentifier: 
-  deltaHunger: 2
-  deltaWater: 4
+  deltaHunger: 4
+  deltaWater: 2
   deltaEnergy: 1

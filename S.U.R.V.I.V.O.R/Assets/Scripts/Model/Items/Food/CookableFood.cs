@@ -6,7 +6,13 @@ using UnityEngine;
 [RequireComponent(typeof(Cookable))]
 public class CookableFood : EatableFood
 {
-    [SerializeField] private List<GameObject> objectToSpawnAfterCook;
+    [SerializeField] private List<BaseItem> objectToSpawnAfterCook;
 
-    public IEnumerable<GameObject> ObjectToSpawnAfterCook => objectToSpawnAfterCook;
+    public IEnumerable<BaseItem> ObjectToSpawnAfterCook => objectToSpawnAfterCook;
+
+    public IEnumerable<BaseItem> Cook()
+    {
+        GetComponent<BaseItem>().Destroy();
+        return objectToSpawnAfterCook;
+    }
 }

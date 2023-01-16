@@ -18,6 +18,7 @@ public class Salvagable : MonoBehaviour, IContextMenuAction
     {
         ButtonText = "Разобрать";
         Extendable = false;
+        inventoryController = InventoryController.Instance;
         scrap = GetComponent<Scrap>();
     }
 
@@ -28,10 +29,19 @@ public class Salvagable : MonoBehaviour, IContextMenuAction
         GetComponent<BaseItem>().Destroy();
         foreach (var packed in salvagedItems)
         {
-            var isSuccess = itemOwner.body.PlaceItemToInventory(Instantiate(packed));
-            if (!isSuccess) 
+            bool isSuccess;
+            if (itemOwner != null)
+                isSuccess = itemOwner.body.PlaceItemToInventory(Instantiate(packed));
+            else
             {
-                Debug.Log($"Вам некуда положить один из предметов, получившихся в результате распаковки, он был уничтожен");
+                inventoryController.ThrowItemAtLocation(Instantiate(packed));
+                isSuccess = true;
+            }
+            
+            if (!isSuccess)
+            {
+                Debug.Log(
+                    $"Вам некуда положить один из предметов, получившихся в результате распаковки, он был уничтожен");
             }
         }
     }

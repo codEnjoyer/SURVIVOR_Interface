@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f60254c73b0f4f848ec67d688da95f86, type: 3}
   m_Name: KapustaEatableFoodData
   m_EditorClassIdentifier: 
-  deltaHunger: 1
-  deltaWater: 5
+  deltaHunger: 5
+  deltaWater: 1
   deltaEnergy: 0

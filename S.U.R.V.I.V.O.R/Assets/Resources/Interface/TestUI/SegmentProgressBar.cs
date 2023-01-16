@@ -13,7 +13,7 @@ public class SegmentProgressBar : MonoBehaviour
     [SerializeField] private int maxValue = 10;
     [SerializeField] private int value;
 
-    public void Init()
+    public void Init(int valueToInit)
     {
         for(var i = 0; i < maxValue; i++)
         {
@@ -26,7 +26,7 @@ public class SegmentProgressBar : MonoBehaviour
             if (i >= value)
                 segment.gameObject.SetActive(false);
         }
-        SetValue(value == default ? maxValue : value);
+        SetValue(valueToInit);
     }
 
     public void SetValue(int value)

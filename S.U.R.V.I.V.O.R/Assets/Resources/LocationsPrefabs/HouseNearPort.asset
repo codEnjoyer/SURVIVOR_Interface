@@ -16,27 +16,27 @@ MonoBehaviour:
   locationName: "\u0414\u043E\u043C \u043F\u0440\u0438 \u043F\u043E\u0440\u0442\u0443"
   chancesList:
   - item: {fileID: 3378165496502938967, guid: ff8cc0035eca00849a257ca1d7793f44, type: 3}
-    weightChance: 1
-  - item: {fileID: -4188875244394589981, guid: efa4d84474498a1468fdd9183f31f20e, type: 3}
-    weightChance: 3
-  - item: {fileID: 8119095802818382886, guid: a4e9874bc1ff3cb48acc98fa1e39a53d, type: 3}
-    weightChance: 1
-  - item: {fileID: -7246616232913779961, guid: 2a55ce149e2aa1c47a84112b594474b7, type: 3}
-    weightChance: 3
-  - item: {fileID: 3590134230014093396, guid: 803c0a90db0565f4c9b785f44634a912, type: 3}
-    weightChance: 1
-  - item: {fileID: 2961264404919201855, guid: 8d37c717a2906634a90751303a48950f, type: 3}
-    weightChance: 1
-  - item: {fileID: 1816208681769273612, guid: 5297bfef59d8cc2499d5a831d9269db5, type: 3}
-    weightChance: 1
-  - item: {fileID: -7828054832626531359, guid: 704f35796fa5065428db22cfffeadd51, type: 3}
     weightChance: 2
+  - item: {fileID: -4188875244394589981, guid: efa4d84474498a1468fdd9183f31f20e, type: 3}
+    weightChance: 10
+  - item: {fileID: 8119095802818382886, guid: a4e9874bc1ff3cb48acc98fa1e39a53d, type: 3}
+    weightChance: 2
+  - item: {fileID: -7246616232913779961, guid: 2a55ce149e2aa1c47a84112b594474b7, type: 3}
+    weightChance: 6
+  - item: {fileID: 3590134230014093396, guid: 803c0a90db0565f4c9b785f44634a912, type: 3}
+    weightChance: 2
+  - item: {fileID: 2961264404919201855, guid: 8d37c717a2906634a90751303a48950f, type: 3}
+    weightChance: 2
+  - item: {fileID: 1816208681769273612, guid: 5297bfef59d8cc2499d5a831d9269db5, type: 3}
+    weightChance: 2
+  - item: {fileID: -7828054832626531359, guid: 704f35796fa5065428db22cfffeadd51, type: 3}
+    weightChance: 1
   - item: {fileID: 7989406233264152095, guid: f957be7fec7aa2345a9f2654b097d0ce, type: 3}
-    weightChance: 1
+    weightChance: 2
   - item: {fileID: 1452853661885659746, guid: 802e3318c45bda1429de16db5a12cb94, type: 3}
-    weightChance: 1
+    weightChance: 2
   - item: {fileID: 8125538087884169714, guid: 303e1373546d6f74787bb1ad330dcd97, type: 3}
-    weightChance: 1
+    weightChance: 2
   - item: {fileID: 3699499038728648594, guid: 16a5678dbb1d1f445ba871934a9d1a81, type: 3}
     weightChance: 1
   - item: {fileID: 9009466196365969653, guid: e515cd76c7d262a44bf7a1af663ef107, type: 3}
@@ -55,5 +55,7 @@ MonoBehaviour:
     weightChance: 2
   - item: {fileID: 8902901394452774509, guid: a1f472896027d3f44940261a718721af, type: 3}
     weightChance: 2
+  - item: {fileID: 0}
+    weightChance: 18
   fightChancesList: []
   fightChance: 0

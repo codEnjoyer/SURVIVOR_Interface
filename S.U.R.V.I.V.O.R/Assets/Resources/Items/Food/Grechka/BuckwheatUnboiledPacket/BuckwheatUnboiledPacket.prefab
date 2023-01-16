@@ -38,7 +38,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 100, y: -20}
+  m_AnchoredPosition: {x: 311, y: -14}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &-7246616232913779961
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 1a5b587b367d927459ea4ae0c3e38057, type: 2}
   objectToSpawnAfterCook:
-  - {fileID: 6109797689476464371, guid: 326245fd9abff734c9bb95df5850f912, type: 3}
+  - {fileID: -7246616232913779961, guid: 326245fd9abff734c9bb95df5850f912, type: 3}
 --- !u!114 &-4237728343142148693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,6 +105,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7661a9c963b5b1944a31d2d25e5e4379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Action:
-    m_PersistentCalls:
-      m_Calls: []

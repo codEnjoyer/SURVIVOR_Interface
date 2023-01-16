@@ -48,11 +48,10 @@ public class Character : Entity
         food.GetComponent<BaseItem>().Destroy();
     }
     
-    public IEnumerable<GameObject> Cook(CookableFood food)
+    public IEnumerable<BaseItem> Cook(CookableFood food)
     {
-        var cookedObjects = food.ObjectToSpawnAfterCook.Select(Instantiate);
-        Destroy(food.gameObject);
-        return cookedObjects;
+        //TODO Добавить опыт к навыку готовки
+        return food.Cook();
     }
     
     public MeleeWeapon MeleeWeapon { get; set; }

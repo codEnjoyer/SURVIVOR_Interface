@@ -145,12 +145,11 @@ public class InventoryController : MonoBehaviour
         }
     }
 
-    private void ThrowItemAtLocation() // Перемещение предмета в инвентарь локации при нажатии на пустое пространство
+    public void ThrowItemAtLocation(BaseItem item) // Перемещение предмета в инвентарь локации при нажатии на пустое пространство
     {
         var locationItemGrid = GameObject.FindGameObjectWithTag("LocationItemGrid").GetComponent<InventoryGrid>();
-        var positionOnGrid = locationItemGrid.FindSpaceForObject(SelectedItem);
-        locationItemGrid.PlaceItem(SelectedItem, positionOnGrid.Value.x, positionOnGrid.Value.y);
-        SelectedItem = null;
+        var positionOnGrid = locationItemGrid.FindSpaceForObject(item);
+        locationItemGrid.PlaceItem(item, positionOnGrid.Value.x, positionOnGrid.Value.y);
     }
 
     private void RotateItem()
