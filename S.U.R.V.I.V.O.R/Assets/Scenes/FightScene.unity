@@ -16425,7 +16425,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: d19492c2b62d5734dbad9be349c16f32, type: 3}
     m_FontSize: 25
     m_FontStyle: 1
     m_BestFit: 0
@@ -16437,7 +16437,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: End Turn
+  m_Text: "\u041A\u043E\u043D\u0435\u0446 \u0445\u043E\u0434\u0430"
 --- !u!222 &269938978
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -50601,7 +50601,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &919830560
 RectTransform:
   m_ObjectHideFlags: 0
@@ -65128,7 +65128,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: d19492c2b62d5734dbad9be349c16f32, type: 3}
     m_FontSize: 25
     m_FontStyle: 1
     m_BestFit: 0
@@ -65140,7 +65140,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Shoot
+  m_Text: "\u0412\u044B\u0441\u0442\u0440\u0435\u043B"
 --- !u!222 &1144048564
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -71456,7 +71456,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: d19492c2b62d5734dbad9be349c16f32, type: 3}
     m_FontSize: 25
     m_FontStyle: 1
     m_BestFit: 0
@@ -71468,7 +71468,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Move
+  m_Text: "\u0425\u043E\u0434"
 --- !u!222 &1272464053
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -107674,7 +107674,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: d19492c2b62d5734dbad9be349c16f32, type: 3}
     m_FontSize: 25
     m_FontStyle: 1
     m_BestFit: 0
@@ -107686,7 +107686,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Fight
+  m_Text: "\u0423\u0434\u0430\u0440"
 --- !u!222 &1925600250
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -118270,7 +118270,6 @@ MonoBehaviour:
   groupCharacterCardPrefab: {fileID: 2113059583011548651, guid: d620cc2ab1a40604da48153f776a85ce, type: 3}
   queuePanel: {fileID: 1293386575}
   groupPanel: {fileID: 1926245456}
-  textPrefab: {fileID: 2131739560993306242, guid: b5a33737c86f28b4ebccbbe44cd98a48, type: 3}
   camera: {fileID: 963194227}
 --- !u!1 &2109873405
 GameObject:

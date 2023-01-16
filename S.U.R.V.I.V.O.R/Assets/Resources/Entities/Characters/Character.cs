@@ -69,7 +69,7 @@ public class Character : Entity
     
     public override void Attack(IEnumerable<BodyPart> targets, float distance)
     {
-        var damage = new DamageInfo(15f);
+        var damage = new DamageInfo(40f);
         targets.First().TakeDamage(damage);
     }
 }
