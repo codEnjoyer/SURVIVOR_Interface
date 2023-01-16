@@ -6,8 +6,8 @@ public class CameraScript : MonoBehaviour
 {
     private float moveSpeed = 10f;
     private float liftSpeed = 20f;
-    private float rotateSpeed = 1f;
-    private float rotateZone = 20f;
+    private float rotateSpeed = 2f;
+    private float rotateZone = 30f;
     private Camera mainCamera;
 
     private float rotationX = 0;

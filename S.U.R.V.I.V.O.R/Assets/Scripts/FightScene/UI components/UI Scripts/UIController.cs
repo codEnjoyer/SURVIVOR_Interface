@@ -57,7 +57,7 @@ public class UIController : MonoBehaviour
             cardT.Find("CharacterName").GetComponent<Text>().text
                 = $"{entityCharacter.FirstName} {entityCharacter.Surname}";
             cardT.Find("Photo").GetComponent<Image>().sprite = entityCharacter.Sprite;
-            cardT.Find("Health").GetComponent<Text>().text = (100).ToString();
+            cardT.Find("Health").GetComponent<Text>().text = fCharacter.Entity.Body.Hp.ToString();
             cardT.Find("Energy").GetComponent<Text>().text = fCharacter.RemainingEnergy.ToString();
         }
 
@@ -74,12 +74,20 @@ public class UIController : MonoBehaviour
             queueCard.transform.Translate(new Vector3(0f, (float)cardYOffSet,0f));
             queueCard.transform.parent = queuePanel.transform;
             queueCard.GetComponent<Image>().color = (fightCharacter.Type == CharacterType.Ally) 
-                                                                ? new Color(0,1,0,0.7f) : new Color(1,0,0,0.7f);
+                                            ? new Color(0,1,0,0.7f) : new Color(1,0,0,0.7f);
 
             queueCard.AddComponent<UIQueueCard>();
             queueCard.GetComponent<UIQueueCard>().FightCharacter = fightCharacter;
 
-            queueCard.transform.Find("FightCharacterName").GetComponent<Text>().text = "Character" + cardsQueue.Count;
+            if (fightCharacter.Type == CharacterType.Ally)
+            {
+                var character = fightCharacter.Entity as Character;
+                queueCard.transform.Find("FightCharacterName").GetComponent<Text>().text =
+                    $"{character.FirstName} {character.Surname}";
+            }
+            else
+                queueCard.transform.Find("FightCharacterName").GetComponent<Text>().text = "Крыса";
+
             //queueCard.SetActive(cardsQueue.Count < MaxDrawCardsCount);
             cardsQueue.Enqueue(queueCard);
         }
@@ -104,6 +112,8 @@ public class UIController : MonoBehaviour
             var character = card.GetComponent<UIGroupCharacterCard>().FightCharacter;
             card.transform.Find("Energy").GetComponent<Text>().text 
                 = character.RemainingEnergy.ToString();
+            card.transform.Find("Health").GetComponent<Text>().text 
+                = character.Entity.Body.Hp.ToString();
         }
     }
 

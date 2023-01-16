@@ -61,7 +61,7 @@ public class FightCharacter : MonoBehaviour
         transform.LookAt(lookPoint);
         var bodyParts = TargetToHit.GetComponent<FightCharacter>().Entity.Body.BodyParts;
         Entity.Attack(bodyParts, Vector3.Distance(gameObject.transform.position, TargetToHit.transform.position));
-        UIController.Instance.DrawDamage(TargetToHit, 15f);
+        UIController.Instance.DrawDamage(TargetToHit, (Type == CharacterType.Ally)?40f:40f);
     }
 
     public void ResetEnergy()

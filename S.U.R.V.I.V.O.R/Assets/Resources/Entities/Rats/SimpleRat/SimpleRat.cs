@@ -12,7 +12,7 @@ public class SimpleRat : Entity
     public override void Attack(IEnumerable<BodyPart> targets, float distance)
     {
         var target = targets.First();
-        target.TakeDamage(new DamageInfo(10));
+        target.TakeDamage(new DamageInfo(40));
     }
 
     private void Awake()
