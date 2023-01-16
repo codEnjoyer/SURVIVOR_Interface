@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class PlayerCharacteristicsPanel : MonoBehaviour
@@ -28,12 +29,12 @@ public class PlayerCharacteristicsPanel : MonoBehaviour
     [SerializeField] private SegmentProgressBar waterProgressBar;
     [SerializeField] private Text energy;
     [SerializeField] private SegmentProgressBar energyProgressBar;
-    [SerializeField] private Text name;
+    [FormerlySerializedAs("name")] [SerializeField] private Text characterName;
     [SerializeField] private GameObject healthProgressBar;
 
     public void Init()
     {
-        name.text = $"{Player.FirstName} {Player.Surname}";
+        characterName.text = $"{Player.FirstName} {Player.Surname}";
         if (Photo != null)
             Photo.sprite = Player.Sprite;
         food.text = player.body.Hunger.ToString();

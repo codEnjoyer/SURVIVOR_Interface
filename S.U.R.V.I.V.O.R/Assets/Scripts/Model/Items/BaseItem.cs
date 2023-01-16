@@ -89,7 +89,7 @@ public class BaseItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         yield return new WaitForSeconds(Seconds);
         if (mouseEnter && !ContextMenuController.Instance.IsActive)
-            Tooltip.Instance.ShowTooltip(data.Name);
+            Tooltip.Instance.ShowTooltip(data.ItemName);
     }
 
     #endregion

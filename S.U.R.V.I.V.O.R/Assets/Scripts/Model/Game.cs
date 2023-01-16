@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Graph_and_Map;
+using Interface;
 using Player;
 using Player.GroupMovement;
 using UnityEngine;
@@ -97,6 +98,7 @@ public class Game : MonoBehaviour
 
     public void Resume()
     {
+        Debug.Log("Resume");
         OnPause = false;
         Selector.Instance.Activate();
         MinimapController.Instance.isActive = true;
@@ -105,9 +107,16 @@ public class Game : MonoBehaviour
 
     public void Pause()
     {
+        Debug.Log("Pause");
         OnPause = true;
+        Tooltip.Instance.HideTooltip();
         Selector.Instance.DeActivate();
         MinimapController.Instance.isActive = false;
         CameraController.Instance.isActive = false;
+        if (InventoryController.Instance.SelectedItem != null)
+        {
+            LocationInventory.Instance.LocationInventoryGrid.InsertItem(InventoryController.Instance.SelectedItem);
+            InventoryController.Instance.SelectedItem = null;
+        }
     }
 }
