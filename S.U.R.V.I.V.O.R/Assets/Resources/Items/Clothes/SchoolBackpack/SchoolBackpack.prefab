@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 2488022020709401235}
   - component: {fileID: 6433104850600073937}
   - component: {fileID: -4594976966681356657}
+  - component: {fileID: 2506630846484308610}
+  - component: {fileID: 4115851403283330635}
   m_Layer: 0
   m_Name: SchoolBackpack
   m_TagString: Untagged
@@ -73,9 +75,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7661a9c963b5b1944a31d2d25e5e4379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Action:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &-4594976966681356657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,3 +87,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bf17f717442e2d4b91ee6b2417ae00a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2506630846484308610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6630877466564552865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7d9d34ed4be8af4aa9dcd52c5cf5906, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4115851403283330635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6630877466564552865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 347dc2d6bce1eaa4798ca48072e14c96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SalvagableItems:
+  - item: {fileID: 1179882295792572040, guid: 547b866d349cc9d4a823649304b74718, type: 3}
+    weightChance: 2

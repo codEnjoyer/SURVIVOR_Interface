@@ -60,9 +60,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7661a9c963b5b1944a31d2d25e5e4379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Action:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &9133600800863496505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,4 +84,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d56350ec58345bfa195af717fd43646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 550452e834521314abaa1d4652a9535e, type: 2}
+  data: {fileID: 11400000, guid: 397b8e41fa2a84a438e11568e074269e, type: 2}

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c73c94283b9401b97df2a11d9d26027, type: 3}
+  m_Name: Sklad
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 0}
+  locationName: "\u041F\u0440\u043E\u043C\u044B\u0448\u043B\u0435\u043D\u044B\u0439
+    \u0441\u043A\u043B\u0430\u0434"
+  chancesList:
+  - item: {fileID: 616970406597432141, guid: 5cccba5d1e0d52b46a91807c3a82facc, type: 3}
+    weightChance: 3
+  - item: {fileID: 2757619415076845185, guid: a39b72e47efe32b4c9085ce0edc39692, type: 3}
+    weightChance: 1
+  - item: {fileID: 7362341032439074997, guid: e5eee67adbea1a5439b087df32adfd13, type: 3}
+    weightChance: 3
+  - item: {fileID: 8509758011308892050, guid: 5029a11932482974594abef04856a722, type: 3}
+    weightChance: 3
+  - item: {fileID: 0}
+    weightChance: 3
+  fightChancesList: []
+  fightChance: 0

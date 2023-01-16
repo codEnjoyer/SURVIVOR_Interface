@@ -11,7 +11,7 @@ public class ProgressBarScript : MonoBehaviour
     [SerializeField] private float value;
     private RectTransform valueRect;
 
-    private void Awake()
+    public void Init()
     {
         var rect = transform.Find("ValueRect");
         valueRect = rect.GetComponent<RectTransform>();

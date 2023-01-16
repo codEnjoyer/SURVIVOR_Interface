@@ -35,7 +35,7 @@ MonoBehaviour:
     weightChance: 50
   - item: {fileID: -7246616232913779961, guid: 2a55ce149e2aa1c47a84112b594474b7, type: 3}
     weightChance: 50
-  - item: {fileID: 5625003530853893956, guid: 542b68249e554534bb7e15328865c56e, type: 3}
+  - item: {fileID: 2961264404919201855, guid: 8d37c717a2906634a90751303a48950f, type: 3}
     weightChance: 50
   - item: {fileID: 9216805417458442415, guid: 8441d45d3d9770d43b0ac5f9cd37da8c, type: 3}
     weightChance: 50

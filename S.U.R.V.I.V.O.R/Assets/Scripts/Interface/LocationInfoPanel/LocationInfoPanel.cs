@@ -32,7 +32,7 @@ public class LocationInfoPanel : MonoBehaviour
             new (161, 188, 55),
             new (108, 183, 56),
         };
-        OnLocationChange(Game.Instance.ChosenGroup.GroupMovementLogic.CurrentNode.Location);
+        OnLocationChange(Game.Instance.ChosenGroup.Location);
     }
 
     private void OnChosenGroupChange(Group oldGroup, Group newGroup)
@@ -47,13 +47,14 @@ public class LocationInfoPanel : MonoBehaviour
         var chancesDict = new Dictionary<Type, float>();
         foreach (var pair in loc.Data.AllItemsChances)
         {
-                chancesDict = SumDictionaries(CalculateGameObjectChances(pair.Item.gameObject, pair.WeightChance), chancesDict);  
+            if (pair.Item == null) continue;
+            chancesDict = SumDictionaries(CalculateGameObjectChances(pair.Item.gameObject, pair.WeightChance), chancesDict);  
         }
         var resultDict = new Dictionary<Type, float>
         {
             {typeof(IWeapon),0},
             {typeof(Clothes),0},
-            {typeof(Material),0},
+            {typeof(Scrap),0},
             {typeof(Medicine),0},
             {typeof(AmmoBox),0},
             {typeof(EatableFood),0}
@@ -72,7 +73,7 @@ public class LocationInfoPanel : MonoBehaviour
         ammoString.Redraw(resultDict[typeof(AmmoBox)],colors);
         medicineString.Redraw(resultDict[typeof(Medicine)],colors);
         clothesString.Redraw(resultDict[typeof(Clothes)],colors);
-        materialsString.Redraw(resultDict[typeof(Material)],colors);
+        materialsString.Redraw(resultDict[typeof(Scrap)],colors);
         foodString.Redraw(resultDict[typeof(EatableFood)],colors);
     }
     
@@ -107,13 +108,13 @@ public class LocationInfoPanel : MonoBehaviour
         foreach (var key in dic1.Keys.ToArray())
         {
             if (!dic3.ContainsKey(key)) dic3[key] = 0f;
-            dic3[key] = dic1[key];
+            dic3[key] += dic1[key];
         }
         
         foreach (var key in dic2.Keys.ToArray())
         {
             if (!dic3.ContainsKey(key)) dic3[key] = 0f;
-            dic3[key] = dic2[key];
+            dic3[key] += dic2[key];
         }
         
         return dic3;

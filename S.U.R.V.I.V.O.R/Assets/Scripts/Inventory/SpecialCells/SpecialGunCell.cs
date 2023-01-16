@@ -47,6 +47,7 @@ public class SpecialGunCell : SpecialCell
     public override void GiveItem()
     {
         if (placedItem == null) return;
+        placedItem.gameObject.SetActive(true);
         PlacedItem.GetComponent<RectTransform>().sizeDelta = PlacedItem.OnAwakeRectTransformSize;
         PlacedItem.GetComponent<RectTransform>().localScale = PlacedItem.OnAwakeRectTransformScale;
         PlacedItem.GetComponent<RectTransform>().SetParent(canvasTransform);

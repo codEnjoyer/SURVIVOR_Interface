@@ -24,7 +24,7 @@ public class LootAmountString : MonoBehaviour
             messageOfLootAmountText.text = $"Мало {lootTypeText}"; 
             backgroundImage.color = new Color(color.r / 255,color.g / 255, color.b / 255,255);
         }
-        else if (dropChance <= 0.25)
+        else if (dropChance <= 0.20)
         {
             var color = colorsToDraw[2];
             messageOfLootAmountText.text = $"Достаточно {lootTypeText}"; 

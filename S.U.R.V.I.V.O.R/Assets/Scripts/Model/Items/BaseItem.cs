@@ -1,24 +1,27 @@
 using System;
-using System.Text.RegularExpressions;
+using System.Collections;
+using Interface;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
-using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
 
-public class BaseItem : MonoBehaviour
+public class BaseItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    [FormerlySerializedAs("itemData")] [SerializeField] private BaseItemData data;
+    [FormerlySerializedAs("itemData")] [SerializeField]
+    private BaseItemData data;
+
     public int OnGridPositionX { get; set; }
     public int OnGridPositionY { get; set; }
 
     public InventoryGrid InventoryGrid => transform.GetComponentInParent<InventoryGrid>();
 
     public Character ItemOwner { get; set; }
-    
+
     public Vector3 OnAwakeRectTransformSize { get; set; }
-    
+
     public Vector3 OnAwakeRectTransformScale { get; set; }
-    
+
     public int Height => !rotated ? Size.Height : Size.Width;
 
     public int Width => !rotated ? Size.Width : Size.Height;
@@ -27,15 +30,15 @@ public class BaseItem : MonoBehaviour
     public Size Size => data.Size;
     public float Weight => data.Weight;
     public BaseItemData Data => data;
-    
+
     public void Awake()
     {
         if (data == null || data.Icon == null)
             return;
-        
+
         gameObject.AddComponent<Image>().sprite = data.Icon;
         gameObject.GetComponent<Image>().raycastTarget = false;
-        
+
         var rt = gameObject.GetComponent<RectTransform>();
         var scaleFactor = Game.Instance.MainCanvas.scaleFactor;
         var size = new Vector2(((data.Size.Width * InventoryGrid.TileSize) - data.Size.Width - 1) * scaleFactor,
@@ -44,7 +47,7 @@ public class BaseItem : MonoBehaviour
         OnAwakeRectTransformScale = rt.localScale;
         OnAwakeRectTransformSize = rt.sizeDelta;
     }
-    
+
     public void Rotated()
     {
         rotated = !rotated;
@@ -57,4 +60,37 @@ public class BaseItem : MonoBehaviour
         InventoryGrid.PickUpItem(this);
         Destroy(gameObject);
     }
+
+    #region TooltipRegin
+
+    private bool mouseEnter;
+    const float Seconds = 0.5f;
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        mouseEnter = true;
+        StartCoroutine(ShowTooltipCoroutine());
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        mouseEnter = false;
+        Tooltip.Instance.HideTooltip();
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        mouseEnter = false;
+        Tooltip.Instance.HideTooltip();
+    }
+
+
+    IEnumerator ShowTooltipCoroutine()
+    {
+        yield return new WaitForSeconds(Seconds);
+        if (mouseEnter && !ContextMenuController.Instance.IsActive)
+            Tooltip.Instance.ShowTooltip(data.Name);
+    }
+
+    #endregion
 }

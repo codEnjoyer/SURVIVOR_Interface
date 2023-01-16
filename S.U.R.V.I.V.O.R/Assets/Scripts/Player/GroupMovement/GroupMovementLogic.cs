@@ -34,6 +34,8 @@ namespace Player.GroupMovement
         private float progress;
         private Queue<Node> way = new();
 
+        private bool isMovementOverOnThisTurn;
+
         public Node CurrentNode
         {
             get => currentNode;
@@ -64,7 +66,12 @@ namespace Player.GroupMovement
                 LocationChange?.Invoke(currentNode.Location);
                 progress = 0;
                 if (way.Count == 0 || group.CurrentOnGlobalMapGroupEndurance == 0)
+                {
                     movementSm.ChangeState(Sleeping);
+                    group.CurrentOnGlobalMapGroupEndurance = 0;
+                    group.OnOnGlobalMapMovementEnd();
+                    isMovementOverOnThisTurn = true;
+                }
                 else
                 {
                     targetNode = way.Dequeue();
@@ -172,10 +179,15 @@ namespace Player.GroupMovement
 
         public void PreparingToMove()
         {
-            if (movementSm.CurrentState == Sleeping)
+            if (movementSm.CurrentState == Sleeping && !isMovementOverOnThisTurn)
                 movementSm.ChangeState(WaitingTarget);
         }
 
+        public void OnTurnEnd()
+        {
+            isMovementOverOnThisTurn = false;
+        }
+        
         #region MonoBehaviourCallBack
 
         private void Awake()
@@ -192,10 +204,7 @@ namespace Player.GroupMovement
             secondTurnObjectLineRenderer = secondTurnObject.GetComponent<LineRenderer>();
             thirdTurnObjectLineRenderer = thirdTurnObject.GetComponent<LineRenderer>();
             movementSm.Initialize(Sleeping);
-        }
-
-        private void Start()
-        {
+            
             currentNode = Game.Instance.StartNode;
             if (currentNode == null)
                 Debug.Log("Нет стартовой ноды!");
@@ -205,7 +214,6 @@ namespace Player.GroupMovement
                 targetNode = currentNode;
             }
         }
-
         private void Update()
         {
             if (Input.GetMouseButtonDown(0) && movementSm.CurrentState == WaitingTarget &&

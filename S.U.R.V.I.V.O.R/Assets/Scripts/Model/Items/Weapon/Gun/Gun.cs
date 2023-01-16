@@ -6,6 +6,7 @@ using Model.GameEntity.Skills;
 using UnityEngine;
 
 [RequireComponent(typeof(BaseItem))]
+[RequireComponent(typeof(Equipable))]
 public abstract class Gun : MonoBehaviour, IWeapon
 {
     protected Magazine currentMagazine;

@@ -23,11 +23,11 @@ public class PlayerCharacteristicsPanel : MonoBehaviour
 
     [SerializeField] private Image Photo;
     [SerializeField] private Text food;
-    [SerializeField] static SegmentProgressBar foodProgressBar;
+    [SerializeField] private SegmentProgressBar foodProgressBar;
     [SerializeField] private Text water;
-    [SerializeField] static SegmentProgressBar waterProgressBar;
+    [SerializeField] private SegmentProgressBar waterProgressBar;
     [SerializeField] private Text energy;
-    [SerializeField] static SegmentProgressBar energyProgressBar;
+    [SerializeField] private SegmentProgressBar energyProgressBar;
     [SerializeField] private Text name;
     [SerializeField] private GameObject healthProgressBar;
 

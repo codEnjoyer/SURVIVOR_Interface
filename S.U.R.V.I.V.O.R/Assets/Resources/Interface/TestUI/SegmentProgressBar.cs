@@ -26,6 +26,7 @@ public class SegmentProgressBar : MonoBehaviour
             if (i >= value)
                 segment.gameObject.SetActive(false);
         }
+        SetValue(value == default ? maxValue : value);
     }
 
     public void SetValue(int value)

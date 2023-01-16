@@ -7,28 +7,25 @@ using UnityEngine;
 public class Eatable : MonoBehaviour, IContextMenuAction
 {
     public string ButtonText { get; private set; }
-    
     public bool Extendable { get; private set;}
 
-    private EatableFood eatableFood;
+    private EatableFood currentFood;
 
-    private InventoryController inventoryController;
+    private BaseItem item;
     
+
     public void Awake()
     {
-        ButtonText = "Съесть";
-        Extendable = false;
-        eatableFood = GetComponent<EatableFood>();
-    }
-    public void OnButtonClickAction<T>(T value)
-    {
-        var itemOwner = eatableFood.GetComponent<BaseItem>().ItemOwner;
-        itemOwner.Eat(eatableFood);
-        Debug.Log($"Вам некуда положить один из предметов, получившихся в результате готовки, он был уничтожен");
+        ButtonText = "Употребить";
+        Extendable = true;
+        currentFood = GetComponent<EatableFood>();
+        item = GetComponent<BaseItem>();
     }
 
-    public IEnumerable GetValues()
+
+    public void OnButtonClickAction<T>(T value)
     {
-        throw new NotImplementedException();
+        var character = value as Character;
+        character.Eat(currentFood);
     }
 }

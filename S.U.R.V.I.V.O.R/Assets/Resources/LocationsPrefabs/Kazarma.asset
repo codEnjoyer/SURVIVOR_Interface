@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c73c94283b9401b97df2a11d9d26027, type: 3}
+  m_Name: Kazarma
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 0}
+  locationName: "\u0412\u043E\u0435\u043D\u043D\u044B\u0439 \u043E\u0431\u044A\u0435\u043A\u0442"
+  chancesList:
+  - item: {fileID: 7644943031401151179, guid: c0a6c93b4a0a09e4c80eb92ab32e7e6b, type: 3}
+    weightChance: 1
+  - item: {fileID: 1014850509166664758, guid: e70ca26ae9b256d4894daa79afc5e82c, type: 3}
+    weightChance: 1
+  - item: {fileID: 5945854412437212695, guid: ab1464954630320458709db22b96d1d9, type: 3}
+    weightChance: 1
+  - item: {fileID: 6351500512617619885, guid: 95666b85a979d474298f1a8548924080, type: 3}
+    weightChance: 3
+  - item: {fileID: 266964188655704394, guid: 2321407bf58bcd143b8fca176cc2d771, type: 3}
+    weightChance: 3
+  - item: {fileID: 4335172271058922238, guid: 06ad5d7b57028bb42bef52190ac2c775, type: 3}
+    weightChance: 3
+  - item: {fileID: 3378165496502938967, guid: ff8cc0035eca00849a257ca1d7793f44, type: 3}
+    weightChance: 5
+  - item: {fileID: -4134842791348414297, guid: 34b2c9c0cb069994a93de2f4f5829137, type: 3}
+    weightChance: 2
+  - item: {fileID: -5585168378110039048, guid: dedae8c9ac071884ab01c6ef49b80464, type: 3}
+    weightChance: 2
+  - item: {fileID: 75800956248716105, guid: d344ffcc73ffb434cb85f19046cd5b53, type: 3}
+    weightChance: 2
+  - item: {fileID: 7989406233264152095, guid: f957be7fec7aa2345a9f2654b097d0ce, type: 3}
+    weightChance: 2
+  - item: {fileID: 1452853661885659746, guid: 802e3318c45bda1429de16db5a12cb94, type: 3}
+    weightChance: 2
+  - item: {fileID: 3976912532036040208, guid: 5160f3d344ff7834cb2d79706d6e3246, type: 3}
+    weightChance: 2
+  - item: {fileID: 6205756150975093434, guid: ad00c86b81342f747a9c051e4a4d4d6f, type: 3}
+    weightChance: 5
+  fightChancesList: []
+  fightChance: 0

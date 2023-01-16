@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6575d931043aba537c27e7472d109, type: 3}
+  m_Name: SVDBaseItemData
+  m_EditorClassIdentifier: 
+  name: "\u0421\u0412\u0414"
+  description: "\u0421\u043E\u0432\u0435\u0442\u0441\u043A\u0430\u044F \u043F\u043E\u043B\u0443\u0430\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u0430\u044F
+    \u0441\u043D\u0430\u0439\u043F\u0435\u0440\u0441\u043A\u0430\u044F \u0432\u0438\u043D\u0442\u043E\u0432\u043A\u0430,
+    \u0441\u043B\u0430\u0432\u044F\u0449\u0430\u044F\u0441\u044F \u0441\u0432\u043E\u0435\u0439
+    \u0443\u0431\u043E\u0439\u043D\u043E\u0441\u0442\u044C\u044E"
+  size: {fileID: 11400000, guid: 52fa35d181e38734fb1d885d3154ea0b, type: 2}
+  icon: {fileID: 21300000, guid: b0ec4cf9c41582f42888f07a17de3d79, type: 3}
+  weight: 5

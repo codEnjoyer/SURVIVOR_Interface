@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c73c94283b9401b97df2a11d9d26027, type: 3}
+  m_Name: Ofice
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 0}
+  locationName: "\u041E\u0444\u0438\u0441\u043D\u043E\u0435 \u0437\u0434\u0430\u043D\u0438\u0435"
+  chancesList:
+  - item: {fileID: 616970406597432141, guid: 5cccba5d1e0d52b46a91807c3a82facc, type: 3}
+    weightChance: 1
+  - item: {fileID: 6213010528908341367, guid: 7dfc23a3a95a82a498f8a0983c9e8f2d, type: 3}
+    weightChance: 2
+  - item: {fileID: 1523101036465250864, guid: 87894978b5b120c48b8981b047e355d6, type: 3}
+    weightChance: 2
+  - item: {fileID: 1572297648699813524, guid: 73c10154e6911604f877dae57f1a7d7c, type: 3}
+    weightChance: 2
+  - item: {fileID: 7362341032439074997, guid: e5eee67adbea1a5439b087df32adfd13, type: 3}
+    weightChance: 1
+  - item: {fileID: 3699499038728648594, guid: 16a5678dbb1d1f445ba871934a9d1a81, type: 3}
+    weightChance: 1
+  - item: {fileID: 2139329423940833067, guid: fb34a11261346c444954f2356b8057e5, type: 3}
+    weightChance: 1
+  - item: {fileID: 538172261470315174, guid: 069bd23ceb866f94883833dda5a79354, type: 3}
+    weightChance: 2
+  - item: {fileID: 1179882295792572040, guid: 547b866d349cc9d4a823649304b74718, type: 3}
+    weightChance: 3
+  - item: {fileID: 8125538087884169714, guid: 303e1373546d6f74787bb1ad330dcd97, type: 3}
+    weightChance: 3
+  fightChancesList: []
+  fightChance: 0

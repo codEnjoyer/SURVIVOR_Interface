@@ -7,7 +7,23 @@ using UnityEngine;
 
 public class Game : MonoBehaviour
 {
-    public static Game Instance { get; private set; }
+    private static Game instance;
+
+    public static Game Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<Game>();
+                instance.Init();
+            }
+
+            return instance;
+        }
+    }
+
+    public bool OnPause { get; private set; }
 
     [SerializeField] private List<Group> groups;
     [SerializeField] private Group chosenGroup;
@@ -20,7 +36,7 @@ public class Game : MonoBehaviour
     [SerializeField] private TurnController turnController;
     [SerializeField] private GroupsMovementController groupsMovementController;
     [SerializeField] private Selector selector;
-    
+
     private MonoBehaviour[] allControllers;
     public event Action<Group, Group> ChosenGroupChange;
     public Group ChosenGroup => chosenGroup;
@@ -45,10 +61,12 @@ public class Game : MonoBehaviour
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
+            return;
         }
-        else
+
+        if (instance == null)
         {
-            Instance = this;
+            instance = this;
             Init();
         }
     }
@@ -73,5 +91,23 @@ public class Game : MonoBehaviour
         {
             controller.gameObject.SetActive(true);
         }
+        
+    }
+
+
+    public void Resume()
+    {
+        OnPause = false;
+        Selector.Instance.Activate();
+        MinimapController.Instance.isActive = true;
+        CameraController.Instance.isActive = true;
+    }
+
+    public void Pause()
+    {
+        OnPause = true;
+        Selector.Instance.DeActivate();
+        MinimapController.Instance.isActive = false;
+        CameraController.Instance.isActive = false;
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class CameraController : MonoBehaviour
@@ -8,13 +9,13 @@ public class CameraController : MonoBehaviour
     private InputAction movement;
     private Transform cameraTransform;
     private Camera camera;
-    
+
     [SerializeField] private GameObject map;
     private Vector3 mapPointMax;
     private Vector3 mapPointMin;
 
     [SerializeField] private float maxSpeed = 5f;
-    
+
     [SerializeField] private float minimapSpeed = 10f;
     private float speed;
 
@@ -26,9 +27,9 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float zoomMinHeight = 5f;
     [SerializeField] private float zoomMaxHeight = 50f;
     [SerializeField] [Range(0f, 0.1f)] private float edgeTolerance = 0.05f;
-    
+
     private static CameraController instance;
-    
+
     public static CameraController Instance
     {
         get
@@ -99,20 +100,19 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        
         if (!isActive) return;
         if (destinationReached)
         {
             GetKeyboardMovement();
             //CheckMouseAtScreenEdge();
-            
+
             UpdateVelocity();
             UpdateBasePosition();
             UpdateCameraPosition();
         }
         else
             OnMoveToDestination(destinationPoint);
-        
+
 
         transform.position = CheckPosition(transform.position, transform.position);
     }
@@ -226,12 +226,16 @@ public class CameraController : MonoBehaviour
     private Vector3 CheckPosition(Vector3 fromPoint, Vector3 toPoint)
     {
         var minPointTo = GetCameraFrustumPoint(new Vector3(0f, 0f));
-        var maxPointTo = GetCameraFrustumPoint(new Vector3(Screen.width,Screen.height));
-        var resultPoint = new Vector3(Math.Clamp(toPoint.x, mapPointMin.x + 5 + (maxPointTo.x - fromPoint.x), mapPointMax.x - 5 -(fromPoint.x - minPointTo.x)),
-            0, Math.Clamp(toPoint.z, mapPointMin.z + 5 + (maxPointTo.z - fromPoint.z), mapPointMax.z - 5 - (fromPoint.z - minPointTo.z)));
+        var maxPointTo = GetCameraFrustumPoint(new Vector3(Screen.width, Screen.height));
+        var resultPoint = new Vector3(
+            Math.Clamp(toPoint.x, mapPointMin.x + 5 + (maxPointTo.x - fromPoint.x),
+                mapPointMax.x - 5 - (fromPoint.x - minPointTo.x)),
+            0,
+            Math.Clamp(toPoint.z, mapPointMin.z + 5 + (maxPointTo.z - fromPoint.z),
+                mapPointMax.z - 5 - (fromPoint.z - minPointTo.z)));
         return resultPoint;
     }
-    
+
     private Vector3 GetCameraFrustumPoint(Vector3 position)
     {
         var positionRay = camera.ScreenPointToRay(position);

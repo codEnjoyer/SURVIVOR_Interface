@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c73c94283b9401b97df2a11d9d26027, type: 3}
+  m_Name: Cafe
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 0}
+  locationName: "\u041A\u0430\u0444\u0435"
+  chancesList:
+  - item: {fileID: 8119095802818382886, guid: a4e9874bc1ff3cb48acc98fa1e39a53d, type: 3}
+    weightChance: 3
+  - item: {fileID: 2099250462793322563, guid: c0341d8b599d0844dbbe78285885e74f, type: 3}
+    weightChance: 1
+  - item: {fileID: -7405737862124459891, guid: 8d15a65b6ccba254688180f73882d70d, type: 3}
+    weightChance: 2
+  - item: {fileID: -4188875244394589981, guid: efa4d84474498a1468fdd9183f31f20e, type: 3}
+    weightChance: 2
+  - item: {fileID: 4777214484685547728, guid: fadf4c1faa74b3a439b5b586cf6e8412, type: 3}
+    weightChance: 1
+  - item: {fileID: -7246616232913779961, guid: 2a55ce149e2aa1c47a84112b594474b7, type: 3}
+    weightChance: 1
+  - item: {fileID: 538172261470315174, guid: 069bd23ceb866f94883833dda5a79354, type: 3}
+    weightChance: 3
+  - item: {fileID: 9213736200414500741, guid: 50d13267322859b44a11d0221f939488, type: 3}
+    weightChance: 1
+  - item: {fileID: 1846629867524330113, guid: bd52a7ae77c11cb4595ddee8a03d2bec, type: 3}
+    weightChance: 1
+  - item: {fileID: 9072215145345214335, guid: 35c1592ba1f92b04ca46eb5bf2020284, type: 3}
+    weightChance: 1
+  - item: {fileID: 3590134230014093396, guid: 803c0a90db0565f4c9b785f44634a912, type: 3}
+    weightChance: 3
+  - item: {fileID: 2174224634316808906, guid: 774cb39763f38be4ca3fe8aa32fd73e8, type: 3}
+    weightChance: 3
+  - item: {fileID: 1816208681769273612, guid: 5297bfef59d8cc2499d5a831d9269db5, type: 3}
+    weightChance: 2
+  - item: {fileID: 3142800568597314983, guid: d49f7db98cb610946be1153afa48d5a9, type: 3}
+    weightChance: 1
+  - item: {fileID: 4559259169047993179, guid: c5239ce84d83e944fbb22a54545940e5, type: 3}
+    weightChance: 1
+  - item: {fileID: 7521545726855088371, guid: 3fc0784634be7934988decd6d0eb5f42, type: 3}
+    weightChance: 3
+  - item: {fileID: 3378165496502938967, guid: ff8cc0035eca00849a257ca1d7793f44, type: 3}
+    weightChance: 2
+  - item: {fileID: 222805020130576589, guid: 9ed0af74a8a707148be9eeda4457afa5, type: 3}
+    weightChance: 1
+  - item: {fileID: 5508208588816576715, guid: 7a24f03832275434daf0e7568ce547d2, type: 3}
+    weightChance: 1
+  - item: {fileID: 1014850509166664758, guid: e70ca26ae9b256d4894daa79afc5e82c, type: 3}
+    weightChance: 1
+  - item: {fileID: 6476340998660143252, guid: 5fcf1df867e2c10479c5ac42e51f74af, type: 3}
+    weightChance: 1
+  - item: {fileID: 7616576644202868889, guid: 35d90080ff0819f43bf1f7ebb0064882, type: 3}
+    weightChance: 2
+  - item: {fileID: 1836673611246128492, guid: 304535a63b18e384798e2fdbc0264cfa, type: 3}
+    weightChance: 2
+  - item: {fileID: 6213010528908341367, guid: 7dfc23a3a95a82a498f8a0983c9e8f2d, type: 3}
+    weightChance: 2
+  - item: {fileID: -7534699771719633025, guid: 3a75f7f04ed7fb54eb759443fc2f6531, type: 3}
+    weightChance: 1
+  - item: {fileID: 1523101036465250864, guid: 87894978b5b120c48b8981b047e355d6, type: 3}
+    weightChance: 1
+  - item: {fileID: 1572297648699813524, guid: 73c10154e6911604f877dae57f1a7d7c, type: 3}
+    weightChance: 1
+  - item: {fileID: 2139329423940833067, guid: fb34a11261346c444954f2356b8057e5, type: 3}
+    weightChance: 2
+  - item: {fileID: 3699499038728648594, guid: 16a5678dbb1d1f445ba871934a9d1a81, type: 3}
+    weightChance: 2
+  - item: {fileID: 0}
+    weightChance: 10
+  fightChancesList: []
+  fightChance: 0

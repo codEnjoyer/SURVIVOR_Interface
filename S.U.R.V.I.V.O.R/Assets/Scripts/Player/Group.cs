@@ -15,7 +15,13 @@ namespace Player
         private int maxGroupMembers;
 
         public int MaxOnGlobalMapGroupEndurance => maxOnGlobalMapGroupEndurance;
-        public int CurrentOnGlobalMapGroupEndurance => currentOnGlobalMapGroupEndurance;
+
+        public int CurrentOnGlobalMapGroupEndurance
+        {
+            get => currentOnGlobalMapGroupEndurance;
+
+            set => currentOnGlobalMapGroupEndurance = value;
+        } 
         public GroupMovementLogic GroupMovementLogic { get; private set; }
         public Location Location => GroupMovementLogic.CurrentNode.Location;
 
@@ -38,9 +44,13 @@ namespace Player
             }
         }
 
-        public BaseItem Loot()
+        public IEnumerable<BaseItem> Loot()
         {
-            throw new NotImplementedException();
+            SubtractEnergy();
+            foreach (var character in currentGroupMembers)
+            {
+                yield return character.Loot(Location.Data);
+            }
         }
 
         private void SubtractEnergy()
@@ -83,14 +93,18 @@ namespace Player
             currentOnGlobalMapGroupEndurance = maxOnGlobalMapGroupEndurance;
         }
 
+        public void OnOnGlobalMapMovementEnd()
+        {
+            SubtractEnergy();
+        }
+        
         public void OnTurnEnd()
         {
-            if (currentOnGlobalMapGroupEndurance != maxOnGlobalMapGroupEndurance)
-                SubtractEnergy();
             SubtractSatiety();
             SubtractWater();
             AddExtraEnergy();
             ResetAllTurnCharacteristics();
+            GroupMovementLogic.OnTurnEnd();
             //Вычислить все характеристки при окончании хода
         }
     }
