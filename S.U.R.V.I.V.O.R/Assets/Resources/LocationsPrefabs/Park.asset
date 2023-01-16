@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: Park
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
-  locationName: 
-  chancesList: []
+  locationName: "\u041F\u0430\u0440\u043A\u043E\u0432\u0430\u044F \u0437\u043E\u043D\u0430"
+  chancesList:
+  - item: {fileID: 0}
+    weightChance: 3
+  - item: {fileID: 7547739553849836046, guid: 459dea3df3f4f164ab0de7691535d16d, type: 3}
+    weightChance: 1
   fightChancesList: []
   fightChance: 0

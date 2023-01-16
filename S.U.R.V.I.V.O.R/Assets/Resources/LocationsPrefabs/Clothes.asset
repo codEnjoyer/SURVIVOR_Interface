@@ -13,7 +13,47 @@ MonoBehaviour:
   m_Name: Clothes
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
-  locationName: 
-  chancesList: []
+  locationName: "\u041C\u0430\u0433\u0430\u0437\u0438\u043D \u043E\u0434\u0435\u0436\u0434\u044B"
+  chancesList:
+  - item: {fileID: 6854520002444471892, guid: 8257630877d6f514b9176e7de09d84a5, type: 3}
+    weightChance: 1
+  - item: {fileID: 7644943031401151179, guid: c0a6c93b4a0a09e4c80eb92ab32e7e6b, type: 3}
+    weightChance: 1
+  - item: {fileID: 6476340998660143252, guid: 5fcf1df867e2c10479c5ac42e51f74af, type: 3}
+    weightChance: 1
+  - item: {fileID: 1014850509166664758, guid: e70ca26ae9b256d4894daa79afc5e82c, type: 3}
+    weightChance: 1
+  - item: {fileID: -5285827569045471981, guid: 69096a30b242b044eadb5735a8306d1c, type: 3}
+    weightChance: 1
+  - item: {fileID: 5508208588816576715, guid: 7a24f03832275434daf0e7568ce547d2, type: 3}
+    weightChance: 1
+  - item: {fileID: 5945854412437212695, guid: ab1464954630320458709db22b96d1d9, type: 3}
+    weightChance: 1
+  - item: {fileID: 5140252250065058909, guid: bf882990dcc2a8d4c802875db79e3a98, type: 3}
+    weightChance: 1
+  - item: {fileID: 6351500512617619885, guid: 95666b85a979d474298f1a8548924080, type: 3}
+    weightChance: 1
+  - item: {fileID: 266964188655704394, guid: 2321407bf58bcd143b8fca176cc2d771, type: 3}
+    weightChance: 1
+  - item: {fileID: 5027388887330484944, guid: 313d5785a17fc3d49a46bdb785f33f14, type: 3}
+    weightChance: 1
+  - item: {fileID: 8902901394452774509, guid: a1f472896027d3f44940261a718721af, type: 3}
+    weightChance: 1
+  - item: {fileID: 222805020130576589, guid: 9ed0af74a8a707148be9eeda4457afa5, type: 3}
+    weightChance: 1
+  - item: {fileID: 4604406418018142929, guid: 0f6209c3042d794428bf50911cf1e09f, type: 3}
+    weightChance: 1
+  - item: {fileID: 5625003530853893956, guid: 542b68249e554534bb7e15328865c56e, type: 3}
+    weightChance: 1
+  - item: {fileID: 4335172271058922238, guid: 06ad5d7b57028bb42bef52190ac2c775, type: 3}
+    weightChance: 1
+  - item: {fileID: 9216805417458442415, guid: 8441d45d3d9770d43b0ac5f9cd37da8c, type: 3}
+    weightChance: 1
+  - item: {fileID: 1572297648699813524, guid: 73c10154e6911604f877dae57f1a7d7c, type: 3}
+    weightChance: 5
+  - item: {fileID: 616970406597432141, guid: 5cccba5d1e0d52b46a91807c3a82facc, type: 3}
+    weightChance: 1
+  - item: {fileID: 1179882295792572040, guid: 547b866d349cc9d4a823649304b74718, type: 3}
+    weightChance: 3
   fightChancesList: []
   fightChance: 0

@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 7113944570116331319}
   - component: {fileID: 6648274720506669838}
   - component: {fileID: 8169609632163863129}
+  - component: {fileID: -7431440576399462566}
+  - component: {fileID: 5056340039438607271}
   m_Layer: 0
   m_Name: Ushanka
   m_TagString: Untagged
@@ -85,3 +87,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 57a188a65a306504d8069cf349a2bcda, type: 2}
+--- !u!114 &-7431440576399462566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8635531668499068906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7d9d34ed4be8af4aa9dcd52c5cf5906, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5056340039438607271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8635531668499068906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 347dc2d6bce1eaa4798ca48072e14c96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SalvagableItems:
+  - item: {fileID: 1179882295792572040, guid: 547b866d349cc9d4a823649304b74718, type: 3}
+    weightChance: 2

@@ -17,6 +17,6 @@ MonoBehaviour:
     \u043E\u0441\u0442\u043E\u0440\u043E\u0436\u043D\u043E, \u043E\u0447\u0435\u043D\u044C
     \u0441\u043E\u043B\u0435\u043D\u0430\u044F, \u043F\u043E\u0441\u043B\u0435 \u0443\u043F\u043E\u0442\u0440\u0435\u0431\u043B\u0435\u043D\u0438\u044F
     \u0445\u043E\u0447\u0435\u0442\u0441\u044F \u043F\u0438\u0442\u044C"
-  size: {fileID: 11400000, guid: e7b5ab7e04ef7ec4a9ac1e62cb6d4507, type: 2}
+  size: {fileID: 11400000, guid: f96ee0805e6e16542933c370432f2c83, type: 2}
   icon: {fileID: 21300000, guid: 77987ada2274aef42afe2b465d7b33fb, type: 3}
   weight: 0.5

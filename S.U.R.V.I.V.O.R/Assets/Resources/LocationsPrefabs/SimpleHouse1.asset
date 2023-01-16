@@ -13,7 +13,53 @@ MonoBehaviour:
   m_Name: SimpleHouse1
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
-  locationName: 
-  chancesList: []
+  locationName: "\u0414\u043E\u043C - \u0445\u0440\u0443\u0449\u0435\u0432\u043A\u0430"
+  chancesList:
+  - item: {fileID: 6476340998660143252, guid: 5fcf1df867e2c10479c5ac42e51f74af, type: 3}
+    weightChance: 1
+  - item: {fileID: 6351500512617619885, guid: 95666b85a979d474298f1a8548924080, type: 3}
+    weightChance: 1
+  - item: {fileID: 266964188655704394, guid: 2321407bf58bcd143b8fca176cc2d771, type: 3}
+    weightChance: 1
+  - item: {fileID: 5027388887330484944, guid: 313d5785a17fc3d49a46bdb785f33f14, type: 3}
+    weightChance: 1
+  - item: {fileID: 5625003530853893956, guid: 542b68249e554534bb7e15328865c56e, type: 3}
+    weightChance: 1
+  - item: {fileID: 4335172271058922238, guid: 06ad5d7b57028bb42bef52190ac2c775, type: 3}
+    weightChance: 1
+  - item: {fileID: 7521545726855088371, guid: 3fc0784634be7934988decd6d0eb5f42, type: 3}
+    weightChance: 1
+  - item: {fileID: 8119095802818382886, guid: a4e9874bc1ff3cb48acc98fa1e39a53d, type: 3}
+    weightChance: 1
+  - item: {fileID: 2099250462793322563, guid: c0341d8b599d0844dbbe78285885e74f, type: 3}
+    weightChance: 1
+  - item: {fileID: -7246616232913779961, guid: 2a55ce149e2aa1c47a84112b594474b7, type: 3}
+    weightChance: 1
+  - item: {fileID: 538172261470315174, guid: 069bd23ceb866f94883833dda5a79354, type: 3}
+    weightChance: 1
+  - item: {fileID: 9213736200414500741, guid: 50d13267322859b44a11d0221f939488, type: 3}
+    weightChance: 1
+  - item: {fileID: 1846629867524330113, guid: bd52a7ae77c11cb4595ddee8a03d2bec, type: 3}
+    weightChance: 1
+  - item: {fileID: 9072215145345214335, guid: 35c1592ba1f92b04ca46eb5bf2020284, type: 3}
+    weightChance: 1
+  - item: {fileID: 3590134230014093396, guid: 803c0a90db0565f4c9b785f44634a912, type: 3}
+    weightChance: 1
+  - item: {fileID: 7989406233264152095, guid: f957be7fec7aa2345a9f2654b097d0ce, type: 3}
+    weightChance: 1
+  - item: {fileID: 3976912532036040208, guid: 5160f3d344ff7834cb2d79706d6e3246, type: 3}
+    weightChance: 1
+  - item: {fileID: 8125538087884169714, guid: 303e1373546d6f74787bb1ad330dcd97, type: 3}
+    weightChance: 1
+  - item: {fileID: 1179882295792572040, guid: 547b866d349cc9d4a823649304b74718, type: 3}
+    weightChance: 1
+  - item: {fileID: 1572297648699813524, guid: 73c10154e6911604f877dae57f1a7d7c, type: 3}
+    weightChance: 1
+  - item: {fileID: 7362341032439074997, guid: e5eee67adbea1a5439b087df32adfd13, type: 3}
+    weightChance: 1
+  - item: {fileID: 7547739553849836046, guid: 459dea3df3f4f164ab0de7691535d16d, type: 3}
+    weightChance: 1
+  - item: {fileID: 0}
+    weightChance: 10
   fightChancesList: []
   fightChance: 0

@@ -13,7 +13,25 @@ MonoBehaviour:
   m_Name: AZS
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
-  locationName: 
-  chancesList: []
+  locationName: "\u0410\u0417\u0421"
+  chancesList:
+  - item: {fileID: 7547739553849836046, guid: 459dea3df3f4f164ab0de7691535d16d, type: 3}
+    weightChance: 3
+  - item: {fileID: 8509758011308892050, guid: 5029a11932482974594abef04856a722, type: 3}
+    weightChance: 3
+  - item: {fileID: 7362341032439074997, guid: e5eee67adbea1a5439b087df32adfd13, type: 3}
+    weightChance: 3
+  - item: {fileID: 6213010528908341367, guid: 7dfc23a3a95a82a498f8a0983c9e8f2d, type: 3}
+    weightChance: 1
+  - item: {fileID: 616970406597432141, guid: 5cccba5d1e0d52b46a91807c3a82facc, type: 3}
+    weightChance: 1
+  - item: {fileID: 3699499038728648594, guid: 16a5678dbb1d1f445ba871934a9d1a81, type: 3}
+    weightChance: 1
+  - item: {fileID: 2174224634316808906, guid: 774cb39763f38be4ca3fe8aa32fd73e8, type: 3}
+    weightChance: 3
+  - item: {fileID: 538172261470315174, guid: 069bd23ceb866f94883833dda5a79354, type: 3}
+    weightChance: 3
+  - item: {fileID: 0}
+    weightChance: 5
   fightChancesList: []
   fightChance: 0

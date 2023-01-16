@@ -16,7 +16,7 @@ public class Eatable : MonoBehaviour, IContextMenuAction
 
     public void Awake()
     {
-        ButtonText = "Съесть";
+        ButtonText = "Употребить";
         Extendable = true;
         currentFood = GetComponent<EatableFood>();
         item = GetComponent<BaseItem>();

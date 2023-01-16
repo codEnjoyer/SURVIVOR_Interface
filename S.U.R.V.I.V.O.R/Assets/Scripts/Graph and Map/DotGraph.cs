@@ -27,6 +27,11 @@ namespace Graph_and_Map
                 Instance = this;
                 nodes.AddRange(FindObjectsOfType<Node>());
                 kdTree.AddRange(nodes);
+                foreach (var node in nodes)
+                {
+                    node.GetComponent<LineRenderer>().enabled = false;
+                    node.GetComponent<MeshRenderer>().enabled = false;
+                }
             }
             else if (Instance == this)
                 Destroy(gameObject);

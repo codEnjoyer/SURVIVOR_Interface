@@ -13,7 +13,62 @@ MonoBehaviour:
   m_Name: SimleHouse2
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
-  locationName: 
-  chancesList: []
+  locationName: "\u0414\u043E\u043C \u0441\u0442\u0430\u043B\u0438\u043D\u0441\u043A\u043E\u0433\u043E
+    \u0442\u0438\u043F\u0430"
+  chancesList:
+  - item: {fileID: 5945854412437212695, guid: ab1464954630320458709db22b96d1d9, type: 3}
+    weightChance: 1
+  - item: {fileID: 5140252250065058909, guid: bf882990dcc2a8d4c802875db79e3a98, type: 3}
+    weightChance: 1
+  - item: {fileID: 5027388887330484944, guid: 313d5785a17fc3d49a46bdb785f33f14, type: 3}
+    weightChance: 1
+  - item: {fileID: 222805020130576589, guid: 9ed0af74a8a707148be9eeda4457afa5, type: 3}
+    weightChance: 1
+  - item: {fileID: 5625003530853893956, guid: 542b68249e554534bb7e15328865c56e, type: 3}
+    weightChance: 1
+  - item: {fileID: 9216805417458442415, guid: 8441d45d3d9770d43b0ac5f9cd37da8c, type: 3}
+    weightChance: 1
+  - item: {fileID: 8902901394452774509, guid: a1f472896027d3f44940261a718721af, type: 3}
+    weightChance: 1
+  - item: {fileID: 2174224634316808906, guid: 774cb39763f38be4ca3fe8aa32fd73e8, type: 3}
+    weightChance: 1
+  - item: {fileID: 3378165496502938967, guid: ff8cc0035eca00849a257ca1d7793f44, type: 3}
+    weightChance: 1
+  - item: {fileID: 7521545726855088371, guid: 3fc0784634be7934988decd6d0eb5f42, type: 3}
+    weightChance: 1
+  - item: {fileID: 8119095802818382886, guid: a4e9874bc1ff3cb48acc98fa1e39a53d, type: 3}
+    weightChance: 1
+  - item: {fileID: -7405737862124459891, guid: 8d15a65b6ccba254688180f73882d70d, type: 3}
+    weightChance: 1
+  - item: {fileID: 3590134230014093396, guid: 803c0a90db0565f4c9b785f44634a912, type: 3}
+    weightChance: 1
+  - item: {fileID: 2961264404919201855, guid: 8d37c717a2906634a90751303a48950f, type: 3}
+    weightChance: 1
+  - item: {fileID: 9072215145345214335, guid: 35c1592ba1f92b04ca46eb5bf2020284, type: 3}
+    weightChance: 1
+  - item: {fileID: 7989406233264152095, guid: f957be7fec7aa2345a9f2654b097d0ce, type: 3}
+    weightChance: 1
+  - item: {fileID: 7616576644202868889, guid: 35d90080ff0819f43bf1f7ebb0064882, type: 3}
+    weightChance: 1
+  - item: {fileID: -3105400041931317093, guid: f94e3e3f6e1c4f54c9fbaeeb551c5263, type: 3}
+    weightChance: 1
+  - item: {fileID: 8125538087884169714, guid: 303e1373546d6f74787bb1ad330dcd97, type: 3}
+    weightChance: 1
+  - item: {fileID: 8125538087884169714, guid: 303e1373546d6f74787bb1ad330dcd97, type: 3}
+    weightChance: 1
+  - item: {fileID: 1179882295792572040, guid: 547b866d349cc9d4a823649304b74718, type: 3}
+    weightChance: 1
+  - item: {fileID: 9009466196365969653, guid: e515cd76c7d262a44bf7a1af663ef107, type: 3}
+    weightChance: 1
+  - item: {fileID: 616970406597432141, guid: 5cccba5d1e0d52b46a91807c3a82facc, type: 3}
+    weightChance: 1
+  - item: {fileID: 5531356806578580047, guid: 8baa77a7eea3e064ba4b9d7168a9e56a, type: 3}
+    weightChance: 1
+  - item: {fileID: 8767975673455527424, guid: b556e762eed976f41b2cbcd8b7ea3e60, type: 3}
+    weightChance: 4
+  - item: {fileID: -1078881080400955572, guid: 77ab4841f2e5611459982331a497a727, type: 3}
+    weightChance: 1
+  - item: {fileID: 0}
+    weightChance: 10
   fightChancesList: []
   fightChance: 0
