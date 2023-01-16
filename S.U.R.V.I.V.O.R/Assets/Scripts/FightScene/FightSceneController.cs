@@ -275,7 +275,9 @@ public class FightSceneController : MonoBehaviour
     {
         if (targetObj != CharacterObj && targetObj.GetComponent<FightCharacter>()
             && targetObj.GetComponent<FightCharacter>().Alive
-            && StateController.AvailablePhase[FightState.ShootPhase])
+            && StateController.AvailablePhase[FightState.ShootPhase]
+            && targetObj.GetComponent<FightCharacter>().Type !=
+            CharacterObj.GetComponent<FightCharacter>().Type)
         {
             Debug.Log("Shoot");
             var character = CharacterObj.GetComponent<FightCharacter>();
