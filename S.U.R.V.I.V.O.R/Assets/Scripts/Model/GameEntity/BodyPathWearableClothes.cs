@@ -28,7 +28,7 @@ namespace Model.GameEntity
                 clothesDict[clothType] = null;
                 return removedClothes;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }

@@ -1719,6 +1719,8 @@ MonoBehaviour:
   ally:
   - {fileID: 234525757738228535, guid: 57e839bd74f2726409759bc236374acd, type: 3}
   - {fileID: 4763960007681730613, guid: 82f94ce66460cdf4ebad2be3ac8fb386, type: 3}
+  - {fileID: 6862082343402615237, guid: dfaeba7f789c7134d9db8c4a41c7141c, type: 3}
+  - {fileID: 6887316571504503919, guid: 3229cf04fbcc85d45b532647e89c8430, type: 3}
 --- !u!114 &2086217171
 MonoBehaviour:
   m_ObjectHideFlags: 0
