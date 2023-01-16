@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using System;
 using System.Linq;
 using UnityEngine.SceneManagement;
-using UnityEditor.SceneTemplate;
+//using UnityEditor.SceneTemplate;
 
 public class FightSceneController : MonoBehaviour
 {
@@ -14,7 +14,7 @@ public class FightSceneController : MonoBehaviour
     public List<GameObject> Characters = new List<GameObject>();
     public GameObject CharacterObj;
 
-    public SceneTemplateAsset templateAsset;
+    //public SceneTemplateAsset templateAsset;
     public GameObject Sign;
     public static FightState State;
     [SerializeField] private Camera mainCamera;
