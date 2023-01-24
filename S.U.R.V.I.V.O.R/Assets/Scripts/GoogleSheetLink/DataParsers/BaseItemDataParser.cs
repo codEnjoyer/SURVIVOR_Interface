@@ -1,10 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Extension;
-using UnityEngine;
-using UnityEngine.Networking;
-using Object = UnityEngine.Object;
-
+﻿#if UNITY_EDITOR
 namespace GoogleSheetLink.DataParsers
 {
     public static class BaseItemDataParser
@@ -26,3 +20,4 @@ namespace GoogleSheetLink.DataParsers
         }
     }
 }
+#endif

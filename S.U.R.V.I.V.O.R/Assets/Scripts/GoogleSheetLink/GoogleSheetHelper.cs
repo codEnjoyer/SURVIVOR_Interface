@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#if UNITY_EDITOR
+using System.Collections.Generic;
 using System.IO;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Auth.OAuth2;
@@ -74,3 +75,4 @@ namespace GoogleSheetLink
         }
     }
 }
+#endif
