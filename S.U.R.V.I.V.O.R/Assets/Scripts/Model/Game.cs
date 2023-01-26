@@ -75,4 +75,9 @@ namespace Model
             }
         }
     }
+
+    public class GameSave
+    {
+        
+    }
 }
