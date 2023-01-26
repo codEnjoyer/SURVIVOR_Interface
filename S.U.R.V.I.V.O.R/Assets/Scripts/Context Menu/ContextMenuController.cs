@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Model;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ContextMenuController : MonoBehaviour
 {
+    public static ContextMenuController Instance { get; private set; }
+
     [SerializeField] private Canvas canvas;
     [SerializeField] private RectTransform mainMenu;
     [SerializeField] private Button buttonPrefab;
@@ -15,27 +18,21 @@ public class ContextMenuController : MonoBehaviour
     public bool IsActive { get; private set; }
     private RectTransform extendedMenu;
     private float scaleFactor;
-
-    private static ContextMenuController instance;
-
-    public static ContextMenuController Instance
+    
+    private void Awake()
     {
-        get
+        if (Instance != null && Instance != this)
         {
-            if (instance == null)
-            {
-                instance = FindObjectOfType(typeof(ContextMenuController)) as ContextMenuController;
-                if (instance == null)
-                {
-                    instance = new ContextMenuController();
-                }
-            }
-
-            return instance;
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            Init();
         }
     }
 
-    private void Awake()
+    private void Init()
     {
         scaleFactor = Game.Instance.MainCanvas.scaleFactor;
     }
@@ -63,11 +60,13 @@ public class ContextMenuController : MonoBehaviour
             {
                 if (action.Extendable)
                 {
-                    extendedMenu = InitializeExtendedMenu(button.transform.position, button.GetComponent<RectTransform>());
+                    extendedMenu =
+                        InitializeExtendedMenu(button.transform.position, button.GetComponent<RectTransform>());
                     var extendedActions = action.GetValues();
                     foreach (ITuple extendedAction in extendedActions)
                     {
-                        var extendedButton = CreateButton(extendedMenuButtonPrefab, extendedMenu.transform, (string) extendedAction[1]);
+                        var extendedButton = CreateButton(extendedMenuButtonPrefab, extendedMenu.transform,
+                            (string) extendedAction[1]);
                         extendedButton.onClick.AddListener(delegate
                         {
                             action.OnButtonClickAction(extendedAction[0]);
@@ -79,18 +78,18 @@ public class ContextMenuController : MonoBehaviour
                 }
                 else
                 {
-                    action.OnButtonClickAction((object)null);
+                    action.OnButtonClickAction((object) null);
                     Close();
                 }
             });
             storedButtons.Add(button);
         }
-        
+
         mainMenu.position = mousePosition;
         mainMenu.sizeDelta = new Vector2(mainMenu.sizeDelta.x,
             buttonPrefab.GetComponent<RectTransform>().rect.height * storedButtons.Count);
         mainMenu.position = AdjustPositionMainMenu();
-        
+
         Show();
     }
 
@@ -100,10 +99,11 @@ public class ContextMenuController : MonoBehaviour
         var positionMainMenu = mainMenu.position;
         if (!inScreen.Item2)
             positionMainMenu.y += mainMenu.rect.height * scaleFactor;
-        positionMainMenu.x = Math.Clamp(positionMainMenu.x, 0, canvas.GetComponent<RectTransform>().rect.width - mainMenu.rect.width);
+        positionMainMenu.x = Math.Clamp(positionMainMenu.x, 0,
+            canvas.GetComponent<RectTransform>().rect.width - mainMenu.rect.width);
         return positionMainMenu / scaleFactor;
     }
-    
+
     private Vector3 AdjustPositionExtendedMenu(RectTransform parentButton)
     {
         LayoutRebuilder.ForceRebuildLayoutImmediate(extendedMenu);
@@ -115,12 +115,13 @@ public class ContextMenuController : MonoBehaviour
             positionExtendedMenu.y += (extendedMenu.rect.height - parentButton.rect.height) * scaleFactor;
         return positionExtendedMenu / scaleFactor;
     }
-    
+
     private RectTransform InitializeExtendedMenu(Vector3 position, RectTransform parentButton)
     {
         if (extendedMenu != null) Destroy(extendedMenu.gameObject);
         position.x += extendedMenuPrefab.GetComponent<RectTransform>().rect.width;
-        return Instantiate(extendedMenuPrefab, position, Quaternion.identity,  parentButton).GetComponent<RectTransform>();
+        return Instantiate(extendedMenuPrefab, position, Quaternion.identity, parentButton)
+            .GetComponent<RectTransform>();
     }
 
     private Button CreateButton(Button prefab, Transform parent, String text)
@@ -166,7 +167,7 @@ public class ContextMenuController : MonoBehaviour
         return ((mousePosition.x > position.x) && (mousePosition.x < position.x + rect.width)) &&
                ((mousePosition.y < position.y) && (mousePosition.y > position.y - rect.height));
     }
-    
+
     private (bool, bool) BoundaryCheckScreen(Transform menu)
     {
         var canvasRect = canvas.GetComponent<RectTransform>().rect;
@@ -174,6 +175,7 @@ public class ContextMenuController : MonoBehaviour
         var menuPos = menu.position;
         menuRect.size *= scaleFactor;
         canvasRect.size *= scaleFactor;
-        return ((menuPos.x > 0 && menuPos.x + menuRect.width < canvasRect.width), (menuPos.y < canvasRect.height && menuPos.y - menuRect.height > 0));
+        return ((menuPos.x > 0 && menuPos.x + menuRect.width < canvasRect.width),
+            (menuPos.y < canvasRect.height && menuPos.y - menuRect.height > 0));
     }
 }

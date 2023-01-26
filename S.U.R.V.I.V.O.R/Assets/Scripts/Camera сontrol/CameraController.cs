@@ -8,7 +8,7 @@ public class CameraController : MonoBehaviour
     private CameraControlActions cameraActions;
     private InputAction movement;
     private Transform cameraTransform;
-    private Camera camera;
+    private new Camera camera;
 
     [SerializeField] private GameObject map;
     private Vector3 mapPointMax;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Extension;
 using Graph_and_Map;
+using Model;
 using Player.GroupMovement.GroupMovementStates;
 using UnityEngine;
 

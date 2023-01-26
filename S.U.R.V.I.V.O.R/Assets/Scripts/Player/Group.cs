@@ -43,7 +43,6 @@ namespace Player
 
         void Start()
         {
-            
             TurnController.Instance.AddListener(OnTurnEnd);
             foreach (var character in currentGroupMembers)
             {

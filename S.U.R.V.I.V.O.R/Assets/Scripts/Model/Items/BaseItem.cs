@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Interface;
+using Model;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;

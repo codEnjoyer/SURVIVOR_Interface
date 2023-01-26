@@ -3,120 +3,76 @@ using System.Collections.Generic;
 using Graph_and_Map;
 using Interface;
 using Player;
-using Player.GroupMovement;
 using UnityEngine;
 
-public class Game : MonoBehaviour
+namespace Model
 {
-    private static Game instance;
-
-    public static Game Instance
+    public class Game : MonoBehaviour
     {
-        get
+        public static Game Instance { get; private set; }
+
+        public bool OnPause { get; private set; }
+
+        [SerializeField] private List<Group> groups;
+        [field: SerializeField] public Node StartNode { get; private set; }
+        [field: SerializeField] public Canvas MainCanvas { get; private set; }
+    
+        [SerializeField] [Min(0)] private int chosenGroupIndex;
+        public int ChosenGroupIndex
         {
-            if (instance == null)
+            get => chosenGroupIndex;
+            set
             {
-                instance = FindObjectOfType<Game>();
-                instance.Init();
+                if (value < 0 || value >= groups.Count)
+                    throw new InvalidOperationException();
+                ChosenGroupChange?.Invoke(groups[chosenGroupIndex], groups[value]);
+                chosenGroupIndex = value;
             }
-
-            return instance;
-        }
-    }
-
-    public bool OnPause { get; private set; }
-
-    [SerializeField] private List<Group> groups;
-    [SerializeField] private Group chosenGroup;
-    [SerializeField] private Node startNode;
-    [SerializeField] private Canvas mainCanvas;
-
-    [SerializeField] private InterfaceController interfaceController;
-    [SerializeField] private InventoryController inventoryController;
-    [SerializeField] private ContextMenuController contextMenuController;
-    [SerializeField] private TurnController turnController;
-    [SerializeField] private GroupsMovementController groupsMovementController;
-    [SerializeField] private Selector selector;
-
-    private MonoBehaviour[] allControllers;
-    public event Action<Group, Group> ChosenGroupChange;
-    public Group ChosenGroup => chosenGroup;
-    public Node StartNode => startNode;
-    public Canvas MainCanvas => mainCanvas;
-    public IEnumerable<Group> Groups => groups;
-    public InterfaceController InterfaceController => interfaceController;
-    public InventoryController InventoryController => inventoryController;
-    public ContextMenuController ContextMenuController => contextMenuController;
-    public TurnController TurnController => turnController;
-    public GroupsMovementController GroupsMovementController => groupsMovementController;
-    public Selector Selector => selector;
-
-    private void SetChosenGroup(Group newGroup)
-    {
-        ChosenGroupChange?.Invoke(chosenGroup, newGroup);
-        chosenGroup = newGroup;
-    }
-
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
         }
 
-        if (instance == null)
+        public Group ChosenGroup => groups[chosenGroupIndex];
+        public IEnumerable<Group> Groups => groups;
+        public event Action<Group, Group> ChosenGroupChange;
+    
+        private void Awake()
         {
-            instance = this;
-            Init();
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                Instance = this;
+                Init();
+            }
         }
-    }
 
-    private void Init()
-    {
-        groups = new List<Group>();
-        if (chosenGroup != null)
-            groups.Add(chosenGroup);
-
-        allControllers = new MonoBehaviour[]
+        private void Init()
         {
-            selector,
-            interfaceController,
-            inventoryController,
-            contextMenuController,
-            turnController,
-            groupsMovementController
-        };
-
-        foreach (var controller in allControllers)
-        {
-            controller.gameObject.SetActive(true);
-        }
         
-    }
+        }
 
 
-    public void Resume()
-    {
-        Debug.Log("Resume");
-        OnPause = false;
-        Selector.Instance.Activate();
-        MinimapController.Instance.isActive = true;
-        CameraController.Instance.isActive = true;
-    }
-
-    public void Pause()
-    {
-        Debug.Log("Pause");
-        OnPause = true;
-        Tooltip.Instance.HideTooltip();
-        Selector.Instance.DeActivate();
-        MinimapController.Instance.isActive = false;
-        CameraController.Instance.isActive = false;
-        if (InventoryController.Instance.SelectedItem != null)
+        public void Resume()
         {
-            LocationInventory.Instance.LocationInventoryGrid.InsertItem(InventoryController.Instance.SelectedItem);
-            InventoryController.Instance.SelectedItem = null;
+            OnPause = false;
+            Selector.Instance.Activate();
+            MinimapController.Instance.isActive = true;
+            CameraController.Instance.isActive = true;
+        }
+
+        public void Pause()
+        {
+            OnPause = true;
+            Tooltip.Instance.HideTooltip();
+            Selector.Instance.DeActivate();
+            MinimapController.Instance.isActive = false;
+            CameraController.Instance.isActive = false;
+            if (InventoryController.Instance.SelectedItem != null)
+            {
+                LocationInventory.Instance.LocationInventoryGrid.InsertItem(InventoryController.Instance.SelectedItem);
+                InventoryController.Instance.SelectedItem = null;
+            }
         }
     }
 }

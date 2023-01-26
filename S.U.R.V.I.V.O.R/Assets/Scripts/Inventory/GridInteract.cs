@@ -12,7 +12,7 @@ public class GridInteract : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     private void Awake()
     {
-        inventoryController = Game.Instance.InventoryController;
+        inventoryController = InventoryController.Instance;
         inventoryGrid = GetComponent<InventoryGrid>();
     }
 

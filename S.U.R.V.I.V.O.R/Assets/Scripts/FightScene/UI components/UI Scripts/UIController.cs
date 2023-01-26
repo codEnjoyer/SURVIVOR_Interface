@@ -13,7 +13,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject groupCharacterCardPrefab;
     [SerializeField] private GameObject queuePanel;
     [SerializeField] private GameObject groupPanel;
-    [SerializeField] private Camera camera;
+    [SerializeField] private new Camera camera;
     private Queue<GameObject> cardsQueue = new Queue<GameObject>();
     private List<GameObject> groupCards = new List<GameObject>();
 
