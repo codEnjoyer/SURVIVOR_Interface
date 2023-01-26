@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using Model;
-using Player;
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -1,10 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using Interface.InterfaceStates;
 using Model;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class InterfaceController : MonoBehaviour
@@ -60,7 +56,7 @@ public class InterfaceController : MonoBehaviour
         }
     }
 
-    public void Init()
+    private void Init()
     {
         NothingActive = new NothingActive(this, interfaceStateMachine);
         CharacterPanelActive = new CharacterPanelActive(this, interfaceStateMachine);

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Model;
-using Player;
+using Model.Player;
 using UnityEngine;
 using UnityEngine.UI;
 

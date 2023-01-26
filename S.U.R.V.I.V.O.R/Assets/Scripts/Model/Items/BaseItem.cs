@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Interface;
 using Model;
+using Model.Entities.Characters;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;

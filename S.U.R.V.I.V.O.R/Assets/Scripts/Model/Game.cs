@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
 using Graph_and_Map;
 using Interface;
-using Player;
+using Model.Player;
+using Model.SaveSystem;
 using UnityEngine;
 
 namespace Model
 {
-    public class Game : MonoBehaviour
+    public class Game : MonoBehaviour, ISaved<GameSave>
     {
         public static Game Instance { get; private set; }
 
@@ -49,7 +52,10 @@ namespace Model
 
         private void Init()
         {
-        
+            var path = Application.persistentDataPath + "/testSave.xml";
+            SaveManager.WriteObject(path, CreateSave());
+            var save = SaveManager.ReadObject<GameSave>(path);
+            Debug.Log("Success");
         }
 
 
@@ -74,10 +80,21 @@ namespace Model
                 InventoryController.Instance.SelectedItem = null;
             }
         }
+
+        public GameSave CreateSave()
+        {
+            return new GameSave()
+            {
+                groupSaves = groups.Select(g => g.CreateSave()).ToArray(),
+                chosenGroupIndex = ChosenGroupIndex
+            };
+        }
     }
 
+    [DataContract]
     public class GameSave
     {
-        
+        [DataMember] public GroupSave[] groupSaves;
+        [DataMember] public int chosenGroupIndex;
     }
 }

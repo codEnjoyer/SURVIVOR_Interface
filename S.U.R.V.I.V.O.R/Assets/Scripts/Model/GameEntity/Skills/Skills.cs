@@ -1,4 +1,6 @@
-﻿namespace Model.GameEntity.Skills
+﻿using Model.Entities.Characters;
+
+namespace Model.GameEntity.Skills
 {
     public class Skills
     {

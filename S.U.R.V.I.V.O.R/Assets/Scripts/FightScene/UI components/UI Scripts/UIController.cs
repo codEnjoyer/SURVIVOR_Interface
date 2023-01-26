@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Model.Entities.Characters;
 using Unity.VisualScripting;
 using UnityEngine.UI;
 using UnityEngine;

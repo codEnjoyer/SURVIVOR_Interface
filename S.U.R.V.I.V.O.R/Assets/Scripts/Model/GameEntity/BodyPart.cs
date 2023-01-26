@@ -1,17 +1,18 @@
 ﻿using System;
-using System.Data;
+using System.Runtime.Serialization;
 using Model.GameEntity.Health;
-using UnityEngine;
 
 namespace Model.GameEntity
 {
+    [DataContract]
     public abstract class BodyPart : IAlive
     {
-        public readonly Body body;
-        public readonly BodyPathHealth health;
-        private int maxHp;
-        private float size;
-        private int significance = 10; // Temporary!!!
+        [DataMember] public readonly Body body;
+        [DataMember] public readonly BodyPathHealth health;
+        [DataMember] private int maxHp;
+        [DataMember] private float hp;
+        [DataMember] private float size;
+        [DataMember] private int significance;
 
         public int MaxHp
         {
@@ -35,7 +36,7 @@ namespace Model.GameEntity
             set => significance = Math.Max(1, value);
         }
 
-        private float hp;
+
         public float Hp
         {
             get => hp;
@@ -47,19 +48,21 @@ namespace Model.GameEntity
                     body.LossBodyParts(this);
                     return;
                 }
+
                 hp = value;
             }
         }
 
         public event Action<BodyPart> OnZeroHp;
 
-        protected BodyPart(Body body, int maxHp = 100, int size = 100)
+        protected BodyPart(Body body, int maxHp = 100, int size = 100, int significance = 10)
         {
             health = new BodyPathHealth(this);
             this.body = body;
             MaxHp = maxHp;
             Size = size;
             Hp = MaxHp;
+            Significance = significance;
         }
 
         public void TakeDamage(DamageInfo damage)
