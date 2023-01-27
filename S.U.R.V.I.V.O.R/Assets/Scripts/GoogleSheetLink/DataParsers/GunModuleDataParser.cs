@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+using System;
 
 namespace GoogleSheetLink.DataParsers
 {
@@ -23,3 +24,4 @@ namespace GoogleSheetLink.DataParsers
         }
     }
 }
+#endif

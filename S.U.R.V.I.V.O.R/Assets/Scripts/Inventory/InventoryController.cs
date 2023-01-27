@@ -6,6 +6,7 @@ public class InventoryController : MonoBehaviour
 {
     public static InventoryController Instance { get; private set; }
     private InventoryGrid selectedInventoryGrid;
+
     public InventoryGrid SelectedInventoryGrid
     {
         get => selectedInventoryGrid;
@@ -23,14 +24,14 @@ public class InventoryController : MonoBehaviour
         get => selectedItem;
         set
         {
-            if (selectedItem != null)//Вещь на курсоре есть
+            if (selectedItem != null) //Вещь на курсоре есть
             {
                 switch (value)
                 {
-                    case null://Кладем вещь с курсора в ячейку
+                    case null: //Кладем вещь с курсора в ячейку
                         selectedItem.GetComponent<Image>().raycastTarget = true;
                         break;
-                    case not null://Меняем вещи местами
+                    case not null: //Меняем вещи местами
                         selectedItem.GetComponent<Image>().raycastTarget = true;
                         value.GetComponent<Image>().raycastTarget = false;
                         break;
@@ -38,11 +39,11 @@ public class InventoryController : MonoBehaviour
             }
             else
             {
-                switch (value)//Вещи на курсоре нет
+                switch (value) //Вещи на курсоре нет
                 {
-                    case null://Ничего не происходит
+                    case null: //Ничего не происходит
                         break;
-                    case not null://Берем вещь из ячейки
+                    case not null: //Берем вещь из ячейки
                         value.GetComponent<Image>().raycastTarget = false;
                         break;
                 }
@@ -51,10 +52,10 @@ public class InventoryController : MonoBehaviour
             selectedItem = value;
         }
     }
-    
+
     private BaseItem overlapItem;
     private RectTransform rectTransform;
-    
+
     [SerializeField] private Transform canvasTransform;
 
     private InventoryHighlight inventoryHighlight;
@@ -64,13 +65,20 @@ public class InventoryController : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
         {
             Instance = this;
-            inventoryHighlight = GetComponent<InventoryHighlight>();
+            Init();
         }
-        else if (Instance == this)
-            Destroy(gameObject);
+    }
+
+    private void Init()
+    {
+        inventoryHighlight = GetComponent<InventoryHighlight>();
     }
 
     private void Update()
@@ -103,7 +111,7 @@ public class InventoryController : MonoBehaviour
                 PlaceItem(tileGridPosition);
             }
         }
-        
+
         HandleHighlight();
         inventoryHighlight.transform.SetParent(inventoryHighlight.transform.parent);
     }
@@ -113,15 +121,15 @@ public class InventoryController : MonoBehaviour
         SelectedItem = item;
         ChangeRectTransform();
     }
-    
-    
+
+
     private void ChangeRectTransform()
     {
         if (SelectedItem == null) return;
         rectTransform = SelectedItem.GetComponent<RectTransform>();
         rectTransform.SetParent(canvasTransform);
     }
-    
+
     private void PickUpItem(Vector2Int tileGridPosition)
     {
         SelectedItem = selectedInventoryGrid.PickUpItem(tileGridPosition.x, tileGridPosition.y);
@@ -145,7 +153,9 @@ public class InventoryController : MonoBehaviour
         }
     }
 
-    public void ThrowItemAtLocation(BaseItem item) // Перемещение предмета в инвентарь локации при нажатии на пустое пространство
+    public void
+        ThrowItemAtLocation(
+            BaseItem item) // Перемещение предмета в инвентарь локации при нажатии на пустое пространство
     {
         var locationItemGrid = GameObject.FindGameObjectWithTag("LocationItemGrid").GetComponent<InventoryGrid>();
         var positionOnGrid = locationItemGrid.FindSpaceForObject(item);
@@ -219,6 +229,7 @@ public class InventoryController : MonoBehaviour
             Destroy(itemToInsert);
             return;
         }
+
         selectedInventoryGrid.PlaceItem(itemToInsert, positionOnGrid.Value.x, positionOnGrid.Value.y);
     }
 

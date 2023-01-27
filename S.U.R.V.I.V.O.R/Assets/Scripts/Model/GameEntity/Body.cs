@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.Serialization;
 using Model.GameEntity.Health;
-using UnityEngine;
 
 namespace Model.GameEntity
 {
+    [DataContract]
     public abstract class Body : IAlive
     {
-        private int currentCriticalLoses;
-        private int maxCriticalLoses;
-        protected readonly List<BodyPart> bodyParts = new();
-        public BodyHealth Health { get; }
+        [DataMember] private int currentCriticalLoses;
+        [DataMember] private int maxCriticalLoses;
+        [DataMember] protected readonly List<BodyPart> bodyParts = new();
+        [DataMember] public BodyHealth Health { get; }
 
         protected Body()
         {

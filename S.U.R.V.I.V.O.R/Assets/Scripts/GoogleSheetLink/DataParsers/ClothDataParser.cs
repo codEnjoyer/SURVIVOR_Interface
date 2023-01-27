@@ -1,5 +1,5 @@
-﻿using System;
-using Unity.VisualScripting.Antlr3.Runtime;
+﻿#if UNITY_EDITOR
+using System;
 
 namespace GoogleSheetLink.DataParsers
 {
@@ -20,3 +20,4 @@ namespace GoogleSheetLink.DataParsers
         }
     }
 }
+#endif

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class MinimapDrawBorder : MonoBehaviour
 {
-    private Camera camera;
+    private new Camera camera;
     private Camera minimapCamera;
     private LineRenderer lr;
     [SerializeField] private GameObject minimapTexture;

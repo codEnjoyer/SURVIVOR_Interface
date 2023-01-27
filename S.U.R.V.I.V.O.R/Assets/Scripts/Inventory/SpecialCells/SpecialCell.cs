@@ -43,7 +43,7 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
     public virtual void Init()
     {
         if (InventoryController == null)
-            InventoryController = Game.Instance.InventoryController;
+            InventoryController = InventoryController.Instance;
     }
 
     protected virtual bool CanInsertIntoSlot()

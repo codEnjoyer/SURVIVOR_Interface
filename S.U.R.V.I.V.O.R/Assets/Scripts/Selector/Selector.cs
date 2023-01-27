@@ -5,31 +5,30 @@ using Enumerable = System.Linq.Enumerable;
 
 public class Selector : MonoBehaviour
 {
+    public static Selector Instance { get; private set; }
+    
     private static Selectable[] units;
     private static List<Selectable> unitSelected;
-
-    public static Selector Instance { get; private set; }
+    private bool isActivate = true;
 
     [SerializeField] private GUISkin skin;
-
-    private bool isActivate = true;
+    
     private Rect rect;
     private bool draw;
     private Vector2 startPos;
     private Vector2 endPos;
+    private Camera mainCamera;
 
     private void Awake()
     {
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
-            Instance.Init();
         }
         else
         {
             Instance = this;
             Init();
-            DontDestroyOnLoad(gameObject);
         }
     }
 
@@ -37,6 +36,7 @@ public class Selector : MonoBehaviour
     {
         units = FindObjectsOfType<Selectable>();
         unitSelected = new List<Selectable>();
+        mainCamera = Camera.main;
     }
 
     public void Activate() => isActivate = true;
@@ -106,8 +106,8 @@ public class Selector : MonoBehaviour
         foreach (var unit in units)
         {
             var pos = unit.transform.position;
-            var tmp = new Vector2(Camera.main.WorldToScreenPoint(pos).x,
-                Screen.height - Camera.main.WorldToScreenPoint(pos).y);
+            var tmp = new Vector2(mainCamera.WorldToScreenPoint(pos).x,
+                Screen.height - mainCamera.WorldToScreenPoint(pos).y);
             if (rect.Contains(tmp))
                 unitSelected.Add(unit);
         }

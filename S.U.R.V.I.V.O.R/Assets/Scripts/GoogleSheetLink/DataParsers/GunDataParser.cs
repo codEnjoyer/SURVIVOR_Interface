@@ -1,7 +1,6 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+using System;
 using System.Linq;
-using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace GoogleSheetLink.DataParsers
 {
@@ -31,3 +30,4 @@ namespace GoogleSheetLink.DataParsers
         }
     }
 }
+#endif

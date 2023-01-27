@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿#if UNITY_EDITOR
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -29,3 +30,4 @@ namespace GoogleSheetLink
         }
     }
 }
+#endif

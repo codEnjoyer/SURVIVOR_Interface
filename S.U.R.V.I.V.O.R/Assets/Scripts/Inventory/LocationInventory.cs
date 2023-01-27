@@ -1,5 +1,6 @@
 ﻿using System;
-using Player;
+using Model;
+using Model.Player;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;

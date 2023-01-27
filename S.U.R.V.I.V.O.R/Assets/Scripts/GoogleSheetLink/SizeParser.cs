@@ -1,10 +1,11 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using UnityEditor;
 using UnityEngine;
+using UnityEditor;
 
 namespace GoogleSheetLink
 {
@@ -69,3 +70,4 @@ namespace GoogleSheetLink
         }
     }
 }
+#endif
