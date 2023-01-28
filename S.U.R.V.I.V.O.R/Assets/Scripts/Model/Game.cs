@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Graph_and_Map;
 using Interface;
+using Model.Items;
 using Model.Player;
 using Model.SaveSystem;
 using UnityEngine;
@@ -86,6 +87,7 @@ namespace Model
         {
             return new GameSave()
             {
+                resourcesPath = GetComponent<Saved>().ResourcesPath,
                 turnNumber = TurnNumber,
                 groupSaves = groups.Select(g => g.CreateSave()).ToArray(),
                 chosenGroupIndex = ChosenGroupIndex,
@@ -95,9 +97,10 @@ namespace Model
         }
     }
 
-    [DataContract]
+    [DataContract(Namespace = "Model")]
     public class GameSave
     {
+        [DataMember] public string resourcesPath;
         [DataMember] public int turnNumber;
         [DataMember] public GroupSave[] groupSaves;
         [DataMember] public int chosenGroupIndex;

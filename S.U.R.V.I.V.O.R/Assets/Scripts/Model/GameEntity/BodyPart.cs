@@ -4,7 +4,7 @@ using Model.GameEntity.Health;
 
 namespace Model.GameEntity
 {
-    [DataContract]
+    [DataContract(Namespace = "Model.GameEntity")]
     public abstract class BodyPart : IAlive
     {
         [DataMember] public readonly Body body;

@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace Model.GameEntity.Health
 {
-    [DataContract]
+    [DataContract(Namespace = "Model.GameEntity.Health")]
     public class BodyPathHealth : Health
     {
         [DataMember] private BodyPart target;

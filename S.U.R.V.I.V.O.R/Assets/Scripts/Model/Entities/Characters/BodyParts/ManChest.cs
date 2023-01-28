@@ -4,7 +4,7 @@ using Model.GameEntity;
 
 namespace Model.Entities.Characters.BodyParts
 {
-    [DataContract]
+    [DataContract(Namespace = "Model.Entities.Characters.BodyParts")]
     public sealed class ManChest : BodyPathWearableClothes
     {
         public Clothes Underwear => clothesDict[ClothType.Underwear];

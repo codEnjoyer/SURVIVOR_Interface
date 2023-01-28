@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Model.GameEntity;
 using Model.GameEntity.Skills;
+using Model.Items;
 using Model.SaveSystem;
 using UnityEditor;
 using UnityEngine;
@@ -104,7 +105,7 @@ namespace Model.Entities.Characters
         }
     }
 
-    [DataContract]
+    [DataContract(Namespace = "Model.Entities.Characters")]
     public class CharacterSave
     {
         [DataMember] public string resourcesPath;

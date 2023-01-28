@@ -1,3 +1,4 @@
+using Model.Items;
 using UnityEngine;
 using UnityEngine.UI;
 

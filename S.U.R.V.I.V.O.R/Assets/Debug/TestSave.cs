@@ -1,5 +1,6 @@
 using System;
 using Model;
+using Model.Items;
 using Model.SaveSystem;
 using UnityEngine;
 

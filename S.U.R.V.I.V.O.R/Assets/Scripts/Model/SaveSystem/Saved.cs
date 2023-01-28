@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Model.SaveSystem
 {
     [ExecuteInEditMode]
-    public class Saved : MonoBehaviour
+    public class Saved : MonoBehaviour, ISerializationCallbackReceiver
     {
         [field: SerializeField]
         [field: ReadOnlyInspector]
@@ -32,8 +32,20 @@ namespace Model.SaveSystem
 
         private void OnValidate()
         {
-            FindPath();
+            if (!UnityEditor.EditorApplication.isPlaying
+                && !UnityEditor.EditorApplication.isUpdating
+                && !UnityEditor.EditorApplication.isCompiling)
+            {
+                FindPath();
+            }
         }
 #endif
+        public void OnBeforeSerialize()
+        {
+#if UNITY_EDITOR
+            OnValidate();
+#endif
+        }
+        public void OnAfterDeserialize() {}
     }
 }

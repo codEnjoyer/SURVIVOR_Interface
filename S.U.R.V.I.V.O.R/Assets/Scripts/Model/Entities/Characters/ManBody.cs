@@ -5,11 +5,12 @@ using System.Runtime.Serialization;
 using Model.Entities.Characters.BodyParts;
 using Model.GameEntity;
 using Model.GameEntity.Health;
+using Model.Items;
 using Object = UnityEngine.Object;
 
 namespace Model.Entities.Characters
 {
-    [DataContract]
+    [DataContract(Namespace = "Model.Entities.Characters")]
     public class ManBody : Body, IWearClothes
     {
         [DataMember] private int energy;

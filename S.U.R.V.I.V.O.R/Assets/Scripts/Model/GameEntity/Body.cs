@@ -7,7 +7,7 @@ using Model.GameEntity.Health;
 
 namespace Model.GameEntity
 {
-    [DataContract]
+    [DataContract(Namespace = "Model.GameEntity")]
     public abstract class Body : IAlive
     {
         [DataMember] private int currentCriticalLoses;

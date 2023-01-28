@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Extension;
 using Model.Entities.Characters;
+using Model.Items;
 using Model.Player.GroupMovement;
 using Model.SaveSystem;
 using UnityEngine;
@@ -144,7 +145,7 @@ namespace Model.Player
         }
     }
     
-    [DataContract]
+    [DataContract(Namespace = "Model.Player")]
     public class GroupSave
     {
         [DataMember] public string resourcesPath;

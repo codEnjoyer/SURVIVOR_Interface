@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace Model.GameEntity.Health
 {
-    [DataContract]
+    [DataContract(Namespace = "Model.GameEntity.Health")]
     public abstract class Health
     {
         public abstract IAlive Target { get; }

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-
 public class Location : MonoBehaviour, ISerializationCallbackReceiver
 {
     [SerializeField] private LocationData data;
@@ -40,6 +39,14 @@ public class Location : MonoBehaviour, ISerializationCallbackReceiver
 
     public void OnBeforeSerialize()
     {
+#if UNITY_EDITOR
+        if (!UnityEditor.EditorApplication.isPlaying
+            && !UnityEditor.EditorApplication.isUpdating
+            && !UnityEditor.EditorApplication.isCompiling)
+        {
+            //UpdatePrefab();
+        }
+#endif
     }
 
     public void OnAfterDeserialize()

@@ -2,7 +2,7 @@
 
 namespace Model.GameEntity.Health
 {
-   [DataContract]
+   [DataContract(Namespace = "Model.GameEntity.Health")]
    public abstract class HealthProperty
    {
       public abstract HealthPropertyType Type { get; }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Runtime.Serialization;
+using Model.Items;
 using Model.SaveSystem;
 using UnityEngine;
 
@@ -47,7 +48,7 @@ public class Clothes : MonoBehaviour, ISaved<ClothSave>
     }
 }
 
-[DataContract]
+[DataContract(Namespace = "Model.Items")]
 public class ClothSave: ComponentSave
 {
     [DataMember] public float currentArmor;

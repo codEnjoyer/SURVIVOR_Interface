@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 
 namespace Model.GameEntity
 {
-    [DataContract]
+    [DataContract(Namespace = "Model.GameEntity")]
     public abstract class BodyPathWearableClothes : BodyPart, IWearClothes
     {
         protected BodyPathWearableClothes(Body body, int maxHp = 100, int size = 100) 
