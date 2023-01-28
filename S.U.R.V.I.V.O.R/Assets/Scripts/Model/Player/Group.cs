@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using Extension;
 using Model.Entities.Characters;
@@ -44,9 +45,7 @@ namespace Model.Player
         public Location Location => GroupMovementLogic.CurrentNode.Location;
 
         public IEnumerable<Character> CurrentGroupMembers => currentGroupMembers;
-
-        public void SetCurrentOnGlobalMapGroupEndurance(int value) => currentOnGlobalMapGroupEndurance = value;
-
+        
         private void Awake()
         {
             GroupMovementLogic = GetComponent<GroupMovementLogic>();
@@ -136,7 +135,9 @@ namespace Model.Player
                 resourcesPath = GetComponent<Saved>().ResourcesPath,
                 maxOnGlobalMapGroupEndurance = MaxOnGlobalMapGroupEndurance,
                 currentOnGlobalMapGroupEndurance = CurrentOnGlobalMapGroupEndurance,
-                currentGroupMembers = null,
+                currentGroupMembers = CurrentGroupMembers
+                    .Select(x => x.CreateSave())
+                    .ToArray(),
                 position = transform.position.To2D(),
                 isLootAllowedOnThisTurn = IsLootAllowedOnThisTurn
             };

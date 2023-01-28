@@ -40,8 +40,8 @@ public class SpecialClothCell : SpecialCell
     
     public override void PlaceItem(BaseItem item)
     {
-        if (item.rotated)
-            item.Rotated();
+        if (item.IsRotated)
+            item.Rotate();
         placedItem = item;
         bool isWeared = CurrentCharacter.body.Wear(item.GetComponent<Clothes>());
         if (isWeared)

@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Model.GameEntity.Health
 {
+    [DataContract]
     public class BodyHealth: Health
     {
-        public override IAlive Target { get; }
-        public override ICollection<HealthProperty> HealthProperties { get; }
-
-        private float radiation;
+        [DataMember] private Body target;
+        [DataMember] private List<HealthProperty> healthProperties;
+        [DataMember] private float radiation;
+        public override IAlive Target => target;
+        public override ICollection<HealthProperty> HealthProperties => healthProperties;
         public float Radiation
         {
             get => radiation;
@@ -20,8 +23,8 @@ namespace Model.GameEntity.Health
 
         public BodyHealth(Body body)
         {
-            Target = body;
-            HealthProperties = new List<HealthProperty>();
+            target = body;
+            healthProperties = new List<HealthProperty>();
         }
     }
 }

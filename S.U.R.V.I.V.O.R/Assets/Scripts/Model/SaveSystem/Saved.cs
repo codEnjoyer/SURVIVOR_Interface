@@ -1,32 +1,39 @@
 ﻿using System;
 using Extension;
-using UnityEditor;
 using UnityEngine;
 
 namespace Model.SaveSystem
 {
     [ExecuteInEditMode]
-    public class Saved : MonoBehaviour, ISerializationCallbackReceiver
+    public class Saved : MonoBehaviour
     {
         [field: SerializeField]
         [field: ReadOnlyInspector]
         public string ResourcesPath { get; private set; }
-    
+
         [field: SerializeField]
         [field: ReadOnlyInspector]
         public string Path { get; private set; }
 
-
-        public void OnBeforeSerialize()
-        {
 #if UNITY_EDITOR
-            Path = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(gameObject);
-            ResourcesPath = Path
-                .Replace("Assets/Resources/", String.Empty)
-                .Replace(".prefab", String.Empty);
-#endif
+        private void FindPath()
+        {
+            if (!UnityEditor.PrefabUtility.IsPartOfAnyPrefab(gameObject))
+                return;
+            Path = UnityEditor.PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(gameObject);
+            if (Path.Contains("Assets/Resources"))
+                ResourcesPath = Path
+                    .Replace("Assets/Resources/", String.Empty)
+                    .Replace(".prefab", String.Empty);
+            else
+                ResourcesPath = null;
+            
         }
 
-        public void OnAfterDeserialize() {}
+        private void OnValidate()
+        {
+            FindPath();
+        }
+#endif
     }
 }

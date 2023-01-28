@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Model.GameEntity;
 
 namespace Model.Entities.Characters.BodyParts
 {
+    [DataContract]
     public sealed class ManLeg : BodyPathWearableClothes
     {
         public Clothes Boots => clothesDict[ClothType.Boots];

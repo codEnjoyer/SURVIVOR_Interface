@@ -12,15 +12,23 @@ namespace Model.Entities.Characters
     [DataContract]
     public class ManBody : Body, IWearClothes
     {
-        private int energy;
-        private int hunger;
-        private int water;
+        [DataMember] private int energy;
+        [DataMember] private int hunger;
+        [DataMember] private int water;
 
-        private int maxEnergy = 10;
-        private int maxHunger = 10;
-        private int maxWater = 10;
+        [DataMember] private int maxEnergy = 10;
+        [DataMember] private int maxHunger = 10;
+        [DataMember] private int maxWater = 10;
+        
+        [DataMember] public ManHead Head { get; private set; }
+        [DataMember] public ManChest Chest { get; private set; }
+        [DataMember] public ManStomach Stomach { get; private set; }
+        [DataMember] public ManArm LeftArm { get; private set; }
+        [DataMember] public ManArm RightArm { get; private set; }
+        [DataMember] public ManLeg LeftLeg { get; private set; }
+        [DataMember] public ManLeg RightLeg { get; private set; }
 
-        private IWearClothes[] wearClothesBodyParts;
+        private readonly IWearClothes[] wearClothesBodyParts;
 
         public ManBody()
         {
@@ -49,16 +57,7 @@ namespace Model.Entities.Characters
         public event Action<int> HungerChange;
         public event Action<int> WaterChange;
         public event Action<ClothType> WearChanged;
-
-        public ManHead Head { get; }
-        public ManChest Chest { get; }
-        public ManStomach Stomach { get; }
-        public ManArm LeftArm { get; }
-        public ManArm RightArm { get; }
-        public ManLeg LeftLeg { get; }
-        public ManLeg RightLeg { get; }
-
-
+        
         public int Energy
         {
             get => energy;
@@ -116,6 +115,25 @@ namespace Model.Entities.Characters
             }
         }
 
+        public int MaxEnergy
+        {
+            get => maxEnergy;
+            set => maxEnergy = Math.Min(1, value);
+        }
+
+        public int MaxHunger
+        {
+            get => maxHunger;
+            set => maxHunger = Math.Min(1, value);
+        }
+
+        public int MaxWater
+        {
+            get => maxWater;
+            set => maxWater = Math.Min(1, value);
+        }
+
+
         public Clothes GetClothByType(ClothType type)
         {
             switch (type)
@@ -162,6 +180,7 @@ namespace Model.Entities.Characters
                 if (wearClothesBodyPart.Wear(clothesToWear))
                     isSuccess = true;
             }
+
             if (isSuccess) WearChanged?.Invoke(clothesToWear.Data.ClothType);
             return isSuccess;
         }
@@ -175,11 +194,13 @@ namespace Model.Entities.Characters
                 var x = bodyPart.UnWear(clothType);
                 if (x is not null)
                     clothes = x;
-            }   
+            }
+
             if (clothes is not null)
             {
                 WearChanged?.Invoke(clothType);
             }
+
             return clothes;
         }
 

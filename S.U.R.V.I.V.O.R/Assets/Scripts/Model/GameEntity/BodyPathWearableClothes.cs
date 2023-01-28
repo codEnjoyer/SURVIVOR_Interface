@@ -1,15 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Model.GameEntity
 {
+    [DataContract]
     public abstract class BodyPathWearableClothes : BodyPart, IWearClothes
     {
-        protected BodyPathWearableClothes(Body body, int maxHp = 100, int size = 100) : base(body, maxHp, size)
+        protected BodyPathWearableClothes(Body body, int maxHp = 100, int size = 100) 
+            : base(body, maxHp, size)
         {
         }
 
-        protected Dictionary<ClothType, Clothes> clothesDict;
+        [IgnoreDataMember] protected Dictionary<ClothType, Clothes> clothesDict;
 
         public bool Wear(Clothes clothesToWear)
         {

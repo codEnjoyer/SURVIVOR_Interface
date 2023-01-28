@@ -38,8 +38,8 @@ public class SpecialGunCell : SpecialCell
 
     public override void PlaceItem(BaseItem item)
     {
-        if (item.rotated)
-            item.Rotated();
+        if (item.IsRotated)
+            item.Rotate();
         placedItem = item;
         ChangeCharacterGuns();
         InventoryController.SelectedItem = null;

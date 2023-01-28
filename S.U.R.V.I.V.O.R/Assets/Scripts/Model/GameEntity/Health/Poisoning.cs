@@ -1,10 +1,13 @@
-﻿namespace Model.GameEntity.Health
+﻿using System.Runtime.Serialization;
+
+namespace Model.GameEntity.Health
 {
+    [DataContract]
     public class Poisoning: HealthProperty
     {
-        public int Duration { get; private set; }
-        public readonly int damage;
-        public override HealthPropertyType Type { get; }
+        [DataMember] public int Duration { get; private set; }
+        [DataMember] public readonly int damage;
+        [DataMember] public override HealthPropertyType Type { get; }
 
         public Poisoning(int damage = 1, int duration = 4)
         {

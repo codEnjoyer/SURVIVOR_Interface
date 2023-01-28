@@ -1,16 +1,20 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Model.GameEntity.Health
 {
-    public class BodyPathHealth: Health
+    [DataContract]
+    public class BodyPathHealth : Health
     {
-        public override IAlive Target { get; }
-        public override ICollection<HealthProperty> HealthProperties { get; }
+        [DataMember] private BodyPart target;
+        [DataMember] private List<HealthProperty> healthProperties;
+        public override IAlive Target => target;
+        public override ICollection<HealthProperty> HealthProperties => healthProperties;
 
         public BodyPathHealth(BodyPart bodyPart)
         {
-            Target = bodyPart;
-            HealthProperties = new List<HealthProperty>();
+            target = bodyPart;
+            healthProperties = new List<HealthProperty>();
         }
     }
 }

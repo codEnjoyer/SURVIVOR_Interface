@@ -9,7 +9,7 @@ public class GunMagazineSpecialCell : SpecialCell
     
     public override void PlaceItem(BaseItem item)
     {
-        if (item.rotated) item.Rotated();
+        if (item.IsRotated) item.Rotate();
         placedItem = item;
 
         InventoryController.SelectedItem = null;

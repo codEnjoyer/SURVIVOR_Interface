@@ -165,7 +165,7 @@ public class InventoryController : MonoBehaviour
     private void RotateItem()
     {
         if (SelectedItem == null) return;
-        SelectedItem.Rotated();
+        SelectedItem.Rotate();
     }
 
     private void HandleHighlight()

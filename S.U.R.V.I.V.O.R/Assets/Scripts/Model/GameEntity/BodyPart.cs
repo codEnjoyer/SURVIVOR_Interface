@@ -9,18 +9,20 @@ namespace Model.GameEntity
     {
         [DataMember] public readonly Body body;
         [DataMember] public readonly BodyPathHealth health;
-        [DataMember] private int maxHp;
+        [DataMember] private float maxHp;
         [DataMember] private float hp;
         [DataMember] private float size;
         [DataMember] private int significance;
 
-        public int MaxHp
+        public float MaxHp
         {
             get => maxHp;
             set
             {
-                maxHp = Math.Max(1, value);
-                Hp = Math.Min(maxHp, Hp);
+                value = Math.Max(1, value);
+                var multiplier = value / maxHp;
+                maxHp = value;
+                Hp *= multiplier;
             }
         }
 

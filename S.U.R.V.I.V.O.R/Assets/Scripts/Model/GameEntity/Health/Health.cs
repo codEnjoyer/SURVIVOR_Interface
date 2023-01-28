@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Model.GameEntity.Health
 {
+    [DataContract]
     public abstract class Health
     {
         public abstract IAlive Target { get; }

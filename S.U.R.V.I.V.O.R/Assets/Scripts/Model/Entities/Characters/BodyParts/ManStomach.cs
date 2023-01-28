@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Model.GameEntity;
 
 namespace Model.Entities.Characters.BodyParts
 {
+    [DataContract]
     public sealed class ManStomach : BodyPathWearableClothes
     {
         public ManStomach(Body body) : base(body)

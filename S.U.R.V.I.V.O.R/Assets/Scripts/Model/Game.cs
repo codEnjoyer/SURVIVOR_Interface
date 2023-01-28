@@ -10,17 +10,21 @@ using UnityEngine;
 
 namespace Model
 {
+    [RequireComponent(typeof(Saved))]
     public class Game : MonoBehaviour, ISaved<GameSave>
     {
         public static Game Instance { get; private set; }
 
         public bool OnPause { get; private set; }
 
+        public int TurnNumber { get; private set; }
+
         [SerializeField] private List<Group> groups;
         [field: SerializeField] public Node StartNode { get; private set; }
         [field: SerializeField] public Canvas MainCanvas { get; private set; }
-    
+
         [SerializeField] [Min(0)] private int chosenGroupIndex;
+
         public int ChosenGroupIndex
         {
             get => chosenGroupIndex;
@@ -36,7 +40,7 @@ namespace Model
         public Group ChosenGroup => groups[chosenGroupIndex];
         public IEnumerable<Group> Groups => groups;
         public event Action<Group, Group> ChosenGroupChange;
-    
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -52,10 +56,7 @@ namespace Model
 
         private void Init()
         {
-            var path = Application.persistentDataPath + "/testSave.xml";
-            SaveManager.WriteObject(path, CreateSave());
-            var save = SaveManager.ReadObject<GameSave>(path);
-            Debug.Log("Success");
+            TurnController.Instance.AddListener(() => TurnNumber++);
         }
 
 
@@ -85,8 +86,11 @@ namespace Model
         {
             return new GameSave()
             {
+                turnNumber = TurnNumber,
                 groupSaves = groups.Select(g => g.CreateSave()).ToArray(),
-                chosenGroupIndex = ChosenGroupIndex
+                chosenGroupIndex = ChosenGroupIndex,
+                locationInventory = LocationInventory.Instance.LocationInventoryGrid
+                    .GetItems().Select(x => x.CreateSave()).ToArray()
             };
         }
     }
@@ -94,7 +98,9 @@ namespace Model
     [DataContract]
     public class GameSave
     {
+        [DataMember] public int turnNumber;
         [DataMember] public GroupSave[] groupSaves;
         [DataMember] public int chosenGroupIndex;
+        [DataMember] public ItemSave[] locationInventory;
     }
 }

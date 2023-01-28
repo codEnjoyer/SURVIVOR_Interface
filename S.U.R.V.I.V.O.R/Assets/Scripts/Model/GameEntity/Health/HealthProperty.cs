@@ -1,6 +1,8 @@
-﻿
+﻿using System.Runtime.Serialization;
+
 namespace Model.GameEntity.Health
 {
+   [DataContract]
    public abstract class HealthProperty
    {
       public abstract HealthPropertyType Type { get; }

@@ -12,12 +12,13 @@ namespace Model.GameEntity
     {
         [DataMember] private int currentCriticalLoses;
         [DataMember] private int maxCriticalLoses;
-        [DataMember] protected readonly List<BodyPart> bodyParts = new();
-        [DataMember] public BodyHealth Health { get; }
+        [IgnoreDataMember] protected readonly List<BodyPart> bodyParts = new();
+        [DataMember] private BodyHealth health;
+        public BodyHealth Health => health;
 
         protected Body()
         {
-            Health = new BodyHealth(this);
+            health = new BodyHealth(this);
         }
 
         protected int MaxCriticalLoses

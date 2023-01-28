@@ -1,14 +1,21 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
 using Interface;
 using Model;
 using Model.Entities.Characters;
+using Model.SaveSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using Image = UnityEngine.UI.Image;
 
-public class BaseItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+[RequireComponent(typeof(Saved))]
+public class BaseItem : MonoBehaviour, IPointerEnterHandler,
+    IPointerExitHandler, IPointerClickHandler, ISaved<ItemSave>
 {
     [FormerlySerializedAs("itemData")] [SerializeField]
     private BaseItemData data;
@@ -24,13 +31,9 @@ public class BaseItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public Vector3 OnAwakeRectTransformScale { get; set; }
 
-    public int Height => !rotated ? Size.Height : Size.Width;
-
-    public int Width => !rotated ? Size.Width : Size.Height;
-
-    public bool rotated { get; set; }
-    public Size Size => data.Size;
-    public float Weight => data.Weight;
+    public bool IsRotated { get; private set; }
+    public int Height => !IsRotated ? data.Size.Height : data.Size.Width;
+    public int Width => !IsRotated ? data.Size.Width : data.Size.Height;
     public BaseItemData Data => data;
 
     public void Awake()
@@ -50,11 +53,11 @@ public class BaseItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         OnAwakeRectTransformSize = rt.sizeDelta;
     }
 
-    public void Rotated()
+    public void Rotate()
     {
-        rotated = !rotated;
+        IsRotated = !IsRotated;
         var rectTransform = GetComponent<RectTransform>();
-        rectTransform.rotation = Quaternion.Euler(0, 0, rotated ? 90 : 0);
+        rectTransform.rotation = Quaternion.Euler(0, 0, IsRotated ? 90 : 0);
     }
 
     public void Destroy()
@@ -63,9 +66,10 @@ public class BaseItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         Destroy(gameObject);
     }
 
-    #region TooltipRegin
+    #region TooltipRegion
 
     private bool mouseEnter;
+    private ISaved<ItemSave> savedImplementation;
     const float Seconds = 0.5f;
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -95,4 +99,49 @@ public class BaseItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
 
     #endregion
+
+    public ItemSave CreateSave()
+    {
+        var itemSave = new ItemSave()
+        {
+            resourcesPath = GetComponent<Saved>().ResourcesPath,
+            positionInInventory = new Vector2(OnGridPositionX, OnGridPositionY),
+            isRotated = IsRotated,
+        };
+        
+        var allComponents = GetComponents<Component>()
+            .Where(component => !component.Equals(this));
+        var componentSaves = new List<ComponentSave>();
+        foreach (var component in allComponents)
+        {
+            var type = component.GetType();
+            var method = type.GetMethod("HiddenCreateSave",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            if (method == null) continue;
+            var componentSave = (ComponentSave) method.Invoke(component, Array.Empty<object>());
+            if (componentSave == null) continue;
+            
+            componentSaves.Add(componentSave);
+            componentSave.itemSave = itemSave;
+        }
+
+        itemSave.componentSaves = componentSaves.ToArray();
+        return itemSave;
+    }
+}
+
+[DataContract]
+[KnownType(typeof(ClothSave))]
+public class ItemSave
+{
+    [DataMember] public string resourcesPath;
+    [DataMember] public Vector2 positionInInventory;
+    [DataMember] public bool isRotated;
+    [DataMember] public ComponentSave[] componentSaves;
+}
+
+[DataContract]
+public abstract class ComponentSave
+{
+    [DataMember] public ItemSave itemSave;
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.UIElements;
+﻿using UnityEngine;
 
 public class Location : MonoBehaviour, ISerializationCallbackReceiver
 {
@@ -17,7 +15,6 @@ public class Location : MonoBehaviour, ISerializationCallbackReceiver
 
     public void UpdatePrefab()
     {
-        //
         var meshFilter = GetComponent<MeshFilter>();
         var meshRender = GetComponent<MeshRenderer>();
         if (meshFilter == null || meshRender == null)

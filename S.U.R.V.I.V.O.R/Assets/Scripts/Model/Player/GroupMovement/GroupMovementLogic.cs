@@ -75,7 +75,7 @@ namespace Model.Player.GroupMovement
                 else
                 {
                     targetNode = way.Dequeue();
-                    group.SetCurrentOnGlobalMapGroupEndurance(group.CurrentOnGlobalMapGroupEndurance - 1);
+                    group.CurrentOnGlobalMapGroupEndurance -= 1;
                 }
             }
         }
