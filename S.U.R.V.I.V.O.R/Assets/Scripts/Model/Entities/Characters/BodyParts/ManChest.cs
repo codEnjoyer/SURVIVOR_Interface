@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using Model.GameEntity;
 
@@ -12,7 +13,7 @@ namespace Model.Entities.Characters.BodyParts
         public Clothes Backpack => clothesDict[ClothType.Backpack];
         public Clothes Vest => clothesDict[ClothType.Vest];
 
-        public ManChest(Body body) : base(body)
+        public ManChest()
         {
             clothesDict = new Dictionary<ClothType, Clothes>
             {
@@ -21,6 +22,7 @@ namespace Model.Entities.Characters.BodyParts
                 {ClothType.Vest,null},
                 {ClothType.Underwear,null}
             };
+            possibleClothTypes = clothesDict.Keys.ToList();
         }
     }
 }

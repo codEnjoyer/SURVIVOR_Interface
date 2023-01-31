@@ -18,8 +18,7 @@ namespace Model
 
         public bool OnPause { get; private set; }
 
-        public int TurnNumber { get; private set; }
-
+        public int TurnNumber { get; private set; } = 1;
         [SerializeField] private List<Group> groups;
         [field: SerializeField] public Node StartNode { get; private set; }
         [field: SerializeField] public Canvas MainCanvas { get; private set; }
@@ -87,7 +86,6 @@ namespace Model
         {
             return new GameSave()
             {
-                resourcesPath = GetComponent<Saved>().ResourcesPath,
                 turnNumber = TurnNumber,
                 groupSaves = groups.Select(g => g.CreateSave()).ToArray(),
                 chosenGroupIndex = ChosenGroupIndex,
@@ -95,12 +93,44 @@ namespace Model
                     .GetItems().Select(x => x.CreateSave()).ToArray()
             };
         }
+
+        public void Restore(GameSave gameSave)
+        {
+            Clear();
+            groups = new List<Group>();
+            foreach (var groupSave in gameSave.groupSaves)
+            {
+                var group = Instantiate(Resources.Load<Group>(groupSave.resourcesPath));
+                groups.Add(group);
+                group.Restore(groupSave);
+            }
+
+            ChosenGroupIndex = gameSave.chosenGroupIndex;
+            TurnNumber = gameSave.turnNumber;
+
+            var inventory = LocationInventory.Instance.LocationInventoryGrid;
+            foreach (var itemSave in gameSave.locationInventory)
+            {
+                var item = Instantiate(Resources.Load<BaseItem>(itemSave.resourcesPath));
+                item.Restore(itemSave);
+                inventory.PlaceItem(item, item.OnGridPositionX, item.OnGridPositionY);
+            }
+        }
+
+        public void Clear()
+        {
+            foreach (var group in groups)
+                Destroy(group.gameObject);
+
+            groups = new List<Group>();
+            foreach (var item in FindObjectsOfType<BaseItem>(true))
+                item.Destroy();
+        }
     }
 
     [DataContract(Namespace = "Model")]
     public class GameSave
     {
-        [DataMember] public string resourcesPath;
         [DataMember] public int turnNumber;
         [DataMember] public GroupSave[] groupSaves;
         [DataMember] public int chosenGroupIndex;

@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace Model.GameEntity
 {
-    public abstract class Entity: MonoBehaviour, IAlive
+    public abstract class Entity : MonoBehaviour
     {
         [SerializeField] [Min(1)] private float initiative = 1;
         [SerializeField] [Min(1)] private int speedInFightScene = 1;
+        
         public abstract Body Body { get; }
-        public abstract void Attack(IEnumerable<BodyPart> targets, float distance);
 
         public float Initiative
         {
@@ -33,9 +33,6 @@ namespace Model.GameEntity
             }
         }
 
-        
-        public void TakeDamage(DamageInfo damage) => Body.TakeDamage(damage);
-        public void Healing(HealInfo heal) => Body.Healing(heal);
-        public float Hp => Body.Hp;
+        public abstract void Attack(IEnumerable<BodyPart> targets, float distance);
     }
 }

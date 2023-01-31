@@ -14,15 +14,15 @@ namespace Model.Entities.Characters
     [RequireComponent(typeof(Saved))]
     public class Character : Entity, ISaved<CharacterSave>
     {
-        public readonly ManBody body = new();
+        public ManBody body = new();
         [SerializeField] private Sprite sprite;
         [SerializeField] private string firstName;
         [SerializeField] private string surname;
-        
+
         private Gun primaryGun;
         private Gun secondaryGun;
         public MeleeWeapon MeleeWeapon { get; set; }
-        
+
         public readonly Skills skills;
         public event Action<GunType> OnGunsChanged;
 
@@ -30,13 +30,13 @@ namespace Model.Entities.Characters
         {
             skills = new Skills(this);
         }
-        
+
 
         public override Body Body => body;
         public Sprite Sprite => sprite;
         public string FirstName => firstName;
         public string Surname => surname;
-        
+
         public Gun PrimaryGun
         {
             get => primaryGun;
@@ -46,7 +46,7 @@ namespace Model.Entities.Characters
                 OnGunsChanged?.Invoke(GunType.PrimaryGun);
             }
         }
-        
+
         public Gun SecondaryGun
         {
             get => secondaryGun;
@@ -77,7 +77,7 @@ namespace Model.Entities.Characters
             //TODO Добавить опыт к навыку лутания в зависмости от редкости найденной вещи
             return infoAboutLocation.GetLoot();
         }
-        
+
         public int Mobility => throw new NotImplementedException(); //Скорость передвижения на глобальной карте
 
         public override void Attack(IEnumerable<BodyPart> targets, float distance)
@@ -99,8 +99,34 @@ namespace Model.Entities.Characters
                 vest = body.Chest.Vest?.CreateSave(),
                 boots = body.LeftLeg.Boots?.CreateSave(),
                 pants = body.LeftLeg.Pants?.CreateSave()
-                // Почему у левой и правой ноги одежда одинаковая, хотя здоровье разное?
             };
+        }
+
+        public void Restore(CharacterSave save)
+        {
+            body = save.manBody;
+            body.RestoreBodyParts();
+
+            foreach (var bodyPart in body.BodyParts)
+                ((BodyPathWearableClothes) bodyPart).RestoreClothesDict();
+            
+            Wear(save.hat);
+            Wear(save.underwear);
+            Wear(save.jacket);
+            Wear(save.backpack);
+            Wear(save.vest);
+            Wear(save.boots);
+            Wear(save.pants);
+
+            void Wear(ClothesSave clothesSave)
+            {
+                if (clothesSave == null)
+                    return;
+                var clothesPref = Resources.Load<Clothes>(clothesSave.itemSave.resourcesPath);
+                var clothes = Instantiate(clothesPref);
+                clothes.Restore(clothesSave);
+                body.Wear(clothes);
+            }
         }
     }
 
@@ -110,12 +136,12 @@ namespace Model.Entities.Characters
         [DataMember] public string resourcesPath;
         [DataMember] public ManBody manBody;
 
-        [DataMember] public ClothSave hat;
-        [DataMember] public ClothSave underwear;
-        [DataMember] public ClothSave jacket;
-        [DataMember] public ClothSave backpack;
-        [DataMember] public ClothSave vest;
-        [DataMember] public ClothSave boots;
-        [DataMember] public ClothSave pants;
+        [DataMember] public ClothesSave hat;
+        [DataMember] public ClothesSave underwear;
+        [DataMember] public ClothesSave jacket;
+        [DataMember] public ClothesSave backpack;
+        [DataMember] public ClothesSave vest;
+        [DataMember] public ClothesSave boots;
+        [DataMember] public ClothesSave pants;
     }
 }

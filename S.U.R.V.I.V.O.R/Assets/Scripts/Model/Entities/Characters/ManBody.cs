@@ -11,7 +11,7 @@ using Object = UnityEngine.Object;
 namespace Model.Entities.Characters
 {
     [DataContract(Namespace = "Model.Entities.Characters")]
-    public class ManBody : Body, IWearClothes
+    public sealed class ManBody : Body, IWearClothes
     {
         [DataMember] private int energy;
         [DataMember] private int hunger;
@@ -29,25 +29,25 @@ namespace Model.Entities.Characters
         [DataMember] public ManLeg LeftLeg { get; private set; }
         [DataMember] public ManLeg RightLeg { get; private set; }
 
-        private readonly IWearClothes[] wearClothesBodyParts;
+        private  IWearClothes[] wearClothesBodyParts;
 
         public ManBody()
         {
-            Head = new ManHead(this);
-            Chest = new ManChest(this);
-            Stomach = new ManStomach(this);
-            LeftArm = new ManArm(this);
-            RightArm = new ManArm(this);
-            LeftLeg = new ManLeg(this);
-            RightLeg = new ManLeg(this);
-
-            bodyParts.AddRange(new List<BodyPart> {Head, Chest, Stomach, LeftArm, RightArm, LeftLeg, RightLeg});
+            Head = new ManHead();
+            Chest = new ManChest();
+            Stomach = new ManStomach();
+            LeftArm = new ManArm();
+            RightArm = new ManArm();
+            LeftLeg = new ManLeg();
+            RightLeg = new ManLeg();
+            
+            RestoreBodyParts();
+            
             Energy = maxEnergy;
             Hunger = maxHunger;
             Water = maxWater;
-            MaxCriticalLoses = bodyParts.Count;
-
-            wearClothesBodyParts = bodyParts.OfType<IWearClothes>().ToArray();
+            MaxCriticalLoses = BodyParts.Count;
+            
         }
 
         public event Action<Health> PlayerTired;
@@ -175,6 +175,8 @@ namespace Model.Entities.Characters
 
         public bool Wear(Clothes clothesToWear)
         {
+            if (clothesToWear == null)
+                return false;
             var isSuccess = false;
             foreach (var wearClothesBodyPart in wearClothesBodyParts)
             {
@@ -214,6 +216,19 @@ namespace Model.Entities.Characters
             }
 
             return clothes.Distinct().Where(x => x is not null);
+        }
+
+        public override void RestoreBodyParts()
+        {
+            base.RestoreBodyParts();
+            AddBodyPart(Head, 3);
+            AddBodyPart(Chest, 3);
+            AddBodyPart(Stomach, 3);
+            AddBodyPart(LeftArm, 1);
+            AddBodyPart(RightArm, 1);
+            AddBodyPart(LeftLeg, 1);
+            AddBodyPart(RightLeg, 1);
+            wearClothesBodyParts = BodyParts.OfType<IWearClothes>().ToArray();
         }
     }
 }

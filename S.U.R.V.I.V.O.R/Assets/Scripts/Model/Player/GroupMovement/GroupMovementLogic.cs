@@ -38,7 +38,12 @@ namespace Model.Player.GroupMovement
 
         public Node CurrentNode
         {
-            get => currentNode;
+            get
+            {
+                if (currentNode == null)
+                    currentNode = DotGraph.Instance.GetNearestNode(transform.position.To2D());
+                return currentNode;
+            }
             private set
             {
                 currentNode = value;
@@ -48,7 +53,7 @@ namespace Model.Player.GroupMovement
 
         public event Action<Location> LocationChange;
 
-        private List<Node> GetPath() => PathFinder.FindShortestWay(currentNode, DotGraph.Instance.GetNearestNode());
+        private List<Node> GetPath() => PathFinder.FindShortestWay(CurrentNode, DotGraph.Instance.GetNearestNodeToMouse());
 
         public void CreateWay()
         {
@@ -58,12 +63,12 @@ namespace Model.Player.GroupMovement
 
         public void Move()
         {
-            transform.position = Vector3.Lerp(currentNode.transform.position, targetNode.transform.position, progress);
+            transform.position = Vector3.Lerp(CurrentNode.transform.position, targetNode.transform.position, progress);
             progress += 0.050f;
             if (IsNearly())
             {
-                currentNode = targetNode;
-                LocationChange?.Invoke(currentNode.Location);
+                CurrentNode = targetNode;
+                LocationChange?.Invoke(CurrentNode.Location);
                 progress = 0;
                 if (way.Count == 0 || group.CurrentOnGlobalMapGroupEndurance == 0)
                 {
@@ -205,13 +210,13 @@ namespace Model.Player.GroupMovement
             thirdTurnObjectLineRenderer = thirdTurnObject.GetComponent<LineRenderer>();
             movementSm.Initialize(Sleeping);
             
-            currentNode = Game.Instance.StartNode;
-            if (currentNode == null)
+            CurrentNode = Game.Instance.StartNode;
+            if (CurrentNode == null)
                 Debug.Log("Нет стартовой ноды!");
             else
             {
-                transform.position = currentNode.transform.position;
-                targetNode = currentNode;
+                transform.position = CurrentNode.transform.position;
+                targetNode = CurrentNode;
             }
         }
         private void Update()
@@ -230,5 +235,15 @@ namespace Model.Player.GroupMovement
         private void FixedUpdate() => movementSm.CurrentState.FixedUpdate();
 
         #endregion
+
+        public void Restore()
+        {
+            firstTurnObject = 
+                Instantiate(firstTurnObject, new Vector3(0, -1000, 0), Quaternion.identity);
+            secondTurnObjectLineRenderer = 
+                Instantiate(secondTurnObjectLineRenderer, new Vector3(0, -1000, 0), Quaternion.identity);
+            thirdTurnObjectLineRenderer = 
+                Instantiate(thirdTurnObjectLineRenderer, new Vector3(0, -1000, 0), Quaternion.identity);
+        }
     }
 }

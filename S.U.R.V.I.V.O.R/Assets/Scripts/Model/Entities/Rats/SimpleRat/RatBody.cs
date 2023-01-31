@@ -8,9 +8,9 @@ namespace Model.Entities.Rats.SimpleRat
 
         public RatBody()
         {
-            Chest = new RatChest(this);
-            bodyParts.Add(Chest);
-            MaxCriticalLoses = bodyParts.Count;
+            Chest = new RatChest();
+            AddBodyPart(Chest, 1);
+            MaxCriticalLoses = BodyParts.Count;
         }
     }
 }

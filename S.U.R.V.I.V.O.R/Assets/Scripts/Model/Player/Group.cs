@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using Extension;
+using Graph_and_Map;
 using Model.Entities.Characters;
 using Model.Items;
 using Model.Player.GroupMovement;
@@ -16,10 +17,10 @@ namespace Model.Player
     {
         [SerializeField] private int maxOnGlobalMapGroupEndurance = 10;
         [SerializeField] private int currentOnGlobalMapGroupEndurance = 10;
-        [SerializeField] private List<Character> currentGroupMembers = new ();
+        [SerializeField] private List<Character> currentGroupMembers = new();
         private int maxGroupMembers;
         public bool IsLootAllowedOnThisTurn { get; set; } = true;
-        
+
         public int MaxOnGlobalMapGroupEndurance
         {
             get => maxOnGlobalMapGroupEndurance;
@@ -41,12 +42,13 @@ namespace Model.Player
                     throw new InvalidOperationException();
                 currentOnGlobalMapGroupEndurance = value;
             }
-        } 
+        }
+
         public GroupMovementLogic GroupMovementLogic { get; private set; }
         public Location Location => GroupMovementLogic.CurrentNode.Location;
 
         public IEnumerable<Character> CurrentGroupMembers => currentGroupMembers;
-        
+
         private void Awake()
         {
             GroupMovementLogic = GetComponent<GroupMovementLogic>();
@@ -117,7 +119,7 @@ namespace Model.Player
         {
             SubtractEnergy();
         }
-        
+
         public void OnTurnEnd()
         {
             SubtractSatiety();
@@ -143,8 +145,38 @@ namespace Model.Player
                 isLootAllowedOnThisTurn = IsLootAllowedOnThisTurn
             };
         }
+
+        private void OnDestroy()
+        {
+            // foreach (var character in currentGroupMembers)
+            //     Destroy(character);
+        }
+
+        public void Restore(GroupSave save)
+        {
+            GroupMovementLogic.Restore();
+            transform.position = save.position.To3D();
+            MaxOnGlobalMapGroupEndurance = save.maxOnGlobalMapGroupEndurance;
+            CurrentOnGlobalMapGroupEndurance = save.currentOnGlobalMapGroupEndurance;
+            IsLootAllowedOnThisTurn = save.isLootAllowedOnThisTurn;
+            
+            currentGroupMembers.Clear();
+
+            foreach (var characterSave in save.currentGroupMembers)
+            {
+                var character = Instantiate(
+                    Resources.Load<Character>(characterSave.resourcesPath),
+                    transform.position,
+                    Quaternion.identity,
+                    transform
+                );
+                currentGroupMembers.Add(character);
+                character.Restore(characterSave);
+                character.gameObject.SetActive(false);
+            }
+        }
     }
-    
+
     [DataContract(Namespace = "Model.Player")]
     public class GroupSave
     {

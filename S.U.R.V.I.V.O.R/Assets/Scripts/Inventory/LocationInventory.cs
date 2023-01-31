@@ -34,6 +34,7 @@ public class LocationInventory : MonoBehaviour
     {
         if (text != null)
             text.text = loc.name;
+        
     }
 
     private void OnChosenGroupChange(Group currentGroup, Group newGroup)

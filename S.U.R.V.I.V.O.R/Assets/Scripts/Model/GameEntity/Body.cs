@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Runtime.Serialization;
+using Model.Entities.Characters.BodyParts;
 using Model.GameEntity.Health;
 
 namespace Model.GameEntity
 {
     [DataContract(Namespace = "Model.GameEntity")]
-    public abstract class Body : IAlive
+    public class Body : IAlive
     {
         [DataMember] private int currentCriticalLoses;
         [DataMember] private int maxCriticalLoses;
-        [IgnoreDataMember] protected readonly List<BodyPart> bodyParts = new();
+        [IgnoreDataMember] private List<BodyPart> bodyParts;
         [DataMember] private BodyHealth health;
         public BodyHealth Health => health;
 
@@ -33,18 +34,19 @@ namespace Model.GameEntity
             }
         }
 
-        public IEnumerable<BodyPart> BodyParts => bodyParts;
+        public IReadOnlyCollection<BodyPart> BodyParts => bodyParts;
         public float Hp => BodyParts.Sum(part => part.Hp);
         public event Action Died;
 
-        public void LossBodyParts(BodyPart bodyPart)
+        protected void AddBodyPart(BodyPart bodyPart, int significance)
         {
-            bodyParts.Remove(bodyPart);
-            currentCriticalLoses += bodyPart.Significance;
-            if (currentCriticalLoses >= MaxCriticalLoses)
+            bodyParts.Add(bodyPart);
+            bodyPart.Died += () =>
             {
-                Died?.Invoke();
-            }
+                currentCriticalLoses += significance;
+                if (currentCriticalLoses >= maxCriticalLoses)
+                    Died?.Invoke();
+            };
         }
 
         public void TakeDamage(DamageInfo damage)
@@ -56,5 +58,7 @@ namespace Model.GameEntity
         {
             throw new NotImplementedException();
         }
+
+        public virtual void RestoreBodyParts() => bodyParts = new List<BodyPart>();
     }
 }

@@ -7,7 +7,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(BaseItem))]
 [RequireComponent(typeof(Wearable))]
-public class Clothes : MonoBehaviour, ISaved<ClothSave>
+public class Clothes : MonoBehaviour, ISaved<ClothesSave>
 {
     [SerializeField] private ClothData data;
     [SerializeField] private InventoryState inventory;
@@ -32,15 +32,33 @@ public class Clothes : MonoBehaviour, ISaved<ClothSave>
         baseItem = gameObject.GetComponent<BaseItem>();
     }
     
-    public ClothSave CreateSave()
+    public ClothesSave CreateSave()
     {
         var itemSave = GetComponent<BaseItem>().CreateSave();
-        return itemSave.componentSaves.OfType<ClothSave>().First();
+        return itemSave.componentSaves.OfType<ClothesSave>().First();
     }
 
-    private ClothSave HiddenCreateSave()
+    public void Restore(ClothesSave save)
     {
-        return new ClothSave()
+        GetComponent<BaseItem>().Restore(save.itemSave);
+    }
+
+    private void HiddenRestore(ItemSave save)
+    {
+        var clothSave = save.componentSaves.OfType<ClothesSave>().First();
+        CurrentArmor = clothSave.currentArmor;
+        inventory = new InventoryState(data.InventorySize);
+        foreach (var itemSave in clothSave.inventory)
+        {
+            var item = Instantiate(Resources.Load<BaseItem>(itemSave.resourcesPath));
+            item.Restore(itemSave);
+            inventory.PlaceItem(item, item.OnGridPositionX, item.OnGridPositionY);
+            item.gameObject.SetActive(false);
+        }
+    }
+    private ClothesSave HiddenCreateSave()
+    {
+        return new ClothesSave()
         {
             currentArmor = CurrentArmor,
             inventory = inventory?.GetItems().Select(x => x.CreateSave()).ToArray()
@@ -49,7 +67,7 @@ public class Clothes : MonoBehaviour, ISaved<ClothSave>
 }
 
 [DataContract(Namespace = "Model.Items")]
-public class ClothSave: ComponentSave
+public class ClothesSave: ComponentSave
 {
     [DataMember] public float currentArmor;
     [DataMember] public ItemSave[] inventory;

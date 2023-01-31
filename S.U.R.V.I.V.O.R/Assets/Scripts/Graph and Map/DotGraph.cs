@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-
+using Extension;
 using UnityEngine;
 
 namespace Graph_and_Map
 {
-    public class DotGraph:MonoBehaviour
+    public class DotGraph : MonoBehaviour
     {
         public static DotGraph Instance { get; private set; }
         private readonly List<Node> nodes = new();
@@ -12,13 +12,19 @@ namespace Graph_and_Map
         private Camera mainCamera;
         private Vector3 mPos;
 
-        public Node GetNearestNode()
+        public Node GetNearestNodeToMouse()
         {
             var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var rayHit))
                 mPos = rayHit.point;
-            return (Node)kdTree.GetNeighbour(new Vector2(mPos.x, mPos.z));
+            return (Node) kdTree.GetNeighbour(mPos.To2D());
         }
+
+        public Node GetNearestNode(Vector2 pos)
+        {
+            return (Node) kdTree.GetNeighbour(pos);
+        }
+
 
         void Awake()
         {

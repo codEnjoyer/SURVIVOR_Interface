@@ -18,6 +18,14 @@ public class TestSave : MonoBehaviour
         var save2 = SaveManager.ReadObject<GameSave>(path);
     }
 
+    public void LoadGame()
+    {
+        // Game.Instance.Clear();
+        var path = Application.persistentDataPath + "/test.xml";
+        var save = SaveManager.ReadObject<GameSave>(path);
+        Game.Instance.Restore(save);
+    }
+
     public void SaveItem()
     {
         var path = Application.persistentDataPath + "/itemSave.xml";

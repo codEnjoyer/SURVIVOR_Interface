@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 
 namespace Model.GameEntity
@@ -7,18 +8,20 @@ namespace Model.GameEntity
     [DataContract(Namespace = "Model.GameEntity")]
     public abstract class BodyPathWearableClothes : BodyPart, IWearClothes
     {
-        protected BodyPathWearableClothes(Body body, int maxHp = 100, int size = 100) 
-            : base(body, maxHp, size)
+        [DataMember] protected List<ClothType> possibleClothTypes;
+        [IgnoreDataMember] protected Dictionary<ClothType, Clothes> clothesDict;
+
+        protected BodyPathWearableClothes(int maxHp = 100, int size = 100)
+            : base(maxHp, size)
         {
         }
 
-        [IgnoreDataMember] protected Dictionary<ClothType, Clothes> clothesDict;
-
         public bool Wear(Clothes clothesToWear)
         {
-            if (clothesToWear == null || !clothesDict.ContainsKey(clothesToWear.Data.ClothType) || clothesDict[clothesToWear.Data.ClothType] != null) 
+            if (clothesToWear == null || !clothesDict.ContainsKey(clothesToWear.Data.ClothType) ||
+                clothesDict[clothesToWear.Data.ClothType] != null)
                 return false;
-            
+
             clothesDict[clothesToWear.Data.ClothType] = clothesToWear;
             return true;
         }
@@ -38,5 +41,12 @@ namespace Model.GameEntity
         }
 
         public IEnumerable<Clothes> GetClothes() => clothesDict.Values;
+
+        public void RestoreClothesDict()
+        {
+            clothesDict = new Dictionary<ClothType, Clothes>();
+            foreach (var possibleClothType in possibleClothTypes)
+                clothesDict.Add(possibleClothType, null);
+        }
     }
 }

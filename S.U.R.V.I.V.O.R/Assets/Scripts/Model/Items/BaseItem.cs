@@ -63,7 +63,7 @@ namespace Model.Items
 
         public void Destroy()
         {
-            InventoryGrid.PickUpItem(this);
+            InventoryGrid?.PickUpItem(this);
             Destroy(gameObject);
         }
 
@@ -106,10 +106,10 @@ namespace Model.Items
             var itemSave = new ItemSave()
             {
                 resourcesPath = GetComponent<Saved>().ResourcesPath,
-                positionInInventory = new Vector2(OnGridPositionX, OnGridPositionY),
+                positionInInventory = new Vector2Int(OnGridPositionX, OnGridPositionY),
                 isRotated = IsRotated,
             };
-        
+
             var allComponents = GetComponents<Component>()
                 .Where(component => !component.Equals(this));
             var componentSaves = new List<ComponentSave>();
@@ -121,7 +121,7 @@ namespace Model.Items
                 if (method == null) continue;
                 var componentSave = (ComponentSave) method.Invoke(component, Array.Empty<object>());
                 if (componentSave == null) continue;
-            
+
                 componentSaves.Add(componentSave);
                 componentSave.itemSave = itemSave;
             }
@@ -129,14 +129,39 @@ namespace Model.Items
             itemSave.componentSaves = componentSaves.ToArray();
             return itemSave;
         }
+
+        public void Restore(ItemSave save)
+        {
+            OnGridPositionX = save.positionInInventory.x;
+            OnGridPositionY = save.positionInInventory.y;
+
+            IsRotated = IsRotated;
+            
+            var allComponents = GetComponents<Component>()
+                .Where(component => !component.Equals(this));
+
+            foreach (var component in allComponents)
+            {
+                var type = component.GetType();
+                var method = type.GetMethod("HiddenRestore",
+                    BindingFlags.NonPublic | BindingFlags.Instance);
+                if (method == null) continue;
+                method.Invoke(component, new object[] {save});
+            }
+        }
+
+        private void OnDestroy()
+        {
+            Debug.Log(name);
+        }
     }
 
     [DataContract(Namespace = "Model.Items")]
-    [KnownType(typeof(ClothSave))]
+    [KnownType(typeof(ClothesSave))]
     public class ItemSave
     {
         [DataMember] public string resourcesPath;
-        [DataMember] public Vector2 positionInInventory;
+        [DataMember] public Vector2Int positionInInventory;
         [DataMember] public bool isRotated;
         [DataMember] public ComponentSave[] componentSaves;
     }
