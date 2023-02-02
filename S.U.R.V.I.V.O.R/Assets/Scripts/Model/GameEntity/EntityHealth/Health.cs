@@ -5,17 +5,21 @@ using System.Runtime.Serialization;
 
 namespace Model.GameEntity.EntityHealth
 {
-    [DataContract(Namespace = "Model.GameEntity.Health")]
-    [KnownType("GetKnownTypes")]
     public sealed class Health
     {
-        [DataMember] public IAlive Target { get; private set; }
-        [DataMember] private List<IHealthProperty> healthProperties;
+        public IAlive Target { get; private set; }
+        private readonly List<IHealthProperty> healthProperties;
 
         public Health(IAlive target)
         {
             Target = target;
             healthProperties = new List<IHealthProperty>();
+        }
+
+        public Health(IAlive target, IEnumerable<IHealthProperty> healthProperties)
+        {
+            Target = target;
+            this.healthProperties = healthProperties.ToList();
         }
 
         public IReadOnlyCollection<IHealthProperty> HealthProperties => healthProperties;
@@ -39,27 +43,5 @@ namespace Model.GameEntity.EntityHealth
             foreach (var healthProperty in HealthProperties)
                 healthProperty.TurnEndAction(this);
         }
-
-
-        #region Save
-
-        private static Type[] knownTypes;
-
-        private static Type[] GetKnownTypes()
-        {
-            if (knownTypes == null)
-            {
-                var type = typeof(IHealthProperty);
-                var types = AppDomain.CurrentDomain.GetAssemblies()
-                    .SelectMany(s => s.GetTypes())
-                    .Where(p => type.IsAssignableFrom(p) && !p.IsInterface)
-                    .ToArray();
-                knownTypes = types;
-            }
-
-            return knownTypes;
-        }
-
-        #endregion
     }
 }

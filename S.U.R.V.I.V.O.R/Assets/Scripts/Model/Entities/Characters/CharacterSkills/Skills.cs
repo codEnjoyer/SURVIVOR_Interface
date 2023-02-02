@@ -1,28 +1,24 @@
 ﻿using System.Runtime.Serialization;
 using Model.SaveSystem;
+using UnityEngine;
 
 namespace Model.Entities.Characters.CharacterSkills
 {
-    public class Skills: ISaved<SkillsSave>
+    public class Skills : MonoBehaviour, ISaved<SkillsSave>
     {
-        public readonly Strength strength;
-
-        public Skills(Character character)
-        {
-            strength = new Strength(character.body);
-        }
+        [field: SerializeField] public Strength Strength { get; private set; }
 
         public SkillsSave CreateSave()
         {
             return new SkillsSave()
             {
-                strength = strength.CreateSave()
+                strength = Strength.CreateSave()
             };
         }
 
         public void Restore(SkillsSave save)
         {
-            strength.Restore(save.strength);
+            Strength.Restore(save.strength);
         }
     }
 

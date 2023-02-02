@@ -34,7 +34,7 @@ public class Cookable : MonoBehaviour, IContextMenuAction
         {
             bool isSuccess;
             if (itemOwner != null)
-                isSuccess = itemOwner.body.PlaceItemToInventory(Instantiate(packed));
+                isSuccess = itemOwner.ManBody.PlaceItemToInventory(Instantiate(packed));
             else
             {
                 inventoryController.ThrowItemAtLocation(Instantiate(packed));

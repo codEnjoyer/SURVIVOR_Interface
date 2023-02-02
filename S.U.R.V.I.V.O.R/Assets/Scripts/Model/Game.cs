@@ -11,7 +11,6 @@ using UnityEngine;
 
 namespace Model
 {
-    [RequireComponent(typeof(Saved))]
     public class Game : MonoBehaviour, ISaved<GameSave>
     {
         public static Game Instance { get; private set; }

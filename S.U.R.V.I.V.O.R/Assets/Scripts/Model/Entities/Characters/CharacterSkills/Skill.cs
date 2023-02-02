@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using Model.SaveSystem;
+using UnityEngine;
 
 namespace Model.Entities.Characters.CharacterSkills
 {
     public abstract class Skill : IDeveloping, ISaved<SkillSave>
     {
-        private int maxLevel;
-        private int currentLevel;
-        private float levelProgress;
+        [SerializeField] [Min(1)] private int maxLevel;
+        private int currentLevel = 0;
+        private float levelProgress = 0;
         public string Name { get; }
         public string Description { get;  }
 

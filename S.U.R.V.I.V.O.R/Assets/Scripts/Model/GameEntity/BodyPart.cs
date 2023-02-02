@@ -1,27 +1,19 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using Model.GameEntity.EntityHealth;
+using Model.SaveSystem;
 using UnityEngine;
 
 namespace Model.GameEntity
 {
-    [DataContract(Namespace = "Model.GameEntity")]
-    public class BodyPart : MonoBehaviour, IAlive
+    public class BodyPart : MonoBehaviour, IAlive, ISaved<BodyPartSave>
     {
-        [DataMember] public Health Health { get; private set; }
-        [DataMember] private float maxHp;
-        [DataMember] private float hp;
-        [DataMember] private float size;
+        public Health Health { get; private set; }
+        [SerializeField][Min(1)] private float maxHp = 100;
+        [SerializeField][Min(1)] private float hp = 100;
+        [SerializeField][Min(1)] private float size = 100;
         public event Action Died;
-
-        public BodyPart(int maxHp = 100, int size = 100)
-        {
-            Health = new Health(this);
-            MaxHp = maxHp;
-            Size = size;
-            Hp = MaxHp;
-        }
-
+        
         public float MaxHp
         {
             get => maxHp;
@@ -65,5 +57,25 @@ namespace Model.GameEntity
         {
             Hp += heal.Heal;
         }
+        
+        protected virtual void Awake()
+        {
+            Health = new Health(this);
+        }
+
+        public BodyPartSave CreateSave()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Restore(BodyPartSave save)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class BodyPartSave
+    {
+        
     }
 }

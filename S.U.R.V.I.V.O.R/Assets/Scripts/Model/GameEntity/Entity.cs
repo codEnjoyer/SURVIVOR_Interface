@@ -8,13 +8,13 @@ using UnityEngine;
 
 namespace Model.GameEntity
 {
-    public abstract class Entity: MonoBehaviour, IEntity
+    public abstract class Entity : MonoBehaviour, IEntity
     {
         [SerializeField] [Min(1)] private float initiative = 1;
         [SerializeField] [Min(1)] private int speedInFightScene = 1;
         [SerializeField] private MeleeAttack meleeAttack;
-        public abstract Body Body { get; }
-        
+        [field: SerializeField] public Body Body { get; private set; }
+
         public float Initiative
         {
             get => initiative;
@@ -36,11 +36,12 @@ namespace Model.GameEntity
                 speedInFightScene = value;
             }
         }
-        
-        public virtual void Attack(IEnumerable<AttackTarget> potentialTargets, out IEnumerable<ITakingDamage> attackedTargets)
+
+        public virtual void Attack(IEnumerable<AttackTarget> potentialTargets,
+            out IEnumerable<ITakingDamage> attackedTargets)
         {
-            var target = potentialTargets.First(x => x.DistanceToTarget < meleeAttack.DistanceForAttack);
-            target.Target.TakeDamage(meleeAttack.DamageInfoForAttack);
+            var target = potentialTargets.First(x => x.DistanceToTarget < meleeAttack.Distance);
+            target.Target.TakeDamage(meleeAttack.DamageInfo);
             attackedTargets = new[] {target.Target};
         }
     }

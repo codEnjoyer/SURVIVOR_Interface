@@ -59,7 +59,7 @@ namespace Model.Player
             TurnController.Instance.AddListener(OnTurnEnd);
             foreach (var character in currentGroupMembers)
             {
-                character.body.Died += () => currentGroupMembers.Remove(character);
+                character.ManBody.Died += () => currentGroupMembers.Remove(character);
             }
         }
 
@@ -79,7 +79,7 @@ namespace Model.Player
         {
             foreach (var groupMember in currentGroupMembers)
             {
-                groupMember.body.Energy--;
+                groupMember.ManBody.Energy--;
             }
         }
 
@@ -87,7 +87,7 @@ namespace Model.Player
         {
             foreach (var groupMember in currentGroupMembers)
             {
-                groupMember.body.Water--;
+                groupMember.ManBody.Water--;
             }
         }
 
@@ -95,7 +95,7 @@ namespace Model.Player
         {
             foreach (var groupMember in currentGroupMembers)
             {
-                groupMember.body.Hunger--;
+                groupMember.ManBody.Hunger--;
             }
         }
 
@@ -103,10 +103,10 @@ namespace Model.Player
         {
             foreach (var groupMember in currentGroupMembers)
             {
-                if (groupMember.body.Hunger >= 8)
-                    groupMember.body.Energy++;
-                if (groupMember.body.Water >= 8)
-                    groupMember.body.Energy++;
+                if (groupMember.ManBody.Hunger >= 8)
+                    groupMember.ManBody.Energy++;
+                if (groupMember.ManBody.Water >= 8)
+                    groupMember.ManBody.Energy++;
             }
         }
 
@@ -154,7 +154,6 @@ namespace Model.Player
 
         public void Restore(GroupSave save)
         {
-            GroupMovementLogic.Restore();
             transform.position = save.position.To3D();
             MaxOnGlobalMapGroupEndurance = save.maxOnGlobalMapGroupEndurance;
             CurrentOnGlobalMapGroupEndurance = save.currentOnGlobalMapGroupEndurance;

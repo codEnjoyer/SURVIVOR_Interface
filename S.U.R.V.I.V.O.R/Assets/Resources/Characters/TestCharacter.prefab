@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5741105790145617565}
   - component: {fileID: 8225858728903749776}
   - component: {fileID: 234525757738228535}
+  - component: {fileID: 3333002195196557063}
   m_Layer: 0
   m_Name: TestCharacter
   m_TagString: Untagged
@@ -28,10 +29,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3004767863623703735}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 273.88922, y: 4.6508284, z: 354.3107}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5157904529076457433}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -113,6 +115,162 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initiative: 10
   speedInFightScene: 10
+  meleeAttack:
+    <DamageInfo>k__BackingField:
+      damage: 0
+    <Distance>k__BackingField: 0
+  <Body>k__BackingField: {fileID: 1233003011690297868}
   sprite: {fileID: 21300000, guid: a67f20be9f345254caae03239d3322a5, type: 3}
   firstName: "\u041F\u0430\u0448\u0430"
   surname: "\u0422\u043E\u043F\u043E\u0440"
+--- !u!114 &3333002195196557063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3004767863623703735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26b3563c1d3241e4a43a8598b7d73eae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ResourcesPath>k__BackingField: 
+  <Path>k__BackingField: 
+--- !u!1001 &6237810390486011769
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5396246459581135847}
+    m_Modifications:
+    - target: {fileID: 664112820406852780, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 664112820406852780, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1071008484826185203, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: <Path>k__BackingField
+      value: Assets/Resources/Characters/Body/ManBodyParts/Arm.prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 1071008484826185203, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: <ResourcesPath>k__BackingField
+      value: Characters/Body/ManBodyParts/Arm
+      objectReference: {fileID: 0}
+    - target: {fileID: 1226572666229735584, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1226572666229735584, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1226572666229735584, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1226572666229735584, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1226572666229735584, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1226572666229735584, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1226572666229735584, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1226572666229735584, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1226572666229735584, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1226572666229735584, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1226572666229735584, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1891728123844767352, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: <Path>k__BackingField
+      value: Assets/Resources/Characters/Body/ManBodyParts/Arm.prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 1891728123844767352, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: <ResourcesPath>k__BackingField
+      value: Characters/Body/ManBodyParts/Arm
+      objectReference: {fileID: 0}
+    - target: {fileID: 1961363022883136749, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: <Path>k__BackingField
+      value: Assets/Resources/Characters/Body/ManBodyParts/Chest.prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 1961363022883136749, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: <ResourcesPath>k__BackingField
+      value: Characters/Body/ManBodyParts/Chest
+      objectReference: {fileID: 0}
+    - target: {fileID: 5875543791195839603, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: <Path>k__BackingField
+      value: Assets/Resources/Characters/Body/ManBodyParts/Head.prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 5875543791195839603, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: <ResourcesPath>k__BackingField
+      value: Characters/Body/ManBodyParts/Head
+      objectReference: {fileID: 0}
+    - target: {fileID: 6766305387854739330, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: <Path>k__BackingField
+      value: Assets/Resources/Characters/Body/ManBodyParts/Leg.prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 6766305387854739330, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: <ResourcesPath>k__BackingField
+      value: Characters/Body/ManBodyParts/Leg
+      objectReference: {fileID: 0}
+    - target: {fileID: 9012836241494726444, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: <Path>k__BackingField
+      value: Assets/Resources/Characters/Body/ManBodyParts/Leg.prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 9012836241494726444, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: <ResourcesPath>k__BackingField
+      value: Characters/Body/ManBodyParts/Leg
+      objectReference: {fileID: 0}
+    - target: {fileID: 9142305833660315183, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: m_Name
+      value: ManBody
+      objectReference: {fileID: 0}
+    - target: {fileID: 9160503724411595222, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: <Path>k__BackingField
+      value: Assets/Resources/Characters/Body/ManBodyParts/Stomach.prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 9160503724411595222, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: <ResourcesPath>k__BackingField
+      value: Characters/Body/ManBodyParts/Stomach
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+--- !u!114 &1233003011690297868 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5155959894500816245, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+  m_PrefabInstance: {fileID: 6237810390486011769}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1da993f0f42c9cf439aeee9e246cd28d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &5157904529076457433 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1226572666229735584, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+  m_PrefabInstance: {fileID: 6237810390486011769}
+  m_PrefabAsset: {fileID: 0}

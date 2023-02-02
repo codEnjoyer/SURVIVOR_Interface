@@ -229,15 +229,5 @@ namespace Model.Player.GroupMovement
         private void FixedUpdate() => movementSm.CurrentState.FixedUpdate();
 
         #endregion
-
-        public void Restore()
-        {
-            firstTurnObject = 
-                Instantiate(firstTurnObject, new Vector3(0, -1000, 0), Quaternion.identity);
-            secondTurnObjectLineRenderer = 
-                Instantiate(secondTurnObjectLineRenderer, new Vector3(0, -1000, 0), Quaternion.identity);
-            thirdTurnObjectLineRenderer = 
-                Instantiate(thirdTurnObjectLineRenderer, new Vector3(0, -1000, 0), Quaternion.identity);
-        }
     }
 }

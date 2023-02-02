@@ -4,50 +4,31 @@ using System.Data;
 using System.Linq;
 using System.Runtime.Serialization;
 using Model.GameEntity.EntityHealth;
+using Model.SaveSystem;
+using UnityEngine;
 
 namespace Model.GameEntity
 {
-    [DataContract(Namespace = "Model.GameEntity")]
-    public class Body : IAlive
+    public class Body : MonoBehaviour, IAlive
     {
-        [DataMember] private int currentCriticalLoses;
-        [DataMember] private int maxCriticalLoses;
-        [IgnoreDataMember] private List<BodyPart> bodyParts;
-        [DataMember] public Health Health { get; private set; }
-
-        public Body(IEnumerable<BodyPart> bodyParts) : this()
-        {
-            this.bodyParts = bodyParts.ToList();
-        }
-        public Body()
-        {
-            Health = new Health(this);
-        }
-
-
-        protected int MaxCriticalLoses
-        {
-            get => maxCriticalLoses;
-            set
-            {
-                if (value > 0 && value <= bodyParts.Count)
-                    maxCriticalLoses = value;
-                else
-                    throw new ConstraintException($"Нарушино устовие 0 < {value} <= {bodyParts.Count}. {GetType()}");
-            }
-        }
-
+        public Health Health { get; private set; }
+        public int MaxCriticalLoses => bodyParts.Count; 
+        public int CurrentCriticalLoses { get; private set; }
+        private readonly List<BodyPart> bodyParts = new ();
         public IReadOnlyCollection<BodyPart> BodyParts => bodyParts;
         public float Hp => BodyParts.Sum(part => part.Hp);
         public event Action Died;
 
         protected void AddBodyPart(BodyPart bodyPart, int significance)
         {
+            if (bodyPart == null)
+                throw new ArgumentException();
             bodyParts.Add(bodyPart);
+            
             bodyPart.Died += () =>
             {
-                currentCriticalLoses += significance;
-                if (currentCriticalLoses >= maxCriticalLoses)
+                CurrentCriticalLoses += significance;
+                if (CurrentCriticalLoses >= MaxCriticalLoses)
                     Died?.Invoke();
             };
         }
@@ -62,6 +43,9 @@ namespace Model.GameEntity
             throw new NotImplementedException();
         }
 
-        public virtual void RestoreBodyParts() => bodyParts = new List<BodyPart>();
+        protected virtual void Awake()
+        {
+            Health = new Health(this);
+        }
     }
 }

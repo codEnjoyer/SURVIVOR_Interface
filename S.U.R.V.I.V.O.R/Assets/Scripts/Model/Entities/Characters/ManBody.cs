@@ -6,49 +6,47 @@ using Model.Entities.Characters.BodyParts;
 using Model.GameEntity;
 using Model.GameEntity.EntityHealth;
 using Model.Items;
+using Model.SaveSystem;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace Model.Entities.Characters
 {
-    [DataContract(Namespace = "Model.Entities.Characters")]
-    public sealed class ManBody : Body, IWearClothes
+    public sealed class ManBody : Body, IWearClothes, ISaved<MenBodySave>
     {
-        [DataMember] private int energy;
-        [DataMember] private int hunger;
-        [DataMember] private int water;
+        private int energy;
+        private int hunger;
+        private int water;
 
-        [DataMember] private int maxEnergy = 10;
-        [DataMember] private int maxHunger = 10;
-        [DataMember] private int maxWater = 10;
-        
-        [DataMember] public ManHead Head { get; private set; }
-        [DataMember] public ManChest Chest { get; private set; }
-        [DataMember] public ManStomach Stomach { get; private set; }
-        [DataMember] public ManArm LeftArm { get; private set; }
-        [DataMember] public ManArm RightArm { get; private set; }
-        [DataMember] public ManLeg LeftLeg { get; private set; }
-        [DataMember] public ManLeg RightLeg { get; private set; }
+        [SerializeField] [Min(0)] private int maxEnergy = 10;
+        [SerializeField] [Min(0)] private int maxHunger = 10;
+        [SerializeField] [Min(0)] private int maxWater = 10;
 
-        private  IWearClothes[] wearClothesBodyParts;
+        [field: SerializeField] public ManHead Head { get; private set; }
+        [field: SerializeField] public ManChest Chest { get; private set; }
+        [field: SerializeField] public ManStomach Stomach { get; private set; }
+        [field: SerializeField] public ManArm LeftArm { get; private set; }
+        [field: SerializeField] public ManArm RightArm { get; private set; }
+        [field: SerializeField] public ManLeg LeftLeg { get; private set; }
+        [field: SerializeField] public ManLeg RightLeg { get; private set; }
 
-        public ManBody()
+        private IWearClothes[] wearClothesBodyParts;
+
+        protected override void Awake()
         {
-            Head = new ManHead();
-            Chest = new ManChest();
-            Stomach = new ManStomach();
-            LeftArm = new ManArm();
-            RightArm = new ManArm();
-            LeftLeg = new ManLeg();
-            RightLeg = new ManLeg();
-            
-            RestoreBodyParts();
-            
+            base.Awake();
+            AddBodyPart(Head, 3);
+            AddBodyPart(Chest, 3);
+            AddBodyPart(Stomach, 3);
+            AddBodyPart(LeftArm, 1);
+            AddBodyPart(RightArm, 1);
+            AddBodyPart(LeftLeg, 1);
+            AddBodyPart(RightLeg, 1);
+            wearClothesBodyParts = BodyParts.OfType<IWearClothes>().ToArray();
+
             Energy = maxEnergy;
             Hunger = maxHunger;
             Water = maxWater;
-            MaxCriticalLoses = BodyParts.Count;
-            
         }
 
         public event Action<Health> PlayerTired;
@@ -59,7 +57,7 @@ namespace Model.Entities.Characters
         public event Action<int> HungerChange;
         public event Action<int> WaterChange;
         public event Action<ClothType> WearChanged;
-        
+
         public int Energy
         {
             get => energy;
@@ -219,17 +217,48 @@ namespace Model.Entities.Characters
             return clothes.Distinct().Where(x => x is not null);
         }
 
-        public override void RestoreBodyParts()
+        public MenBodySave CreateSave()
         {
-            base.RestoreBodyParts();
-            AddBodyPart(Head, 3);
-            AddBodyPart(Chest, 3);
-            AddBodyPart(Stomach, 3);
-            AddBodyPart(LeftArm, 1);
-            AddBodyPart(RightArm, 1);
-            AddBodyPart(LeftLeg, 1);
-            AddBodyPart(RightLeg, 1);
-            wearClothesBodyParts = BodyParts.OfType<IWearClothes>().ToArray();
+            throw new NotImplementedException();
+        }
+
+        public void Restore(MenBodySave save)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    [DataContract]
+    [KnownType("GetKnownTypes")]
+    public class MenBodySave
+    {
+        [DataMember] public IHealthProperty[] healthProperties;
+        [DataMember] public int currentCriticalLoses;
+        
+        [DataMember] private int energy;
+        [DataMember] private int hunger;
+        [DataMember] private int water;
+
+        [DataMember] private int maxEnergy = 10;
+        [DataMember] private int maxHunger = 10;
+        [DataMember] private int maxWater = 10;
+
+        
+        private static Type[] knownTypes;
+
+        private static Type[] GetKnownTypes()
+        {
+            if (knownTypes == null)
+            {
+                var type = typeof(IHealthProperty);
+                var types = AppDomain.CurrentDomain.GetAssemblies()
+                    .SelectMany(s => s.GetTypes())
+                    .Where(p => type.IsAssignableFrom(p) && !p.IsInterface)
+                    .ToArray();
+                knownTypes = types;
+            }
+
+            return knownTypes;
         }
     }
 }

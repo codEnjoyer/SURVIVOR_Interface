@@ -2,19 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using UnityEngine;
 
 namespace Model.GameEntity
 {
-    [DataContract(Namespace = "Model.GameEntity")]
     public abstract class BodyPathWearableClothes : BodyPart, IWearClothes
     {
-        [DataMember] protected List<ClothType> possibleClothTypes;
-        [IgnoreDataMember] protected Dictionary<ClothType, Clothes> clothesDict;
-
-        protected BodyPathWearableClothes(int maxHp = 100, int size = 100) : base(maxHp, size)
-        {
-        }
-
+        [SerializeField] private List<ClothType> possibleClothTypes;
+        protected Dictionary<ClothType, Clothes> clothesDict;
+        
         public bool Wear(Clothes clothesToWear)
         {
             if (clothesToWear == null || !clothesDict.ContainsKey(clothesToWear.Data.ClothType) ||
@@ -41,8 +37,9 @@ namespace Model.GameEntity
 
         public IEnumerable<Clothes> GetClothes() => clothesDict.Values;
 
-        public void RestoreClothesDict()
+        protected override void Awake()
         {
+            base.Awake();
             clothesDict = new Dictionary<ClothType, Clothes>();
             foreach (var possibleClothType in possibleClothTypes)
                 clothesDict.Add(possibleClothType, null);

@@ -15,7 +15,6 @@ namespace Model.Entities.Characters
     [RequireComponent(typeof(Saved))]
     public class Character : Entity, ISaved<CharacterSave>
     {
-        public ManBody body = new();
         [SerializeField] private Sprite sprite;
         [SerializeField] private string firstName;
         [SerializeField] private string surname;
@@ -24,17 +23,12 @@ namespace Model.Entities.Characters
         private Gun secondaryGun;
         public MeleeWeapon MeleeWeapon { get; set; }
 
-        public readonly Skills skills; // конструктор??
-        
+        public readonly Skills skills;
+        public ManBody ManBody => (ManBody) Body;
+
         public event Action<GunType> OnGunsChanged;
 
-        public Character()
-        {
-            skills = new Skills(this);
-        }
 
-
-        public override Body Body => body;
         public Sprite Sprite => sprite;
         public string FirstName => firstName;
         public string Surname => surname;
@@ -62,9 +56,9 @@ namespace Model.Entities.Characters
 
         public void Eat(EatableFood food)
         {
-            body.Energy += food.Data.DeltaEnergy;
-            body.Water += food.Data.DeltaWater;
-            body.Hunger += food.Data.DeltaHunger;
+            ManBody.Energy += food.Data.DeltaEnergy;
+            ManBody.Water += food.Data.DeltaWater;
+            ManBody.Hunger += food.Data.DeltaHunger;
             food.GetComponent<BaseItem>().Destroy();
         }
 
@@ -81,34 +75,26 @@ namespace Model.Entities.Characters
         }
 
         public int Mobility => throw new NotImplementedException(); //Скорость передвижения на глобальной карте
-        
+
         public CharacterSave CreateSave()
         {
-            body.Health.AddProperty(new Poisoning());
+            ManBody.Health.AddProperty(new Poisoning());
             return new CharacterSave()
             {
                 resourcesPath = GetComponent<Saved>().ResourcesPath,
-                manBody = body,
                 skills = skills.CreateSave(),
-                hat = body.Head.Hat?.CreateSave(),
-                underwear = body.Chest.Underwear?.CreateSave(),
-                jacket = body.Chest.Jacket?.CreateSave(),
-                backpack = body.Chest.Backpack?.CreateSave(),
-                vest = body.Chest.Vest?.CreateSave(),
-                boots = body.LeftLeg.Boots?.CreateSave(),
-                pants = body.LeftLeg.Pants?.CreateSave()
+                hat = ManBody.Head.Hat?.CreateSave(),
+                underwear = ManBody.Chest.Underwear?.CreateSave(),
+                jacket = ManBody.Chest.Jacket?.CreateSave(),
+                backpack = ManBody.Chest.Backpack?.CreateSave(),
+                vest = ManBody.Chest.Vest?.CreateSave(),
+                boots = ManBody.LeftLeg.Boots?.CreateSave(),
+                pants = ManBody.LeftLeg.Pants?.CreateSave()
             };
         }
 
         public void Restore(CharacterSave save)
         {
-            body = save.manBody;
-            
-            body.RestoreBodyParts();
-
-            foreach (var bodyPart in body.BodyParts)
-                ((BodyPathWearableClothes) bodyPart).RestoreClothesDict();
-            
             Wear(save.hat);
             Wear(save.underwear);
             Wear(save.jacket);
@@ -116,7 +102,7 @@ namespace Model.Entities.Characters
             Wear(save.vest);
             Wear(save.boots);
             Wear(save.pants);
-            
+
             skills.Restore(save.skills);
 
             void Wear(ClothesSave clothesSave)
@@ -126,7 +112,7 @@ namespace Model.Entities.Characters
                 var clothesPref = Resources.Load<Clothes>(clothesSave.itemSave.resourcesPath);
                 var clothes = Instantiate(clothesPref);
                 clothes.Restore(clothesSave);
-                body.Wear(clothes);
+                ManBody.Wear(clothes);
             }
         }
     }
@@ -135,7 +121,6 @@ namespace Model.Entities.Characters
     public class CharacterSave
     {
         [DataMember] public string resourcesPath;
-        [DataMember] public ManBody manBody;
         [DataMember] public SkillsSave skills;
 
         [DataMember] public ClothesSave hat;

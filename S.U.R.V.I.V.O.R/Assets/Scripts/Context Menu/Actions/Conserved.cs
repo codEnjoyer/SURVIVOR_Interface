@@ -29,7 +29,7 @@ public class Conserved : MonoBehaviour, IContextMenuAction
         
         bool isSuccess;
         if (itemOwner != null)
-            isSuccess = itemOwner.body.PlaceItemToInventory(Instantiate(foodAfterOpen));
+            isSuccess = itemOwner.ManBody.PlaceItemToInventory(Instantiate(foodAfterOpen));
         else
         {
             inventoryController.ThrowItemAtLocation(Instantiate(foodAfterOpen));
