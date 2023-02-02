@@ -4,8 +4,9 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Model.Entities.Characters.BodyParts;
 using Model.GameEntity;
-using Model.GameEntity.Health;
+using Model.GameEntity.EntityHealth;
 using Model.Items;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace Model.Entities.Characters

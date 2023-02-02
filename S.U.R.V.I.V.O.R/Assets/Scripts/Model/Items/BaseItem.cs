@@ -136,7 +136,7 @@ namespace Model.Items
             OnGridPositionY = save.positionInInventory.y;
 
             IsRotated = IsRotated;
-            
+
             var allComponents = GetComponents<Component>()
                 .Where(component => !component.Equals(this));
 
@@ -149,21 +149,35 @@ namespace Model.Items
                 method.Invoke(component, new object[] {save});
             }
         }
-
-        private void OnDestroy()
-        {
-            Debug.Log(name);
-        }
     }
 
     [DataContract(Namespace = "Model.Items")]
-    [KnownType(typeof(ClothesSave))]
+    [KnownType("GetKnownTypes")]
     public class ItemSave
     {
         [DataMember] public string resourcesPath;
         [DataMember] public Vector2Int positionInInventory;
         [DataMember] public bool isRotated;
         [DataMember] public ComponentSave[] componentSaves;
+
+
+        #region Save
+        private static Type[] knownTypes;
+        private static Type[] GetKnownTypes()
+        {
+            if (knownTypes == null)
+            {
+                var type = typeof(ComponentSave);
+                var types = AppDomain.CurrentDomain.GetAssemblies()
+                    .SelectMany(s => s.GetTypes())
+                    .Where(p => type.IsAssignableFrom(p) && !p.IsInterface)
+                    .ToArray();
+                knownTypes = types;
+            }
+
+            return knownTypes;
+        }
+        #endregion
     }
 
     [DataContract(Namespace = "Model.Items")]

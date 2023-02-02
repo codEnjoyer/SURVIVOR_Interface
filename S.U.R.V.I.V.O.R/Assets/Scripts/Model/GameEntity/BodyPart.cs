@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using Model.GameEntity.Health;
+using Model.GameEntity.EntityHealth;
+using UnityEngine;
 
 namespace Model.GameEntity
 {
     [DataContract(Namespace = "Model.GameEntity")]
-    public class BodyPart : IAlive
+    public class BodyPart : MonoBehaviour, IAlive
     {
-        [DataMember] public readonly BodyPathHealth health;
+        [DataMember] public Health Health { get; private set; }
         [DataMember] private float maxHp;
         [DataMember] private float hp;
         [DataMember] private float size;
         public event Action Died;
-        
-        protected BodyPart(int maxHp = 100, int size = 100)
+
+        public BodyPart(int maxHp = 100, int size = 100)
         {
-            health = new BodyPathHealth(this);
+            Health = new Health(this);
             MaxHp = maxHp;
             Size = size;
             Hp = MaxHp;
@@ -53,25 +54,16 @@ namespace Model.GameEntity
                 hp = value;
             }
         }
-        
-        public void TakeDamage(DamageInfo damage)
+
+        public virtual void TakeDamage(DamageInfo damage)
         {
-            //throw new NotImplementedException();
             //TODO реализовать метод получения урона в зависимоти от выстрела
-
-
-            //var blockedDamage = Clothes.Sum(cloth => cloth.CalculateBlockedDamage(damage));
-            TakeDamage(damage.Damage);
+            Hp -= damage.Damage;
         }
 
-        protected void TakeDamage(float damage)
+        public virtual void Healing(HealInfo heal)
         {
-            Hp -= damage;
-        }
-
-        public void Healing(HealInfo heal)
-        {
-            throw new NotImplementedException();
+            Hp += heal.Heal;
         }
     }
 }

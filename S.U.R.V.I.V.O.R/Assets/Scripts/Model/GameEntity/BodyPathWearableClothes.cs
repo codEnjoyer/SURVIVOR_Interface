@@ -11,8 +11,7 @@ namespace Model.GameEntity
         [DataMember] protected List<ClothType> possibleClothTypes;
         [IgnoreDataMember] protected Dictionary<ClothType, Clothes> clothesDict;
 
-        protected BodyPathWearableClothes(int maxHp = 100, int size = 100)
-            : base(maxHp, size)
+        protected BodyPathWearableClothes(int maxHp = 100, int size = 100) : base(maxHp, size)
         {
         }
 

@@ -3,10 +3,10 @@ using Model.GameEntity;
 
 namespace Model.ServiceClasses
 {
-    public class AttackTarget
+    public sealed class AttackTarget
     {
         private ITakingDamage target;
-        private float distance;
+        private float distanceToTarget;
 
         public ITakingDamage Target
         {
@@ -14,21 +14,21 @@ namespace Model.ServiceClasses
             private set => target = value ?? throw new InvalidOperationException();
         }
 
-        public float Distance
+        public float DistanceToTarget
         {
-            get => distance;
+            get => distanceToTarget;
             private set
             {
                 if (value < 0)
                     throw new InvalidOperationException();
-                distance = value;
+                distanceToTarget = value;
             }
         }
 
-        public AttackTarget(ITakingDamage target, float distance)
+        public AttackTarget(ITakingDamage target, float distanceToTarget)
         {
             Target = target;
-            Distance = distance;
+            DistanceToTarget = distanceToTarget;
         }
     }
 }

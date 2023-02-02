@@ -210,14 +210,8 @@ namespace Model.Player.GroupMovement
             thirdTurnObjectLineRenderer = thirdTurnObject.GetComponent<LineRenderer>();
             movementSm.Initialize(Sleeping);
             
-            CurrentNode = Game.Instance.StartNode;
-            if (CurrentNode == null)
-                Debug.Log("Нет стартовой ноды!");
-            else
-            {
-                transform.position = CurrentNode.transform.position;
-                targetNode = CurrentNode;
-            }
+            transform.position = CurrentNode.transform.position;
+            targetNode = CurrentNode;
         }
         private void Update()
         {

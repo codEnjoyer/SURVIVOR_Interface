@@ -20,7 +20,6 @@ namespace Model
 
         public int TurnNumber { get; private set; } = 1;
         [SerializeField] private List<Group> groups;
-        [field: SerializeField] public Node StartNode { get; private set; }
         [field: SerializeField] public Canvas MainCanvas { get; private set; }
 
         [SerializeField] [Min(0)] private int chosenGroupIndex;

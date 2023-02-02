@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Runtime.Serialization;
-using Model.Entities.Characters.BodyParts;
-using Model.GameEntity.Health;
+using Model.GameEntity.EntityHealth;
 
 namespace Model.GameEntity
 {
@@ -14,13 +13,17 @@ namespace Model.GameEntity
         [DataMember] private int currentCriticalLoses;
         [DataMember] private int maxCriticalLoses;
         [IgnoreDataMember] private List<BodyPart> bodyParts;
-        [DataMember] private BodyHealth health;
-        public BodyHealth Health => health;
+        [DataMember] public Health Health { get; private set; }
 
-        protected Body()
+        public Body(IEnumerable<BodyPart> bodyParts) : this()
         {
-            health = new BodyHealth(this);
+            this.bodyParts = bodyParts.ToList();
         }
+        public Body()
+        {
+            Health = new Health(this);
+        }
+
 
         protected int MaxCriticalLoses
         {
@@ -49,12 +52,12 @@ namespace Model.GameEntity
             };
         }
 
-        public void TakeDamage(DamageInfo damage)
+        public virtual void TakeDamage(DamageInfo damage)
         {
             throw new NotImplementedException();
         }
 
-        public void Healing(HealInfo heal)
+        public virtual void Healing(HealInfo heal)
         {
             throw new NotImplementedException();
         }

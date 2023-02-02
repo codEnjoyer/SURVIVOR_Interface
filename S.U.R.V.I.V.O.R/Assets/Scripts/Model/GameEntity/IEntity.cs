@@ -3,8 +3,8 @@ using Model.ServiceClasses;
 
 namespace Model.GameEntity
 {
-    public interface IEntity: IAlive
+    public interface IEntity
     {
-        public void Attack(IEnumerable<AttackTarget> targets);
+        public void Attack(IEnumerable<AttackTarget> potentialTargets, out IEnumerable<ITakingDamage> attackedTargets);
     }
 }

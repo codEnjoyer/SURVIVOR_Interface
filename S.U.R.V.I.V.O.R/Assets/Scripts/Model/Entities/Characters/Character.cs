@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using Model.Entities.Characters.CharacterSkills;
 using Model.GameEntity;
-using Model.GameEntity.Skills;
+using Model.GameEntity.EntityHealth;
 using Model.Items;
 using Model.SaveSystem;
 using UnityEngine;
@@ -23,7 +24,8 @@ namespace Model.Entities.Characters
         private Gun secondaryGun;
         public MeleeWeapon MeleeWeapon { get; set; }
 
-        public readonly Skills skills;
+        public readonly Skills skills; // конструктор??
+        
         public event Action<GunType> OnGunsChanged;
 
         public Character()
@@ -79,19 +81,15 @@ namespace Model.Entities.Characters
         }
 
         public int Mobility => throw new NotImplementedException(); //Скорость передвижения на глобальной карте
-
-        public override void Attack(IEnumerable<BodyPart> targets, float distance)
-        {
-            var damage = new DamageInfo(40f);
-            targets.First().TakeDamage(damage);
-        }
-
+        
         public CharacterSave CreateSave()
         {
+            body.Health.AddProperty(new Poisoning());
             return new CharacterSave()
             {
                 resourcesPath = GetComponent<Saved>().ResourcesPath,
                 manBody = body,
+                skills = skills.CreateSave(),
                 hat = body.Head.Hat?.CreateSave(),
                 underwear = body.Chest.Underwear?.CreateSave(),
                 jacket = body.Chest.Jacket?.CreateSave(),
@@ -105,6 +103,7 @@ namespace Model.Entities.Characters
         public void Restore(CharacterSave save)
         {
             body = save.manBody;
+            
             body.RestoreBodyParts();
 
             foreach (var bodyPart in body.BodyParts)
@@ -117,6 +116,8 @@ namespace Model.Entities.Characters
             Wear(save.vest);
             Wear(save.boots);
             Wear(save.pants);
+            
+            skills.Restore(save.skills);
 
             void Wear(ClothesSave clothesSave)
             {
@@ -135,6 +136,7 @@ namespace Model.Entities.Characters
     {
         [DataMember] public string resourcesPath;
         [DataMember] public ManBody manBody;
+        [DataMember] public SkillsSave skills;
 
         [DataMember] public ClothesSave hat;
         [DataMember] public ClothesSave underwear;
