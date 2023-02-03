@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -3601365665896551178}
   - component: {fileID: 3550033351741690605}
   - component: {fileID: -288147871173528199}
+  - component: {fileID: 542787831722442598}
   m_Layer: 0
   m_Name: SimpleRat
   m_TagString: Untagged
@@ -99,6 +100,25 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &542787831722442598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 853453954277567857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbb9a4504b2043729f47faf381fb06bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initiative: 100
+  speedInFightScene: 12
+  meleeAttack:
+    <DamageInfo>k__BackingField:
+      damage: 40
+    <Distance>k__BackingField: 1
+  <Body>k__BackingField: {fileID: 2420150646467309065}
 --- !u!1 &1839833592320302573
 GameObject:
   m_ObjectHideFlags: 0
