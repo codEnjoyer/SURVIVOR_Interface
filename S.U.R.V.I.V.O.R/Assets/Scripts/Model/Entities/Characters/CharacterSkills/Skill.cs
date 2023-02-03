@@ -7,7 +7,7 @@ namespace Model.Entities.Characters.CharacterSkills
 {
     public abstract class Skill : IDeveloping, ISaved<SkillSave>
     {
-        [SerializeField] [Min(1)] private int maxLevel;
+        private int maxLevel;
         private int currentLevel = 0;
         private float levelProgress = 0;
         public string Name { get; }
@@ -47,7 +47,7 @@ namespace Model.Entities.Characters.CharacterSkills
 
 
         public abstract void Development();
-        public SkillSave CreateSave()
+        public virtual SkillSave CreateSave()
         {
             return new SkillSave()
             {
@@ -56,7 +56,7 @@ namespace Model.Entities.Characters.CharacterSkills
             };
         }
 
-        public void Restore(SkillSave save)
+        public virtual void Restore(SkillSave save)
         {
             CurrentLevel = save.currentLevel;
             LevelProgress = save.levelProgress;

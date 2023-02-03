@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
-using Graph_and_Map;
 using Interface;
 using Model.Items;
 using Model.Player;
@@ -10,7 +9,7 @@ using Model.SaveSystem;
 using UnityEngine;
 
 namespace Model
-{
+{ 
     public class Game : MonoBehaviour, ISaved<GameSave>
     {
         public static Game Instance { get; private set; }
@@ -107,7 +106,7 @@ namespace Model
             TurnNumber = gameSave.turnNumber;
 
             var inventory = LocationInventory.Instance.LocationInventoryGrid;
-            foreach (var itemSave in gameSave.locationInventory)
+            foreach (var itemSave in gameSave.locationInventory) 
             {
                 var item = Instantiate(Resources.Load<BaseItem>(itemSave.resourcesPath));
                 item.Restore(itemSave);
@@ -126,7 +125,7 @@ namespace Model
         }
     }
 
-    [DataContract(Namespace = "Model")]
+    [DataContract]
     public class GameSave
     {
         [DataMember] public int turnNumber;

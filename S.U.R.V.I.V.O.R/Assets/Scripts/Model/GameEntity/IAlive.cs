@@ -8,5 +8,7 @@ namespace Model.GameEntity
         public float Hp { get; }
         public Health Health { get; }
         public event Action Died;
+
+        public bool IsDied { get; }
     }
 }

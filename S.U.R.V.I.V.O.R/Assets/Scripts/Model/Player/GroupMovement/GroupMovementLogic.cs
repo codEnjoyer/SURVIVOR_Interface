@@ -33,15 +33,19 @@ namespace Model.Player.GroupMovement
         private const float Delta = 0.1f;
         private float progress;
         private Queue<Node> way = new();
-
-        private bool isMovementOverOnThisTurn;
+        public bool CanMove { get; set; }
 
         public Node CurrentNode
         {
             get
             {
                 if (currentNode == null)
+                {
                     currentNode = DotGraph.Instance.GetNearestNode(transform.position.To2D());
+                    transform.position = currentNode.transform.position;
+                    targetNode = currentNode;
+                }
+
                 return currentNode;
             }
             private set
@@ -53,7 +57,8 @@ namespace Model.Player.GroupMovement
 
         public event Action<Location> LocationChange;
 
-        private List<Node> GetPath() => PathFinder.FindShortestWay(CurrentNode, DotGraph.Instance.GetNearestNodeToMouse());
+        private List<Node> GetPath() =>
+            PathFinder.FindShortestWay(CurrentNode, DotGraph.Instance.GetNearestNodeToMouse());
 
         public void CreateWay()
         {
@@ -63,7 +68,16 @@ namespace Model.Player.GroupMovement
 
         public void Move()
         {
-            transform.position = Vector3.Lerp(CurrentNode.transform.position, targetNode.transform.position, progress);
+            var oldGroupPos = transform.position;
+            var newGroupPos = Vector3.Lerp(CurrentNode.transform.position, targetNode.transform.position, progress);
+            transform.position = newGroupPos;
+
+            var offset = oldGroupPos - newGroupPos;
+
+            firstTurnObject.transform.localPosition += offset;
+            secondTurnObject.transform.localPosition += offset;
+            thirdTurnObject.transform.localPosition += offset;
+
             progress += 0.050f;
             if (IsNearly())
             {
@@ -75,7 +89,7 @@ namespace Model.Player.GroupMovement
                     movementSm.ChangeState(Sleeping);
                     group.CurrentOnGlobalMapGroupEndurance = 0;
                     group.OnOnGlobalMapMovementEnd();
-                    isMovementOverOnThisTurn = true;
+                    CanMove = true;
                 }
                 else
                 {
@@ -184,15 +198,15 @@ namespace Model.Player.GroupMovement
 
         public void PreparingToMove()
         {
-            if (movementSm.CurrentState == Sleeping && !isMovementOverOnThisTurn)
+            if (movementSm.CurrentState == Sleeping && !CanMove)
                 movementSm.ChangeState(WaitingTarget);
         }
 
         public void OnTurnEnd()
         {
-            isMovementOverOnThisTurn = false;
+            CanMove = false;
         }
-        
+
         #region MonoBehaviourCallBack
 
         private void Awake()
@@ -209,10 +223,8 @@ namespace Model.Player.GroupMovement
             secondTurnObjectLineRenderer = secondTurnObject.GetComponent<LineRenderer>();
             thirdTurnObjectLineRenderer = thirdTurnObject.GetComponent<LineRenderer>();
             movementSm.Initialize(Sleeping);
-            
-            transform.position = CurrentNode.transform.position;
-            targetNode = CurrentNode;
         }
+
         private void Update()
         {
             if (Input.GetMouseButtonDown(0) && movementSm.CurrentState == WaitingTarget &&

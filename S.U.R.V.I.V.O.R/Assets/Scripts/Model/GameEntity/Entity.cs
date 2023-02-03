@@ -8,12 +8,15 @@ using UnityEngine;
 
 namespace Model.GameEntity
 {
-    public abstract class Entity : MonoBehaviour, IEntity
+    public class Entity : MonoBehaviour, IEntity
     {
         [SerializeField] [Min(1)] private float initiative = 1;
         [SerializeField] [Min(1)] private int speedInFightScene = 1;
         [SerializeField] private MeleeAttack meleeAttack;
         [field: SerializeField] public Body Body { get; private set; }
+
+        protected virtual void Awake()
+        { }
 
         public float Initiative
         {
@@ -38,7 +41,7 @@ namespace Model.GameEntity
         }
 
         public virtual void Attack(IEnumerable<AttackTarget> potentialTargets,
-            out IEnumerable<ITakingDamage> attackedTargets)
+            out IEnumerable<IAlive> attackedTargets)
         {
             var target = potentialTargets.First(x => x.DistanceToTarget < meleeAttack.Distance);
             target.Target.TakeDamage(meleeAttack.DamageInfo);

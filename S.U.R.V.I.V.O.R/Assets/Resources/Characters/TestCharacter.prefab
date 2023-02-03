@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 1528b8524ea902946ae56337e5d17800, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -117,8 +117,8 @@ MonoBehaviour:
   speedInFightScene: 10
   meleeAttack:
     <DamageInfo>k__BackingField:
-      damage: 0
-    <Distance>k__BackingField: 0
+      damage: 10
+    <Distance>k__BackingField: 2
   <Body>k__BackingField: {fileID: 1233003011690297868}
   sprite: {fileID: 21300000, guid: a67f20be9f345254caae03239d3322a5, type: 3}
   firstName: "\u041F\u0430\u0448\u0430"
@@ -220,6 +220,78 @@ PrefabInstance:
       propertyPath: <ResourcesPath>k__BackingField
       value: Characters/Body/ManBodyParts/Chest
       objectReference: {fileID: 0}
+    - target: {fileID: 5155959894500816245, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: <RightArm>k__BackingField
+      value: 
+      objectReference: {fileID: 3191006574082473249}
+    - target: {fileID: 5155959894500816245, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: bodyPartRegisters.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5155959894500816245, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: bodyPartRegisters.Array.data[0].<BodyPart>k__BackingField
+      value: 
+      objectReference: {fileID: 4855187337722083488}
+    - target: {fileID: 5155959894500816245, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: bodyPartRegisters.Array.data[1].<BodyPart>k__BackingField
+      value: 
+      objectReference: {fileID: 7305157414726558705}
+    - target: {fileID: 5155959894500816245, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: bodyPartRegisters.Array.data[2].<BodyPart>k__BackingField
+      value: 
+      objectReference: {fileID: 780669324322236069}
+    - target: {fileID: 5155959894500816245, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: bodyPartRegisters.Array.data[3].<BodyPart>k__BackingField
+      value: 
+      objectReference: {fileID: 4095042739635449514}
+    - target: {fileID: 5155959894500816245, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: bodyPartRegisters.Array.data[4].<BodyPart>k__BackingField
+      value: 
+      objectReference: {fileID: 3191006574082473249}
+    - target: {fileID: 5155959894500816245, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: bodyPartRegisters.Array.data[5].<BodyPart>k__BackingField
+      value: 
+      objectReference: {fileID: 3930124949972437605}
+    - target: {fileID: 5155959894500816245, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: bodyPartRegisters.Array.data[6].<BodyPart>k__BackingField
+      value: 
+      objectReference: {fileID: 1619083615774845643}
+    - target: {fileID: 5155959894500816245, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: bodyPartRegisters.Array.data[0].<Significance>k__BackingField
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5155959894500816245, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: bodyPartRegisters.Array.data[1].<Significance>k__BackingField
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5155959894500816245, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: bodyPartRegisters.Array.data[2].<Significance>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5155959894500816245, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: bodyPartRegisters.Array.data[3].<Significance>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5155959894500816245, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: bodyPartRegisters.Array.data[4].<Significance>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5155959894500816245, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: bodyPartRegisters.Array.data[5].<Significance>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5155959894500816245, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: bodyPartRegisters.Array.data[6].<Significance>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5412524177802310976, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5412524177802310976, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5875543791195839603, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
       propertyPath: <Path>k__BackingField
       value: Assets/Resources/Characters/Body/ManBodyParts/Head.prefab
@@ -230,19 +302,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6766305387854739330, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
       propertyPath: <Path>k__BackingField
-      value: Assets/Resources/Characters/Body/ManBodyParts/Leg.prefab
+      value: Assets/Resources/Characters/MenBody/ManBodyParts/Leg.prefab
       objectReference: {fileID: 0}
     - target: {fileID: 6766305387854739330, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
       propertyPath: <ResourcesPath>k__BackingField
-      value: Characters/Body/ManBodyParts/Leg
+      value: Characters/MenBody/ManBodyParts/Leg
       objectReference: {fileID: 0}
     - target: {fileID: 9012836241494726444, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
       propertyPath: <Path>k__BackingField
-      value: Assets/Resources/Characters/Body/ManBodyParts/Leg.prefab
+      value: Assets/Resources/Characters/MenBody/ManBodyParts/Leg.prefab
       objectReference: {fileID: 0}
     - target: {fileID: 9012836241494726444, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
       propertyPath: <ResourcesPath>k__BackingField
-      value: Characters/Body/ManBodyParts/Leg
+      value: Characters/MenBody/ManBodyParts/Leg
       objectReference: {fileID: 0}
     - target: {fileID: 9142305833660315183, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
       propertyPath: m_Name
@@ -258,6 +330,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+--- !u!114 &780669324322236069 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6648536932981516764, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+  m_PrefabInstance: {fileID: 6237810390486011769}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f545b3a0f5dbed429837acc22c5218c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1233003011690297868 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5155959894500816245, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
@@ -269,8 +352,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1da993f0f42c9cf439aeee9e246cd28d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1619083615774845643 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4677274602899170738, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+  m_PrefabInstance: {fileID: 6237810390486011769}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fc1ce60e7af0314bac8f97df20654ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3191006574082473249 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8852278146804216408, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+  m_PrefabInstance: {fileID: 6237810390486011769}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcfc2bf1e5b62a34390532f976c10452, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3930124949972437605 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6925335910425363740, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+  m_PrefabInstance: {fileID: 6237810390486011769}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fc1ce60e7af0314bac8f97df20654ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4095042739635449514 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7945937630362575315, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+  m_PrefabInstance: {fileID: 6237810390486011769}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcfc2bf1e5b62a34390532f976c10452, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4855187337722083488 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1580816970873239513, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+  m_PrefabInstance: {fileID: 6237810390486011769}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 422f39668c42b5f4c8a466d72f6667db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &5157904529076457433 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1226572666229735584, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
   m_PrefabInstance: {fileID: 6237810390486011769}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7305157414726558705 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3742498398117211272, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+  m_PrefabInstance: {fileID: 6237810390486011769}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 265d5c37e13abcc4d862d0e25944692c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

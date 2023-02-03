@@ -142,16 +142,11 @@ namespace Model.Player
                     .Select(x => x.CreateSave())
                     .ToArray(),
                 position = transform.position.To2D(),
-                isLootAllowedOnThisTurn = IsLootAllowedOnThisTurn
+                isLootAllowedOnThisTurn = IsLootAllowedOnThisTurn,
+                canMove = GroupMovementLogic.CanMove
             };
         }
-
-        private void OnDestroy()
-        {
-            // foreach (var character in currentGroupMembers)
-            //     Destroy(character);
-        }
-
+        
         public void Restore(GroupSave save)
         {
             transform.position = save.position.To3D();
@@ -173,10 +168,12 @@ namespace Model.Player
                 character.Restore(characterSave);
                 character.gameObject.SetActive(false);
             }
+
+            GroupMovementLogic.CanMove = save.canMove;
         }
     }
 
-    [DataContract(Namespace = "Model.Player")]
+    [DataContract]
     public class GroupSave
     {
         [DataMember] public string resourcesPath;
@@ -185,5 +182,6 @@ namespace Model.Player
         [DataMember] public CharacterSave[] currentGroupMembers;
         [DataMember] public Vector2 position;
         [DataMember] public bool isLootAllowedOnThisTurn;
+        [DataMember] public bool canMove;
     }
 }

@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
 using Model.Entities.Characters.CharacterSkills;
 using Model.GameEntity;
-using Model.GameEntity.EntityHealth;
 using Model.Items;
 using Model.SaveSystem;
 using UnityEngine;
-using BodyPart = Model.GameEntity.BodyPart;
 
+[assembly: ContractNamespace("", ClrNamespace = "Contoso.CRM")]
 namespace Model.Entities.Characters
 {
     [RequireComponent(typeof(Saved))]
@@ -21,14 +19,16 @@ namespace Model.Entities.Characters
 
         private Gun primaryGun;
         private Gun secondaryGun;
+        private Skills skills;
         public MeleeWeapon MeleeWeapon { get; set; }
-
-        public readonly Skills skills;
-        public ManBody ManBody => (ManBody) Body;
-
         public event Action<GunType> OnGunsChanged;
+        protected override void Awake()
+        {
+            base.Awake();
+            skills = new Skills(this);
+        }
 
-
+        public ManBody ManBody => (ManBody) Body;
         public Sprite Sprite => sprite;
         public string FirstName => firstName;
         public string Surname => surname;
@@ -78,10 +78,10 @@ namespace Model.Entities.Characters
 
         public CharacterSave CreateSave()
         {
-            ManBody.Health.AddProperty(new Poisoning());
             return new CharacterSave()
             {
                 resourcesPath = GetComponent<Saved>().ResourcesPath,
+                manBody = (ManBodySave) ManBody.CreateSave(),
                 skills = skills.CreateSave(),
                 hat = ManBody.Head.Hat?.CreateSave(),
                 underwear = ManBody.Chest.Underwear?.CreateSave(),
@@ -95,6 +95,9 @@ namespace Model.Entities.Characters
 
         public void Restore(CharacterSave save)
         {
+            ManBody.Restore(save.manBody);
+            skills.Restore(save.skills);
+            
             Wear(save.hat);
             Wear(save.underwear);
             Wear(save.jacket);
@@ -102,8 +105,7 @@ namespace Model.Entities.Characters
             Wear(save.vest);
             Wear(save.boots);
             Wear(save.pants);
-
-            skills.Restore(save.skills);
+            
 
             void Wear(ClothesSave clothesSave)
             {
@@ -117,10 +119,11 @@ namespace Model.Entities.Characters
         }
     }
 
-    [DataContract(Namespace = "Model.Entities.Characters")]
+    [DataContract]
     public class CharacterSave
     {
         [DataMember] public string resourcesPath;
+        [DataMember] public ManBodySave manBody;
         [DataMember] public SkillsSave skills;
 
         [DataMember] public ClothesSave hat;

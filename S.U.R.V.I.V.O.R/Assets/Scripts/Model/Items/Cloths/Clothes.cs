@@ -66,7 +66,7 @@ public class Clothes : MonoBehaviour, ISaved<ClothesSave>
     }
 }
 
-[DataContract(Namespace = "Model.Items")]
+[DataContract]
 public class ClothesSave: ComponentSave
 {
     [DataMember] public float currentArmor;

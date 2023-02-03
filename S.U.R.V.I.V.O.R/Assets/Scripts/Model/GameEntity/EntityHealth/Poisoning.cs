@@ -2,7 +2,7 @@
 
 namespace Model.GameEntity.EntityHealth
 {
-    [DataContract(Namespace = "Model.GameEntity.Health")]
+    [DataContract]
     public class Poisoning : IHealthProperty
     {
         [DataMember] public int Duration { get; private set; }

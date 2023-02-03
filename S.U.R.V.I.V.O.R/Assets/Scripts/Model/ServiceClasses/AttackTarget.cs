@@ -5,10 +5,10 @@ namespace Model.ServiceClasses
 {
     public sealed class AttackTarget
     {
-        private ITakingDamage target;
+        private IAlive target;
         private float distanceToTarget;
 
-        public ITakingDamage Target
+        public IAlive Target
         {
             get => target;
             private set => target = value ?? throw new InvalidOperationException();
@@ -25,7 +25,7 @@ namespace Model.ServiceClasses
             }
         }
 
-        public AttackTarget(ITakingDamage target, float distanceToTarget)
+        public AttackTarget(IAlive target, float distanceToTarget)
         {
             Target = target;
             DistanceToTarget = distanceToTarget;

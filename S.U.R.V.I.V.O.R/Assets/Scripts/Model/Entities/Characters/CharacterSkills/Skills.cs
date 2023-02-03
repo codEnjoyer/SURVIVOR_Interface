@@ -4,9 +4,15 @@ using UnityEngine;
 
 namespace Model.Entities.Characters.CharacterSkills
 {
-    public class Skills : MonoBehaviour, ISaved<SkillsSave>
+    public class Skills : ISaved<SkillsSave>
     {
-        [field: SerializeField] public Strength Strength { get; private set; }
+        public Strength Strength { get; private set; }
+
+        public Skills(Character character)
+        {
+            Strength = new Strength(character.Body);
+        }
+        
 
         public SkillsSave CreateSave()
         {

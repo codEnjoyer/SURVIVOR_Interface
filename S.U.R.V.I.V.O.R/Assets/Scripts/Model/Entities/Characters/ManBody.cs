@@ -6,13 +6,12 @@ using Model.Entities.Characters.BodyParts;
 using Model.GameEntity;
 using Model.GameEntity.EntityHealth;
 using Model.Items;
-using Model.SaveSystem;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace Model.Entities.Characters
 {
-    public sealed class ManBody : Body, IWearClothes, ISaved<MenBodySave>
+    public sealed class ManBody : Body, IWearClothes
     {
         private int energy;
         private int hunger;
@@ -35,18 +34,23 @@ namespace Model.Entities.Characters
         protected override void Awake()
         {
             base.Awake();
-            AddBodyPart(Head, 3);
-            AddBodyPart(Chest, 3);
-            AddBodyPart(Stomach, 3);
-            AddBodyPart(LeftArm, 1);
-            AddBodyPart(RightArm, 1);
-            AddBodyPart(LeftLeg, 1);
-            AddBodyPart(RightLeg, 1);
-            wearClothesBodyParts = BodyParts.OfType<IWearClothes>().ToArray();
+            // Проверка
+            if (
+                Head != (ManHead) BodyParts[0] ||
+                Chest != (ManChest) BodyParts[1] ||
+                Stomach != (ManStomach) BodyParts[2] ||
+                LeftArm != (ManArm) BodyParts[3] ||
+                RightArm != (ManArm) BodyParts[4] ||
+                LeftLeg != (ManLeg) BodyParts[5] ||
+                RightLeg != (ManLeg) BodyParts[6]
+            )
+                throw new Exception("Несостыковка!");
+            //
 
-            Energy = maxEnergy;
-            Hunger = maxHunger;
-            Water = maxWater;
+            Energy = MaxEnergy;
+            Hunger = MaxHunger;
+            Water = MaxWater;
+            wearClothesBodyParts = BodyParts.OfType<IWearClothes>().ToArray();
         }
 
         public event Action<Health> PlayerTired;
@@ -217,48 +221,50 @@ namespace Model.Entities.Characters
             return clothes.Distinct().Where(x => x is not null);
         }
 
-        public MenBodySave CreateSave()
+
+        public override BodySave CreateSave()
         {
-            throw new NotImplementedException();
+            var baseSave = base.CreateSave(); 
+            return new ManBodySave()
+            {
+                healthProperties = baseSave.healthProperties,
+                bodyPartSaves = baseSave.bodyPartSaves,
+                energy = Energy,
+                hunger = hunger,
+                water = water,
+                
+                maxEnergy = maxEnergy,
+                maxHunger = maxHunger,
+                maxWater = maxWater,
+            };
         }
 
-        public void Restore(MenBodySave save)
+
+        public override void Restore(BodySave save)
         {
-            throw new NotImplementedException();
+            base.Restore(save);
+            if (save is ManBodySave manBodySave)
+            {
+                MaxEnergy = manBodySave.maxEnergy;
+                MaxHunger = manBodySave.maxHunger;
+                MaxWater = manBodySave.maxWater;
+
+                Energy = manBodySave.energy;
+                Hunger = manBodySave.hunger;
+                Water = manBodySave.water;
+            }
         }
     }
 
     [DataContract]
-    [KnownType("GetKnownTypes")]
-    public class MenBodySave
+    public class ManBodySave: BodySave
     {
-        [DataMember] public IHealthProperty[] healthProperties;
-        [DataMember] public int currentCriticalLoses;
-        
-        [DataMember] private int energy;
-        [DataMember] private int hunger;
-        [DataMember] private int water;
+        [DataMember] public int energy;
+        [DataMember] public int hunger;
+        [DataMember] public int water;
 
-        [DataMember] private int maxEnergy = 10;
-        [DataMember] private int maxHunger = 10;
-        [DataMember] private int maxWater = 10;
-
-        
-        private static Type[] knownTypes;
-
-        private static Type[] GetKnownTypes()
-        {
-            if (knownTypes == null)
-            {
-                var type = typeof(IHealthProperty);
-                var types = AppDomain.CurrentDomain.GetAssemblies()
-                    .SelectMany(s => s.GetTypes())
-                    .Where(p => type.IsAssignableFrom(p) && !p.IsInterface)
-                    .ToArray();
-                knownTypes = types;
-            }
-
-            return knownTypes;
-        }
+        [DataMember] public int maxEnergy;
+        [DataMember] public int maxHunger;
+        [DataMember] public int maxWater;
     }
 }

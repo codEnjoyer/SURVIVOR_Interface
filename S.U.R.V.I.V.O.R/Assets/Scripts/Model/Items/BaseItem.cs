@@ -151,7 +151,7 @@ namespace Model.Items
         }
     }
 
-    [DataContract(Namespace = "Model.Items")]
+    [DataContract]
     [KnownType("GetKnownTypes")]
     public class ItemSave
     {
@@ -180,7 +180,7 @@ namespace Model.Items
         #endregion
     }
 
-    [DataContract(Namespace = "Model.Items")]
+    [DataContract]
     public abstract class ComponentSave
     {
         [DataMember] public ItemSave itemSave;
