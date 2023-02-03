@@ -122,19 +122,19 @@ namespace Model.Entities.Characters
         public int MaxEnergy
         {
             get => maxEnergy;
-            set => maxEnergy = Math.Min(1, value);
+            set => maxEnergy = Math.Max(1, value);
         }
 
         public int MaxHunger
         {
             get => maxHunger;
-            set => maxHunger = Math.Min(1, value);
+            set => maxHunger = Math.Max(1, value);
         }
 
         public int MaxWater
         {
             get => maxWater;
-            set => maxWater = Math.Min(1, value);
+            set => maxWater = Math.Max(1, value);
         }
 
 

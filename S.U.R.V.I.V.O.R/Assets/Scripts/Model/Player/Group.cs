@@ -8,6 +8,7 @@ using Model.Entities.Characters;
 using Model.Items;
 using Model.Player.GroupMovement;
 using Model.SaveSystem;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Model.Player
@@ -153,7 +154,9 @@ namespace Model.Player
             MaxOnGlobalMapGroupEndurance = save.maxOnGlobalMapGroupEndurance;
             CurrentOnGlobalMapGroupEndurance = save.currentOnGlobalMapGroupEndurance;
             IsLootAllowedOnThisTurn = save.isLootAllowedOnThisTurn;
-            
+
+            foreach (var groupMember in currentGroupMembers)
+                Destroy(groupMember.gameObject);
             currentGroupMembers.Clear();
 
             foreach (var characterSave in save.currentGroupMembers)
@@ -166,7 +169,6 @@ namespace Model.Player
                 );
                 currentGroupMembers.Add(character);
                 character.Restore(characterSave);
-                character.gameObject.SetActive(false);
             }
 
             GroupMovementLogic.CanMove = save.canMove;

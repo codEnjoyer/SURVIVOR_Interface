@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 234525757738228535}
   - component: {fileID: 3333002195196557063}
   m_Layer: 0
-  m_Name: TestCharacter
+  m_Name: TestCharacter 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -302,19 +302,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6766305387854739330, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
       propertyPath: <Path>k__BackingField
-      value: Assets/Resources/Characters/MenBody/ManBodyParts/Leg.prefab
+      value: Assets/Resources/Characters/ManBody/ManBodyParts/Leg.prefab
       objectReference: {fileID: 0}
     - target: {fileID: 6766305387854739330, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
       propertyPath: <ResourcesPath>k__BackingField
-      value: Characters/MenBody/ManBodyParts/Leg
+      value: Characters/ManBody/ManBodyParts/Leg
       objectReference: {fileID: 0}
     - target: {fileID: 9012836241494726444, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
       propertyPath: <Path>k__BackingField
-      value: Assets/Resources/Characters/MenBody/ManBodyParts/Leg.prefab
+      value: Assets/Resources/Characters/ManBody/ManBodyParts/Leg.prefab
       objectReference: {fileID: 0}
     - target: {fileID: 9012836241494726444, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
       propertyPath: <ResourcesPath>k__BackingField
-      value: Characters/MenBody/ManBodyParts/Leg
+      value: Characters/ManBody/ManBodyParts/Leg
       objectReference: {fileID: 0}
     - target: {fileID: 9142305833660315183, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
       propertyPath: m_Name
