@@ -204,6 +204,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1580816970873239513, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: maxHp
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 1891728123844767352, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
       propertyPath: <Path>k__BackingField
       value: Assets/Resources/Characters/Body/ManBodyParts/Arm.prefab

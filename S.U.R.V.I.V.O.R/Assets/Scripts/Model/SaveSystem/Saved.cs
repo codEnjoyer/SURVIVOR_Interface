@@ -20,7 +20,10 @@ namespace Model.SaveSystem
         {
             if (!UnityEditor.PrefabUtility.IsPartOfAnyPrefab(gameObject))
                 return;
-            Path = UnityEditor.PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(gameObject);
+            var path = UnityEditor.PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(gameObject);
+            if (string.IsNullOrEmpty(path))
+                return;
+            Path = path;
             if (Path.Contains("Assets/Resources"))
                 ResourcesPath = Path
                     .Replace("Assets/Resources/", String.Empty)
@@ -32,11 +35,14 @@ namespace Model.SaveSystem
 
         private void OnValidate()
         {
-            if (!UnityEditor.EditorApplication.isPlaying
-                && !UnityEditor.EditorApplication.isUpdating
-                && !UnityEditor.EditorApplication.isCompiling)
+            if (!UnityEditor.EditorApplication.isCompiling)
             {
                 FindPath();
+            }
+
+            if (string.IsNullOrEmpty(Path))
+            {
+                Debug.Log(name);
             }
         }
 #endif
