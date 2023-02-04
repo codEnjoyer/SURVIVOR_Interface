@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Model.Items;
 using UnityEngine;
 
 [RequireComponent(typeof(BaseItem))]

@@ -1,7 +1,8 @@
 ﻿namespace Model.SaveSystem
 {
-    public interface ISaved<out T>
+    public interface ISaved<T>
     {
         public T CreateSave();
+        public void Restore(T save);
     }
 }

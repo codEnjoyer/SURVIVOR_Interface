@@ -4,41 +4,53 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Model.Entities.Characters.BodyParts;
 using Model.GameEntity;
-using Model.GameEntity.Health;
+using Model.GameEntity.EntityHealth;
+using Model.Items;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace Model.Entities.Characters
 {
-    [DataContract]
-    public class ManBody : Body, IWearClothes
+    public sealed class ManBody : Body, IWearClothes
     {
         private int energy;
         private int hunger;
         private int water;
 
-        private int maxEnergy = 10;
-        private int maxHunger = 10;
-        private int maxWater = 10;
+        [SerializeField] [Min(0)] private int maxEnergy = 10;
+        [SerializeField] [Min(0)] private int maxHunger = 10;
+        [SerializeField] [Min(0)] private int maxWater = 10;
+
+        [field: SerializeField] public ManHead Head { get; private set; }
+        [field: SerializeField] public ManChest Chest { get; private set; }
+        [field: SerializeField] public ManStomach Stomach { get; private set; }
+        [field: SerializeField] public ManArm LeftArm { get; private set; }
+        [field: SerializeField] public ManArm RightArm { get; private set; }
+        [field: SerializeField] public ManLeg LeftLeg { get; private set; }
+        [field: SerializeField] public ManLeg RightLeg { get; private set; }
 
         private IWearClothes[] wearClothesBodyParts;
 
-        public ManBody()
+        protected override void Awake()
         {
-            Head = new ManHead(this);
-            Chest = new ManChest(this);
-            Stomach = new ManStomach(this);
-            LeftArm = new ManArm(this);
-            RightArm = new ManArm(this);
-            LeftLeg = new ManLeg(this);
-            RightLeg = new ManLeg(this);
+            base.Awake();
+            // Проверка
+            if (
+                Head != (ManHead) BodyParts[0] ||
+                Chest != (ManChest) BodyParts[1] ||
+                Stomach != (ManStomach) BodyParts[2] ||
+                LeftArm != (ManArm) BodyParts[3] ||
+                RightArm != (ManArm) BodyParts[4] ||
+                LeftLeg != (ManLeg) BodyParts[5] ||
+                RightLeg != (ManLeg) BodyParts[6]
+            )
+                throw new Exception("Несостыковка!");
+            //
 
-            bodyParts.AddRange(new List<BodyPart> {Head, Chest, Stomach, LeftArm, RightArm, LeftLeg, RightLeg});
-            Energy = maxEnergy;
-            Hunger = maxHunger;
-            Water = maxWater;
-            MaxCriticalLoses = bodyParts.Count;
-
-            wearClothesBodyParts = bodyParts.OfType<IWearClothes>().ToArray();
+            Energy = MaxEnergy;
+            Hunger = MaxHunger;
+            Water = MaxWater;
+            wearClothesBodyParts = BodyParts.OfType<IWearClothes>().ToArray();
         }
 
         public event Action<Health> PlayerTired;
@@ -49,15 +61,6 @@ namespace Model.Entities.Characters
         public event Action<int> HungerChange;
         public event Action<int> WaterChange;
         public event Action<ClothType> WearChanged;
-
-        public ManHead Head { get; }
-        public ManChest Chest { get; }
-        public ManStomach Stomach { get; }
-        public ManArm LeftArm { get; }
-        public ManArm RightArm { get; }
-        public ManLeg LeftLeg { get; }
-        public ManLeg RightLeg { get; }
-
 
         public int Energy
         {
@@ -116,6 +119,25 @@ namespace Model.Entities.Characters
             }
         }
 
+        public int MaxEnergy
+        {
+            get => maxEnergy;
+            set => maxEnergy = Math.Max(1, value);
+        }
+
+        public int MaxHunger
+        {
+            get => maxHunger;
+            set => maxHunger = Math.Max(1, value);
+        }
+
+        public int MaxWater
+        {
+            get => maxWater;
+            set => maxWater = Math.Max(1, value);
+        }
+
+
         public Clothes GetClothByType(ClothType type)
         {
             switch (type)
@@ -156,12 +178,15 @@ namespace Model.Entities.Characters
 
         public bool Wear(Clothes clothesToWear)
         {
+            if (clothesToWear == null)
+                return false;
             var isSuccess = false;
             foreach (var wearClothesBodyPart in wearClothesBodyParts)
             {
                 if (wearClothesBodyPart.Wear(clothesToWear))
                     isSuccess = true;
             }
+
             if (isSuccess) WearChanged?.Invoke(clothesToWear.Data.ClothType);
             return isSuccess;
         }
@@ -175,11 +200,13 @@ namespace Model.Entities.Characters
                 var x = bodyPart.UnWear(clothType);
                 if (x is not null)
                     clothes = x;
-            }   
+            }
+
             if (clothes is not null)
             {
                 WearChanged?.Invoke(clothType);
             }
+
             return clothes;
         }
 
@@ -193,5 +220,51 @@ namespace Model.Entities.Characters
 
             return clothes.Distinct().Where(x => x is not null);
         }
+
+
+        public override BodySave CreateSave()
+        {
+            var baseSave = base.CreateSave(); 
+            return new ManBodySave()
+            {
+                healthProperties = baseSave.healthProperties,
+                bodyPartSaves = baseSave.bodyPartSaves,
+                energy = Energy,
+                hunger = hunger,
+                water = water,
+                
+                maxEnergy = maxEnergy,
+                maxHunger = maxHunger,
+                maxWater = maxWater,
+            };
+        }
+
+
+        public override void Restore(BodySave save)
+        {
+            base.Restore(save);
+            if (save is ManBodySave manBodySave)
+            {
+                MaxEnergy = manBodySave.maxEnergy;
+                MaxHunger = manBodySave.maxHunger;
+                MaxWater = manBodySave.maxWater;
+
+                Energy = manBodySave.energy;
+                Hunger = manBodySave.hunger;
+                Water = manBodySave.water;
+            }
+        }
+    }
+
+    [DataContract]
+    public class ManBodySave: BodySave
+    {
+        [DataMember] public int energy;
+        [DataMember] public int hunger;
+        [DataMember] public int water;
+
+        [DataMember] public int maxEnergy;
+        [DataMember] public int maxHunger;
+        [DataMember] public int maxWater;
     }
 }

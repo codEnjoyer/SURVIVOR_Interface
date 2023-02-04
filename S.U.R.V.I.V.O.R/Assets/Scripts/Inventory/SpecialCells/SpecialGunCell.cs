@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Model.Entities.Characters;
+using Model.Items;
 using UnityEngine;
 
 public class SpecialGunCell : SpecialCell
@@ -38,8 +39,8 @@ public class SpecialGunCell : SpecialCell
 
     public override void PlaceItem(BaseItem item)
     {
-        if (item.rotated)
-            item.Rotated();
+        if (item.IsRotated)
+            item.Rotate();
         placedItem = item;
         ChangeCharacterGuns();
         InventoryController.SelectedItem = null;

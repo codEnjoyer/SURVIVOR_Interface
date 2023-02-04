@@ -1,28 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
+using Model.Entities.Characters.CharacterSkills;
 using Model.GameEntity;
-using Model.GameEntity.Skills;
-using UnityEditor;
+using Model.Items;
+using Model.SaveSystem;
 using UnityEngine;
-using BodyPart = Model.GameEntity.BodyPart;
 
+[assembly: ContractNamespace("", ClrNamespace = "Contoso.CRM")]
 namespace Model.Entities.Characters
 {
-    public class Character : Entity
+    [RequireComponent(typeof(Saved))]
+    public class Character : Entity, ISaved<CharacterSave>
     {
-        public readonly ManBody body = new ();
-        [SerializeField] private Sprite sprite; 
+        [SerializeField] private Sprite sprite;
         [SerializeField] private string firstName;
         [SerializeField] private string surname;
 
+        private Gun primaryGun;
+        private Gun secondaryGun;
+        private Skills skills;
+        public MeleeWeapon MeleeWeapon { get; set; }
+        public event Action<GunType> OnGunsChanged;
+        protected override void Awake()
+        {
+            base.Awake();
+            skills = new Skills(this);
+        }
+
+        public ManBody ManBody => (ManBody) Body;
         public Sprite Sprite => sprite;
         public string FirstName => firstName;
         public string Surname => surname;
-
-    
-        private Gun primaryGun;
 
         public Gun PrimaryGun
         {
@@ -33,8 +42,7 @@ namespace Model.Entities.Characters
                 OnGunsChanged?.Invoke(GunType.PrimaryGun);
             }
         }
-    
-        private Gun secondaryGun;
+
         public Gun SecondaryGun
         {
             get => secondaryGun;
@@ -44,27 +52,20 @@ namespace Model.Entities.Characters
                 OnGunsChanged?.Invoke(GunType.SecondaryGun);
             }
         }
-    
+
+
         public void Eat(EatableFood food)
         {
-            body.Energy += food.Data.DeltaEnergy;
-            body.Water += food.Data.DeltaWater;
-            body.Hunger += food.Data.DeltaHunger;
+            ManBody.Energy += food.Data.DeltaEnergy;
+            ManBody.Water += food.Data.DeltaWater;
+            ManBody.Hunger += food.Data.DeltaHunger;
             food.GetComponent<BaseItem>().Destroy();
         }
-    
+
         public IEnumerable<BaseItem> Cook(CookableFood food)
         {
             //TODO Добавить опыт к навыку готовки
             return food.Cook();
-        }
-    
-        public MeleeWeapon MeleeWeapon { get; set; }
-        public readonly Skills skills;
-
-        public Character()
-        {
-            skills = new Skills(this);
         }
 
         public BaseItem Loot(LocationData infoAboutLocation)
@@ -72,22 +73,65 @@ namespace Model.Entities.Characters
             //TODO Добавить опыт к навыку лутания в зависмости от редкости найденной вещи
             return infoAboutLocation.GetLoot();
         }
-    
-        public event Action<GunType> OnGunsChanged; 
 
-        public override Body Body => body;
         public int Mobility => throw new NotImplementedException(); //Скорость передвижения на глобальной карте
-    
-        public override void Attack(IEnumerable<BodyPart> targets, float distance)
+
+        public CharacterSave CreateSave()
         {
-            var damage = new DamageInfo(40f);
-            targets.First().TakeDamage(damage);
+            return new CharacterSave()
+            {
+                resourcesPath = GetComponent<Saved>().ResourcesPath,
+                manBody = (ManBodySave) ManBody.CreateSave(),
+                skills = skills.CreateSave(),
+                hat = ManBody.Head.Hat?.CreateSave(),
+                underwear = ManBody.Chest.Underwear?.CreateSave(),
+                jacket = ManBody.Chest.Jacket?.CreateSave(),
+                backpack = ManBody.Chest.Backpack?.CreateSave(),
+                vest = ManBody.Chest.Vest?.CreateSave(),
+                boots = ManBody.LeftLeg.Boots?.CreateSave(),
+                pants = ManBody.LeftLeg.Pants?.CreateSave()
+            };
+        }
+
+        public void Restore(CharacterSave save)
+        {
+            ManBody.Restore(save.manBody);
+            skills.Restore(save.skills);
+            
+            Wear(save.hat);
+            Wear(save.underwear);
+            Wear(save.jacket);
+            Wear(save.backpack);
+            Wear(save.vest);
+            Wear(save.boots);
+            Wear(save.pants);
+            
+
+            void Wear(ClothesSave clothesSave)
+            {
+                if (clothesSave == null)
+                    return;
+                var clothesPref = Resources.Load<Clothes>(clothesSave.itemSave.resourcesPath);
+                var clothes = Instantiate(clothesPref);
+                clothes.Restore(clothesSave);
+                ManBody.Wear(clothes);
+            }
         }
     }
 
     [DataContract]
     public class CharacterSave
     {
-        [DataMember] public Body manBody;
+        [DataMember] public string resourcesPath;
+        [DataMember] public ManBodySave manBody;
+        [DataMember] public SkillsSave skills;
+
+        [DataMember] public ClothesSave hat;
+        [DataMember] public ClothesSave underwear;
+        [DataMember] public ClothesSave jacket;
+        [DataMember] public ClothesSave backpack;
+        [DataMember] public ClothesSave vest;
+        [DataMember] public ClothesSave boots;
+        [DataMember] public ClothesSave pants;
     }
 }

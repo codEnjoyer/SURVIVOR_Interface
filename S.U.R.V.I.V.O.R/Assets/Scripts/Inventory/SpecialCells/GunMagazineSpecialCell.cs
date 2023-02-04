@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Model.Items;
 using UnityEngine;
 
 public class GunMagazineSpecialCell : SpecialCell
@@ -9,7 +10,7 @@ public class GunMagazineSpecialCell : SpecialCell
     
     public override void PlaceItem(BaseItem item)
     {
-        if (item.rotated) item.Rotated();
+        if (item.IsRotated) item.Rotate();
         placedItem = item;
 
         InventoryController.SelectedItem = null;

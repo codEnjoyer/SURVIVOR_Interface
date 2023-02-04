@@ -33,12 +33,21 @@ namespace Model.Player.GroupMovement
         private const float Delta = 0.1f;
         private float progress;
         private Queue<Node> way = new();
-
-        private bool isMovementOverOnThisTurn;
+        public bool CanMove { get; set; }
 
         public Node CurrentNode
         {
-            get => currentNode;
+            get
+            {
+                if (currentNode == null)
+                {
+                    currentNode = DotGraph.Instance.GetNearestNode(transform.position.To2D());
+                    transform.position = currentNode.transform.position;
+                    targetNode = currentNode;
+                }
+
+                return currentNode;
+            }
             private set
             {
                 currentNode = value;
@@ -48,7 +57,8 @@ namespace Model.Player.GroupMovement
 
         public event Action<Location> LocationChange;
 
-        private List<Node> GetPath() => PathFinder.FindShortestWay(currentNode, DotGraph.Instance.GetNearestNode());
+        private List<Node> GetPath() =>
+            PathFinder.FindShortestWay(CurrentNode, DotGraph.Instance.GetNearestNodeToMouse());
 
         public void CreateWay()
         {
@@ -58,24 +68,33 @@ namespace Model.Player.GroupMovement
 
         public void Move()
         {
-            transform.position = Vector3.Lerp(currentNode.transform.position, targetNode.transform.position, progress);
+            var oldGroupPos = transform.position;
+            var newGroupPos = Vector3.Lerp(CurrentNode.transform.position, targetNode.transform.position, progress);
+            transform.position = newGroupPos;
+
+            var offset = oldGroupPos - newGroupPos;
+
+            firstTurnObject.transform.localPosition += offset;
+            secondTurnObject.transform.localPosition += offset;
+            thirdTurnObject.transform.localPosition += offset;
+
             progress += 0.050f;
             if (IsNearly())
             {
-                currentNode = targetNode;
-                LocationChange?.Invoke(currentNode.Location);
+                CurrentNode = targetNode;
+                LocationChange?.Invoke(CurrentNode.Location);
                 progress = 0;
                 if (way.Count == 0 || group.CurrentOnGlobalMapGroupEndurance == 0)
                 {
                     movementSm.ChangeState(Sleeping);
                     group.CurrentOnGlobalMapGroupEndurance = 0;
                     group.OnOnGlobalMapMovementEnd();
-                    isMovementOverOnThisTurn = true;
+                    CanMove = true;
                 }
                 else
                 {
                     targetNode = way.Dequeue();
-                    group.SetCurrentOnGlobalMapGroupEndurance(group.CurrentOnGlobalMapGroupEndurance - 1);
+                    group.CurrentOnGlobalMapGroupEndurance -= 1;
                 }
             }
         }
@@ -179,15 +198,15 @@ namespace Model.Player.GroupMovement
 
         public void PreparingToMove()
         {
-            if (movementSm.CurrentState == Sleeping && !isMovementOverOnThisTurn)
+            if (movementSm.CurrentState == Sleeping && !CanMove)
                 movementSm.ChangeState(WaitingTarget);
         }
 
         public void OnTurnEnd()
         {
-            isMovementOverOnThisTurn = false;
+            CanMove = false;
         }
-        
+
         #region MonoBehaviourCallBack
 
         private void Awake()
@@ -204,16 +223,8 @@ namespace Model.Player.GroupMovement
             secondTurnObjectLineRenderer = secondTurnObject.GetComponent<LineRenderer>();
             thirdTurnObjectLineRenderer = thirdTurnObject.GetComponent<LineRenderer>();
             movementSm.Initialize(Sleeping);
-            
-            currentNode = Game.Instance.StartNode;
-            if (currentNode == null)
-                Debug.Log("Нет стартовой ноды!");
-            else
-            {
-                transform.position = currentNode.transform.position;
-                targetNode = currentNode;
-            }
         }
+
         private void Update()
         {
             if (Input.GetMouseButtonDown(0) && movementSm.CurrentState == WaitingTarget &&

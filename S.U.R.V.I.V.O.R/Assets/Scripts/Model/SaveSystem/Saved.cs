@@ -1,6 +1,5 @@
 ﻿using System;
 using Extension;
-using UnityEditor;
 using UnityEngine;
 
 namespace Model.SaveSystem
@@ -11,22 +10,42 @@ namespace Model.SaveSystem
         [field: SerializeField]
         [field: ReadOnlyInspector]
         public string ResourcesPath { get; private set; }
-    
+
         [field: SerializeField]
         [field: ReadOnlyInspector]
         public string Path { get; private set; }
 
+#if UNITY_EDITOR
+        private void FindPath()
+        {
+            if (!UnityEditor.PrefabUtility.IsPartOfAnyPrefab(gameObject))
+                return;
+            Path = UnityEditor.PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(gameObject);
+            if (Path.Contains("Assets/Resources"))
+                ResourcesPath = Path
+                    .Replace("Assets/Resources/", String.Empty)
+                    .Replace(".prefab", String.Empty);
+            else
+                ResourcesPath = null;
+            
+        }
 
+        private void OnValidate()
+        {
+            if (!UnityEditor.EditorApplication.isPlaying
+                && !UnityEditor.EditorApplication.isUpdating
+                && !UnityEditor.EditorApplication.isCompiling)
+            {
+                FindPath();
+            }
+        }
+#endif
         public void OnBeforeSerialize()
         {
 #if UNITY_EDITOR
-            Path = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(gameObject);
-            ResourcesPath = Path
-                .Replace("Assets/Resources/", String.Empty)
-                .Replace(".prefab", String.Empty);
+            OnValidate();
 #endif
         }
-
         public void OnAfterDeserialize() {}
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System;
+using UnityEngine;
 
-public class HealInfo
+[Serializable]
+public sealed class HealInfo
 {
-    private float heal;
+    [SerializeField] [Min(0)] private float heal;
     public float Heal
     {
         get => heal;

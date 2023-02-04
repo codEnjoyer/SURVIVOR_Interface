@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Model.Items;
 using UnityEngine;
 
 
@@ -31,7 +32,7 @@ public class Salvagable : MonoBehaviour, IContextMenuAction
         {
             bool isSuccess;
             if (itemOwner != null)
-                isSuccess = itemOwner.body.PlaceItemToInventory(Instantiate(packed));
+                isSuccess = itemOwner.ManBody.PlaceItemToInventory(Instantiate(packed));
             else
             {
                 inventoryController.ThrowItemAtLocation(Instantiate(packed));

@@ -7,7 +7,7 @@ public class Selector : MonoBehaviour
 {
     public static Selector Instance { get; private set; }
     
-    private static Selectable[] units;
+    public static readonly List<Selectable> Units = new ();
     private static List<Selectable> unitSelected;
     private bool isActivate = true;
 
@@ -34,7 +34,6 @@ public class Selector : MonoBehaviour
 
     private void Init()
     {
-        units = FindObjectsOfType<Selectable>();
         unitSelected = new List<Selectable>();
         mainCamera = Camera.main;
     }
@@ -103,7 +102,7 @@ public class Selector : MonoBehaviour
 
     private void SelectUnitsInRectangle(Rect rect)
     {
-        foreach (var unit in units)
+        foreach (var unit in Units)
         {
             var pos = unit.transform.position;
             var tmp = new Vector2(mainCamera.WorldToScreenPoint(pos).x,

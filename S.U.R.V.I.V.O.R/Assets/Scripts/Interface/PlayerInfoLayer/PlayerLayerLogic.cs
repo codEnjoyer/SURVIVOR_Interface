@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Model.Entities.Characters;
+using Model.Items;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -89,14 +90,14 @@ public class PlayerLayerLogic : MonoBehaviour
     private void SubscribeCharacterEvents()
     {
         if (CurrentCharacter == null) return;
-        CurrentCharacter.body.WearChanged += OnWearChanged;
+        CurrentCharacter.ManBody.WearChanged += OnWearChanged;
         CurrentCharacter.OnGunsChanged += OnGunsChanged;
     }
 
     private void UnsubscribeCharacterEvents()
     {        
         if (CurrentCharacter == null) return;
-        CurrentCharacter.body.WearChanged -= OnWearChanged;
+        CurrentCharacter.ManBody.WearChanged -= OnWearChanged;
         CurrentCharacter.OnGunsChanged -= OnGunsChanged;
     }
 
@@ -118,37 +119,37 @@ public class PlayerLayerLogic : MonoBehaviour
         switch (type)
         {
             case ClothType.Jacket:
-                jacketCell.CheckNewItem(currentCharacter.body.Chest.Jacket?.GetComponent<BaseItem>());
+                jacketCell.CheckNewItem(currentCharacter.ManBody.Chest.Jacket?.GetComponent<BaseItem>());
                 break;
             case ClothType.Backpack:
-                backpackCell.CheckNewItem(currentCharacter.body.Chest.Backpack?.GetComponent<BaseItem>());
+                backpackCell.CheckNewItem(currentCharacter.ManBody.Chest.Backpack?.GetComponent<BaseItem>());
                 break;
             case ClothType.Pants:
-                pantsCell.CheckNewItem(currentCharacter.body.LeftLeg.Pants?.GetComponent<BaseItem>());
+                pantsCell.CheckNewItem(currentCharacter.ManBody.LeftLeg.Pants?.GetComponent<BaseItem>());
                 break;
             case ClothType.Vest:
-                vestCell.CheckNewItem(currentCharacter.body.Chest.Vest?.GetComponent<BaseItem>());
+                vestCell.CheckNewItem(currentCharacter.ManBody.Chest.Vest?.GetComponent<BaseItem>());
                 break;
             case ClothType.Underwear:
-                underwearCell.CheckNewItem(currentCharacter.body.Chest.Underwear?.GetComponent<BaseItem>());
+                underwearCell.CheckNewItem(currentCharacter.ManBody.Chest.Underwear?.GetComponent<BaseItem>());
                 break;
             case ClothType.Boots:
-                bootsCell.CheckNewItem(currentCharacter.body.LeftLeg.Boots?.GetComponent<BaseItem>());
+                bootsCell.CheckNewItem(currentCharacter.ManBody.LeftLeg.Boots?.GetComponent<BaseItem>());
                 break;
             case ClothType.Hat:
-                hatCell.CheckNewItem(currentCharacter.body.Head.Hat?.GetComponent<BaseItem>());
+                hatCell.CheckNewItem(currentCharacter.ManBody.Head.Hat?.GetComponent<BaseItem>());
                 break;
         }
     }
     private void PlaceAllItems()
     {
-        CheckCellAfterWindowOpen(CurrentCharacter.body.Chest.Vest != null ? CurrentCharacter.body.Chest.Vest.GetComponent<BaseItem>() : null,vestCell );
-        CheckCellAfterWindowOpen(CurrentCharacter.body.Chest.Backpack != null ? CurrentCharacter.body.Chest.Backpack.GetComponent<BaseItem>() : null, backpackCell);
-        CheckCellAfterWindowOpen(CurrentCharacter.body.LeftLeg.Pants != null ? CurrentCharacter.body.LeftLeg.Pants.GetComponent<BaseItem>() : null, pantsCell);
-        CheckCellAfterWindowOpen(CurrentCharacter.body.Head.Hat != null ? CurrentCharacter.body.Head.Hat.GetComponent<BaseItem>() : null, hatCell);
-        CheckCellAfterWindowOpen(CurrentCharacter.body.Chest.Underwear != null ? CurrentCharacter.body.Chest.Underwear.GetComponent<BaseItem>() : null, underwearCell);
-        CheckCellAfterWindowOpen(CurrentCharacter.body.LeftLeg.Boots != null ? CurrentCharacter.body.LeftLeg.Boots.GetComponent<BaseItem>() : null, bootsCell);
-        CheckCellAfterWindowOpen(CurrentCharacter.body.Chest.Jacket != null ? CurrentCharacter.body.Chest.Jacket.GetComponent<BaseItem>() : null, jacketCell);
+        CheckCellAfterWindowOpen(CurrentCharacter.ManBody.Chest.Vest != null ? CurrentCharacter.ManBody.Chest.Vest.GetComponent<BaseItem>() : null,vestCell );
+        CheckCellAfterWindowOpen(CurrentCharacter.ManBody.Chest.Backpack != null ? CurrentCharacter.ManBody.Chest.Backpack.GetComponent<BaseItem>() : null, backpackCell);
+        CheckCellAfterWindowOpen(CurrentCharacter.ManBody.LeftLeg.Pants != null ? CurrentCharacter.ManBody.LeftLeg.Pants.GetComponent<BaseItem>() : null, pantsCell);
+        CheckCellAfterWindowOpen(CurrentCharacter.ManBody.Head.Hat != null ? CurrentCharacter.ManBody.Head.Hat.GetComponent<BaseItem>() : null, hatCell);
+        CheckCellAfterWindowOpen(CurrentCharacter.ManBody.Chest.Underwear != null ? CurrentCharacter.ManBody.Chest.Underwear.GetComponent<BaseItem>() : null, underwearCell);
+        CheckCellAfterWindowOpen(CurrentCharacter.ManBody.LeftLeg.Boots != null ? CurrentCharacter.ManBody.LeftLeg.Boots.GetComponent<BaseItem>() : null, bootsCell);
+        CheckCellAfterWindowOpen(CurrentCharacter.ManBody.Chest.Jacket != null ? CurrentCharacter.ManBody.Chest.Jacket.GetComponent<BaseItem>() : null, jacketCell);
         if (primaryGunSlot != null)
             CheckCellAfterWindowOpen(CurrentCharacter.PrimaryGun != null ? CurrentCharacter.PrimaryGun.GetComponent<BaseItem>() : null,primaryGunSlot);
         if (secondaryGunSlot != null)

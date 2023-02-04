@@ -3,57 +3,101 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Runtime.Serialization;
-using Model.GameEntity.Health;
+using Model.GameEntity.EntityHealth;
+using Model.SaveSystem;
+using Model.ServiceClasses;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Model.GameEntity
 {
-    [DataContract]
-    public abstract class Body : IAlive
+    public class Body : MonoBehaviour, IAlive, ISaved<BodySave>
     {
-        [DataMember] private int currentCriticalLoses;
-        [DataMember] private int maxCriticalLoses;
-        [DataMember] protected readonly List<BodyPart> bodyParts = new();
-        [DataMember] public BodyHealth Health { get; }
+        public Health Health { get; private set; }
 
-        protected Body()
-        {
-            Health = new BodyHealth(this);
-        }
+        [SerializeField] [FormerlySerializedAs("bodyParts")]
+        private List<BodyPartRegister> bodyPartRegisters = new();
 
-        protected int MaxCriticalLoses
-        {
-            get => maxCriticalLoses;
-            set
-            {
-                if (value > 0 && value <= bodyParts.Count)
-                    maxCriticalLoses = value;
-                else
-                    throw new ConstraintException($"Нарушино устовие 0 < {value} <= {bodyParts.Count}. {GetType()}");
-            }
-        }
-
-        public IEnumerable<BodyPart> BodyParts => bodyParts;
-        public float Hp => BodyParts.Sum(part => part.Hp);
+        private readonly List<BodyPart> bodyParts = new();
+        public int CurrentCriticalLoses { get; private set; }
         public event Action Died;
 
-        public void LossBodyParts(BodyPart bodyPart)
+        public IReadOnlyList<BodyPart> BodyParts => bodyParts;
+        public float Hp => BodyParts.Sum(part => part.Hp);
+        public int MaxCriticalLoses => bodyPartRegisters.Count;
+
+        public bool IsDied => CurrentCriticalLoses >= MaxCriticalLoses;
+
+        private void AddBodyPart(BodyPartRegister bodyPartRegister)
         {
-            bodyParts.Remove(bodyPart);
-            currentCriticalLoses += bodyPart.Significance;
-            if (currentCriticalLoses >= MaxCriticalLoses)
+            var bodyPart = bodyPartRegister.BodyPart;
+            var significance = bodyPartRegister.Significance;
+
+            if (bodyPart == null) throw new ArgumentException();
+            bodyParts.Add(bodyPart);
+
+            if (bodyPart.IsDied)
+                CurrentCriticalLoses += significance;
+            else
+                bodyPart.Died += () =>
+                {
+                    CurrentCriticalLoses += significance;
+                    if (IsDied)
+                        Died?.Invoke();
+                };
+        }
+
+        public virtual void TakeDamage(DamageInfo damage)
+        {
+            foreach (var bodyPart in bodyParts)
             {
-                Died?.Invoke();
+                bodyPart.TakeDamage(damage);
             }
         }
 
-        public void TakeDamage(DamageInfo damage)
+        public virtual void Healing(HealInfo heal)
         {
             throw new NotImplementedException();
         }
 
-        public void Healing(HealInfo heal)
+        protected virtual void Awake()
         {
-            throw new NotImplementedException();
+            if (bodyPartRegisters.Count == 0)
+                throw new Exception();
+
+            Health = new Health(this);
+            foreach (var bodyPartRegister in bodyPartRegisters)
+                AddBodyPart(bodyPartRegister);
+
+            if (
+                bodyParts.Any(x => x == null) ||
+                bodyParts.Count != bodyParts.Distinct().Count()
+            )
+                throw new Exception();
         }
+
+        public virtual BodySave CreateSave()
+        {
+            return new BodySave()
+            {
+                healthProperties = Health.HealthProperties.ToArray(),
+                bodyPartSaves = bodyParts.Select(x => x.CreateSave()).ToArray()
+            };
+        }
+
+        public virtual void Restore(BodySave save)
+        {
+            Health = new Health(this, save.healthProperties);
+            for (int i = 0; i < bodyParts.Count; i++)
+                bodyParts[i].Restore(save.bodyPartSaves[i]);
+        }
+    }
+
+    [DataContract]
+    [KnownType(typeof(Poisoning))]
+    public class BodySave
+    {
+        [DataMember] public IHealthProperty[] healthProperties;
+        [DataMember] public BodyPartSave[] bodyPartSaves;
     }
 }

@@ -4,7 +4,7 @@ using System.Xml;
 
 namespace Model.SaveSystem
 {
-    public class SaveManager
+    public static class SaveManager
     {
         public static void WriteObject<T>(string fileName, T obj)
         {

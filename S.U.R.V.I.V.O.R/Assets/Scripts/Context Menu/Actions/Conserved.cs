@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Model.Items;
 using UnityEngine;
 [RequireComponent(typeof(ContextMenuItem))]
 public class Conserved : MonoBehaviour, IContextMenuAction
@@ -28,7 +29,7 @@ public class Conserved : MonoBehaviour, IContextMenuAction
         
         bool isSuccess;
         if (itemOwner != null)
-            isSuccess = itemOwner.body.PlaceItemToInventory(Instantiate(foodAfterOpen));
+            isSuccess = itemOwner.ManBody.PlaceItemToInventory(Instantiate(foodAfterOpen));
         else
         {
             inventoryController.ThrowItemAtLocation(Instantiate(foodAfterOpen));

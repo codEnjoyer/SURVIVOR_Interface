@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Model.Items;
+using UnityEngine;
 
 [System.Serializable]
 public class ItemChance
