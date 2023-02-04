@@ -134,9 +134,10 @@ namespace Model.Player
 
         public GroupSave CreateSave()
         {
+            var resPath = GetComponent<Saved>().ResourcesPath;
             return new GroupSave()
             {
-                resourcesPath = GetComponent<Saved>().ResourcesPath,
+                resourcesPath = resPath,
                 maxOnGlobalMapGroupEndurance = MaxOnGlobalMapGroupEndurance,
                 currentOnGlobalMapGroupEndurance = CurrentOnGlobalMapGroupEndurance,
                 currentGroupMembers = CurrentGroupMembers

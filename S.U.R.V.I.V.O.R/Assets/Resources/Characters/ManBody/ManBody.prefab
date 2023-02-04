@@ -51,6 +51,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1da993f0f42c9cf439aeee9e246cd28d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bodyPartRegisters:
+  - <BodyPart>k__BackingField: {fileID: 3742498398117211272}
+    <Significance>k__BackingField: 3
+  - <BodyPart>k__BackingField: {fileID: 3742498398117211272}
+    <Significance>k__BackingField: 3
+  - <BodyPart>k__BackingField: {fileID: 6648536932981516764}
+    <Significance>k__BackingField: 1
+  - <BodyPart>k__BackingField: {fileID: 7945937630362575315}
+    <Significance>k__BackingField: 1
+  - <BodyPart>k__BackingField: {fileID: 8852278146804216408}
+    <Significance>k__BackingField: 1
+  - <BodyPart>k__BackingField: {fileID: 6925335910425363740}
+    <Significance>k__BackingField: 1
+  - <BodyPart>k__BackingField: {fileID: 4677274602899170738}
+    <Significance>k__BackingField: 1
   maxEnergy: 10
   maxHunger: 10
   maxWater: 10
