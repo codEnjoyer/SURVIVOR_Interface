@@ -8,6 +8,7 @@ using Interface;
 using Model.Entities.Characters;
 using Model.SaveSystem;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -37,6 +38,8 @@ namespace Model.Items
         public int Width => !IsRotated ? data.Size.Width : data.Size.Height;
         public BaseItemData Data => data;
 
+        public UnityEvent Destroy;
+
         public void Awake()
         {
             if (data == null || data.Icon == null)
@@ -61,10 +64,9 @@ namespace Model.Items
             rectTransform.rotation = Quaternion.Euler(0, 0, IsRotated ? 90 : 0);
         }
 
-        public void Destroy()
+        public void OnDestroy()
         {
-            InventoryGrid?.PickUpItem(this);
-            Destroy(gameObject);
+            Destroy?.Invoke();
         }
 
         #region TooltipRegion

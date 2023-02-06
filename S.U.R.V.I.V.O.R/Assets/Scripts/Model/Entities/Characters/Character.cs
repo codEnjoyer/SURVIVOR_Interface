@@ -59,7 +59,7 @@ namespace Model.Entities.Characters
             ManBody.Energy += food.Data.DeltaEnergy;
             ManBody.Water += food.Data.DeltaWater;
             ManBody.Hunger += food.Data.DeltaHunger;
-            food.GetComponent<BaseItem>().Destroy();
+            Destroy(food.gameObject);
         }
 
         public IEnumerable<BaseItem> Cook(CookableFood food)

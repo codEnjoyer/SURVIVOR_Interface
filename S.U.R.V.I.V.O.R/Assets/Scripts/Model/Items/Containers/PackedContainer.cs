@@ -14,7 +14,7 @@ public class PackedContainer : MonoBehaviour
     }
     public IEnumerable<BaseItem> Unpack()
     {
-        GetComponent<BaseItem>().Destroy();
+        Destroy(gameObject);
         return data.PackedItems;
     }
 }
