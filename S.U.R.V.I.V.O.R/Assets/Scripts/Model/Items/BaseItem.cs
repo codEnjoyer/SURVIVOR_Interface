@@ -154,32 +154,12 @@ namespace Model.Items
     }
 
     [DataContract]
-    [KnownType("GetKnownTypes")]
     public class ItemSave
     {
         [DataMember] public string resourcesPath;
         [DataMember] public Vector2Int positionInInventory;
         [DataMember] public bool isRotated;
         [DataMember] public ComponentSave[] componentSaves;
-
-
-        #region Save
-        private static Type[] knownTypes;
-        private static Type[] GetKnownTypes()
-        {
-            if (knownTypes == null)
-            {
-                var type = typeof(ComponentSave);
-                var types = AppDomain.CurrentDomain.GetAssemblies()
-                    .SelectMany(s => s.GetTypes())
-                    .Where(p => type.IsAssignableFrom(p) && !p.IsInterface)
-                    .ToArray();
-                knownTypes = types;
-            }
-
-            return knownTypes;
-        }
-        #endregion
     }
 
     [DataContract]

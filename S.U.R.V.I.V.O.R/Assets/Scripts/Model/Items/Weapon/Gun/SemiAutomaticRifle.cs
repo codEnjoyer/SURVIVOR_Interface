@@ -12,20 +12,7 @@ public class SemiAutomaticRifle : Gun
     [SerializeField] private GunData data;
     
     public override GunData Data => data;
-
-    public override Magazine Reload(Magazine magazine)
-    {
-        if (currentMagazine == null)
-        {
-            currentMagazine = magazine;
-            return null;
-        }
-
-        var result = currentMagazine;
-        currentMagazine = magazine;
-        return result;
-    }
-
+    
     public override void Attack(List<BodyPart> targets, float distance, Skills skills)
     {
         throw new NotImplementedException();

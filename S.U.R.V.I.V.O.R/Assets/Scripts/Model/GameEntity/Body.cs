@@ -94,7 +94,6 @@ namespace Model.GameEntity
     }
 
     [DataContract]
-    [KnownType(typeof(Poisoning))]
     public class BodySave
     {
         [DataMember] public IHealthProperty[] healthProperties;

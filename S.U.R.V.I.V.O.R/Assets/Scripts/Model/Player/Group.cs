@@ -135,14 +135,15 @@ namespace Model.Player
         public GroupSave CreateSave()
         {
             var resPath = GetComponent<Saved>().ResourcesPath;
+            var cgm = CurrentGroupMembers
+                .Select(x => x.CreateSave())
+                .ToArray();
             return new GroupSave()
             {
                 resourcesPath = resPath,
                 maxOnGlobalMapGroupEndurance = MaxOnGlobalMapGroupEndurance,
                 currentOnGlobalMapGroupEndurance = CurrentOnGlobalMapGroupEndurance,
-                currentGroupMembers = CurrentGroupMembers
-                    .Select(x => x.CreateSave())
-                    .ToArray(),
+                currentGroupMembers = cgm,
                 position = transform.position.To2D(),
                 isLootAllowedOnThisTurn = IsLootAllowedOnThisTurn,
                 canMove = GroupMovementLogic.CanMove
