@@ -31,8 +31,8 @@ public class SpecialClothCell : SpecialCell
         if (currentInventory != null)
             currentInventory.InventoryOwner = CurrentCharacter;
     }
-    
-    
+
+
     public void OnEnable()
     {
         if (currentInventory != null && PlacedItem == null)

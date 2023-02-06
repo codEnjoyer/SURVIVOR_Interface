@@ -87,13 +87,14 @@ namespace Model
                 groupSaves = groups.Select(g => g.CreateSave()).ToArray(),
                 chosenGroupIndex = ChosenGroupIndex,
                 locationInventory = LocationInventory.Instance.LocationInventoryGrid
-                    .GetItems().Select(x => x.CreateSave()).ToArray()
+                    .GetItems().Select(x => x.CreateSave()).ToArray(),
+                cameraPosition = CameraController.Instance.transform.position,
+                zoomHeight = CameraController.Instance.zoomHeight
             };
         }
 
         public void Restore(GameSave gameSave)
         {
-            Clear();
             groups = new List<Group>();
             foreach (var groupSave in gameSave.groupSaves)
             {
@@ -112,6 +113,9 @@ namespace Model
                 item.Restore(itemSave);
                 inventory.PlaceItem(item, item.OnGridPositionX, item.OnGridPositionY);
             }
+
+            CameraController.Instance.MoveCamera(gameSave.cameraPosition);
+            CameraController.Instance.zoomHeight = gameSave.zoomHeight;
         }
 
         public void Clear()
@@ -121,7 +125,7 @@ namespace Model
 
             groups = new List<Group>();
             foreach (var item in FindObjectsOfType<BaseItem>(true))
-                item.Destroy();
+                Destroy(item.gameObject);
         }
     }
 
@@ -132,5 +136,7 @@ namespace Model
         [DataMember] public GroupSave[] groupSaves;
         [DataMember] public int chosenGroupIndex;
         [DataMember] public ItemSave[] locationInventory;
+        [DataMember] public Vector3 cameraPosition;
+        [DataMember] public float zoomHeight;
     }
 }

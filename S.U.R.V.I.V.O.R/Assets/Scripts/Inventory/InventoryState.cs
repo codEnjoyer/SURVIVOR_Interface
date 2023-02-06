@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Model.Items;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryState
 {
@@ -21,7 +22,7 @@ public class InventoryState
             i++;
         }
 
-        return array.Distinct().Where(x => x is not null);
+        return array.Distinct().Where(x => x != null);
     }
 
     public event Action InventoryChange;
@@ -81,10 +82,17 @@ public class InventoryState
                 inventoryItemSlot[posX + x, posY + y] = item;
             }
         }
+        
+        item.GetComponent<Image>().raycastTarget = true;
 
         item.OnGridPositionX = posX;
         item.OnGridPositionY = posY;
         PlaceItemEvent?.Invoke(item);
+        item.Destroy.AddListener(() =>
+        {
+            RemoveGridReference(item);
+            inventoryItemSlot[item.OnGridPositionX, item.OnGridPositionY] = null;
+        });
         InventoryChange?.Invoke();
     }
 

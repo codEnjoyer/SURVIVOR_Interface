@@ -13,7 +13,7 @@ public class CookableFood : EatableFood
 
     public IEnumerable<BaseItem> Cook()
     {
-        GetComponent<BaseItem>().Destroy();
+        Destroy(gameObject);
         return objectToSpawnAfterCook;
     }
 }

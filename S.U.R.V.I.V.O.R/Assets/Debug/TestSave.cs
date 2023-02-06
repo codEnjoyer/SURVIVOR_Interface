@@ -1,4 +1,7 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using Interface;
 using Model;
 using Model.Items;
 using Model.SaveSystem;
@@ -19,10 +22,8 @@ public class TestSave : MonoBehaviour
 
     public void LoadGame()
     {
-        var path = Application.persistentDataPath + "/test.xml";
-        var save = SaveManager.ReadObject<GameSave>(path);
-        Game.Instance.Restore(save);
-        Debug.Log("Load");
+        Game.Instance.Clear();
+        StartCoroutine(RestoreGameCoroutine());
     }
 
     public void SaveItem()
@@ -30,5 +31,14 @@ public class TestSave : MonoBehaviour
         var path = Application.persistentDataPath + "/itemSave.xml";
         var save = item.CreateSave();
         SaveManager.WriteObject(path, save);
+    }
+    
+    IEnumerator RestoreGameCoroutine()
+    {
+        yield return null;
+        var path = Application.persistentDataPath + "/test.xml";
+        var save = SaveManager.ReadObject<GameSave>(path);
+        Game.Instance.Restore(save);
+        Debug.Log("Load");
     }
 }
