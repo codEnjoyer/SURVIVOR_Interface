@@ -10,7 +10,7 @@ public class ConservedFood : MonoBehaviour
 
     public BaseItem Open()
     {
-        GetComponent<BaseItem>().Destroy();
+        Destroy(gameObject);
         return data.ItemToSpawnAfterConserveOpen;
     }
 }

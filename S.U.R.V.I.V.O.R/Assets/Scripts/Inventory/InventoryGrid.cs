@@ -41,7 +41,7 @@ public class InventoryGrid : MonoBehaviour
         curInventoryState.PlaceItemEvent += OnPlaceItem;
         curInventoryState.PickUpItemEvent += OnPickedItem;
     }
-    
+
     public void ChangeState(InventoryState inventoryState)
     {
         if (curInventoryState != null)

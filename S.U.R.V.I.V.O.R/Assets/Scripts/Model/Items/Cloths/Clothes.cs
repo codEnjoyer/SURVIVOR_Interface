@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using Model.Items;
@@ -28,7 +29,8 @@ public class Clothes : MonoBehaviour, ISaved<ClothesSave>
     private void Start()
     {
         CurrentArmor = data.MaxArmor;
-        inventory = new InventoryState(data.InventorySize);
+        if (inventory == null)
+            inventory = new InventoryState(data.InventorySize);
         baseItem = gameObject.GetComponent<BaseItem>();
     }
     

@@ -27,7 +27,7 @@ public class Salvagable : MonoBehaviour, IContextMenuAction
     {
         var itemOwner = scrap.GetComponent<BaseItem>().ItemOwner;
         var salvagedItems = scrap.salvagableItems;
-        GetComponent<BaseItem>().Destroy();
+        Destroy(gameObject);
         foreach (var packed in salvagedItems)
         {
             bool isSuccess;
