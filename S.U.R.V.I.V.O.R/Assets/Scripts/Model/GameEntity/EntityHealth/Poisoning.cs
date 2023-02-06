@@ -16,9 +16,7 @@ namespace Model.GameEntity.EntityHealth
             this.damage = damage;
         }
 
-        public void InitialAction(Health health)
-        {
-        }
+        public void InitialAction(Health health) {}
 
         public void TurnEndAction(Health health)
         {
