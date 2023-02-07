@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
-using Player;
+using Model;
+using Model.Entities.Characters;
+using Model.Player;
 using UnityEngine;
 
 public class PlayerCartReDrawInfo

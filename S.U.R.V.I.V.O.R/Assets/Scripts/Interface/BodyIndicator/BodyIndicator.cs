@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using Model.Entities.Characters;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,13 +32,13 @@ public class BodyIndicator : MonoBehaviour
 
     public void Init()
     {
-        ChangeBodyPartParameters(head,GetColorByNumber(character.body.Head.Hp/character.body.Head.MaxHp),character.body.Head.Hp);
-        ChangeBodyPartParameters(chest,GetColorByNumber(character.body.Chest.Hp/character.body.Chest.Hp),character.body.Chest.Hp);
-        ChangeBodyPartParameters(stomach,GetColorByNumber(character.body.Stomach.Hp/character.body.Stomach.Hp),character.body.Stomach.Hp);
-        ChangeBodyPartParameters(leftArm,GetColorByNumber(character.body.LeftArm.Hp/character.body.LeftArm.Hp),character.body.LeftArm.Hp);
-        ChangeBodyPartParameters(rightArm,GetColorByNumber(character.body.RightArm.Hp/character.body.RightArm.Hp),character.body.RightArm.Hp);
-        ChangeBodyPartParameters(leftLeg,GetColorByNumber(character.body.LeftLeg.Hp/character.body.LeftLeg.Hp),character.body.LeftLeg.Hp);
-        ChangeBodyPartParameters(rightLeg,GetColorByNumber(character.body.RightLeg.Hp/character.body.RightLeg.Hp),character.body.RightLeg.Hp);
+        ChangeBodyPartParameters(head,GetColorByNumber(character.ManBody.Head.Hp/character.ManBody.Head.MaxHp),character.ManBody.Head.Hp);
+        ChangeBodyPartParameters(chest,GetColorByNumber(character.ManBody.Chest.Hp/character.ManBody.Chest.Hp),character.ManBody.Chest.Hp);
+        ChangeBodyPartParameters(stomach,GetColorByNumber(character.ManBody.Stomach.Hp/character.ManBody.Stomach.Hp),character.ManBody.Stomach.Hp);
+        ChangeBodyPartParameters(leftArm,GetColorByNumber(character.ManBody.LeftArm.Hp/character.ManBody.LeftArm.Hp),character.ManBody.LeftArm.Hp);
+        ChangeBodyPartParameters(rightArm,GetColorByNumber(character.ManBody.RightArm.Hp/character.ManBody.RightArm.Hp),character.ManBody.RightArm.Hp);
+        ChangeBodyPartParameters(leftLeg,GetColorByNumber(character.ManBody.LeftLeg.Hp/character.ManBody.LeftLeg.Hp),character.ManBody.LeftLeg.Hp);
+        ChangeBodyPartParameters(rightLeg,GetColorByNumber(character.ManBody.RightLeg.Hp/character.ManBody.RightLeg.Hp),character.ManBody.RightLeg.Hp);
     }
 
     private void ChangeBodyPartParameters(Image img, Color32 color, float numberOfHp)

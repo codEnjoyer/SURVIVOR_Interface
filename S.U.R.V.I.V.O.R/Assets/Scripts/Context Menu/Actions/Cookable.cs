@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Model.Entities.Characters;
+using Model.Items;
 using UnityEngine;
 
 [RequireComponent(typeof(ContextMenuItem))]
@@ -32,7 +34,7 @@ public class Cookable : MonoBehaviour, IContextMenuAction
         {
             bool isSuccess;
             if (itemOwner != null)
-                isSuccess = itemOwner.body.PlaceItemToInventory(Instantiate(packed));
+                isSuccess = itemOwner.ManBody.PlaceItemToInventory(Instantiate(packed));
             else
             {
                 inventoryController.ThrowItemAtLocation(Instantiate(packed));

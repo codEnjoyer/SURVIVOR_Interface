@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Model.Items;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -12,7 +13,7 @@ public class CookableFood : EatableFood
 
     public IEnumerable<BaseItem> Cook()
     {
-        GetComponent<BaseItem>().Destroy();
+        Destroy(gameObject);
         return objectToSpawnAfterCook;
     }
 }

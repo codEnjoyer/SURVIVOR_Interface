@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Model.Items;
 using UnityEngine;
 
 [RequireComponent(typeof(Conserved))]
@@ -9,7 +10,7 @@ public class ConservedFood : MonoBehaviour
 
     public BaseItem Open()
     {
-        GetComponent<BaseItem>().Destroy();
+        Destroy(gameObject);
         return data.ItemToSpawnAfterConserveOpen;
     }
 }

@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using Model;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -8,7 +10,7 @@ public class CameraController : MonoBehaviour
     private CameraControlActions cameraActions;
     private InputAction movement;
     private Transform cameraTransform;
-    private Camera camera;
+    private new Camera camera;
 
     [SerializeField] private GameObject map;
     private Vector3 mapPointMax;
@@ -51,7 +53,7 @@ public class CameraController : MonoBehaviour
 
     private Vector3 targetPosition;
 
-    private float zoomHeight;
+    public float zoomHeight;
 
     private Vector3 horizontalVelocity;
     private Vector3 lastPosition;
@@ -76,6 +78,7 @@ public class CameraController : MonoBehaviour
         cameraTransform = objCamera.transform;
         mapPointMax = map.GetComponent<Collider>().bounds.max;
         mapPointMin = map.GetComponent<Collider>().bounds.min;
+        transform.position = destinationPoint = Game.Instance.Groups.First().transform.position;
     }
 
     private void OnEnable()
@@ -87,14 +90,14 @@ public class CameraController : MonoBehaviour
 
         movement = cameraActions.Camera.Move;
         cameraActions.Camera.ZoomCamera.performed += ZoomCamera;
-        GetComponent<MinimapController>().MoveToDestinationEvent += OnMoveToDestination;
+        MinimapController.Instance.MoveToDestinationEvent += OnMoveToDestination;
         cameraActions.Camera.Enable();
     }
 
     private void OnDisable()
     {
         cameraActions.Camera.ZoomCamera.performed -= ZoomCamera;
-        GetComponent<MinimapController>().MoveToDestinationEvent -= OnMoveToDestination;
+        MinimapController.Instance.MoveToDestinationEvent -= OnMoveToDestination;
         cameraActions.Camera.Disable();
     }
 
@@ -243,5 +246,11 @@ public class CameraController : MonoBehaviour
         if (Physics.Raycast(positionRay, out hit, Mathf.Infinity))
             return hit.point;
         return new Vector3();
+    }
+
+    public void MoveCamera(Vector3 point)
+    {
+        destinationReached = false;
+        transform.position = destinationPoint = point;
     }
 }

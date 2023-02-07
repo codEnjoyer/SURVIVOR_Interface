@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Model.Entities.Characters;
+using Model.Items;
 using UnityEngine;
 using UnityEngine.EventSystems;
 public class SpecialClothCell : SpecialCell
@@ -29,8 +31,8 @@ public class SpecialClothCell : SpecialCell
         if (currentInventory != null)
             currentInventory.InventoryOwner = CurrentCharacter;
     }
-    
-    
+
+
     public void OnEnable()
     {
         if (currentInventory != null && PlacedItem == null)
@@ -39,10 +41,10 @@ public class SpecialClothCell : SpecialCell
     
     public override void PlaceItem(BaseItem item)
     {
-        if (item.rotated)
-            item.Rotated();
+        if (item.IsRotated)
+            item.Rotate();
         placedItem = item;
-        bool isWeared = CurrentCharacter.body.Wear(item.GetComponent<Clothes>());
+        bool isWeared = CurrentCharacter.ManBody.Wear(item.GetComponent<Clothes>());
         if (isWeared)
         {
             item.ItemOwner = CurrentCharacter;
@@ -57,7 +59,7 @@ public class SpecialClothCell : SpecialCell
     public override void GiveItem()
     {
         if (placedItem == null) return;
-        var removedClothes = CurrentCharacter.body.UnWear(PlacedItem.GetComponent<Clothes>().Data.ClothType);
+        var removedClothes = CurrentCharacter.ManBody.UnWear(PlacedItem.GetComponent<Clothes>().Data.ClothType);
         if (removedClothes is null) return;
         PlacedItem.GetComponent<RectTransform>().sizeDelta = PlacedItem.OnAwakeRectTransformSize;
         PlacedItem.GetComponent<RectTransform>().localScale = PlacedItem.OnAwakeRectTransformScale;
@@ -76,7 +78,7 @@ public class SpecialClothCell : SpecialCell
     
     private void UpdateInventory()
     {
-        var item = CurrentCharacter.body.GetClothByType(type);
+        var item = CurrentCharacter.ManBody.GetClothByType(type);
         if (item != null)
             currentInventory.ChangeState(item.Inventory);
         else

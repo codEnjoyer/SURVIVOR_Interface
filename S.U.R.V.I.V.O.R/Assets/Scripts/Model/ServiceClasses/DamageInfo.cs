@@ -1,9 +1,11 @@
 ﻿
 using System;
+using UnityEngine;
 
-public class DamageInfo
+[Serializable]
+public sealed class DamageInfo
 {
-    private float damage;
+    [SerializeField] [Min(0)] private float damage;
     public float Damage
     {
         get => damage;

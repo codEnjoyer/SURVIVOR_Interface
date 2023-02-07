@@ -1,13 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using Interface.InterfaceStates;
-using Unity.VisualScripting;
+using Model;
 using UnityEngine;
 
 public class InterfaceController : MonoBehaviour
 {
+    public static InterfaceController Instance { get; private set; }
     public readonly StateMachine interfaceStateMachine = new();
     public NothingActive NothingActive { get; private set; }
     public CharacterPanelActive CharacterPanelActive { get; private set; }
@@ -43,21 +41,34 @@ public class InterfaceController : MonoBehaviour
 
     public GameObject CurrentPlayerLayer { get; private set; }
 
-    private bool IsFirstFrameSkiped;
+    private bool isFirstFrameSkipped;
     
     public void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            Init();
+        }
+    }
+
+    private void Init()
     {
         NothingActive = new NothingActive(this, interfaceStateMachine);
         CharacterPanelActive = new CharacterPanelActive(this, interfaceStateMachine);
         GroupLayerActive = new GroupLayerActive(this, interfaceStateMachine);
         PlayerLayerActive = new PlayerLayerActive(this, interfaceStateMachine);
 
-        var gMemebers = Game.Instance.ChosenGroup.CurrentGroupMembers.ToArray(); 
+        var gMemebers = Game.Instance.ChosenGroup.CurrentGroupMembers.ToArray();
         firstPlayerLayerLogic.Init(gMemebers[0]);
         secondPlayerLayerLogic.Init(gMemebers[1]);
         thirdfPlayerLayerLogic.Init(gMemebers[2]);
         fourthPlayerLayerLogic.Init(gMemebers[3]);
-        
+
         Selector.Instance.Activate();
         InitializeInterface();
         interfaceStateMachine.Initialize(NothingActive);
@@ -123,11 +134,7 @@ public class InterfaceController : MonoBehaviour
     }
 
 
-    public void ChooseFirstPlayer()
-    {
-        SetPlayerLayerActive(firstPlayerLayer);
-    }
-
+    public void ChooseFirstPlayer() => SetPlayerLayerActive(firstPlayerLayer);
     public void ChooseSecondPlayer() => SetPlayerLayerActive(secondPlayerLayer);
     public void ChooseThirdPlayer() => SetPlayerLayerActive(thirdPlayerLayer);
     public void ChooseFourthPlayer() => SetPlayerLayerActive(fourthPlayerLayer);

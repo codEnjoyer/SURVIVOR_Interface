@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Model.Entities.Characters;
 using Unity.VisualScripting;
 using UnityEngine.UI;
 using UnityEngine;
@@ -13,7 +14,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject groupCharacterCardPrefab;
     [SerializeField] private GameObject queuePanel;
     [SerializeField] private GameObject groupPanel;
-    [SerializeField] private Camera camera;
+    [SerializeField] private new Camera camera;
     private Queue<GameObject> cardsQueue = new Queue<GameObject>();
     private List<GameObject> groupCards = new List<GameObject>();
     private Vector3 uiScale = Vector3.zero;

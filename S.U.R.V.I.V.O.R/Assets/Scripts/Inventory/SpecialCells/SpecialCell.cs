@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing.Printing;
+using Model.Items;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -43,7 +44,7 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
     public virtual void Init()
     {
         if (InventoryController == null)
-            InventoryController = Game.Instance.InventoryController;
+            InventoryController = InventoryController.Instance;
     }
 
     protected virtual bool CanInsertIntoSlot()

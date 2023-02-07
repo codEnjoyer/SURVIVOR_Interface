@@ -1,5 +1,6 @@
 ﻿using System;
-using Player;
+using Model;
+using Model.Player;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -33,6 +34,7 @@ public class LocationInventory : MonoBehaviour
     {
         if (text != null)
             text.text = loc.name;
+        
     }
 
     private void OnChosenGroupChange(Group currentGroup, Group newGroup)

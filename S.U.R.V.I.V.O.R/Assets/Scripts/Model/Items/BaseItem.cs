@@ -1,96 +1,170 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
 using Interface;
+using Model.Entities.Characters;
+using Model.SaveSystem;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
-using Image = UnityEngine.UI.Image;
+using UnityEngine.UI;
 
-public class BaseItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+namespace Model.Items
 {
-    [FormerlySerializedAs("itemData")] [SerializeField]
-    private BaseItemData data;
-
-    public int OnGridPositionX { get; set; }
-    public int OnGridPositionY { get; set; }
-
-    public InventoryGrid InventoryGrid => transform.GetComponentInParent<InventoryGrid>();
-
-    public Character ItemOwner { get; set; }
-
-    public Vector3 OnAwakeRectTransformSize { get; set; }
-
-    public Vector3 OnAwakeRectTransformScale { get; set; }
-
-    public int Height => !rotated ? Size.Height : Size.Width;
-
-    public int Width => !rotated ? Size.Width : Size.Height;
-
-    public bool rotated { get; set; }
-    public Size Size => data.Size;
-    public float Weight => data.Weight;
-    public BaseItemData Data => data;
-
-    public void Awake()
+    [RequireComponent(typeof(Saved))]
+    public class BaseItem : MonoBehaviour, IPointerEnterHandler,
+        IPointerExitHandler, IPointerClickHandler, ISaved<ItemSave>
     {
-        if (data == null || data.Icon == null)
-            return;
+        [FormerlySerializedAs("itemData")] [SerializeField]
+        private BaseItemData data;
 
-        gameObject.AddComponent<Image>().sprite = data.Icon;
-        gameObject.GetComponent<Image>().raycastTarget = false;
+        public int OnGridPositionX { get; set; }
+        public int OnGridPositionY { get; set; }
 
-        var rt = gameObject.GetComponent<RectTransform>();
-        var scaleFactor = Game.Instance.MainCanvas.scaleFactor;
-        var size = new Vector2(((data.Size.Width * InventoryGrid.TileSize) - data.Size.Width - 1) * scaleFactor,
-            ((data.Size.Height * InventoryGrid.TileSize) - data.Size.Height - 1) * scaleFactor);
-        rt.sizeDelta = size;
-        OnAwakeRectTransformScale = rt.localScale;
-        OnAwakeRectTransformSize = rt.sizeDelta;
+        public InventoryGrid InventoryGrid => transform.GetComponentInParent<InventoryGrid>();
+
+        public Character ItemOwner { get; set; }
+
+        public Vector3 OnAwakeRectTransformSize { get; set; }
+
+        public Vector3 OnAwakeRectTransformScale { get; set; }
+
+        public bool IsRotated { get; private set; }
+        public int Height => !IsRotated ? data.Size.Height : data.Size.Width;
+        public int Width => !IsRotated ? data.Size.Width : data.Size.Height;
+        public BaseItemData Data => data;
+
+        public UnityEvent Destroy;
+
+        public void Awake()
+        {
+            if (data == null || data.Icon == null)
+                return;
+
+            gameObject.AddComponent<Image>().sprite = data.Icon;
+            gameObject.GetComponent<Image>().raycastTarget = false;
+
+            var rt = gameObject.GetComponent<RectTransform>();
+            var scaleFactor = Game.Instance.MainCanvas.scaleFactor;
+            var size = new Vector2(((data.Size.Width * InventoryGrid.TileSize) - data.Size.Width - 1) * scaleFactor,
+                ((data.Size.Height * InventoryGrid.TileSize) - data.Size.Height - 1) * scaleFactor);
+            rt.sizeDelta = size;
+            OnAwakeRectTransformScale = rt.localScale;
+            OnAwakeRectTransformSize = rt.sizeDelta;
+        }
+
+        public void Rotate()
+        {
+            IsRotated = !IsRotated;
+            var rectTransform = GetComponent<RectTransform>();
+            rectTransform.rotation = Quaternion.Euler(0, 0, IsRotated ? 90 : 0);
+        }
+
+        public void OnDestroy()
+        {
+            Destroy?.Invoke();
+        }
+
+        #region TooltipRegion
+
+        private bool mouseEnter;
+        private ISaved<ItemSave> savedImplementation;
+        const float Seconds = 0.5f;
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            mouseEnter = true;
+            StartCoroutine(ShowTooltipCoroutine());
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            mouseEnter = false;
+            Tooltip.Instance.HideTooltip();
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            mouseEnter = false;
+            Tooltip.Instance.HideTooltip();
+        }
+
+
+        IEnumerator ShowTooltipCoroutine()
+        {
+            yield return new WaitForSeconds(Seconds);
+            if (mouseEnter && !ContextMenuController.Instance.IsActive)
+                Tooltip.Instance.ShowTooltip(data.ItemName);
+        }
+
+        #endregion
+
+        public ItemSave CreateSave()
+        {
+            var itemSave = new ItemSave()
+            {
+                resourcesPath = GetComponent<Saved>().ResourcesPath,
+                positionInInventory = new Vector2Int(OnGridPositionX, OnGridPositionY),
+                isRotated = IsRotated,
+            };
+
+            var allComponents = GetComponents<Component>()
+                .Where(component => !component.Equals(this));
+            var componentSaves = new List<ComponentSave>();
+            foreach (var component in allComponents)
+            {
+                var type = component.GetType();
+                var method = type.GetMethod("HiddenCreateSave",
+                    BindingFlags.NonPublic | BindingFlags.Instance);
+                if (method == null) continue;
+                var componentSave = (ComponentSave) method.Invoke(component, Array.Empty<object>());
+                if (componentSave == null) continue;
+
+                componentSaves.Add(componentSave);
+                componentSave.itemSave = itemSave;
+            }
+
+            itemSave.componentSaves = componentSaves.ToArray();
+            return itemSave;
+        }
+
+        public void Restore(ItemSave save)
+        {
+            OnGridPositionX = save.positionInInventory.x;
+            OnGridPositionY = save.positionInInventory.y;
+
+            IsRotated = IsRotated;
+
+            var allComponents = GetComponents<Component>()
+                .Where(component => !component.Equals(this));
+
+            foreach (var component in allComponents)
+            {
+                var type = component.GetType();
+                var method = type.GetMethod("HiddenRestore",
+                    BindingFlags.NonPublic | BindingFlags.Instance);
+                if (method == null) continue;
+                method.Invoke(component, new object[] {save});
+            }
+        }
     }
 
-    public void Rotated()
+    [DataContract]
+    public class ItemSave
     {
-        rotated = !rotated;
-        var rectTransform = GetComponent<RectTransform>();
-        rectTransform.rotation = Quaternion.Euler(0, 0, rotated ? 90 : 0);
+        [DataMember] public string resourcesPath;
+        [DataMember] public Vector2Int positionInInventory;
+        [DataMember] public bool isRotated;
+        [DataMember] public ComponentSave[] componentSaves;
     }
 
-    public void Destroy()
+    [DataContract]
+    public abstract class ComponentSave
     {
-        InventoryGrid.PickUpItem(this);
-        Destroy(gameObject);
+        [DataMember] public ItemSave itemSave;
     }
-
-    #region TooltipRegin
-
-    private bool mouseEnter;
-    const float Seconds = 0.5f;
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        mouseEnter = true;
-        StartCoroutine(ShowTooltipCoroutine());
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        mouseEnter = false;
-        Tooltip.Instance.HideTooltip();
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        mouseEnter = false;
-        Tooltip.Instance.HideTooltip();
-    }
-
-
-    IEnumerator ShowTooltipCoroutine()
-    {
-        yield return new WaitForSeconds(Seconds);
-        if (mouseEnter && !ContextMenuController.Instance.IsActive)
-            Tooltip.Instance.ShowTooltip(data.ItemName);
-    }
-
-    #endregion
 }

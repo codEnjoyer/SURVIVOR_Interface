@@ -2,7 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Player;
+using Model;
+using Model.Player;
 using UnityEngine;
 using UnityEngine.UI;
 

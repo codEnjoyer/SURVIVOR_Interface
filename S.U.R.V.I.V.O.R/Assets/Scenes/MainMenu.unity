@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: d268ef2276ccdbe4299487091f1c2c07, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -1712,15 +1712,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemies:
-  - {fileID: -8374986040575136808, guid: 9449a94c99a31054a9c99b121af8906b, type: 3}
-  - {fileID: -8374986040575136808, guid: 9449a94c99a31054a9c99b121af8906b, type: 3}
-  - {fileID: -8374986040575136808, guid: 9449a94c99a31054a9c99b121af8906b, type: 3}
-  - {fileID: -8374986040575136808, guid: 9449a94c99a31054a9c99b121af8906b, type: 3}
+  - {fileID: 542787831722442598, guid: 85e90988476e8b146b991706a53cfb17, type: 3}
+  - {fileID: 542787831722442598, guid: 85e90988476e8b146b991706a53cfb17, type: 3}
+  - {fileID: 542787831722442598, guid: 85e90988476e8b146b991706a53cfb17, type: 3}
+  - {fileID: 542787831722442598, guid: 85e90988476e8b146b991706a53cfb17, type: 3}
   ally:
-  - {fileID: 234525757738228535, guid: 57e839bd74f2726409759bc236374acd, type: 3}
-  - {fileID: 4763960007681730613, guid: 82f94ce66460cdf4ebad2be3ac8fb386, type: 3}
-  - {fileID: 6862082343402615237, guid: dfaeba7f789c7134d9db8c4a41c7141c, type: 3}
-  - {fileID: 6887316571504503919, guid: 3229cf04fbcc85d45b532647e89c8430, type: 3}
+  - {fileID: 234525757738228535, guid: 4e9905753c882cc4e9b9b729b3f148cc, type: 3}
+  - {fileID: 234525757738228535, guid: 9e7fb43f594febc47814418c608c83df, type: 3}
+  - {fileID: 234525757738228535, guid: 0ec2b778a23804f49aae9f2b1db9d64c, type: 3}
+  - {fileID: 234525757738228535, guid: ec91439454054264f942a893b05b416f, type: 3}
 --- !u!114 &2086217171
 MonoBehaviour:
   m_ObjectHideFlags: 0

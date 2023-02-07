@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Model.Entities.Characters;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -37,15 +34,15 @@ public class PlayerCharacteristicsPanel : MonoBehaviour
         characterName.text = $"{Player.FirstName} {Player.Surname}";
         if (Photo != null)
             Photo.sprite = Player.Sprite;
-        food.text = player.body.Hunger.ToString();
+        food.text = player.ManBody.Hunger.ToString();
         if (foodProgressBar != null)
-            foodProgressBar.Init(player.body.Hunger);
-        water.text = player.body.Water.ToString();
+            foodProgressBar.Init(player.ManBody.Hunger);
+        water.text = player.ManBody.Water.ToString();
         if (waterProgressBar != null)
-            waterProgressBar.Init(player.body.Water);
-        energy.text = player.body.Energy.ToString();
+            waterProgressBar.Init(player.ManBody.Water);
+        energy.text = player.ManBody.Energy.ToString();
         if (energyProgressBar != null)
-            energyProgressBar.Init(player.body.Energy);
+            energyProgressBar.Init(player.ManBody.Energy);
     }
 
     private void OnFoodChanged(int value)
@@ -76,17 +73,17 @@ public class PlayerCharacteristicsPanel : MonoBehaviour
     private void Subscribe()
     {
         if(player is null) return;
-        player.body.EnergyChange += OnEnergyChanged;
-        player.body.WaterChange += OnWaterChanged;
-        player.body.HungerChange += OnFoodChanged;
+        player.ManBody.EnergyChange += OnEnergyChanged;
+        player.ManBody.WaterChange += OnWaterChanged;
+        player.ManBody.HungerChange += OnFoodChanged;
     }
 
     private void Unsubscribe()
     {
         if(player is null) return;
-        player.body.EnergyChange -= OnEnergyChanged;
-        player.body.WaterChange -= OnWaterChanged;
-        player.body.HungerChange -= OnFoodChanged;
+        player.ManBody.EnergyChange -= OnEnergyChanged;
+        player.ManBody.WaterChange -= OnWaterChanged;
+        player.ManBody.HungerChange -= OnFoodChanged;
     }
 
     private void OnDestroy()

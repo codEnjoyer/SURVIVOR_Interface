@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Model.Entities.Characters;
+using Model.Items;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -31,7 +33,7 @@ public class Wearable : MonoBehaviour, IContextMenuAction
         var inventory = item.InventoryGrid;
         var character = value as Character;
         inventory.PickUpItem(item);
-        var isSuccessful = character.body.Wear(currentClothes);
+        var isSuccessful = character.ManBody.Wear(currentClothes);
         
         if (!isSuccessful)
         {

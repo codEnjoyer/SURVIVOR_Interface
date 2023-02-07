@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Model.Entities.Characters;
+using Model.Items;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -39,7 +41,7 @@ public class InventoryGrid : MonoBehaviour
         curInventoryState.PlaceItemEvent += OnPlaceItem;
         curInventoryState.PickUpItemEvent += OnPickedItem;
     }
-    
+
     public void ChangeState(InventoryState inventoryState)
     {
         if (curInventoryState != null)

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Model.Items;
 using UnityEngine;
 
 public class SpecialGunModuleCell : SpecialCell
@@ -19,8 +20,8 @@ public class SpecialGunModuleCell : SpecialCell
 
     public override void PlaceItem(BaseItem item)
     {
-        if (item.rotated)
-            item.Rotated();
+        if (item.IsRotated)
+            item.Rotate();
         placedItem = item;
         InventoryController.SelectedItem = null;
         CurrentGun.AddGunModule(placedItem.GetComponent<GunModule>());

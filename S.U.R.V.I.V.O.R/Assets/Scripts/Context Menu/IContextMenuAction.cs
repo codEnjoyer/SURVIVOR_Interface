@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Model;
+using Model.Entities.Characters;
 using UnityEngine;
 using UnityEngine.UI;
 

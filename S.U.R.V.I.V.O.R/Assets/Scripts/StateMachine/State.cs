@@ -1,7 +1,6 @@
 ﻿public abstract class State
 {
     protected StateMachine stateMachine;
-    public StateMachine StateMachine => stateMachine;
     public virtual void Enter(){}
 
     public virtual void Update(){}

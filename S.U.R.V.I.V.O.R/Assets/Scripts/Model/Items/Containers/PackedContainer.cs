@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Model.Items;
 using UnityEngine;
 
 [RequireComponent(typeof(Unpackable))]
@@ -13,7 +14,7 @@ public class PackedContainer : MonoBehaviour
     }
     public IEnumerable<BaseItem> Unpack()
     {
-        GetComponent<BaseItem>().Destroy();
+        Destroy(gameObject);
         return data.PackedItems;
     }
 }

@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 using Model.GameEntity;
+using Model.ServiceClasses;
 
 public class FightCharacter : MonoBehaviour
 {
@@ -22,11 +24,11 @@ public class FightCharacter : MonoBehaviour
 
     public float Initiative => Entity.Initiative;
     public int Energy => Entity.SpeedInFightScene;
-    public int RemainingEnergy {get; set;}
+    public int RemainingEnergy { get; set; }
     public bool Alive = true;
     public GameObject TargetToHit;
     public readonly float radius = 1.5f;
-    
+
     // public void MakeShoot(GameObject targetObj, string targetName)
     // {
     //     transform.LookAt(targetObj.transform);
@@ -60,8 +62,11 @@ public class FightCharacter : MonoBehaviour
             TargetToHit.transform.position.z);
         transform.LookAt(lookPoint);
         var bodyParts = TargetToHit.GetComponent<FightCharacter>().Entity.Body.BodyParts;
-        Entity.Attack(bodyParts, Vector3.Distance(gameObject.transform.position, TargetToHit.transform.position));
-        UIController.Instance.DrawDamage(TargetToHit, (Type == CharacterType.Ally)?40f:40f);
+        var dist = Vector3.Distance(gameObject.transform.position, TargetToHit.transform.position);
+        // Временный фикс
+        Entity.Attack(bodyParts.Select(x => new AttackTarget(x, dist)),
+            out var attackedTargets);
+        UIController.Instance.DrawDamage(TargetToHit, (Type == CharacterType.Ally) ? 40f : 40f);
     }
 
     public void ResetEnergy()

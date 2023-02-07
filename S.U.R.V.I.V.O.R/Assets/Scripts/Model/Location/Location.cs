@@ -1,7 +1,4 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.UIElements;
-
+﻿using UnityEngine;
 public class Location : MonoBehaviour, ISerializationCallbackReceiver
 {
     [SerializeField] private LocationData data;
@@ -17,20 +14,24 @@ public class Location : MonoBehaviour, ISerializationCallbackReceiver
 
     public void UpdatePrefab()
     {
+        var meshFilter = GetComponent<MeshFilter>();
+        var meshRender = GetComponent<MeshRenderer>();
+        if (meshFilter == null || meshRender == null)
+            return;
         if (data != null && data.Prefab != null)
         {
-            GetComponent<MeshFilter>().mesh = data.Prefab.GetComponent<MeshFilter>().sharedMesh;
-            GetComponent<MeshRenderer>().material = data.Prefab.GetComponent<MeshRenderer>().sharedMaterial;
+            meshFilter.mesh = data.Prefab.GetComponent<MeshFilter>().sharedMesh;
+            meshRender.material = data.Prefab.GetComponent<MeshRenderer>().sharedMaterial;
         }
         else
         {
             var node = Resources.Load<GameObject>("Node");
-            GetComponent<MeshFilter>().mesh = node.GetComponent<MeshFilter>().sharedMesh;
-            GetComponent<MeshRenderer>().material = node.GetComponent<MeshRenderer>().sharedMaterial;
+            meshFilter.mesh = node.GetComponent<MeshFilter>().sharedMesh;
+            meshRender.material = node.GetComponent<MeshRenderer>().sharedMaterial;
         }
 
         var x = transform.position.x;
-        var y = GetComponent<MeshRenderer>().bounds.size.y * transform.localScale.y / 2;
+        var y = meshRender.bounds.size.y * transform.localScale.y / 2;
         var z = transform.position.z;
 
         transform.position = new Vector3(x, y, z);
@@ -38,7 +39,14 @@ public class Location : MonoBehaviour, ISerializationCallbackReceiver
 
     public void OnBeforeSerialize()
     {
-        UpdatePrefab();
+#if UNITY_EDITOR
+        if (!UnityEditor.EditorApplication.isPlaying
+            && !UnityEditor.EditorApplication.isUpdating
+            && !UnityEditor.EditorApplication.isCompiling)
+        {
+            //UpdatePrefab();
+        }
+#endif
     }
 
     public void OnAfterDeserialize()

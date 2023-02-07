@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Model.Entities.Characters;
 using UnityEngine;
 using UnityEngine.UI;
 
