@@ -1,6 +1,6 @@
 ﻿public enum SceneName
 {
-    MainScene = 0,
-    FightScene = 1,
-    MainMenu = 2
+    MainScene = 1,
+    FightScene = 2,
+    MainMenu = 0
 }
