@@ -6,42 +6,29 @@ using UnityEngine;
 public class InterfaceController : MonoBehaviour
 {
     public static InterfaceController Instance { get; private set; }
-    public readonly StateMachine interfaceStateMachine = new();
-    public NothingActive NothingActive { get; private set; }
-    public CharacterPanelActive CharacterPanelActive { get; private set; }
-    public GroupLayerActive GroupLayerActive { get; private set; }
-    public PlayerLayerActive PlayerLayerActive { get; private set; }
 
-    private State memoryState;
-    
+    public readonly StateMachine interfaceStateMachine = new();
+    public NothingState NothingState { get; private set; }
+    public CharactersState CharactersState { get; private set; }
+    public GroupState GroupState { get; private set; }
+    public CharacterState FirstCharacterState { get; private set; }
+    public CharacterState SecondCharacterState { get; private set; }
+    public CharacterState ThirdCharacterState { get; private set; }
+    public CharacterState FourthCharacterState { get; private set; }
+
     [SerializeField] private GameObject mainInfoPanelLayer;
     [SerializeField] private GameObject groupButtonsLayer;
     [SerializeField] private GameObject groupInfoLayer;
     [SerializeField] private GameObject charactersButtonsLayer;
-    [SerializeField] private GameObject firstPlayerLayer;
-    [SerializeField] private GameObject secondPlayerLayer;
-    [SerializeField] private GameObject thirdPlayerLayer;
-    [SerializeField] private GameObject fourthPlayerLayer;
-    
-    
-    [SerializeField] private CharactersPlateLayerLogic charactersPlateLayerLogic;
-    private PlayerLayerLogic firstPlayerLayerLogic => firstPlayerLayer.GetComponent<PlayerLayerLogic>();
-    private PlayerLayerLogic secondPlayerLayerLogic => secondPlayerLayer.GetComponent<PlayerLayerLogic>();
-    private PlayerLayerLogic thirdfPlayerLayerLogic => thirdPlayerLayer.GetComponent<PlayerLayerLogic>();
-    private PlayerLayerLogic fourthPlayerLayerLogic => fourthPlayerLayer.GetComponent<PlayerLayerLogic>();
-    
+    [SerializeField] private PlayerLayerLogic firstPlayerLayer;
+    [SerializeField] private PlayerLayerLogic secondPlayerLayer;
+    [SerializeField] private PlayerLayerLogic thirdPlayerLayer;
+    [SerializeField] private PlayerLayerLogic fourthPlayerLayer;
+
     public GameObject MainInfoPanelLayer => mainInfoPanelLayer;
     public GameObject GroupButtonsLayer => groupButtonsLayer;
     public GameObject GroupInfoLayer => groupInfoLayer;
     public GameObject CharactersButtonsLayer => charactersButtonsLayer;
-    public GameObject FirstPlayerLayer => firstPlayerLayer;
-    public GameObject SecondPlayerLayer => secondPlayerLayer;
-    public GameObject ThirdPlayerLayer => thirdPlayerLayer;
-    public GameObject FourthPlayerLayer => fourthPlayerLayer;
-
-    public GameObject CurrentPlayerLayer { get; private set; }
-
-    private bool isFirstFrameSkipped;
     
     public void Awake()
     {
@@ -58,26 +45,29 @@ public class InterfaceController : MonoBehaviour
 
     private void Init()
     {
-        NothingActive = new NothingActive(this, interfaceStateMachine);
-        CharacterPanelActive = new CharacterPanelActive(this, interfaceStateMachine);
-        GroupLayerActive = new GroupLayerActive(this, interfaceStateMachine);
-        PlayerLayerActive = new PlayerLayerActive(this, interfaceStateMachine);
+        NothingState = new NothingState(this, interfaceStateMachine);
+        CharactersState = new CharactersState(this, interfaceStateMachine);
+        GroupState = new GroupState(this, interfaceStateMachine);
+        FirstCharacterState = new CharacterState(this, interfaceStateMachine, firstPlayerLayer);
+        SecondCharacterState = new CharacterState(this, interfaceStateMachine, secondPlayerLayer);
+        ThirdCharacterState = new CharacterState(this, interfaceStateMachine, thirdPlayerLayer);
+        FourthCharacterState = new CharacterState(this, interfaceStateMachine, fourthPlayerLayer);
 
         var gMemebers = Game.Instance.ChosenGroup.CurrentGroupMembers.ToArray();
-        firstPlayerLayerLogic.Init(gMemebers[0]);
-        secondPlayerLayerLogic.Init(gMemebers[1]);
-        thirdfPlayerLayerLogic.Init(gMemebers[2]);
-        fourthPlayerLayerLogic.Init(gMemebers[3]);
+        firstPlayerLayer.Init(gMemebers[0]);
+        secondPlayerLayer.Init(gMemebers[1]);
+        thirdPlayerLayer.Init(gMemebers[2]);
+        fourthPlayerLayer.Init(gMemebers[3]);
 
-        Selector.Instance.Activate();
+        Selector.Instance.gameObject.SetActive(true);
         InitializeInterface();
-        interfaceStateMachine.Initialize(NothingActive);
+        interfaceStateMachine.Initialize(NothingState);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            interfaceStateMachine.ChangeState(NothingActive);
+            interfaceStateMachine.ChangeState(NothingState);
     }
 
     private void InitializeInterface()
@@ -86,56 +76,27 @@ public class InterfaceController : MonoBehaviour
         GroupButtonsLayer.SetActive(true);
         CharactersButtonsLayer.SetActive(true);
         GroupInfoLayer.SetActive(true);
-        
-        FirstPlayerLayer.SetActive(true);
-        SecondPlayerLayer.SetActive(true);
-        ThirdPlayerLayer.SetActive(true);
-        FourthPlayerLayer.SetActive(true);
+
+        firstPlayerLayer.gameObject.SetActive(true);
+        secondPlayerLayer.gameObject.SetActive(true);
+        thirdPlayerLayer.gameObject.SetActive(true);
+        fourthPlayerLayer.gameObject.SetActive(true);
 
         MainInfoPanelLayer.SetActive(false);
         GroupButtonsLayer.SetActive(false);
         CharactersButtonsLayer.SetActive(false);
         GroupInfoLayer.SetActive(false);
-        
-        FirstPlayerLayer.SetActive(false);
-        SecondPlayerLayer.SetActive(false);
-        ThirdPlayerLayer.SetActive(false);
-        FourthPlayerLayer.SetActive(false);
+
+        firstPlayerLayer.gameObject.SetActive(false);
+        secondPlayerLayer.gameObject.SetActive(false);
+        thirdPlayerLayer.gameObject.SetActive(false);
+        fourthPlayerLayer.gameObject.SetActive(false);
     }
 
-    public void SetCharactersPanelActive()
-    {
-        if (interfaceStateMachine.CurrentState == CharacterPanelActive)
-            interfaceStateMachine.ChangeState(NothingActive);
-        else
-            interfaceStateMachine.ChangeState(CharacterPanelActive);
-    }
-
-    public void SetGroupLayerActive()
-    {
-        if (interfaceStateMachine.CurrentState == GroupLayerActive)
-            interfaceStateMachine.ChangeState(memoryState);
-        else
-        {
-            memoryState = interfaceStateMachine.CurrentState;
-            interfaceStateMachine.ChangeState(GroupLayerActive);
-        }
-    }
-
-    private void SetPlayerLayerActive(GameObject characterLayer)
-    {
-        if (interfaceStateMachine.CurrentState == PlayerLayerActive && CurrentPlayerLayer == characterLayer)
-            interfaceStateMachine.ChangeState(CharacterPanelActive);
-        else
-        {
-            CurrentPlayerLayer = characterLayer;
-            interfaceStateMachine.ChangeState(PlayerLayerActive);
-        }
-    }
-
-
-    public void ChooseFirstPlayer() => SetPlayerLayerActive(firstPlayerLayer);
-    public void ChooseSecondPlayer() => SetPlayerLayerActive(secondPlayerLayer);
-    public void ChooseThirdPlayer() => SetPlayerLayerActive(thirdPlayerLayer);
-    public void ChooseFourthPlayer() => SetPlayerLayerActive(fourthPlayerLayer);
+    public void SetCharactersPanelActive() => interfaceStateMachine.ChangeState(CharactersState);
+    public void SetGroupLayerActive() => interfaceStateMachine.ChangeState(GroupState);
+    public void ChooseFirstPlayer() => interfaceStateMachine.ChangeState(FirstCharacterState);
+    public void ChooseSecondPlayer() => interfaceStateMachine.ChangeState(SecondCharacterState);
+    public void ChooseThirdPlayer() => interfaceStateMachine.ChangeState(ThirdCharacterState);
+    public void ChooseFourthPlayer() => interfaceStateMachine.ChangeState(FourthCharacterState);
 }

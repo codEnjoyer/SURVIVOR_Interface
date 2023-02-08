@@ -38,7 +38,7 @@ namespace Model.Items
         public int Width => !IsRotated ? data.Size.Width : data.Size.Height;
         public BaseItemData Data => data;
 
-        public UnityEvent Destroy;
+        public UnityEvent destroyEvent;
 
         public void Awake()
         {
@@ -66,7 +66,7 @@ namespace Model.Items
 
         public void OnDestroy()
         {
-            Destroy?.Invoke();
+            destroyEvent?.Invoke();
         }
 
         #region TooltipRegion

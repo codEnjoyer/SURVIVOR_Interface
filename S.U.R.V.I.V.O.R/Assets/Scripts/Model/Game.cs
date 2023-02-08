@@ -60,23 +60,20 @@ namespace Model
         public void Resume()
         {
             OnPause = false;
-            Selector.Instance.Activate();
+            Selector.Instance.gameObject.SetActive(true);
             MinimapController.Instance.isActive = true;
             CameraController.Instance.isActive = true;
+            InventoryController.Instance.gameObject.SetActive(true);
         }
 
         public void Pause()
         {
             OnPause = true;
             Tooltip.Instance.HideTooltip();
-            Selector.Instance.DeActivate();
+            Selector.Instance.gameObject.SetActive(false);
             MinimapController.Instance.isActive = false;
             CameraController.Instance.isActive = false;
-            if (InventoryController.Instance.SelectedItem != null)
-            {
-                LocationInventory.Instance.LocationInventoryGrid.InsertItem(InventoryController.Instance.SelectedItem);
-                InventoryController.Instance.SelectedItem = null;
-            }
+            InventoryController.Instance.gameObject.SetActive(false);
         }
 
         public GameSave CreateSave()
