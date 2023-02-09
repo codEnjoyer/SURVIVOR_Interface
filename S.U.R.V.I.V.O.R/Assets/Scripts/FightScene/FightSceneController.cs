@@ -212,7 +212,7 @@ public class FightSceneController : MonoBehaviour
         AI.CurrentCharacterObj = CharacterObj;
 
         Sign.transform.position = new Vector3(CharacterObj.transform.position.x,
-            Sign.transform.position.y, CharacterObj.transform.position.z);
+            CharacterObj.transform.position.y + 1.3f, CharacterObj.transform.position.z);
         Sign.transform.parent = CharacterObj.transform;
 
         StateController.MakeAvailablePhases();

@@ -111415,8 +111415,8 @@ MonoBehaviour:
   - {fileID: 1577858484}
   - {fileID: 1784623219}
   - {fileID: 1652699842}
-  characterPrefab: {fileID: 3004767863623703735, guid: 57e839bd74f2726409759bc236374acd, type: 3}
-  ratPrefab: {fileID: 6953240871029818446, guid: 9449a94c99a31054a9c99b121af8906b, type: 3}
+  characterPrefab: {fileID: 3004767863623703735, guid: 4e9905753c882cc4e9b9b729b3f148cc, type: 3}
+  ratPrefab: {fileID: 853453954277567857, guid: 85e90988476e8b146b991706a53cfb17, type: 3}
 --- !u!4 &1978437330
 Transform:
   m_ObjectHideFlags: 0

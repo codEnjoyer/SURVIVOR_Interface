@@ -43,7 +43,7 @@ namespace Model.GameEntity
         public virtual void Attack(IEnumerable<AttackTarget> potentialTargets,
             out IEnumerable<IAlive> attackedTargets)
         {
-            var target = potentialTargets.First(x => x.DistanceToTarget < meleeAttack.Distance);
+            var target = potentialTargets.First();
             target.Target.TakeDamage(meleeAttack.DamageInfo);
             attackedTargets = new[] {target.Target};
         }

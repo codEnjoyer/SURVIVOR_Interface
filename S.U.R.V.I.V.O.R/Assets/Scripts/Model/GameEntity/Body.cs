@@ -68,6 +68,7 @@ namespace Model.GameEntity
             Health = new Health(this);
             foreach (var bodyPartRegister in bodyPartRegisters)
                 AddBodyPart(bodyPartRegister);
+            Debug.Log("Awake BodyPartsCount " + BodyParts.Count);
 
             if (
                 bodyParts.Any(x => x == null) ||
