@@ -17,6 +17,7 @@ namespace Model
         public bool OnPause { get; private set; }
 
         public int TurnNumber { get; private set; } = 1;
+        
         [SerializeField] private List<Group> groups;
         [field: SerializeField] public Canvas MainCanvas { get; private set; }
 
@@ -116,6 +117,7 @@ namespace Model
 
             CameraController.Instance.MoveCamera(gameSave.cameraPosition);
             CameraController.Instance.zoomHeight = gameSave.zoomHeight;
+            InterfaceController.Instance.Init();
         }
 
         public void Clear()

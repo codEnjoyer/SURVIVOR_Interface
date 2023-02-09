@@ -11,7 +11,7 @@ public class CharactersPlateLayerLogic : MonoBehaviour
     [SerializeField] private PlayerCharacteristicsPanel ThirdPlayerPanel;
     [SerializeField] private PlayerCharacteristicsPanel FourthPlayerPanel;
     // Start is called before the first frame update
-    public void Awake()
+    public void Init()
     {
         var playersArray = Game.Instance.ChosenGroup.CurrentGroupMembers.ToArray();
         FirstPlayerPanel.Player = playersArray[0];

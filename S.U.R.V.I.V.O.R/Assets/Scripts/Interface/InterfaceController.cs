@@ -6,6 +6,7 @@ using UnityEngine;
 public class InterfaceController : MonoBehaviour
 {
     public static InterfaceController Instance { get; private set; }
+    
     public readonly StateMachine interfaceStateMachine = new();
     public NothingActive NothingActive { get; private set; }
     public CharacterPanelActive CharacterPanelActive { get; private set; }
@@ -25,6 +26,8 @@ public class InterfaceController : MonoBehaviour
     
     
     [SerializeField] private CharactersPlateLayerLogic charactersPlateLayerLogic;
+
+    private GroupLayerLogic groupLayerLogic => groupInfoLayer.GetComponent<GroupLayerLogic>();
     private PlayerLayerLogic firstPlayerLayerLogic => firstPlayerLayer.GetComponent<PlayerLayerLogic>();
     private PlayerLayerLogic secondPlayerLayerLogic => secondPlayerLayer.GetComponent<PlayerLayerLogic>();
     private PlayerLayerLogic thirdfPlayerLayerLogic => thirdPlayerLayer.GetComponent<PlayerLayerLogic>();
@@ -56,7 +59,7 @@ public class InterfaceController : MonoBehaviour
         }
     }
 
-    private void Init()
+    public void Init()
     {
         NothingActive = new NothingActive(this, interfaceStateMachine);
         CharacterPanelActive = new CharacterPanelActive(this, interfaceStateMachine);
@@ -68,6 +71,9 @@ public class InterfaceController : MonoBehaviour
         secondPlayerLayerLogic.Init(gMemebers[1]);
         thirdfPlayerLayerLogic.Init(gMemebers[2]);
         fourthPlayerLayerLogic.Init(gMemebers[3]);
+        
+        groupLayerLogic.Init();
+        charactersPlateLayerLogic.Init();
 
         Selector.Instance.Activate();
         InitializeInterface();
