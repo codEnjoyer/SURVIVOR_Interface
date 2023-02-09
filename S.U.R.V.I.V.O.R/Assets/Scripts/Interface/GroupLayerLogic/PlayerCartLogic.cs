@@ -53,10 +53,9 @@ public class PlayerCartLogic : MonoBehaviour
 
     public void Init(PlayerCartReDrawInfo cart)
     {
-        ReDraw(cart);
-        playerLayerLogic.Init(currentCharacter);
         nextCharacterButton.Init();
         previousCharacterButton.Init();
+        ReDraw(cart);
     }
 
     public void DoSomethingIfYouAreNotNeeded()

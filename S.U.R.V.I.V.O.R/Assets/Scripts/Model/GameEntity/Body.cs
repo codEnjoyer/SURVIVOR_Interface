@@ -55,7 +55,7 @@ namespace Model.GameEntity
             }
         }
 
-        public virtual void Healing(HealInfo heal)
+        public virtual void Heal(HealInfo heal)
         {
             throw new NotImplementedException();
         }
