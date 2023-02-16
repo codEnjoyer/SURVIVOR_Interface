@@ -6,7 +6,6 @@ namespace Model.Player.GroupMovement
     public class GroupsMovementController : MonoBehaviour
     {
         public Button GroupMoveButton;
-        public GroupMovementLogic ChosenGroup;
 
         public void Awake()
         {
@@ -15,7 +14,7 @@ namespace Model.Player.GroupMovement
 
         private void OnButtonClick()
         {
-            ChosenGroup.PreparingToMove();
+            Game.Instance.ChosenGroup.GetComponent<GroupMovementLogic>().PreparingToMove();
         }
     }
 }

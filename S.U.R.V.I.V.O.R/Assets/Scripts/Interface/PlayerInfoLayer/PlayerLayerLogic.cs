@@ -74,7 +74,7 @@ public class PlayerLayerLogic : MonoBehaviour
         }
 
         if(bodyIndicator != null)
-            bodyIndicator.Character = currentCharacter;
+            bodyIndicator.Character = CurrentCharacter;
         if (playerCharacteristicsPanel != null)
             playerCharacteristicsPanel.Player = CurrentCharacter;
         if (primaryGunSlot!=null)

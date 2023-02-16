@@ -57,7 +57,7 @@ namespace Model.GameEntity
             Hp -= damage.Damage;
         }
 
-        public virtual void Healing(HealInfo heal)
+        public virtual void Heal(HealInfo heal)
         {
             Hp += heal.Heal;
         }
@@ -65,7 +65,7 @@ namespace Model.GameEntity
         protected virtual void Awake()
         {
             Health = new Health(this);
-            hp = maxHp;
+            Hp = maxHp;
         }
 
         public virtual BodyPartSave CreateSave()

@@ -123,17 +123,16 @@ public class GroupLayerLogic : MonoBehaviour
             }
         }
     }
-    void Awake()
+
+    public void Init()
     {
         charactersList = Game.Instance.ChosenGroup.CurrentGroupMembers.ToList();
         Game.Instance.ChosenGroupChange += OnGroupChanged;
         leftCartReDrawInfo = new PlayerCartReDrawInfo(null, null, null);
         rightCartReDrawInfo = new PlayerCartReDrawInfo(null, null, null);
         ReCalculateCartsInfo();
-        
-        
         leftCart.Init(leftCartReDrawInfo);
-        rightCart.Init(rightCartReDrawInfo);///////////////
+        rightCart.Init(rightCartReDrawInfo);
     }
 
     private void ReCalculateCartsInfo()

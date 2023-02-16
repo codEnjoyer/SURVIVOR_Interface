@@ -30,15 +30,20 @@ public class BodyIndicator : MonoBehaviour
         }
     }
 
+    public void OnEnable()
+    {
+        Init();
+    }
+
     public void Init()
     {
         ChangeBodyPartParameters(head,GetColorByNumber(character.ManBody.Head.Hp/character.ManBody.Head.MaxHp),character.ManBody.Head.Hp);
-        ChangeBodyPartParameters(chest,GetColorByNumber(character.ManBody.Chest.Hp/character.ManBody.Chest.Hp),character.ManBody.Chest.Hp);
-        ChangeBodyPartParameters(stomach,GetColorByNumber(character.ManBody.Stomach.Hp/character.ManBody.Stomach.Hp),character.ManBody.Stomach.Hp);
-        ChangeBodyPartParameters(leftArm,GetColorByNumber(character.ManBody.LeftArm.Hp/character.ManBody.LeftArm.Hp),character.ManBody.LeftArm.Hp);
-        ChangeBodyPartParameters(rightArm,GetColorByNumber(character.ManBody.RightArm.Hp/character.ManBody.RightArm.Hp),character.ManBody.RightArm.Hp);
-        ChangeBodyPartParameters(leftLeg,GetColorByNumber(character.ManBody.LeftLeg.Hp/character.ManBody.LeftLeg.Hp),character.ManBody.LeftLeg.Hp);
-        ChangeBodyPartParameters(rightLeg,GetColorByNumber(character.ManBody.RightLeg.Hp/character.ManBody.RightLeg.Hp),character.ManBody.RightLeg.Hp);
+        ChangeBodyPartParameters(chest,GetColorByNumber(character.ManBody.Chest.Hp/character.ManBody.Chest.MaxHp),character.ManBody.Chest.Hp);
+        ChangeBodyPartParameters(stomach,GetColorByNumber(character.ManBody.Stomach.Hp/character.ManBody.Stomach.MaxHp),character.ManBody.Stomach.Hp);
+        ChangeBodyPartParameters(leftArm,GetColorByNumber(character.ManBody.LeftArm.Hp/character.ManBody.LeftArm.MaxHp),character.ManBody.LeftArm.Hp);
+        ChangeBodyPartParameters(rightArm,GetColorByNumber(character.ManBody.RightArm.Hp/character.ManBody.RightArm.MaxHp),character.ManBody.RightArm.Hp);
+        ChangeBodyPartParameters(leftLeg,GetColorByNumber(character.ManBody.LeftLeg.Hp/character.ManBody.LeftLeg.MaxHp),character.ManBody.LeftLeg.Hp);
+        ChangeBodyPartParameters(rightLeg,GetColorByNumber(character.ManBody.RightLeg.Hp/character.ManBody.RightLeg.MaxHp),character.ManBody.RightLeg.Hp);
     }
 
     private void ChangeBodyPartParameters(Image img, Color32 color, float numberOfHp)

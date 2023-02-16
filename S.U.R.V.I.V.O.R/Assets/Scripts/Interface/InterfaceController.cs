@@ -25,6 +25,9 @@ public class InterfaceController : MonoBehaviour
     [SerializeField] private PlayerLayerLogic thirdPlayerLayer;
     [SerializeField] private PlayerLayerLogic fourthPlayerLayer;
 
+    [SerializeField] private CharactersPlateLayerLogic charactersPlateLayerLogic;
+    private GroupLayerLogic groupLayerLogic => groupInfoLayer.GetComponent<GroupLayerLogic>();
+    
     public GameObject MainInfoPanelLayer => mainInfoPanelLayer;
     public GameObject GroupButtonsLayer => groupButtonsLayer;
     public GameObject GroupInfoLayer => groupInfoLayer;
@@ -43,7 +46,7 @@ public class InterfaceController : MonoBehaviour
         }
     }
 
-    private void Init()
+    public void Init()
     {
         NothingState = new NothingState(this, interfaceStateMachine);
         CharactersState = new CharactersState(this, interfaceStateMachine);
@@ -58,6 +61,9 @@ public class InterfaceController : MonoBehaviour
         secondPlayerLayer.Init(gMemebers[1]);
         thirdPlayerLayer.Init(gMemebers[2]);
         fourthPlayerLayer.Init(gMemebers[3]);
+       
+        groupLayerLogic.Init();
+        charactersPlateLayerLogic.Init();
 
         Selector.Instance.gameObject.SetActive(true);
         InitializeInterface();
