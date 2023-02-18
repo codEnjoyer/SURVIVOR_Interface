@@ -30,5 +30,7 @@ public class Fight : ScriptableObject
             GlobalMapController.Data.groupSaves.Remove(GlobalMapController.Data.groupSaves[chosenGroupIndex]);
         else
             GlobalMapController.Data.groupSaves[chosenGroupIndex].currentGroupMembers = characters.ToArray();
+        SceneTransition.LoadScene(SceneName.GlobalMapScene);
+        chosenGroupIndex = -1;
     }
 }

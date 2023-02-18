@@ -23,6 +23,6 @@ public class LoadSave : MonoBehaviour
             var save = SaveManager.ReadObject<GlobalMapData>(path);
             GlobalMapController.Data = save;
         }
-        SceneTransition.LoadScene(SceneName.MainScene);
+        SceneTransition.LoadScene(SceneName.GlobalMapScene);
     }
 }

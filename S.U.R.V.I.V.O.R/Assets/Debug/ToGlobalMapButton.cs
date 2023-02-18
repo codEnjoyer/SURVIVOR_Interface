@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
-public class ToMainScaneButton : MonoBehaviour
+public class ToGlobalMapButton : MonoBehaviour
 {
     private Button button;
 
@@ -17,6 +17,6 @@ public class ToMainScaneButton : MonoBehaviour
 
     private void OnClick()
     {
-        SceneManager.LoadScene((int) SceneName.MainScene);
+        SceneManager.LoadScene((int) SceneName.GlobalMapScene);
     }
 }
