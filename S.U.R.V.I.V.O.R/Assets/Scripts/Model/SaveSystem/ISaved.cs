@@ -2,7 +2,7 @@
 {
     public interface ISaved<T>
     {
-        public T CreateSave();
+        public T CreateData();
         public void Restore(T save);
     }
 }

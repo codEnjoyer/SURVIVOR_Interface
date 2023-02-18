@@ -18,12 +18,12 @@ public class LootAmountButtonLogic : MonoBehaviour
 
     private void OnButtonClick()
     {
-        if (Game.Instance.ChosenGroup.Location.Data.CheckFight())
+        if (GlobalMapController.Instance.ChosenGroup.Location.Data.CheckFight())
             return;
         interfaceController.SetGroupLayerActive();
         for (int i = 0; i < LootAmount; i++)
         {
-            foreach (var item in Game.Instance.ChosenGroup.Loot())
+            foreach (var item in GlobalMapController.Instance.ChosenGroup.Loot())
             {
                 if (item == null) continue;
                 inventoryController.SelectedInventoryGrid = LocationInventory.Instance.LocationInventoryGrid;
@@ -31,6 +31,6 @@ public class LootAmountButtonLogic : MonoBehaviour
             }
         }
 
-        Game.Instance.ChosenGroup.IsLootAllowedOnThisTurn = false;
+        GlobalMapController.Instance.ChosenGroup.IsLootAllowedOnThisTurn = false;
     }
 }

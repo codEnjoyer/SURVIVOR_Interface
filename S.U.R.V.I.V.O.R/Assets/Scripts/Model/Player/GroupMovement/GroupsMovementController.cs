@@ -14,7 +14,7 @@ namespace Model.Player.GroupMovement
 
         private void OnButtonClick()
         {
-            Game.Instance.ChosenGroup.GetComponent<GroupMovementLogic>().PreparingToMove();
+            GlobalMapController.Instance.ChosenGroup.GetComponent<GroupMovementLogic>().PreparingToMove();
         }
     }
 }

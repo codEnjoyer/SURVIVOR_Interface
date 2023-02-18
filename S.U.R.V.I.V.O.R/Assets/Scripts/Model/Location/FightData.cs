@@ -1,18 +1,23 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Model.Entities.Characters;
 using Model.GameEntity;
-using Model.Player;
-using UnityEngine;
 
 public class FightData
 {
-    public readonly IEnumerable<GameObject> enemies;
-    public readonly CharacterSave[] characterSaves;
+    public readonly IEnumerable<Entity> enemies;
+    public readonly IEnumerable<CharacterData> ally;
 
 
-    public FightData(IEnumerable<GameObject> enemies, CharacterSave[] characterSaves)
+    public FightData(IEnumerable<Entity> enemies, IEnumerable<Character> ally)
     {
         this.enemies = enemies;
-        this.characterSaves= characterSaves;
+        this.ally = ally.Select(x => x.CreateData());
+    }
+    
+    public FightData(IEnumerable<Entity> enemies, IEnumerable<CharacterData> ally)
+    {
+        this.enemies = enemies;
+        this.ally = ally;
     }
 }

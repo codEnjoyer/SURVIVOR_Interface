@@ -11,7 +11,7 @@ using UnityEngine.Serialization;
 
 namespace Model.GameEntity
 {
-    public class Body : MonoBehaviour, IAlive, ISaved<BodySave>
+    public class Body : MonoBehaviour, IAlive, ISaved<BodyData>
     {
         public Health Health { get; private set; }
 
@@ -78,27 +78,27 @@ namespace Model.GameEntity
                 throw new Exception();
         }
 
-        public virtual BodySave CreateSave()
+        public virtual BodyData CreateData()
         {
-            return new BodySave()
+            return new BodyData()
             {
                 healthProperties = Health.HealthProperties.ToArray(),
-                bodyPartSaves = bodyParts.Select(x => x.CreateSave()).ToArray()
+                bodyPartSaves = bodyParts.Select(x => x.CreateData()).ToArray()
             };
         }
 
-        public virtual void Restore(BodySave save)
+        public virtual void Restore(BodyData data)
         {
-            Health = new Health(this, save.healthProperties);
+            Health = new Health(this, data.healthProperties);
             for (int i = 0; i < bodyParts.Count; i++)
-                bodyParts[i].Restore(save.bodyPartSaves[i]);
+                bodyParts[i].Restore(data.bodyPartSaves[i]);
         }
     }
 
     [DataContract]
-    public class BodySave
+    public class BodyData
     {
         [DataMember] public IHealthProperty[] healthProperties;
-        [DataMember] public BodyPartSave[] bodyPartSaves;
+        [DataMember] public BodyPartData[] bodyPartSaves;
     }
 }

@@ -8,8 +8,7 @@ namespace Interface.Menu.Main
 {
     public class ToFightSceneButton: MonoBehaviour
     {
-        [SerializeField] private List<Entity> enemies;
-        [SerializeField] private List<Character> ally;
+        [SerializeField] private Fight fight;
 
         private void Awake()
         {
@@ -18,9 +17,7 @@ namespace Interface.Menu.Main
 
         private void OnClick()
         {
-            //var data = new FightData(enemies, ally);
-            //FightSceneLoader.SendDataToLoader(data);
-            //FightSceneLoader.Load(SceneName.FightScene);
+            fight.Initialization();
         }
     }
 }

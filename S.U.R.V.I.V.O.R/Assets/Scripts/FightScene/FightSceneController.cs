@@ -5,15 +5,14 @@ using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using System;
 using System.Linq;
-using Model.Entities.Characters;
-using Model.GameEntity;
-using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
 //using UnityEditor.SceneTemplate;
 
 public class FightSceneController : MonoBehaviour
 {
     public static FightSceneController Instance { get; private set; }
+    public static FightData CurrentData {get; set;}
+    
     public List<GameObject> Characters = new List<GameObject>();
     public GameObject CharacterObj;
 
@@ -25,7 +24,8 @@ public class FightSceneController : MonoBehaviour
     [SerializeField] private GameObject graph;
     [SerializeField] private EventSystem eventSystem;
     [SerializeField] private List<GameObject> spawnPointsObjects;
-   
+    [SerializeField] private GameObject characterPrefab;
+    [SerializeField] private GameObject ratPrefab;
     public static Queue<GameObject> CharactersQueue {get; private set;}
     private GameObject currentCharacterNodeObj;
     private List<Vector3> allySpawnPoints;
@@ -142,28 +142,29 @@ public class FightSceneController : MonoBehaviour
 
     private void CreateCharactersList()
     {
-        var data = FightSceneLoader.CurrentData;
         Debug.Log(allySpawnPoints.Count);
         Debug.Log(enemySpawnPoints.Count);
-        foreach (var save in data.characterSaves)
+        foreach (var characterSave in CurrentData.ally)
         {
-            var obj = Instantiate(Resources.Load<GameObject>(save.resourcesPath),
-                new Vector3(0,0,0), Quaternion.identity);
+            var obj = Instantiate(characterPrefab, new Vector3(0,0,0), Quaternion.identity);
             var objHeight = obj.GetComponent<MeshRenderer>().bounds.size.y;
             obj.transform.position = allySpawnPoints[allySpawnPoints.Count - 1] + new Vector3(0, objHeight / 2, 0);
             allySpawnPoints.RemoveAt(allySpawnPoints.Count - 1);
-            obj.GetComponent<Character>().Restore(save);
-            obj.AddComponent<FightCharacter>().ApplyProperties(obj.GetComponent<Character>(), CharacterType.Ally);
+            // TODO временно исправление
+            obj.AddComponent<FightCharacter>().ApplyProperties(characterSave.Prefab, CharacterType.Ally);
+            obj.GetComponent<Renderer>().material.color = Color.green;
             Characters.Add(obj);
         }
 
-        foreach (var entityPrefab in data.enemies)
+        foreach (var entity in CurrentData.enemies)
         {
-            var obj = Instantiate(entityPrefab, new Vector3(0,0,0), Quaternion.identity);
+            var entityObj = Instantiate(entity, new Vector3(0,0,0), Quaternion.identity);
+            var obj = entityObj.gameObject;
             var objHeight = obj.GetComponent<MeshRenderer>().bounds.size.y;
             obj.transform.position = enemySpawnPoints[enemySpawnPoints.Count - 1] + new Vector3(0, objHeight / 2, 0);
             enemySpawnPoints.RemoveAt(enemySpawnPoints.Count - 1);
-            obj.AddComponent<FightCharacter>().ApplyProperties(obj.GetComponent<Entity>(), CharacterType.Enemy);
+            obj.AddComponent<FightCharacter>().ApplyProperties(entityObj, CharacterType.Enemy);
+            obj.GetComponent<Renderer>().material.color = Color.red;
             Characters.Add(obj);
         }
 
@@ -213,7 +214,7 @@ public class FightSceneController : MonoBehaviour
         AI.CurrentCharacterObj = CharacterObj;
 
         Sign.transform.position = new Vector3(CharacterObj.transform.position.x,
-            CharacterObj.transform.position.y + 1.3f, CharacterObj.transform.position.z);
+            Sign.transform.position.y, CharacterObj.transform.position.z);
         Sign.transform.parent = CharacterObj.transform;
 
         StateController.MakeAvailablePhases();
