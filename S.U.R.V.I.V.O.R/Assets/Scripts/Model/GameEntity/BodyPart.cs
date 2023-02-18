@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Model.GameEntity
 {
-    public class BodyPart : MonoBehaviour, IAlive, ISaved<BodyPartSave>
+    public class BodyPart : MonoBehaviour, IAlive, ISaved<BodyPartData>
     {
         public Health Health { get; private set; }
         [SerializeField][Min(1)] private float maxHp = 100;
@@ -68,9 +68,9 @@ namespace Model.GameEntity
             Hp = maxHp;
         }
 
-        public virtual BodyPartSave CreateSave()
+        public virtual BodyPartData CreateData()
         {
-            return new BodyPartSave()
+            return new BodyPartData()
             {
                 healthProperties = Health.HealthProperties.ToArray(),
                 maxHp = MaxHp,
@@ -79,17 +79,17 @@ namespace Model.GameEntity
             };
         }
 
-        public virtual void Restore(BodyPartSave save)
+        public virtual void Restore(BodyPartData data)
         {
-            Health = new Health(this, save.healthProperties);
-            MaxHp = save.maxHp;
-            Hp = save.hp;
-            Size = save.size;
+            Health = new Health(this, data.healthProperties);
+            MaxHp = data.maxHp;
+            Hp = data.hp;
+            Size = data.size;
         }
     }
 
     [DataContract]
-    public class BodyPartSave
+    public class BodyPartData
     {
         [DataMember] public IHealthProperty[] healthProperties;
         [DataMember] public float maxHp;

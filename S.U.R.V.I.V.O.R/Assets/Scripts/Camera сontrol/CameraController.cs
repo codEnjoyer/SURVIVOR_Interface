@@ -78,7 +78,7 @@ public class CameraController : MonoBehaviour
         cameraTransform = objCamera.transform;
         mapPointMax = map.GetComponent<Collider>().bounds.max;
         mapPointMin = map.GetComponent<Collider>().bounds.min;
-        transform.position = destinationPoint = Game.Instance.Groups.First().transform.position;
+        transform.position = destinationPoint = GlobalMapController.Instance.Groups.First().transform.position;
     }
 
     private void OnEnable()

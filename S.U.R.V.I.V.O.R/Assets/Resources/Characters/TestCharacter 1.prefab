@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cf3cba3fb2cba044bb96dd83060422cf, type: 2}
+  - {fileID: 2100000, guid: 1083f872bd56c5844b47c1e40a426d01, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -135,8 +135,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26b3563c1d3241e4a43a8598b7d73eae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <ResourcesPath>k__BackingField: 
-  <Path>k__BackingField: 
+  <ResourcesPath>k__BackingField: Characters/TestCharacter 1
+  <Path>k__BackingField: Assets/Resources/Characters/TestCharacter 1.prefab
 --- !u!1001 &6237810390486011769
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -300,21 +300,25 @@ PrefabInstance:
       propertyPath: <ResourcesPath>k__BackingField
       value: Characters/Body/ManBodyParts/Head
       objectReference: {fileID: 0}
+    - target: {fileID: 6648536932981516764, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
+      propertyPath: maxHp
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 6766305387854739330, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
       propertyPath: <Path>k__BackingField
-      value: Assets/Resources/Characters/MenBody/ManBodyParts/Leg.prefab
+      value: Assets/Resources/Characters/ManBody/ManBodyParts/Leg.prefab
       objectReference: {fileID: 0}
     - target: {fileID: 6766305387854739330, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
       propertyPath: <ResourcesPath>k__BackingField
-      value: Characters/MenBody/ManBodyParts/Leg
+      value: Characters/ManBody/ManBodyParts/Leg
       objectReference: {fileID: 0}
     - target: {fileID: 9012836241494726444, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
       propertyPath: <Path>k__BackingField
-      value: Assets/Resources/Characters/MenBody/ManBodyParts/Leg.prefab
+      value: Assets/Resources/Characters/ManBody/ManBodyParts/Leg.prefab
       objectReference: {fileID: 0}
     - target: {fileID: 9012836241494726444, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
       propertyPath: <ResourcesPath>k__BackingField
-      value: Characters/MenBody/ManBodyParts/Leg
+      value: Characters/ManBody/ManBodyParts/Leg
       objectReference: {fileID: 0}
     - target: {fileID: 9142305833660315183, guid: a55e403c1bc41784a93b9c841180adf8, type: 3}
       propertyPath: m_Name

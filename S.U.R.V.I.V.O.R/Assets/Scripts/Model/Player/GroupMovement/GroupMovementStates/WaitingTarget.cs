@@ -14,6 +14,14 @@ namespace Model.Player.GroupMovement.GroupMovementStates
                 stateMachine.ChangeState(gml.Sleeping);
             else
                 gml.DrawPath();
+            
+            if (Input.GetMouseButtonDown(0) &&
+                Physics.Raycast(
+                    Camera.main.ScreenPointToRay(Input.mousePosition),
+                    out var hitInfo, 200f))
+            {
+                stateMachine.ChangeState(gml.Walking);
+            }
         }
     }
 }

@@ -6,30 +6,31 @@ using Model;
 using Model.Items;
 using Model.SaveSystem;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class TestSave : MonoBehaviour
 {
-    public Game game;
+    [FormerlySerializedAs("globalMapGame")] [FormerlySerializedAs("game")] [FormerlySerializedAs("globalMap")] public GlobalMapController globalMapController;
     public BaseItem item;
 
     public void SaveGame()
     {
         var path = Application.persistentDataPath + "/test.xml";
-        var save = game.CreateSave();
+        var save = globalMapController.CreateData();
         SaveManager.WriteObject(path, save);
         Debug.Log("Save");
     }
 
     public void LoadGame()
     {
-        Game.Instance.Clear();
+        GlobalMapController.Instance.Clear();
         StartCoroutine(RestoreGameCoroutine());
     }
 
     public void SaveItem()
     {
         var path = Application.persistentDataPath + "/itemSave.xml";
-        var save = item.CreateSave();
+        var save = item.CreateData();
         SaveManager.WriteObject(path, save);
     }
     
@@ -37,8 +38,8 @@ public class TestSave : MonoBehaviour
     {
         yield return null;
         var path = Application.persistentDataPath + "/test.xml";
-        var save = SaveManager.ReadObject<GameSave>(path);
-        Game.Instance.Restore(save);
+        var save = SaveManager.ReadObject<GlobalMapData>(path);
+        GlobalMapController.Instance.Restore(save);
         Debug.Log("Load");
     }
 }

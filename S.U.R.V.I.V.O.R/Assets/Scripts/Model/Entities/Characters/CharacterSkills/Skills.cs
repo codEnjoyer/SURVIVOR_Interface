@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Model.Entities.Characters.CharacterSkills
 {
-    public class Skills : ISaved<SkillsSave>
+    public class Skills : ISaved<SkillsData>
     {
         public Strength Strength { get; private set; }
 
@@ -14,24 +14,24 @@ namespace Model.Entities.Characters.CharacterSkills
         }
         
 
-        public SkillsSave CreateSave()
+        public SkillsData CreateData()
         {
-            return new SkillsSave()
+            return new SkillsData()
             {
-                strength = Strength.CreateSave()
+                strength = Strength.CreateData()
             };
         }
 
-        public void Restore(SkillsSave save)
+        public void Restore(SkillsData data)
         {
-            Strength.Restore(save.strength);
+            Strength.Restore(data.strength);
         }
     }
 
 
     [DataContract]
-    public class SkillsSave
+    public class SkillsData
     {
-        [DataMember] public SkillSave strength;
+        [DataMember] public SkillData strength;
     }
 }

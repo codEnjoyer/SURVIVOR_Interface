@@ -23,8 +23,8 @@ public class LocationInfoPanel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Game.Instance.ChosenGroupChange += OnChosenGroupChange;
-        Game.Instance.ChosenGroup.GroupMovementLogic.LocationChange += OnLocationChange;
+        GlobalMapController.Instance.ChosenGroupChange += OnChosenGroupChange;
+        GlobalMapController.Instance.ChosenGroup.GroupMovementLogic.LocationChange += OnLocationChange;
         colors = new List<Color>()
         {
             new (201, 91, 65),
@@ -33,7 +33,7 @@ public class LocationInfoPanel : MonoBehaviour
             new (161, 188, 55),
             new (108, 183, 56),
         };
-        OnLocationChange(Game.Instance.ChosenGroup.Location);
+        OnLocationChange(GlobalMapController.Instance.ChosenGroup.Location);
     }
 
     private void OnChosenGroupChange(Group oldGroup, Group newGroup)

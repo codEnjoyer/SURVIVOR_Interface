@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Model.Entities.Characters.CharacterSkills
 {
-    public abstract class Skill : IDeveloping, ISaved<SkillSave>
+    public abstract class Skill : IDeveloping, ISaved<SkillData>
     {
         private int maxLevel;
         private int currentLevel = 0;
@@ -47,24 +47,24 @@ namespace Model.Entities.Characters.CharacterSkills
 
 
         public abstract void Development();
-        public virtual SkillSave CreateSave()
+        public virtual SkillData CreateData()
         {
-            return new SkillSave()
+            return new SkillData()
             {
                 currentLevel = CurrentLevel,
                 levelProgress = LevelProgress
             };
         }
 
-        public virtual void Restore(SkillSave save)
+        public virtual void Restore(SkillData data)
         {
-            CurrentLevel = save.currentLevel;
-            LevelProgress = save.levelProgress;
+            CurrentLevel = data.currentLevel;
+            LevelProgress = data.levelProgress;
         }
     }
 
     [DataContract]
-    public class SkillSave
+    public class SkillData
     {
         [DataMember] public int currentLevel;
         [DataMember] public float levelProgress;

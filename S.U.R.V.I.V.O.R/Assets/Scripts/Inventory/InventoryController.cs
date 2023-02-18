@@ -1,3 +1,4 @@
+using System;
 using Model.Items;
 using UnityEngine;
 using UnityEngine.UI;
@@ -240,5 +241,16 @@ public class InventoryController : MonoBehaviour
         var inventoryItem = Instantiate(item);
         SelectedItem = inventoryItem;
         rectTransform = inventoryItem.GetComponent<RectTransform>();
+    }
+
+
+    private void OnDisable()
+    {
+        if (SelectedItem != null)
+        {
+            LocationInventory.Instance.LocationInventoryGrid.InsertItem(SelectedItem);
+            SelectedItem = null;
+            IsPointerUnderInventory = false;
+        }
     }
 }

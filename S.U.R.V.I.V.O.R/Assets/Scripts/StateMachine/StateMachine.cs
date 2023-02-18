@@ -1,8 +1,8 @@
-﻿
-
-public class StateMachine
+﻿public class StateMachine
 {
     public State CurrentState { get; private set; }
+    public State PreviousState { get; private set; }
+    public State DefaultState { get; set; }
 
     public void Initialize(State startingState)
     {
@@ -12,9 +12,17 @@ public class StateMachine
 
     public void ChangeState(State newState)
     {
-        CurrentState.Exit();
+        PreviousState = CurrentState;
+        PreviousState.Exit();
+        if (DefaultState != null && CurrentState == newState)
+        {
+            CurrentState = DefaultState;
+        }
+        else
+        {
+            CurrentState = newState;
+        }
 
-        CurrentState = newState;
-        newState.Enter();
+        CurrentState.Enter();
     }
 }

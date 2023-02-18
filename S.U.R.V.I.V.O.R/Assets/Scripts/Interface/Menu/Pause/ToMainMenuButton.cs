@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Model;
+using Scenes;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -13,7 +15,8 @@ namespace Interface.Menu.Pause
 
         private void OnClick()
         {
-            SceneManager.LoadScene((int)SceneName.MainMenu);
+            GlobalMapController.Data = GlobalMapController.Instance.CreateData();
+            SceneTransition.LoadScene(SceneName.MainMenu);
         }
     }
 }

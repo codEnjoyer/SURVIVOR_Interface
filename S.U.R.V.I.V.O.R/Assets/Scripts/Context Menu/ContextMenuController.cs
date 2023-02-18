@@ -34,7 +34,7 @@ public class ContextMenuController : MonoBehaviour
 
     private void Init()
     {
-        scaleFactor = Game.Instance.MainCanvas.scaleFactor;
+        scaleFactor = GlobalMapController.Instance.MainCanvas.scaleFactor;
     }
 
     private void Update()

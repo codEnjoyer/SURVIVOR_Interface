@@ -13,7 +13,7 @@ public class CharactersPlateLayerLogic : MonoBehaviour
     // Start is called before the first frame update
     public void Init()
     {
-        var playersArray = Game.Instance.ChosenGroup.CurrentGroupMembers.ToArray();
+        var playersArray = GlobalMapController.Instance.ChosenGroup.CurrentGroupMembers.ToArray();
         FirstPlayerPanel.Player = playersArray[0];
         SecondPlayerPanel.Player = playersArray[1];
         ThirdPlayerPanel.Player = playersArray[2];

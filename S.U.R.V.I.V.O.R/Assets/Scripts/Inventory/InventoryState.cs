@@ -88,7 +88,7 @@ public class InventoryState
         item.OnGridPositionX = posX;
         item.OnGridPositionY = posY;
         PlaceItemEvent?.Invoke(item);
-        item.Destroy.AddListener(() =>
+        item.destroyEvent.AddListener(() =>
         {
             RemoveGridReference(item);
             inventoryItemSlot[item.OnGridPositionX, item.OnGridPositionY] = null;
