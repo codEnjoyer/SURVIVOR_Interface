@@ -126,8 +126,8 @@ public class GroupLayerLogic : MonoBehaviour
 
     public void Init()
     {
-        charactersList = Game.Instance.ChosenGroup.CurrentGroupMembers.ToList();
-        Game.Instance.ChosenGroupChange += OnGroupChanged;
+        charactersList = GlobalMapController.Instance.ChosenGroup.CurrentGroupMembers.ToList();
+        GlobalMapController.Instance.ChosenGroupChange += OnGroupChanged;
         leftCartReDrawInfo = new PlayerCartReDrawInfo(null, null, null);
         rightCartReDrawInfo = new PlayerCartReDrawInfo(null, null, null);
         ReCalculateCartsInfo();

@@ -56,7 +56,7 @@ public class InterfaceController : MonoBehaviour
         ThirdCharacterState = new CharacterState(this, interfaceStateMachine, thirdPlayerLayer);
         FourthCharacterState = new CharacterState(this, interfaceStateMachine, fourthPlayerLayer);
 
-        var gMemebers = Game.Instance.ChosenGroup.CurrentGroupMembers.ToArray();
+        var gMemebers = GlobalMapController.Instance.ChosenGroup.CurrentGroupMembers.ToArray();
         firstPlayerLayer.Init(gMemebers[0]);
         secondPlayerLayer.Init(gMemebers[1]);
         thirdPlayerLayer.Init(gMemebers[2]);

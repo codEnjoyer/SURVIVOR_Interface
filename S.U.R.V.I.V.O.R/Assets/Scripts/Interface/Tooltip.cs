@@ -48,7 +48,7 @@ namespace Interface
             tooltipText = transform.Find("Text").GetComponent<Text>();
             backgroundRectTransform = transform.Find("Background").GetComponent<RectTransform>();
             backgroundImage = backgroundRectTransform.GetComponent<Image>();
-            canvasRectTransform = Game.Instance.MainCanvas.GetComponent<RectTransform>();
+            canvasRectTransform = GlobalMapController.Instance.MainCanvas.GetComponent<RectTransform>();
             HideTooltip();
         }
 

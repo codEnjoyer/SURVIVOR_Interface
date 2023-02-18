@@ -18,7 +18,7 @@ public interface IContextMenuAction
     public virtual IEnumerable GetValues()
     {
         var result = new List<Tuple<Character, string>>();
-        foreach (var character in Game.Instance.ChosenGroup.CurrentGroupMembers)
+        foreach (var character in GlobalMapController.Instance.ChosenGroup.CurrentGroupMembers)
         {
             result.Add(new Tuple<Character, string>(character, $"{character.FirstName} {character.Surname}"));
         }

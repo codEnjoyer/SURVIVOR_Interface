@@ -17,7 +17,7 @@ namespace Model.Items
 {
     [RequireComponent(typeof(Saved))]
     public class BaseItem : MonoBehaviour, IPointerEnterHandler,
-        IPointerExitHandler, IPointerClickHandler, ISaved<ItemSave>
+        IPointerExitHandler, IPointerClickHandler, ISaved<ItemData>
     {
         [FormerlySerializedAs("itemData")] [SerializeField]
         private BaseItemData data;
@@ -49,7 +49,7 @@ namespace Model.Items
             gameObject.GetComponent<Image>().raycastTarget = false;
 
             var rt = gameObject.GetComponent<RectTransform>();
-            var scaleFactor = Game.Instance.MainCanvas.scaleFactor;
+            var scaleFactor = GlobalMapController.Instance.MainCanvas.scaleFactor;
             var size = new Vector2(((data.Size.Width * InventoryGrid.TileSize) - data.Size.Width - 1) * scaleFactor,
                 ((data.Size.Height * InventoryGrid.TileSize) - data.Size.Height - 1) * scaleFactor);
             rt.sizeDelta = size;
@@ -72,7 +72,7 @@ namespace Model.Items
         #region TooltipRegion
 
         private bool mouseEnter;
-        private ISaved<ItemSave> savedImplementation;
+        private ISaved<ItemData> savedImplementation;
         const float Seconds = 0.5f;
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -103,9 +103,9 @@ namespace Model.Items
 
         #endregion
 
-        public ItemSave CreateSave()
+        public ItemData CreateData()
         {
-            var itemSave = new ItemSave()
+            var itemSave = new ItemData()
             {
                 resourcesPath = GetComponent<Saved>().ResourcesPath,
                 positionInInventory = new Vector2Int(OnGridPositionX, OnGridPositionY),
@@ -125,17 +125,17 @@ namespace Model.Items
                 if (componentSave == null) continue;
 
                 componentSaves.Add(componentSave);
-                componentSave.itemSave = itemSave;
+                componentSave.itemData = itemSave;
             }
 
             itemSave.componentSaves = componentSaves.ToArray();
             return itemSave;
         }
 
-        public void Restore(ItemSave save)
+        public void Restore(ItemData data)
         {
-            OnGridPositionX = save.positionInInventory.x;
-            OnGridPositionY = save.positionInInventory.y;
+            OnGridPositionX = data.positionInInventory.x;
+            OnGridPositionY = data.positionInInventory.y;
 
             IsRotated = IsRotated;
 
@@ -148,13 +148,13 @@ namespace Model.Items
                 var method = type.GetMethod("HiddenRestore",
                     BindingFlags.NonPublic | BindingFlags.Instance);
                 if (method == null) continue;
-                method.Invoke(component, new object[] {save});
+                method.Invoke(component, new object[] {data});
             }
         }
     }
 
     [DataContract]
-    public class ItemSave
+    public class ItemData
     {
         [DataMember] public string resourcesPath;
         [DataMember] public Vector2Int positionInInventory;
@@ -165,6 +165,6 @@ namespace Model.Items
     [DataContract]
     public abstract class ComponentSave
     {
-        [DataMember] public ItemSave itemSave;
+        [DataMember] public ItemData itemData;
     }
 }

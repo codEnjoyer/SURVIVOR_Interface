@@ -9,11 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4795528193682294464}
+  - component: {fileID: 739726032757525600}
   - component: {fileID: 3763918663941373874}
   - component: {fileID: -385978895092590874}
-  - component: {fileID: 739726032757525600}
   - component: {fileID: -7795467414297214544}
   - component: {fileID: 3287170049909988012}
+  - component: {fileID: 5999655207994813688}
   m_Layer: 0
   m_Name: Ak-74
   m_TagString: Untagged
@@ -41,6 +42,14 @@ RectTransform:
   m_AnchoredPosition: {x: 942.5058, y: 535.7769}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &739726032757525600
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3994759378867550104}
+  m_CullTransparentMesh: 1
 --- !u!114 &3763918663941373874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54,6 +63,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: f7b449fabf9aae74386858fd735eb529, type: 2}
+  destroyEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &-385978895092590874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,14 +79,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 1c8cfdab325ea3b4798c8764da0c8614, type: 2}
---- !u!222 &739726032757525600
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3994759378867550104}
-  m_CullTransparentMesh: 1
 --- !u!114 &-7795467414297214544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,3 +103,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7661a9c963b5b1944a31d2d25e5e4379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5999655207994813688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3994759378867550104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26b3563c1d3241e4a43a8598b7d73eae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ResourcesPath>k__BackingField: Items/Guns/Ak-74/Ak-74
+  <Path>k__BackingField: Assets/Resources/Items/Guns/Ak-74/Ak-74.prefab

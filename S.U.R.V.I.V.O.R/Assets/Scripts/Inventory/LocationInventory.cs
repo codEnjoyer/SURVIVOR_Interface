@@ -25,9 +25,9 @@ public class LocationInventory : MonoBehaviour
 
     public void Start()
     {
-        OnLocationChanged(Game.Instance.ChosenGroup.Location);
-        Game.Instance.ChosenGroup.GroupMovementLogic.LocationChange += OnLocationChanged;
-        Game.Instance.ChosenGroupChange += OnChosenGroupChange;
+        OnLocationChanged(GlobalMapController.Instance.ChosenGroup.Location);
+        GlobalMapController.Instance.ChosenGroup.GroupMovementLogic.LocationChange += OnLocationChanged;
+        GlobalMapController.Instance.ChosenGroupChange += OnChosenGroupChange;
     }
 
     private void OnLocationChanged(Location loc)

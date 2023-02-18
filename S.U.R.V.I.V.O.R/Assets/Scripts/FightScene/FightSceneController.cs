@@ -11,6 +11,8 @@ using UnityEngine.SceneManagement;
 public class FightSceneController : MonoBehaviour
 {
     public static FightSceneController Instance { get; private set; }
+    public static FightData CurrentData {get; set;}
+    
     public List<GameObject> Characters = new List<GameObject>();
     public GameObject CharacterObj;
 
@@ -140,21 +142,21 @@ public class FightSceneController : MonoBehaviour
 
     private void CreateCharactersList()
     {
-        var data = FightSceneLoader.CurrentData;
         Debug.Log(allySpawnPoints.Count);
         Debug.Log(enemySpawnPoints.Count);
-        foreach (var entity in data.ally)
+        foreach (var characterSave in CurrentData.ally)
         {
             var obj = Instantiate(characterPrefab, new Vector3(0,0,0), Quaternion.identity);
             var objHeight = obj.GetComponent<MeshRenderer>().bounds.size.y;
             obj.transform.position = allySpawnPoints[allySpawnPoints.Count - 1] + new Vector3(0, objHeight / 2, 0);
             allySpawnPoints.RemoveAt(allySpawnPoints.Count - 1);
-            obj.AddComponent<FightCharacter>().ApplyProperties(entity, CharacterType.Ally);
+            // TODO временно исправление
+            obj.AddComponent<FightCharacter>().ApplyProperties(characterSave.Prefab, CharacterType.Ally);
             obj.GetComponent<Renderer>().material.color = Color.green;
             Characters.Add(obj);
         }
 
-        foreach (var entity in data.enemies)
+        foreach (var entity in CurrentData.enemies)
         {
             var entityObj = Instantiate(entity, new Vector3(0,0,0), Quaternion.identity);
             var obj = entityObj.gameObject;
