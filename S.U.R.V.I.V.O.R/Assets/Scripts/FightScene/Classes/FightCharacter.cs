@@ -62,7 +62,7 @@ public class FightCharacter : MonoBehaviour
             TargetToHit.transform.position.z);
         transform.LookAt(lookPoint);
         var bodyParts = TargetToHit.GetComponent<FightCharacter>().Entity.Body.BodyParts;
-        Debug.Log($"BodyParts Count{bodyParts.Count}");
+        Debug.Log($"BodyParts Count {bodyParts.Count}");
         var dist = Vector3.Distance(gameObject.transform.position, TargetToHit.transform.position);
         // Временный фикс
         Entity.Attack(bodyParts.Select(x => new AttackTarget(x, dist)),

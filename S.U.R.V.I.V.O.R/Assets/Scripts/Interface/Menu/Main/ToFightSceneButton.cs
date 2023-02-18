@@ -18,9 +18,9 @@ namespace Interface.Menu.Main
 
         private void OnClick()
         {
-            var data = new FightData(enemies, ally);
-            FightSceneLoader.SendDataToLoader(data);
-            FightSceneLoader.Load(SceneName.FightScene);
+            //var data = new FightData(enemies, ally);
+            //FightSceneLoader.SendDataToLoader(data);
+            //FightSceneLoader.Load(SceneName.FightScene);
         }
     }
 }

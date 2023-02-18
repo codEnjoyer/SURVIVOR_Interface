@@ -2,19 +2,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 
 public static class AI 
 {
     public static GameObject CurrentCharacterObj;
     private static List<GameObject> opponents = new List<GameObject>();
+    private static Dictionary<GameObject, List<GameObject>> pathsToOpponents;
 
     public static List<GameObject> GetOpponents(IEnumerable<GameObject> characters)
     {
         var opponentsObj = new List<GameObject>();
-        foreach(var character in characters.Where(opp => opp.GetComponent<FightCharacter>().Type == CharacterType.Ally))
+        foreach(var character in characters
+                    .Where(opp => opp.GetComponent<FightCharacter>().Type == CharacterType.Ally))
             opponentsObj.Add(character);
         
         return opponentsObj;
+    }
+
+    private static void FindPathsForAllOpponents()
+    {
+        pathsToOpponents = new Dictionary<GameObject, List<GameObject>>();
+        var currentNode = NodesNav.GetNearestNode(CurrentCharacterObj.transform.position);
+        foreach (var opponent in opponents)
+        {
+            var path = new List<GameObject>();
+            var offset = Vector3.ClampMagnitude(CurrentCharacterObj.transform.position - opponent.transform.position,
+                0.2f);
+            var endNode = NodesNav.GetNearestNodeNearEnemy(opponent, opponent.transform.position + offset);
+            endNode.transform.position += new Vector3(0f, 1f, 0f);
+            endNode.GetComponent<MeshRenderer>().enabled = true;
+
+            while (false)
+            {
+                if (currentNode is null)
+                    break;
+                if (currentNode == endNode)
+                {
+                    pathsToOpponents[opponent] = path;
+                    break;
+                }
+
+                path.Add(currentNode);
+                currentNode = NodesNav.AllFightNodesTracking[currentNode.GetComponent<FightNode>()].gameObject;
+            }
+        }
     }
 
     private static void SortOpponentsListByDistance()
@@ -29,6 +62,10 @@ public static class AI
         if (!StateController.CanChangePhase())
             return new Decision(FightSceneController.State, null);
         opponents = GetOpponents(opponentsObj);
+        NodesNav.FindTrackingForAllNodes(NodesNav.GetNearestNode(CurrentCharacterObj.transform.position)
+            .GetComponent<FightNode>());
+        FindPathsForAllOpponents();
+        //Debug.Log($"PathsCount: {pathsToOpponents.Count}");
         SortOpponentsListByDistance();
         var character = CurrentCharacterObj.GetComponent<FightCharacter>();
 

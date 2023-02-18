@@ -44,7 +44,7 @@ namespace Model.GameEntity
             out IEnumerable<IAlive> attackedTargets)
         {
             var target = potentialTargets.First();
-            target.Target.TakeDamage(meleeAttack.DamageInfo);
+            target.Target.TakeDamage(new DamageInfo(40f));
             attackedTargets = new[] {target.Target};
         }
     }
