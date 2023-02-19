@@ -10,6 +10,8 @@ namespace Model.GameEntity
     {
         [SerializeField] private List<ClothType> possibleClothTypes;
         protected Dictionary<ClothType, Clothes> clothesDict;
+
+        public float currentArmor => clothesDict.Values.Sum(x => x.CurrentArmor);
         
         public bool Wear(Clothes clothesToWear)
         {
@@ -37,6 +39,8 @@ namespace Model.GameEntity
 
         public IEnumerable<Clothes> GetClothes() => clothesDict.Values;
 
+        public void GetDamageToArmor(float damage){}//TODO нанести урон броне
+        
         protected override void Awake()
         {
             base.Awake();

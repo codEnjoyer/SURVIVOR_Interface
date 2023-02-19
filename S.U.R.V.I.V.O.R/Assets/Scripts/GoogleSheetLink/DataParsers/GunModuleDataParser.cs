@@ -16,11 +16,12 @@ namespace GoogleSheetLink.DataParsers
             var moduleType = Enum.Parse<GunModuleType>(param[6]);
 
             // ReSharper disable once Unity.IncorrectScriptableObjectInstantiation
-            return new GunModuleData(deltaRecoil, deltaAccuracy, deltaNoise, deltaAverageDistance, deltaDamage,
-                deltaErgonomics, moduleType)
-            {
-                name = "GunModuleData"
-            };
+            // return new GunModuleData(deltaRecoil, deltaAccuracy, deltaNoise, deltaAverageDistance, deltaDamage,
+            //     deltaErgonomics, moduleType)
+            // {
+            //     name = "GunModuleData"
+            // };
+            throw new NotImplementedException();
         }
     }
 }

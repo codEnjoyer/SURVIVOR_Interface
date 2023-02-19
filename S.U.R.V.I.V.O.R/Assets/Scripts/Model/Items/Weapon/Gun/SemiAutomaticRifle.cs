@@ -31,11 +31,11 @@ public class SemiAutomaticRifle : Gun
             var newK = (targetPoint - transform.position).normalized;
             var newI = new Vector3(0, -newK.z, newK.y).normalized;
             var newJ = Vector3.Cross(newI,newK).normalized;
-
-            var oldBasisPoint = newI * x + newJ * y;
-
+            
+            var mainBasisPoint = newI * x + newJ * y;
             var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            sphere.transform.position = oldBasisPoint;
+            sphere.transform.position = mainBasisPoint;
+        
         //
         
         (float x, float y) PolarToCartesian(float ro, float fi)

@@ -12,7 +12,7 @@ using Random = System.Random;
 public abstract class Gun : MonoBehaviour, IWeapon
 {
     public Magazine CurrentMagazine { get; protected set; }
-    
+
     protected readonly List<GunModule> gunModules = new();
     public event Action OnModulesChanged;
     public abstract GunData Data { get; }
@@ -21,9 +21,17 @@ public abstract class Gun : MonoBehaviour, IWeapon
 
     protected Random rnd;
 
+    protected float OptimalFireDistanceBegin =>
+        Data.OptimalFireDistanceBegin + gunModules.Sum(x => x.Data.DeltaAverageDistanceBegin);
+    protected float OptimalFireDistanceEnd =>
+        Data.OptimalFireDistanceEnd + gunModules.Sum(x => x.Data.DeltaAverageDistanceEnd);
+    
+    protected float SpreadSizeOnOptimalFireDistance => Data.SpreadSizeOnOptimalFireDistance + GunModules.Sum(x => x.Data.DeltaSpreadSizeOnOptimalFireDistance);
+
     protected virtual void Awake()
     {
         rnd = new Random();
+        CurrentMagazine = new Magazine();
     }
 
     public virtual Magazine Reload(Magazine magazine)

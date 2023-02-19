@@ -284,13 +284,12 @@ public class FightSceneController : MonoBehaviour
             && targetObj.GetComponent<FightCharacter>().Type !=
             CharacterObj.GetComponent<FightCharacter>().Type)
         {
-            Debug.Log("Shoot");
             var character = CharacterObj.GetComponent<FightCharacter>();
             character.MakeShoot(targetObj);
             // character.MakeShoot(targetObj, "Body");
             State = FightState.Sleeping;
             StateController.AvailablePhase[FightState.FightPhase] = false;
-            StateController.AvailablePhase[FightState.ShootPhase] = false;
+            StateController.AvailablePhase[FightState.ShootPhase] = true;
             //DeleteDeathCharacterFromQueue();
             //Debug.Log(CharactersQueue.Count);
         }

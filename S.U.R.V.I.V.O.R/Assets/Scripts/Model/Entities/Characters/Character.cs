@@ -5,6 +5,7 @@ using Model.Entities.Characters.CharacterSkills;
 using Model.GameEntity;
 using Model.Items;
 using Model.SaveSystem;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [assembly: ContractNamespace("", ClrNamespace = "Contoso.CRM")]
@@ -28,6 +29,9 @@ namespace Model.Entities.Characters
         {
             base.Awake();
             skills = new Skills(this);
+            var weapon  =  Instantiate(Resources.Load<GameObject>("Items/Guns/Ak-74/Ak-74"), transform);
+            weapon.transform.localPosition = Vector3.zero;
+            chosedWeapon = weapon.GetComponent<IWeapon>();
         }
 
         public ManBody ManBody => (ManBody) Body;

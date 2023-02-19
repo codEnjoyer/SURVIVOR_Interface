@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using Model.GameEntity.EntityHealth;
 using Model.SaveSystem;
 using UnityEngine;
+using Random = System.Random;
 
 namespace Model.GameEntity
 {
@@ -53,8 +54,30 @@ namespace Model.GameEntity
 
         public virtual void TakeDamage(DamageInfo damage)
         {
+            var rnd = new Random();
             //TODO реализовать метод получения урона в зависимоти от выстрела
-            Hp -= damage.Damage;
+            var clothesBP = GetComponent<BodyPathWearableClothes>();
+            var damageToBodyPart = damage.FullDamage * damage.KeneeticDamage;
+            if (clothesBP != null && clothesBP.currentArmor == 0 || clothesBP == null) //Броня кончилась или ее нет
+            {
+                damageToBodyPart = damage.FullDamage * damage.RandomCoefficientOfDamage;
+            }
+            else//Броня есть
+            {
+                if (rnd.NextDouble() <= damage.ArmorPenetratingChance)//Броня пробита
+                {
+                    clothesBP.GetDamageToArmor(damage.ArmorDamageOnPenetration);
+                    damageToBodyPart += damage.FullDamage * damage.OnArmorPenetrationDamage;
+                }
+                else//Броня не пробита
+                {
+                    clothesBP.GetDamageToArmor(damage.ArmorDamageOnNonPenetration);
+                    damageToBodyPart += damage.FullDamage * damage.UnderArmorDamage;
+                }
+            }
+            //TODO добавить перелом и кровотечение
+
+            Hp -= damageToBodyPart;
         }
 
         public virtual void Heal(HealInfo heal)

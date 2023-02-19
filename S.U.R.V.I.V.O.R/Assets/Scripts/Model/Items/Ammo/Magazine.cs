@@ -10,7 +10,7 @@ public class Magazine: MonoBehaviour
     [SerializeField] private MagazineData data;
 
     private Stack<SingleAmmo> ammoStack;
-    public SingleAmmo DeLoad() => ammoStack.Pop();
+    public SingleAmmo GetAmmo() => ammoStack.Pop();
     public void Load(SingleAmmo ammo)
     {
         //TODO сделать класс магазина
