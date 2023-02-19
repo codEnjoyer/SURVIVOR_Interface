@@ -40,12 +40,15 @@ namespace Model.GameEntity
             }
         }
 
-        public virtual void Attack(IEnumerable<AttackTarget> potentialTargets,
-            out IEnumerable<IAlive> attackedTargets)
+        public virtual void Attack(Vector3 targetPoint)
         {
-            var target = potentialTargets.First();
-            target.Target.TakeDamage(new DamageInfo(40f));
-            attackedTargets = new[] {target.Target};
+            var rayDirection = (targetPoint - transform.position).normalized;
+            var hitted = Physics.Raycast(new Ray(transform.position, rayDirection), out var hit);
+            var target = hit.transform.gameObject.GetComponent<BodyPart>();
+            if (hitted && target != null)
+            {
+                target.TakeDamage(meleeAttack.DamageInfo);
+            }
         }
     }
 }

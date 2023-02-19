@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Model.Entities.Characters.CharacterSkills;
 using Model.GameEntity;
+using UnityEngine;
 
 public interface IWeapon
 {
-    public float AttackDistance { get; }
-    public void Attack(List<BodyPart> targets, float distance, Skills skills);
+    public void Attack(Vector3 targetPoint,Skills skills);
 }
