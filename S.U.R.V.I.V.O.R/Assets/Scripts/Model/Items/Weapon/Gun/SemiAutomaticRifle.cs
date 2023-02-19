@@ -23,15 +23,26 @@ public class SemiAutomaticRifle : Gun
                 : Data.OptimalFireDistanceEnd/distance; //TODO сделать линейное увеличение, как у конуса
         var spreadSize = Data.SpreadSizeOnOptimalFireDistance + GunModules.Sum(x => x.Data.DeltaSpreadSizeOnOptimalFireDistance); //Чем меньше точность, тем меньше круг
         var maxRo = spreadSize * (1 + (1 - distanceDifference));
-        var ro = rnd.NextDouble() * maxRo;
-        var fi = rnd.NextDouble() * (2 * 3.14f);
+        var ro = (float)rnd.NextDouble() * maxRo;
+        var fi = (float)rnd.NextDouble() * (2 * 3.14f);
         var (x, y) = PolarToCartesian(ro, fi);
+
+        //НАХОЖДЕНИЕ НОВОГО БАЗИСА
+            var newK = (targetPoint - transform.position).normalized;
+            var newI = new Vector3(0, -newK.z, newK.y).normalized;
+            var newJ = Vector3.Cross(newI,newK).normalized;
+
+            var oldBasisPoint = newI * x + newJ * y;
+
+            var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            sphere.transform.position = oldBasisPoint;
+        //
         
-        (double x, double y) PolarToCartesian(double ro, double fi)
+        (float x, float y) PolarToCartesian(float ro, float fi)
         {
             var _x = ro * Math.Cos( fi );
             var _y = ro * Math.Sin( fi );
-            return (_x, _y);
+            return ((float)_x,(float)_y);
         }
     }
 }
