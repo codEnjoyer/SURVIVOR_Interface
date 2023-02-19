@@ -57,6 +57,7 @@ public class LocationData : ScriptableObject
     {
         if (rnd.NextDouble() < fightChance)
         {
+            
             var fight = fightChances[rnd.Next(fightChances.Length)];
             fight.Initialization();
             return true;

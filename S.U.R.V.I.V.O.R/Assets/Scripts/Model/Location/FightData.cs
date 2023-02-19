@@ -11,13 +11,13 @@ public class FightData
 
     public FightData(IEnumerable<Entity> enemies, IEnumerable<Character> ally)
     {
-        this.enemies = enemies;
-        this.ally = ally.Select(x => x.CreateData());
+        this.enemies = enemies.ToList();
+        this.ally = ally.Select(x => x.CreateData()).ToList();
     }
     
     public FightData(IEnumerable<Entity> enemies, IEnumerable<CharacterData> ally)
     {
-        this.enemies = enemies;
-        this.ally = ally;
+        this.enemies = enemies.ToList();
+        this.ally = ally.ToList();
     }
 }

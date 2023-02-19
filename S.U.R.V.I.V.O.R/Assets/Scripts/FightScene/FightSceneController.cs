@@ -5,6 +5,7 @@ using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using System;
 using System.Linq;
+using Model.Entities.Characters;
 using UnityEngine.SceneManagement;
 //using UnityEditor.SceneTemplate;
 
@@ -144,15 +145,17 @@ public class FightSceneController : MonoBehaviour
     {
         Debug.Log(allySpawnPoints.Count);
         Debug.Log(enemySpawnPoints.Count);
-        foreach (var characterSave in CurrentData.ally)
+        
+        foreach (var characterData in CurrentData.ally)
         {
-            var obj = Instantiate(characterPrefab, new Vector3(0,0,0), Quaternion.identity);
+            var character = Instantiate(characterData.Prefab, new Vector3(0, 0, 0), Quaternion.identity);
+            character.Restore(characterData);
+            var obj = character.gameObject;
+            //obj.transform.localPosition = Vector3.zero;
             var objHeight = obj.GetComponent<MeshRenderer>().bounds.size.y;
             obj.transform.position = allySpawnPoints[allySpawnPoints.Count - 1] + new Vector3(0, objHeight / 2, 0);
             allySpawnPoints.RemoveAt(allySpawnPoints.Count - 1);
-            // TODO временно исправление
-            obj.AddComponent<FightCharacter>().ApplyProperties(characterSave.Prefab, CharacterType.Ally);
-            obj.GetComponent<Renderer>().material.color = Color.green;
+            obj.AddComponent<FightCharacter>().ApplyProperties(character, CharacterType.Ally);
             Characters.Add(obj);
         }
 
@@ -160,11 +163,11 @@ public class FightSceneController : MonoBehaviour
         {
             var entityObj = Instantiate(entity, new Vector3(0,0,0), Quaternion.identity);
             var obj = entityObj.gameObject;
+            obj.transform.localPosition = Vector3.zero;
             var objHeight = obj.GetComponent<MeshRenderer>().bounds.size.y;
             obj.transform.position = enemySpawnPoints[enemySpawnPoints.Count - 1] + new Vector3(0, objHeight / 2, 0);
             enemySpawnPoints.RemoveAt(enemySpawnPoints.Count - 1);
             obj.AddComponent<FightCharacter>().ApplyProperties(entityObj, CharacterType.Enemy);
-            obj.GetComponent<Renderer>().material.color = Color.red;
             Characters.Add(obj);
         }
 
@@ -347,7 +350,7 @@ public class FightSceneController : MonoBehaviour
     private void DrawPath(bool isForFighting)
     {
         var pathPoints = NodesNav.Path;
-        var energy = CharacterObj.GetComponent<FightCharacter>().Energy;
+        //var energy = CharacterObj.GetComponent<FightCharacter>().Energy;
         if (NodesNav.Path.Count != 0)
         {
             lineRenderer.positionCount = pathPoints.Count;

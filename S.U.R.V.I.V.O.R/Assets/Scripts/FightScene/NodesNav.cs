@@ -11,6 +11,8 @@ public static class NodesNav
 
     public static Dictionary<FightNode, FightNode> AvailableNodes;
 
+    public static Dictionary<FightNode, FightNode> AllFightNodesTracking;
+
     public static List<Vector3> Path;
 
     public static Vector3 CurrentTargetPoint;
@@ -26,6 +28,7 @@ public static class NodesNav
             Nodes.Add(node.gameObject);
         ObstacleNodes = new List<FightNode>();
         AvailableNodes = new Dictionary<FightNode, FightNode>();
+        AllFightNodesTracking = new Dictionary<FightNode, FightNode>();
         Path = new List<Vector3>();
     }
 
@@ -64,6 +67,32 @@ public static class NodesNav
         }
 
         return nearestNode;
+    }
+
+    public static void FindTrackingForAllNodes(FightNode startNode)
+    {
+        if (startNode is null)
+            return;
+
+        AllFightNodesTracking = new Dictionary<FightNode, FightNode>();
+        AvailableNodes[startNode] = null;
+        
+        var nodesQueue = new Queue<FightNode>();
+        nodesQueue.Enqueue(startNode);
+        while (nodesQueue.Count > 0)
+        {
+            var currentNode = nodesQueue.Dequeue();
+
+            foreach (var neighbour in currentNode.Neighbours)
+            {
+                if (neighbour.Type == NodeType.Free
+                    && neighbour.Type != NodeType.Obstacle && !AllFightNodesTracking.ContainsKey(neighbour))
+                {
+                    AllFightNodesTracking[neighbour] = currentNode;
+                    nodesQueue.Enqueue(neighbour);
+                }
+            }
+        }
     }
 
     public static void FindAvailableArea(GameObject characterObj)
@@ -138,10 +167,10 @@ public static class NodesNav
             var node = collider.transform.gameObject.GetComponent<FightNode>();
             var distance = Vector3.Distance(hitPoint, collider.transform.position);
             if(node != null && AvailableNodes.ContainsKey(node) && distance < minDistance)
-                {
-                    minDistance = distance;
-                    nearestNode = node;
-                }
+            {
+                minDistance = distance;
+                nearestNode = node;
+            }
         }
 
         return nearestNode;

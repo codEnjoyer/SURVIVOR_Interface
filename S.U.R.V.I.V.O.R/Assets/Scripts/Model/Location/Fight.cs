@@ -19,6 +19,8 @@ public class Fight : ScriptableObject
     {
         var data = new FightData(enemies, GlobalMapController.Instance.ChosenGroup.CurrentGroupMembers);
         chosenGroupIndex = GlobalMapController.Instance.ChosenGroupIndex;
+        
+        
 
         FightSceneController.CurrentData = data;
         SceneTransition.LoadScene(sceneName);
