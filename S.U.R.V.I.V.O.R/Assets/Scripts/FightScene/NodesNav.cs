@@ -56,8 +56,7 @@ public static class NodesNav
         { 
             var obj = collider.transform.gameObject;
             if(obj.GetComponent<FightNode>() == null || obj.transform.tag == "Graph" 
-                || obj.GetComponent<FightNode>().Type == NodeType.Obstacle
-                || obj.GetComponent<FightNode>().Type == NodeType.Occupied)
+                || obj.GetComponent<FightNode>().Type == NodeType.Obstacle)
                 continue;
             var distance = Vector3.Distance(point, obj.transform.position);
             if (distance < minDistance)
@@ -168,10 +167,10 @@ public static class NodesNav
             var node = collider.transform.gameObject.GetComponent<FightNode>();
             var distance = Vector3.Distance(hitPoint, collider.transform.position);
             if(node != null && AvailableNodes.ContainsKey(node) && distance < minDistance)
-                {
-                    minDistance = distance;
-                    nearestNode = node;
-                }
+            {
+                minDistance = distance;
+                nearestNode = node;
+            }
         }
 
         return nearestNode;
