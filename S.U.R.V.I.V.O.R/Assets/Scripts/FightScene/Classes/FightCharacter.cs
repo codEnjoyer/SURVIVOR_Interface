@@ -61,11 +61,10 @@ public class FightCharacter : MonoBehaviour
         var lookPoint = new Vector3(TargetToHit.transform.position.x, transform.position.y,
             TargetToHit.transform.position.z);
         transform.LookAt(lookPoint);
-        var bodyParts = TargetToHit.GetComponent<FightCharacter>().Entity.Body.BodyParts;
-        var dist = Vector3.Distance(gameObject.transform.position, TargetToHit.transform.position);
+        //var bodyParts = TargetToHit.GetComponent<FightCharacter>().Entity.Body.BodyParts;
+        //var dist = Vector3.Distance(gameObject.transform.position, TargetToHit.transform.position);
         // Временный фикс
-        Entity.Attack(bodyParts.Select(x => new AttackTarget(x, dist)),
-            out var attackedTargets);
+        Entity.Attack(lookPoint);
         UIController.Instance.DrawDamage(TargetToHit, (Type == CharacterType.Ally) ? 40f : 40f);
     }
 

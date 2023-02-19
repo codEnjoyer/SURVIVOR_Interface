@@ -11,9 +11,8 @@ public class Automat : Gun
     [SerializeField] private GunData data;
     
     public override GunData Data => data;
-    
-    public override void Attack(List<BodyPart> targets, float distance, Skills skills)
+    public override void Attack(Vector3 targetPoint, Skills skills)
     {
-        throw new NotImplementedException();
+        
     }
 }

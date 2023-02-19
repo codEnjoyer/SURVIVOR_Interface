@@ -5,19 +5,26 @@ using Model.Entities.Characters.CharacterSkills;
 using Model.GameEntity;
 using Model.Items;
 using UnityEngine;
+using Random = System.Random;
 
 [RequireComponent(typeof(BaseItem))]
 [RequireComponent(typeof(Equipable))]
 public abstract class Gun : MonoBehaviour, IWeapon
 {
     public Magazine CurrentMagazine { get; protected set; }
+    
     protected readonly List<GunModule> gunModules = new();
     public event Action OnModulesChanged;
     public abstract GunData Data { get; }
-
     public bool CheckGunModule(GunModuleType module) => Data.AvailableGunModules.Contains(module);
-    public float AttackDistance => Data.FireDistance;
     public IReadOnlyCollection<GunModule> GunModules => gunModules;
+
+    protected Random rnd;
+
+    protected virtual void Awake()
+    {
+        rnd = new Random();
+    }
 
     public virtual Magazine Reload(Magazine magazine)
     {
@@ -31,9 +38,9 @@ public abstract class Gun : MonoBehaviour, IWeapon
         CurrentMagazine = magazine;
         return result;
     }
-    
-    public abstract void Attack(List<BodyPart> targets, float distance, Skills skills);
 
+    public abstract void Attack(Vector3 targetPoint, Skills skills);
+    
     public bool AddGunModule(GunModule newGunModule)
     {
         if (CheckGunModule(newGunModule.Data.ModuleType)

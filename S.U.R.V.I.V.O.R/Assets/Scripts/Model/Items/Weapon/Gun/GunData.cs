@@ -6,32 +6,36 @@ using UnityEngine;
 public sealed class GunData : ScriptableObject
 {
     [SerializeField] private float fireRate;
-    [SerializeField] private float accuracy;
+    [SerializeField] private float spreadSizeOnOptimalFireDistance;
     [SerializeField] private float extraDamage;
-    [SerializeField] private float fireDistance;
+    [SerializeField] private float optimalFireDistanceBegin;
+    [SerializeField] private float optimalFireDistanceEnd;
     [SerializeField] private float ergonomics; //Чем выше, тем больше негативное влияние на Mobility класса персонажа
     [SerializeField] private Caliber caliber;
     [SerializeField] private GunType gunType;
     [SerializeField] private List<GunModuleType> availableGunModules;
 
-    public GunData(float fireRate, float accuracy, float extraDamage, float fireDistance,
-        float ergonomics, Caliber caliber, GunType gunType,
-        IEnumerable<GunModuleType> availableGunModules)
+    public GunData(float fireRate, float spreadSizeOnOptimalFireDistance, float extraDamage, float optimalFireDistanceBegin, float optimalFireDistanceEnd, float ergonomics, Caliber caliber, GunType gunType, List<GunModuleType> availableGunModules)
     {
         this.fireRate = fireRate;
-        this.accuracy = accuracy;
+        this.spreadSizeOnOptimalFireDistance = spreadSizeOnOptimalFireDistance;
         this.extraDamage = extraDamage;
-        this.fireDistance = fireDistance;
+        this.optimalFireDistanceBegin = optimalFireDistanceBegin;
+        this.optimalFireDistanceEnd = optimalFireDistanceEnd;
         this.ergonomics = ergonomics;
         this.caliber = caliber;
         this.gunType = gunType;
-        this.availableGunModules = availableGunModules.ToList();
+        this.availableGunModules = availableGunModules;
     }
 
     public float FireRate => fireRate;
-    public float Accuracy => accuracy;
+    public float SpreadSizeOnOptimalFireDistance => spreadSizeOnOptimalFireDistance;
     public float ExtraDamage => extraDamage;
-    public float FireDistance => fireDistance;
+
+    public float OptimalFireDistanceBegin => optimalFireDistanceBegin;
+
+    public float OptimalFireDistanceEnd => optimalFireDistanceEnd;
+
     public float Ergonomics => ergonomics;
     public Caliber Caliber => caliber;
     public GunType GunType => gunType;

@@ -21,6 +21,8 @@ namespace Model.Entities.Characters
         private Gun secondaryGun;
         private Skills skills;
         public MeleeWeapon MeleeWeapon { get; set; }
+
+        private IWeapon chosedWeapon;
         public event Action<GunType> OnGunsChanged;
         protected override void Awake()
         {
@@ -75,6 +77,12 @@ namespace Model.Entities.Characters
         }
 
         public int Mobility => throw new NotImplementedException(); //Скорость передвижения на глобальной карте
+
+        public override void Attack(Vector3 targetPoint)
+        {
+            chosedWeapon.Attack(targetPoint,skills);
+            
+        }
 
         public CharacterData CreateData()
         {

@@ -15,11 +15,11 @@ public class Knife : MeleeWeapon
         Damage = damage;
     }
 
-    public override float AttackDistance => 10;
+    public override float OptimalFireDistance => 10;
 
     public override void Attack(List<BodyPart> targets, float distance, Skills skills)
     {
-        if (distance > AttackDistance)
+        if (distance > OptimalFireDistance)
             return;
 
         var target = targets.First();
