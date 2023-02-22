@@ -14,17 +14,20 @@ public class Clothes : MonoBehaviour, ISaved<ClothesData>
     [SerializeField] private InventoryState inventory;
 
     private BaseItem baseItem;
-    public float CurrentArmor { get; private set; }
+
+    private float currentArmor;
+    public float CurrentArmor
+    {
+        get => currentArmor;
+        set => currentArmor = (value > 0)
+                ? Math.Min(value, Data.MaxArmor)
+                : 0;
+    }
 
     public InventoryState Inventory => inventory;
     public ClothData Data => data;
     public float TotalWeight => baseItem.Data.Weight + inventory.GetItems().Sum(item => item.Data.Weight);
-
-    public float CalculateBlockedDamage(DamageInfo damageInfo)
-    {
-        //TODO расчитать колличество заблокированного урона
-        throw new NotImplementedException();
-    }
+    
 
     private void Start()
     {

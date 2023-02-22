@@ -6,20 +6,23 @@ using UnityEngine;
 public sealed class GunData : ScriptableObject
 {
     [SerializeField] private float fireRate;
-    [SerializeField] private float spreadSizeOnOptimalFireDistance;
+    [SerializeField] private float spreadSizeOnOptimalFireDistance;//Точность
     [SerializeField] private float extraDamage;
+    [SerializeField] private float deltaRecoil;//Изменение отдачи патронов
     [SerializeField] private float optimalFireDistanceBegin;
     [SerializeField] private float optimalFireDistanceEnd;
+    
     [SerializeField] private float ergonomics; //Чем выше, тем больше негативное влияние на Mobility класса персонажа
     [SerializeField] private Caliber caliber;
     [SerializeField] private GunType gunType;
     [SerializeField] private List<GunModuleType> availableGunModules;
 
-    public GunData(float fireRate, float spreadSizeOnOptimalFireDistance, float extraDamage, float optimalFireDistanceBegin, float optimalFireDistanceEnd, float ergonomics, Caliber caliber, GunType gunType, List<GunModuleType> availableGunModules)
+    public GunData(float fireRate, float spreadSizeOnOptimalFireDistance, float extraDamage, float deltaRecoil, float optimalFireDistanceBegin, float optimalFireDistanceEnd, float ergonomics, Caliber caliber, GunType gunType, List<GunModuleType> availableGunModules)
     {
         this.fireRate = fireRate;
         this.spreadSizeOnOptimalFireDistance = spreadSizeOnOptimalFireDistance;
         this.extraDamage = extraDamage;
+        this.deltaRecoil = deltaRecoil;
         this.optimalFireDistanceBegin = optimalFireDistanceBegin;
         this.optimalFireDistanceEnd = optimalFireDistanceEnd;
         this.ergonomics = ergonomics;
@@ -31,6 +34,8 @@ public sealed class GunData : ScriptableObject
     public float FireRate => fireRate;
     public float SpreadSizeOnOptimalFireDistance => spreadSizeOnOptimalFireDistance;
     public float ExtraDamage => extraDamage;
+
+    public float DeltaRecoil => deltaRecoil;
 
     public float OptimalFireDistanceBegin => optimalFireDistanceBegin;
 

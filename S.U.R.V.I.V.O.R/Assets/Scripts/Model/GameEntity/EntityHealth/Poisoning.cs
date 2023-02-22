@@ -20,7 +20,7 @@ namespace Model.GameEntity.EntityHealth
 
         public void TurnEndAction(Health health)
         {
-            health.Target.TakeDamage(new DamageInfo(damage));
+            health.Target.Hp -= damage;
             Duration--;
             if (Duration == 0)
                 health.DeleteProperty(this);

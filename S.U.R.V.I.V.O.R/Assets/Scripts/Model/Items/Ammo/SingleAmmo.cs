@@ -1,48 +1,48 @@
 ﻿using System;
 using UnityEngine;
+using Random = System.Random;
 
 [CreateAssetMenu(fileName = "New Caliber", menuName = "Data/Caliber", order = 50)]
 public class SingleAmmo: ScriptableObject
 {
+    private static Random rnd;
+    
+    /////////////////////////////// Характеристики указываются не для одного патрона, а для одного поражающего элемента ///////////////////////////////////////////
+    
     [SerializeField] [Min(0)] private float keneeticDamage;//Какой процент урона точно пройдет по телу
-    [SerializeField] [Min(0)] private float armorPenetratingChance;//Шанс пробить броню
-    [SerializeField] [Min(0)] private float underArmorDamage;//Какой процент урона пройдет по телу при непробитии
+    [SerializeField] [Range(0,1)] private float armorPenetratingChance;//Шанс пробить броню
+    [SerializeField] [Range(0,1)] private float underArmorDamage;//Какой процент урона пройдет по телу при непробитии
+    [SerializeField] [Range(0,1)] private float upperArmorDamage;//Какой процент урона пройдет по телу при непробитии
     [SerializeField] [Min(0)] private float fullDamage;//Полный урон, наносится при отсутствии брони
-    [SerializeField] [Min(0)] private float bleedingChance;//Шанс кровотечения, равен 0 при непробитии
-    [SerializeField] [Min(0)] private float boneBrokingChance;//Шанс перелома кости, умножается на 1.3 при непробитии
+    [SerializeField] [Range(0,1)] private float bleedingChance;//Шанс кровотечения, равен 0 при непробитии
+    [SerializeField] [Range(0,1)] private float boneBrokingChance;//Шанс перелома кости, умножается на 1.3 при непробитии
     [SerializeField] [Min(0)] private float armorDamageOnPenetration;//Урон броне при непробитии
     [SerializeField] [Min(0)] private float armorDamageOnNonPenetration;//Урон броне при пробитии
     
     [SerializeField] [Min(0)] private float deltaOptimalFireDistanceBegin;//Изменение нижнего порога оптимальной дистанции
     [SerializeField] [Min(0)] private float deltaOptimalFireDistanceEnd;//Изменение верхнего порога оптимальной дистанции
     [SerializeField] [Min(0)] private float deltaSpreadSizeOnOptimalFireDistance;//Изменение круга разброса на оптимальной дистанции
+    
+    [SerializeField] [Min(0)] private float recoil;//Отдача
+    [SerializeField] [Min(0)] private float amountOfBullets;//Количество поражающих элементов
+    
     [SerializeField] private Caliber caliber;
-    
-    public SingleAmmo(float keneeticDamage, float armorPenetratingChance, float underArmorDamage, float fullDamage, float bleedingChance, float boneBrokingChance, float armorDamageOnPenetration, float armorDamageOnNonPenetration, float deltaOptimalFireDistanceBegin, float deltaOptimalFireDistanceEnd, float deltaSpreadSizeOnOptimalFireDistance, Caliber caliber)
-    {
-        this.keneeticDamage = keneeticDamage;
-        this.armorPenetratingChance = armorPenetratingChance;
-        this.underArmorDamage = underArmorDamage;
-        this.fullDamage = fullDamage;
-        this.bleedingChance = bleedingChance;
-        this.boneBrokingChance = boneBrokingChance;
-        this.armorDamageOnPenetration = armorDamageOnPenetration;
-        this.armorDamageOnNonPenetration = armorDamageOnNonPenetration;
-        this.deltaOptimalFireDistanceBegin = deltaOptimalFireDistanceBegin;
-        this.deltaOptimalFireDistanceEnd = deltaOptimalFireDistanceEnd;
-        this.deltaSpreadSizeOnOptimalFireDistance = deltaSpreadSizeOnOptimalFireDistance;
-        this.caliber = caliber;
-    }
-    
+
     public Caliber Caliber => caliber;
 
     public float KeneeticDamage => keneeticDamage;
+
+    public float Recoil => recoil;
+
+    public float AmountOfBullets => amountOfBullets;
 
     public float ArmorPenetratingChance => armorPenetratingChance;
 
     public float UnderArmorDamage => underArmorDamage;
 
-    public float FullDamage => fullDamage;
+    public float UpperArmorDamage => upperArmorDamage;
+
+    public float FullDamage => fullDamage * (rnd.Next(90,110) / 100f);
 
     public float BleedingChance => bleedingChance;
 
