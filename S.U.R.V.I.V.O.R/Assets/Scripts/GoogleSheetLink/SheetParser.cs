@@ -1,5 +1,6 @@
 ﻿#if UNITY_EDITOR
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace GoogleSheetLink
 {
     public class SheetParser : MonoBehaviour
     {
+        private const string LIST_SEPARATOR = ", ";
+
         [SerializeField] private string sheetName;
         [SerializeField] private string from;
         [SerializeField] private string to;
@@ -23,6 +26,10 @@ namespace GoogleSheetLink
 
         private void Awake()
         {
+            if (string.IsNullOrEmpty(sheetName)
+                || string.IsNullOrEmpty(from)
+                || string.IsNullOrEmpty(to))
+                return;
             relativePath = "Assets/Resources/Items";
             absolutePath = $@"{Application.dataPath}/Resources/Items";
             googleSheetHelper = new GoogleSheetHelper("12o3fSTiRqjt2EpLmurYA9KE_DWGaghkFuJkT4jzL09g",
@@ -150,26 +157,75 @@ namespace GoogleSheetLink
             if (componentType == null)
                 throw new Exception(@$"Указанный компонент {componentName} не был найден");
 
-            var parserName = $"{nameof(GoogleSheetLink)}.{nameof(DataParsers)}.{mainComponentName}DataParser";
-            var parserType = Type.GetType(parserName);
-            if (parserType == null)
-                throw new Exception(
-                    $"Парсер данных {parserName} не был найден. Пожалуйста убедитесь," +
-                    $" что его название соответствует шаблону [Название главного компонента]DataParser");
+            var componentDataType = Type.GetType(componentName + "Data");
+            if (componentDataType == null)
+            {
+                componentDataType = Type.GetType(mainComponentName + "Data");
+                if (componentDataType == null)
+                    throw new Exception($"Не удалось найти тип data поля! {fullComponentName}");
+            }
 
-            var parse = parserType.GetMethod("Parse", BindingFlags.Public | BindingFlags.Static);
-            if (parse == null)
-                throw new Exception(@"Парсер данных не содержит метода Parse");
-            
-            var componentData = parse.Invoke(null, new object[] {param});
+            var componentData = CreateDataObject(componentDataType, param);
             var componentDataField = componentType.GetField("data", BindingFlags.Instance | BindingFlags.NonPublic);
             if (componentDataField == null)
                 throw new Exception(
                     @$"Не найдено data поле. Убедитесь, что указанный компонент содержит приватное поле data");
-            
+
             var component = obj.AddComponent(componentType);
             componentDataField.SetValue(component, componentData);
             return (Object) componentData;
+        }
+
+
+        private object CreateDataObject(Type type, string[] param)
+        {
+            var fieldInfos = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
+            if (fieldInfos.Length != param.Length)
+                throw new Exception($"Для типа {type} было переданно неверное колличество данных!");
+            var obj = ScriptableObject.CreateInstance(type);
+            for (var i = 0; i < fieldInfos.Length; i++)
+            {
+                var dataForField = param[i];
+                if (string.IsNullOrEmpty(dataForField))
+                    continue;
+                var fieldInfo = fieldInfos[i];
+                if (fieldInfo.FieldType == typeof(string))
+                    fieldInfo.SetValue(obj, dataForField);
+                else
+                {
+                    var objForField = GetObjectForField(fieldInfo.FieldType, dataForField);
+                    fieldInfo.SetValue(obj, objForField);
+                }
+            }
+
+            return obj;
+        }
+
+        private object GetObjectForField(Type fieldType, string dataForField)
+        {
+            if (fieldType.GetInterface(nameof(ICollection)) != null)
+            {
+                var elemType = fieldType.GetGenericArguments().First();
+                var collection = Activator.CreateInstance(fieldType);
+                var addMethod = fieldType.GetMethod("Add", new[] {elemType});
+                if (addMethod == null)
+                    throw new Exception($"Тип {fieldType} не реализует метод Add!");
+                foreach (var s in dataForField.Split(LIST_SEPARATOR))
+                {
+                    var elemObj = GetObjectForField(elemType, s);
+                    addMethod.Invoke(collection, new object[] {elemObj});
+                }
+
+                return collection;
+            }
+
+            if (fieldType.IsEnum)
+                return Enum.Parse(fieldType, dataForField);
+
+            var parseMethod = fieldType.GetMethod("Parse", new[] {typeof(string)});
+            if (parseMethod == null)
+                throw new Exception($"Для типа {fieldType} не найден статический публичный метод Parse!");
+            return parseMethod.Invoke(null, new object[] {dataForField});
         }
     }
 }

@@ -12,11 +12,4 @@ public class EatableFoodData: ScriptableObject
     public int DeltaWater => deltaWater;
 
     public int DeltaEnergy => deltaEnergy;
-    
-    public EatableFoodData(int deltaHunger, int deltaWater, int deltaEnergy)
-    {
-        this.deltaHunger = deltaHunger;
-        this.deltaWater = deltaWater;
-        this.deltaEnergy = deltaEnergy;
-    }
 }

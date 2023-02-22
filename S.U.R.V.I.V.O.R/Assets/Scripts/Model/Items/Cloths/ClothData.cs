@@ -7,15 +7,7 @@ public class ClothData : ScriptableObject
     [SerializeField] private Size inventorySize;
     [SerializeField] private int warm;
     [SerializeField] private ClothType clothType;
-
-    public ClothData(int maxArmor, Size inventorySize, int warm, ClothType clothType)
-    {
-        this.maxArmor = maxArmor;
-        this.inventorySize = inventorySize;
-        this.warm = warm;
-        this.clothType = clothType;
-    }
-
+    
     public int MaxArmor => maxArmor;
     public Size InventorySize => inventorySize;
     public int Warm => warm;

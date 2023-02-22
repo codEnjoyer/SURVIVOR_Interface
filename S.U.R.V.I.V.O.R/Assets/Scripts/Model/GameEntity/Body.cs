@@ -44,8 +44,8 @@ namespace Model.GameEntity
                     CurrentCriticalLoses += significance;
                     if (IsDied)
                         Died?.Invoke();
-                        Debug.Log("Died");
-                        Debug.Log($"{CurrentCriticalLoses} / {MaxCriticalLoses}");
+                    Debug.Log("Died");
+                    Debug.Log($"{CurrentCriticalLoses} / {MaxCriticalLoses}");
                 };
         }
 
