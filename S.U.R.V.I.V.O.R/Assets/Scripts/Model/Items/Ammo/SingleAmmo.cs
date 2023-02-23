@@ -2,7 +2,7 @@
 using UnityEngine;
 using Random = System.Random;
 
-[CreateAssetMenu(fileName = "New Caliber", menuName = "Data/Caliber", order = 50)]
+[CreateAssetMenu(fileName = "New Ammo", menuName = "Data/Ammo", order = 50)]
 public class SingleAmmo: ScriptableObject
 {
     private static Random rnd;
@@ -27,12 +27,15 @@ public class SingleAmmo: ScriptableObject
     [SerializeField] [Min(0)] private float amountOfBullets;//Количество поражающих элементов
     
     [SerializeField] private Caliber caliber;
+    [SerializeField] private string typeOfSingleAmmo;
 
     public Caliber Caliber => caliber;
 
     public float KeneeticDamage => keneeticDamage;
 
     public float Recoil => recoil;
+
+    public string TypeOfSingleAmmo => typeOfSingleAmmo;
 
     public float AmountOfBullets => amountOfBullets;
 

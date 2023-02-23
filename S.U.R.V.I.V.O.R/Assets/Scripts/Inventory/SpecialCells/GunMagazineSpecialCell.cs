@@ -6,30 +6,22 @@ public class GunMagazineSpecialCell : SpecialCell
 {
     [SerializeField] private Transform canvasTransform;
     public SpecialGunCell gunCell;
+
     
-    public override void PlaceItem(BaseItem item)
+    protected override void PlaceItem(BaseItem item)
     {
         if (item.IsRotated) item.Rotate();
         placedItem = item;
-
-        InventoryController.SelectedItem = null;
-
-        gunCell.PlacedItem.GetComponent<Gun>().Reload(PlacedItem.GetComponent<Magazine>());
+        InventoryController.SelectedItem = gunCell.CurrentGun.Reload(PlacedItem.GetComponent<Magazine>())?.GetComponent<BaseItem>();
     }
 
-    public override void UpdateItem(BaseItem newItem)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void GiveItem()
+    protected override void GiveItem()
     {
         if (PlacedItem == null) return;
-        
+
         PlacedItem.GetComponent<RectTransform>().sizeDelta = PlacedItem.OnAwakeRectTransformSize;
         PlacedItem.GetComponent<RectTransform>().localScale = PlacedItem.OnAwakeRectTransformScale;
-        PlacedItem.GetComponent<RectTransform>().SetParent(canvasTransform);
-        
+
         InventoryController.PickUpItemFromSpecialCell(PlacedItem);
         
         PlaceNullItem();
@@ -40,11 +32,11 @@ public class GunMagazineSpecialCell : SpecialCell
     protected override bool CanInsertIntoSlot()
     {
         var magazine = InventoryController.SelectedItem.GetComponent<Magazine>();
-        return  magazine && magazine.Data.Caliber == gunCell.PlacedItem.GetComponent<Gun>().Data.Caliber;
+        return  magazine && gunCell.PlacedItem && magazine.Data.Caliber == gunCell.PlacedItem.GetComponent<Gun>().Data.Caliber;
     }
 
-    public override void ReDraw()
+    protected override void ReDraw()
     {
-        throw new System.NotImplementedException();
+        DrawItem();
     }
 }

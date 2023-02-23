@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a69084cb783b4d9f9921af102fe93652, type: 3}
   m_Name: VityazGunData
   m_EditorClassIdentifier: 
-  fireRate: 0
-  accuracy: 0
+  fireRate: 1
+  spreadSizeOnOptimalFireDistance: 1
   extraDamage: 0
-  fireDistance: 0
+  deltaRecoil: 0
+  optimalFireDistanceBegin: 10
+  optimalFireDistanceEnd: 30
   ergonomics: 0
-  caliber: 1
+  caliber: 2
   gunType: 1
   availableGunModules: 000000000100000002000000040000000300000005000000

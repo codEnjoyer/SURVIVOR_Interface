@@ -17,7 +17,7 @@ public class SpecialGunModuleCell : SpecialCell
         }
     }
 
-    public override void PlaceItem(BaseItem item)
+    protected override void PlaceItem(BaseItem item)
     {
         if (item.IsRotated)
             item.Rotate();
@@ -26,7 +26,7 @@ public class SpecialGunModuleCell : SpecialCell
         CurrentGun.AddGunModule(placedItem.GetComponent<GunModule>());
     }
 
-    public override void GiveItem()
+    protected override void GiveItem()
     {
         if (PlacedItem == null) return;
         PlacedItem.GetComponent<RectTransform>().sizeDelta = PlacedItem.OnAwakeRectTransformSize;
@@ -46,7 +46,7 @@ public class SpecialGunModuleCell : SpecialCell
                InventoryController.SelectedItem.GetComponent<GunModule>().Data.ModuleType == type;
     }
 
-    public override void ReDraw()
+    protected override void ReDraw()
     {
         throw new System.NotImplementedException();
     }

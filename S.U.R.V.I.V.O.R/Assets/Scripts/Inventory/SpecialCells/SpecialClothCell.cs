@@ -37,8 +37,8 @@ public class SpecialClothCell : SpecialCell
         if (currentInventory != null && PlacedItem == null)
             currentInventory.ChangeState(new InventoryState(zeroInventorySize));
     }
-    
-    public override void PlaceItem(BaseItem item)
+
+    protected override void PlaceItem(BaseItem item)
     {
         if (item.IsRotated)
             item.Rotate();
@@ -55,7 +55,7 @@ public class SpecialClothCell : SpecialCell
         }
     }
 
-    public override void GiveItem()
+    protected override void GiveItem()
     {
         if (placedItem == null) return;
         var removedClothes = CurrentCharacter.ManBody.UnWear(PlacedItem.GetComponent<Clothes>().Data.ClothType);
@@ -68,7 +68,7 @@ public class SpecialClothCell : SpecialCell
         PlaceNullItem();
     }
 
-    public override void ReDraw()
+    protected override void ReDraw()
     {
         DrawItem();
         if(currentInventory != null)

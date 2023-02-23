@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New GunData", menuName = "Data/Gun Data", order = 50)]
 public sealed class GunData : ScriptableObject
 {
-    [SerializeField] private float fireRate;
+    [SerializeField] private int fireRate;
     [SerializeField] private float spreadSizeOnOptimalFireDistance;//Точность
     [SerializeField] private float extraDamage;
     [SerializeField] private float deltaRecoil;//Изменение отдачи патронов
@@ -17,7 +17,7 @@ public sealed class GunData : ScriptableObject
     [SerializeField] private GunType gunType;
     [SerializeField] private List<GunModuleType> availableGunModules;
 
-    public GunData(float fireRate, float spreadSizeOnOptimalFireDistance, float extraDamage, float deltaRecoil, float optimalFireDistanceBegin, float optimalFireDistanceEnd, float ergonomics, Caliber caliber, GunType gunType, List<GunModuleType> availableGunModules)
+    public GunData(int fireRate, float spreadSizeOnOptimalFireDistance, float extraDamage, float deltaRecoil, float optimalFireDistanceBegin, float optimalFireDistanceEnd, float ergonomics, Caliber caliber, GunType gunType, List<GunModuleType> availableGunModules)
     {
         this.fireRate = fireRate;
         this.spreadSizeOnOptimalFireDistance = spreadSizeOnOptimalFireDistance;
@@ -31,7 +31,7 @@ public sealed class GunData : ScriptableObject
         this.availableGunModules = availableGunModules;
     }
 
-    public float FireRate => fireRate;
+    public int FireRate => fireRate;
     public float SpreadSizeOnOptimalFireDistance => spreadSizeOnOptimalFireDistance;
     public float ExtraDamage => extraDamage;
 
