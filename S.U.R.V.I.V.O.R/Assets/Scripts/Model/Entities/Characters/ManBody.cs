@@ -172,7 +172,7 @@ namespace Model.Entities.Characters
 
             if (LocationInventory.Instance.LocationInventoryGrid.InsertItem(itemToPlace))
                 return true;
-            Object.Destroy(itemToPlace);
+            Destroy(itemToPlace);
             return false;
         }
 

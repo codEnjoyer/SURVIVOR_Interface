@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using Model.Entities.Characters.CharacterSkills;
 using Model.GameEntity;
@@ -86,6 +87,24 @@ namespace Model.Entities.Characters
         {
             chosedWeapon.Attack(targetPoint,skills);
             
+        }
+
+        public IEnumerable<T> GetItemsFromAllInventoriesByType<T>()
+        where T : MonoBehaviour
+        {
+            var result = new List<T>();
+            
+            foreach (var bodyPart in Body.BodyParts)
+            {
+                if (bodyPart is BodyPathWearableClothes wearBp)
+                {
+                    result.AddRange(wearBp.GetItemsFromInventory()
+                        .Where(x => x.GetComponent<T>())
+                        .Select(x => x.GetComponent<T>()));
+                }
+            }
+
+            return result;
         }
 
         public CharacterData CreateData()

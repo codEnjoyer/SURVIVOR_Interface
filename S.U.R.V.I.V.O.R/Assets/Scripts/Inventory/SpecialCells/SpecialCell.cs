@@ -31,7 +31,8 @@ public enum GunModuleType
     Shutter,
     Scope,
     Suppressor,
-    Tactical
+    Tactical,
+    Magazine
 }
 
 public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -52,9 +53,9 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
         return false;
     }
 
-    public abstract void ReDraw();
-    
-    public void DrawItem()
+    protected abstract void ReDraw();
+
+    protected void DrawItem()
     {
         if (placedItem == null) return;
         var rectTransform = placedItem.gameObject.GetComponent<RectTransform>();
@@ -84,7 +85,7 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
         }
     }
 
-    public abstract void PlaceItem(BaseItem item);
+    protected abstract void PlaceItem(BaseItem item);
     
     public virtual void UpdateItem(BaseItem item)
     {
@@ -98,12 +99,8 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
         }
         else
         {
-            if (item != placedItem) //item != null and placeItem != null and placeItem == item
+            if (item != placedItem)
             {
-            //    ReDraw();
-            //}
-            //else // item != null and placedItem != null
-            //{
                 placedItem.gameObject.SetActive(false);
                 PlaceNullItem();
                 if (item != null)
@@ -116,16 +113,15 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
     }
 
 
-
-    public void PlaceNullItem()
+    protected void PlaceNullItem()
     {
         placedItem = null;
         ReDraw();
     }
 
-    public abstract void GiveItem();
+    protected abstract void GiveItem();
 
-    protected void ChangeItemSize(RectTransform transform, RectTransform cellTransform)
+    private void ChangeItemSize(RectTransform transform, RectTransform cellTransform)
     {
         if (placedItem.OnAwakeRectTransformSize.x * placedItem.OnAwakeRectTransformScale.x > cellTransform.sizeDelta.x * cellTransform.localScale.x)
         {
@@ -139,7 +135,7 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
         }
     }
 
-    public void CheckNewItem(BaseItem item)
+    public virtual void CheckNewItem(BaseItem item)
     {
         if (item == null || item == PlacedItem)
         {

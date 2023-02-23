@@ -11,8 +11,21 @@ public class PistoletPulemet : Gun
     [SerializeField] private GunData data;
     
     public override GunData Data => data;
-    public override void Attack(Vector3 targetPoint, Skills skills)
+    
+    protected override int GetAmountOfShots(Skills skills)
     {
-        throw new NotImplementedException();
+        switch (fireType)
+        {
+            case FireType.Semi://TODO передергивание затвора при семи режиме (ТОЛЬКО В МЕТОДЕ ДЛЯ БОЛТОВОК) // При макс навыке болтовок, передергивать не нужно
+                return 1;
+            case FireType.SemiAutomatic:
+                return 1;
+            case FireType.Burst:
+                return 3;//TODO Сделать константой, зависящей от навыков обращения с оружием и переопределить методы для каждого типа оружия. 
+            case FireType.Auto:
+                return Data.FireRate;
+            default:
+                return 1;
+        }
     }
 }

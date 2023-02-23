@@ -36,8 +36,8 @@ public class PlayerLayerLogic : MonoBehaviour
     private SpecialGunCell primaryGunSlot;
     [SerializeField]
     private SpecialGunCell secondaryGunSlot;
-    [SerializeField]
-    private SpecialGunCell meleeWeaponSet;
+    //[SerializeField]
+    //private SpecialGunCell meleeWeaponSet;
     
     
     [SerializeField] private Text nameTextBox;
