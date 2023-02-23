@@ -113,7 +113,7 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
     }
 
 
-    protected void PlaceNullItem()
+    protected virtual void PlaceNullItem()
     {
         placedItem = null;
         ReDraw();

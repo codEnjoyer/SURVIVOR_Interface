@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Model.Entities.Characters;
@@ -6,67 +7,221 @@ using UnityEngine;
 
 public class SpecialGunCell : SpecialCell
 {
+    // [SerializeField] private Transform canvasTransform;
+    //
+    // [SerializeField] private GunType type;
+    // [SerializeField]
+    // private GunMagazineSpecialCell magazineSlot;
+    // [SerializeField]
+    // private SpecialGunModuleCell springSlot;
+    // [SerializeField]
+    // private SpecialGunModuleCell shutterSlot;
+    // [SerializeField]
+    // private SpecialGunModuleCell scopeSlot;
+    // [SerializeField]
+    // private SpecialGunModuleCell gripSlot;
+    // [SerializeField]
+    // private SpecialGunModuleCell tacticalSlot;
+    // [SerializeField]
+    // private SpecialGunModuleCell supressorSlot;
+    //
+    // private List<SpecialGunModuleCell> allSlots;
+    //
+    // private Character currentCharacter;
+    //
+    // private Gun currentGun;
+    //
+    // public Gun CurrentGun
+    // {
+    //     get => currentGun;
+    //
+    //     private set
+    //     {
+    //         //UnsubscribeGunEvents();
+    //         currentGun = value;
+    //         //OnGunChanged();
+    //         //SubscribeGunEvents();
+    //     }
+    // }
+    //
+    // public Character CurrentCharacter
+    // {
+    //     get => currentCharacter;
+    //     set
+    //     {
+    //         currentCharacter = value;
+    //         CurrentGun = GetGun(type);
+    //         Init();
+    //     }
+    // }
+    //
+    // public override void Init()
+    // {
+    //     base.Init();
+    //     magazineSlot.Init();
+    // }
+    //
+    // protected override void PlaceItem(BaseItem item)
+    // {
+    //     if (item.IsRotated)
+    //         item.Rotate();
+    //     placedItem = item;
+    //     CurrentGun = placedItem.GetComponent<Gun>();
+    //     ChangeCharacterGuns();
+    //     InventoryController.SelectedItem = null;
+    // }
+    //
+    // protected override void GiveItem()
+    // {
+    //     if (placedItem == null) return;
+    //     placedItem.gameObject.SetActive(true);
+    //
+    //     var gun = GetGun(type);
+    //     if (gun is null) return;
+    //     
+    //     PlacedItem.GetComponent<RectTransform>().sizeDelta = PlacedItem.OnAwakeRectTransformSize;
+    //     PlacedItem.GetComponent<RectTransform>().localScale = PlacedItem.OnAwakeRectTransformScale;
+    //     PlacedItem.GetComponent<RectTransform>().SetParent(canvasTransform);
+    //     
+    //     InventoryController.PickUpItemFromSpecialCell(PlacedItem);
+    //     PlaceNullItem();
+    //     ChangeCharacterGuns();
+    // }
+    //
+    // protected override void PlaceNullItem()
+    // {
+    //     base.PlaceNullItem();
+    //     CurrentGun = null;
+    // }
+    //
+    // protected override bool CanInsertIntoSlot()
+    // {
+    //     var x = InventoryController.SelectedItem.GetComponent<Gun>() != null &&
+    //             InventoryController.SelectedItem.GetComponent<Gun>().Data.GunType == type;
+    //     return x;
+    // }
+    //
+    // public override void CheckNewItem(BaseItem item)
+    // {
+    //     base.CheckNewItem(item);
+    //     var mag = CurrentGun && CurrentGun.CurrentMagazine ? CurrentGun.CurrentMagazine.GetComponent<BaseItem>() : null;
+    //     magazineSlot.CheckNewItem(mag);
+    // }
+    //
+    // public void UpdateGunItem(Gun gun)
+    // {
+    //     UpdateItem(gun && gun.GetComponent<BaseItem>() ? gun.GetComponent<BaseItem>() : null);
+    //     CurrentGun = gun;
+    //     magazineSlot.UpdateItem(CurrentGun && CurrentGun.CurrentMagazine ? CurrentGun.CurrentMagazine.GetComponent<BaseItem>() : null);
+    // }
+    //
+    // protected override void ReDraw()
+    // {
+    //     DrawItem();
+    // }
+    //
+    //
+    // private void ChangeCharacterGuns()
+    // {
+    //     switch (type)
+    //     {
+    //         case GunType.PrimaryGun:
+    //             CurrentCharacter.PrimaryGun = CurrentGun;
+    //             break;
+    //         case GunType.SecondaryGun:
+    //             CurrentCharacter.SecondaryGun = CurrentGun;
+    //             break;
+    //     }  
+    // }
+    //
+    // private Gun GetGun(GunType type)
+    // {
+    //     var x = type == GunType.PrimaryGun ? CurrentCharacter.PrimaryGun : CurrentCharacter.SecondaryGun;
+    //     return x;
+    // }
+    //
+    // // private void OnModulesChanged(GunModuleType moduleType)
+    // // {
+    // //     switch (moduleType)
+    // //     {
+    // //         case GunModuleType.Magazine:
+    // //             magazineSlot.CheckNewItem(CurrentGun && CurrentGun.CurrentMagazine ? CurrentGun.CurrentMagazine.GetComponent<BaseItem>() : null);
+    // //             break;
+    // //     }
+    // // }
+    // //
+    // // private void OnGunChanged()
+    // // {
+    // //     OnModulesChanged(GunModuleType.Magazine);
+    // // }
+    //
+    // // private void UnsubscribeGunEvents()
+    // // {
+    // //     if (CurrentGun != null)
+    // //         CurrentGun.OnModulesChanged -= OnModulesChanged;
+    // // }
+    // //
+    // // private void SubscribeGunEvents()
+    // // {
+    // //     if (CurrentGun != null)
+    // //         CurrentGun.OnModulesChanged += OnModulesChanged;
+    // // }
+    //
+    // // private void OnEnable()
+    // // {
+    // //     SubscribeGunEvents();
+    // // }
+    // //
+    // // private void OnDisable()
+    // // {
+    // //     UnsubscribeGunEvents();
+    // // }
+
     [SerializeField] private Transform canvasTransform;
-    
+
     [SerializeField] private GunType type;
-    [SerializeField]
-    private GunMagazineSpecialCell magazineSlot;
-    [SerializeField]
-    private SpecialGunModuleCell springSlot;
-    [SerializeField]
-    private SpecialGunModuleCell shutterSlot;
-    [SerializeField]
-    private SpecialGunModuleCell scopeSlot;
-    [SerializeField]
-    private SpecialGunModuleCell gripSlot;
-    [SerializeField]
-    private SpecialGunModuleCell tacticalSlot;
-    [SerializeField]
-    private SpecialGunModuleCell supressorSlot;
+    [SerializeField] private GunMagazineSpecialCell magazineSlot;
+    [SerializeField] private SpecialGunModuleCell springSlot;
+    [SerializeField] private SpecialGunModuleCell shutterSlot;
+    [SerializeField] private SpecialGunModuleCell scopeSlot;
+    [SerializeField] private SpecialGunModuleCell gripSlot;
+    [SerializeField] private SpecialGunModuleCell tacticalSlot;
+    [SerializeField] private SpecialGunModuleCell supressorSlot;
 
     private List<SpecialGunModuleCell> allSlots;
-    
+
     private Character currentCharacter;
 
     private Gun currentGun;
+
+    public Gun CurrentGun
+    {
+        get => currentGun;
+
+        set => currentGun = value;
+    }
 
     public Character CurrentCharacter
     {
         get => currentCharacter;
         set
         {
-            UnsubscribeCharacterEvents();
             currentCharacter = value;
-            currentGun = GetGun(type);
-            SubscribeCharacterEvents();
+            CurrentGun = GetGun(type);
             Init();
         }
     }
 
-    public override void Init()
-    {
-        base.Init();
-        magazineSlot.Init();
-    }
+    private bool wasOpened;
 
-    public override void CheckNewItem(BaseItem item)
-    {
-        base.CheckNewItem(item);
-        var magazine = currentGun?.CurrentMagazine != null ? currentGun.CurrentMagazine.GetComponent<BaseItem>() : null;
-        magazineSlot?.CheckNewItem(magazine);
-    }
-
-    public override void UpdateItem(BaseItem item)
-    {
-        base.UpdateItem(item);
-        magazineSlot.UpdateItem(currentGun?.CurrentMagazine?.GetComponent<BaseItem>());
-    }
 
     protected override void PlaceItem(BaseItem item)
     {
         if (item.IsRotated)
             item.Rotate();
         placedItem = item;
+        item.ItemOwner = CurrentCharacter;
+        CurrentGun = placedItem.GetComponent<Gun>();
         ChangeCharacterGuns();
         InventoryController.SelectedItem = null;
     }
@@ -74,20 +229,17 @@ public class SpecialGunCell : SpecialCell
     protected override void GiveItem()
     {
         if (placedItem == null) return;
-        placedItem.gameObject.SetActive(true);
         PlacedItem.GetComponent<RectTransform>().sizeDelta = PlacedItem.OnAwakeRectTransformSize;
         PlacedItem.GetComponent<RectTransform>().localScale = PlacedItem.OnAwakeRectTransformScale;
         PlacedItem.GetComponent<RectTransform>().SetParent(canvasTransform);
         InventoryController.PickUpItemFromSpecialCell(PlacedItem);
         PlaceNullItem();
-        ChangeCharacterGuns();
     }
 
-    protected override bool CanInsertIntoSlot()
+    protected override void PlaceNullItem()
     {
-        var x = InventoryController.SelectedItem.GetComponent<Gun>() != null &&
-                InventoryController.SelectedItem.GetComponent<Gun>().Data.GunType == type;
-        return x;
+        base.PlaceNullItem();
+        CurrentGun = null;
     }
 
     protected override void ReDraw()
@@ -95,75 +247,37 @@ public class SpecialGunCell : SpecialCell
         DrawItem();
     }
 
+    protected override bool CanInsertIntoSlot()
+    {
+        return InventoryController.SelectedItem.GetComponent<Gun>() &&
+               InventoryController.SelectedItem.GetComponent<Gun>().Data.GunType == type;
+    }
 
     private void ChangeCharacterGuns()
     {
-        var currentGun = placedItem?.GetComponent<Gun>();
         switch (type)
         {
             case GunType.PrimaryGun:
-                CurrentCharacter.PrimaryGun = currentGun;
+                CurrentCharacter.PrimaryGun = CurrentGun;
                 break;
             case GunType.SecondaryGun:
-                CurrentCharacter.SecondaryGun = currentGun;
+                CurrentCharacter.SecondaryGun = CurrentGun;
                 break;
-        }  
-    }
-
-    private void OnGunChanged(GunType type)
-    {
-        UnsubscribeGunEvents();//TODO Redraw Yourself
-        currentGun = GetGun(type);
-        CheckNewItem(currentGun.GetComponent<BaseItem>());
-        SubscribeGunEvents();
-    }
-    
-    private void OnGunModulesChanged(GunModuleType moduleType)
-    {
-        currentGun = GetGun(type);//TODO Redraw Module
-        switch (moduleType)
-        {
-            case GunModuleType.Magazine:
-                magazineSlot.CheckNewItem(currentGun.CurrentMagazine?.GetComponent<BaseItem>());
-                break;
-
         }
-    }
-    
-    private void SubscribeCharacterEvents()
-    {
-        if (currentCharacter != null)
-        {
-            currentCharacter.OnGunsChanged += OnGunChanged;
-            if (currentGun != null)
-                currentGun.OnModulesChanged += OnGunModulesChanged;
-        }
-    }
-    
-    private void UnsubscribeCharacterEvents()
-    {
-        if (currentCharacter != null)
-        {
-            currentCharacter.OnGunsChanged -= OnGunChanged;
-            if (currentGun != null)
-                currentGun.OnModulesChanged -= OnGunModulesChanged;
-        }
-    }
-    
-    private void SubscribeGunEvents()
-    {
-        if (currentGun != null)
-            currentGun.OnModulesChanged += OnGunModulesChanged;
-    }
-    
-    private void UnsubscribeGunEvents()
-    {
-        if (currentGun != null)
-            currentGun.OnModulesChanged -= OnGunModulesChanged;
     }
 
     private Gun GetGun(GunType type)
     {
-        return type == GunType.PrimaryGun ? CurrentCharacter.PrimaryGun : CurrentCharacter.SecondaryGun;
+        switch (type)
+        {
+            case GunType.PrimaryGun:
+                return CurrentCharacter.PrimaryGun;
+
+            case GunType.SecondaryGun:
+                return CurrentCharacter.SecondaryGun = CurrentGun;
+        }
+
+        return null;
     }
+
 }
