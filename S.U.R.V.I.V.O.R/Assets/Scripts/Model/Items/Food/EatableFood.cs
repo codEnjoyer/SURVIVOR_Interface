@@ -1,5 +1,4 @@
-﻿using Model.Items;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(BaseItem))]
 [RequireComponent(typeof(Eatable))]

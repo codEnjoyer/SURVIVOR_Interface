@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Model.Entities.Characters.CharacterSkills;
 using Model.GameEntity;
-using Model.Items;
 using UnityEngine;
 
 [RequireComponent(typeof(BaseItem))]

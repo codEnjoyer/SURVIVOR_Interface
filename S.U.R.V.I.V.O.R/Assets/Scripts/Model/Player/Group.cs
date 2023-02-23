@@ -5,7 +5,6 @@ using System.Runtime.Serialization;
 using Extension;
 using Graph_and_Map;
 using Model.Entities.Characters;
-using Model.Items;
 using Model.Player.GroupMovement;
 using Model.SaveSystem;
 using Unity.VisualScripting;

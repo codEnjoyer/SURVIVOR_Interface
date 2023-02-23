@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Model.Entities.Characters;
-using Model.Items;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;

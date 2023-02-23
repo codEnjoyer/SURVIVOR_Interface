@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Model.Entities.Characters;
-using Model.Items;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SpecialGunCell : SpecialCell

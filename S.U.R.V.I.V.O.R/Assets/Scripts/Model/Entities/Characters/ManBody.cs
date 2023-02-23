@@ -5,7 +5,6 @@ using System.Runtime.Serialization;
 using Model.Entities.Characters.BodyParts;
 using Model.GameEntity;
 using Model.GameEntity.EntityHealth;
-using Model.Items;
 using UnityEngine;
 using Object = UnityEngine.Object;
 

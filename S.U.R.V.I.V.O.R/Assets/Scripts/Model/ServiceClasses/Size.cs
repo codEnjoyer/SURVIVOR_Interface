@@ -1,4 +1,5 @@
 using System;
+using GoogleSheetLink;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Size", menuName = "Data/Size", order = 50)]
@@ -16,6 +17,8 @@ public sealed class Size : ScriptableObject
     public int Width => width;
 
     public int Height => height;
+
+    public static Size Parse(string str) => SizeParser.Parse(str);
 
     public override bool Equals(object other)
     {

@@ -5,7 +5,6 @@ using System.Runtime.Serialization;
 using System.Xml;
 
 using Model.GameEntity.EntityHealth;
-using Model.Items;
 
 namespace Model.SaveSystem
 {
