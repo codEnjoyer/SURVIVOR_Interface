@@ -47,7 +47,7 @@ namespace Model.GameEntity
             var target = hit.transform.gameObject.GetComponent<BodyPart>();
             if (hitted && target != null)
             {
-                target.TakeDamage(meleeAttack.DamageInfo);
+                target.Hp -= meleeAttack.Damage;
             }
         }
     }

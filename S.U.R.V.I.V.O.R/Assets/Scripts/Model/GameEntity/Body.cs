@@ -23,7 +23,19 @@ namespace Model.GameEntity
         public event Action Died;
 
         public IReadOnlyList<BodyPart> BodyParts => bodyParts;
-        public float Hp => BodyParts.Sum(part => part.Hp);
+        public float Hp
+        {
+            get { return BodyParts.Sum(part => part.Hp); }
+            set
+            {
+                var valuePart = value / BodyParts.Count(x => !x.IsDied);
+                foreach (var bodyPart in bodyParts)
+                {
+                    bodyPart.Hp += valuePart;
+                }
+            }
+        }
+
         public int MaxCriticalLoses => bodyPartRegisters.Count;
 
         public bool IsDied => CurrentCriticalLoses >= MaxCriticalLoses;
@@ -44,22 +56,7 @@ namespace Model.GameEntity
                     CurrentCriticalLoses += significance;
                     if (IsDied)
                         Died?.Invoke();
-                    Debug.Log("Died");
-                    Debug.Log($"{CurrentCriticalLoses} / {MaxCriticalLoses}");
                 };
-        }
-
-        public virtual void TakeDamage(DamageInfo damage)
-        {
-            foreach (var bodyPart in bodyParts)
-            {
-                bodyPart.TakeDamage(damage);
-            }
-        }
-
-        public virtual void Heal(HealInfo heal)
-        {
-            throw new NotImplementedException();
         }
 
         protected virtual void Awake()

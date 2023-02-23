@@ -10,8 +10,9 @@ namespace Model.GameEntity
     {
         [SerializeField] private List<ClothType> possibleClothTypes;
         protected Dictionary<ClothType, Clothes> clothesDict;
+        public float CurrentArmor => clothesDict.Values.Sum(x => x.CurrentArmor);
 
-        public float currentArmor => clothesDict.Values.Sum(x => x.CurrentArmor);
+        public bool IsArmorDestroyed => CurrentArmor == 0f;
         
         public bool Wear(Clothes clothesToWear)
         {
@@ -39,7 +40,19 @@ namespace Model.GameEntity
 
         public IEnumerable<Clothes> GetClothes() => clothesDict.Values;
 
-        public void GetDamageToArmor(float damage){}//TODO нанести урон броне
+        public void DamageArmor(float damage)
+        {
+            if (damage < 0) throw new ArgumentException("Урон по броне меньше нуля");
+            var cloth = clothesDict.Values.OrderBy(x => x.CurrentArmor).First();
+            if (damage <= cloth.CurrentArmor)
+            {
+                cloth.CurrentArmor -= damage;
+            }
+            else
+            {
+                cloth.CurrentArmor = 0;
+            }
+        }//TODO нанести урон броне
         
         protected override void Awake()
         {

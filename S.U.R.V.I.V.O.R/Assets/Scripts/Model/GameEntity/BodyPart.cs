@@ -37,7 +37,7 @@ namespace Model.GameEntity
         public float Hp
         {
             get => hp;
-            private set
+            set
             {
                 if (value <= 0)
                 {
@@ -46,45 +46,12 @@ namespace Model.GameEntity
                     return;
                 }
 
-                hp = value;
+                hp = Math.Min(value,MaxHp);
             }
         }
 
         public bool IsDied => hp <= 0;
 
-        public virtual void TakeDamage(DamageInfo damage)
-        {
-            var rnd = new Random();
-            //TODO реализовать метод получения урона в зависимоти от выстрела
-            var clothesBP = GetComponent<BodyPathWearableClothes>();
-            var damageToBodyPart = damage.FullDamage * damage.KeneeticDamage;
-            if (clothesBP != null && clothesBP.currentArmor == 0 || clothesBP == null) //Броня кончилась или ее нет
-            {
-                damageToBodyPart = damage.FullDamage * damage.RandomCoefficientOfDamage;
-            }
-            else//Броня есть
-            {
-                if (rnd.NextDouble() <= damage.ArmorPenetratingChance)//Броня пробита
-                {
-                    clothesBP.GetDamageToArmor(damage.ArmorDamageOnPenetration);
-                    damageToBodyPart += damage.FullDamage * damage.OnArmorPenetrationDamage;
-                }
-                else//Броня не пробита
-                {
-                    clothesBP.GetDamageToArmor(damage.ArmorDamageOnNonPenetration);
-                    damageToBodyPart += damage.FullDamage * damage.UnderArmorDamage;
-                }
-            }
-            //TODO добавить перелом и кровотечение
-
-            Hp -= damageToBodyPart;
-        }
-
-        public virtual void Heal(HealInfo heal)
-        {
-            Hp += heal.Heal;
-        }
-        
         protected virtual void Awake()
         {
             Health = new Health(this);
