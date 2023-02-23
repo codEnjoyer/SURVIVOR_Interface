@@ -166,6 +166,8 @@ namespace GoogleSheetLink
             }
 
             var componentData = CreateDataObject(componentDataType, param);
+            componentData.name = mainComponentName + "Data";
+            
             var componentDataField = componentType.GetField("data", BindingFlags.Instance | BindingFlags.NonPublic);
             if (componentDataField == null)
                 throw new Exception(
@@ -177,7 +179,7 @@ namespace GoogleSheetLink
         }
 
 
-        private object CreateDataObject(Type type, string[] param)
+        private ScriptableObject CreateDataObject(Type type, string[] param)
         {
             var fieldInfos = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
             if (fieldInfos.Length != param.Length)

@@ -39,11 +39,6 @@ namespace Model.SaveSystem
             {
                 FindPath();
             }
-
-            if (string.IsNullOrEmpty(Path))
-            {
-                Debug.Log(name);
-            }
         }
 #endif
         public void OnBeforeSerialize()
