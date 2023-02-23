@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Model.Entities.Characters.CharacterSkills;
 using Model.GameEntity;
-using Model.Items;
 using Model.SaveSystem;
 using Unity.VisualScripting;
 using UnityEngine;

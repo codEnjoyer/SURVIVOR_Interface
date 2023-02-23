@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Model.Entities.Characters.CharacterSkills;
 using Model.GameEntity;
-using Model.Items;
 using UnityEngine;
 using Random = System.Random;
 

@@ -93,7 +93,7 @@ namespace GoogleSheetLink
                     }
                     catch (Exception e)
                     {
-                        Debug.Log(e.Message);
+                        Debug.LogError(e.Message);
                         return false;
                     }
 
@@ -181,7 +181,7 @@ namespace GoogleSheetLink
         {
             var fieldInfos = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
             if (fieldInfos.Length != param.Length)
-                throw new Exception($"Для типа {type} было переданно неверное колличество данных!");
+                throw new Exception($"Для типа {type} было переданно неверное колличество данных! ({fieldInfos.Length} != {param.Length})");
             var obj = ScriptableObject.CreateInstance(type);
             for (var i = 0; i < fieldInfos.Length; i++)
             {

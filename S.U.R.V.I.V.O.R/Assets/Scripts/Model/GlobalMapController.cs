@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using Interface;
-using Model.Items;
 using Model.Player;
 using Model.SaveSystem;
 using UnityEngine;

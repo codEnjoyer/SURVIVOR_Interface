@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Model.Items;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New PackedContainerData", menuName = "Data/Packed Container Data", order = 50)]

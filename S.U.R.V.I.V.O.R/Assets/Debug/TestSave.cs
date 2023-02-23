@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Interface;
 using Model;
-using Model.Items;
 using Model.SaveSystem;
 using UnityEngine;
 using UnityEngine.Serialization;
