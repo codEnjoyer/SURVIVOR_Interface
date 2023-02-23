@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Model.Entities.Characters;
 using Model.Items;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SpecialGunCell : SpecialCell
@@ -24,11 +25,30 @@ public class SpecialGunCell : SpecialCell
 
     private Gun currentGun;
 
+    public override BaseItem PlacedItem
+    {
+        get => placedItem;
+        protected set
+        {
+            placedItem = value;
+            CurrentGun = placedItem.GetComponent<Gun>();
+        }
+    }
+
     public Gun CurrentGun
     {
         get => currentGun;
 
-        set => currentGun = value;
+        set
+        {
+            if (currentGun != null)
+                currentGun.OnModulesChanged -= OnModuleChanged;
+            currentGun = value;
+            PlaceAllModules();
+            if (currentGun != null)
+                currentGun.OnModulesChanged += OnModuleChanged;
+            
+        }
     }
 
     public Character CurrentCharacter
@@ -42,31 +62,10 @@ public class SpecialGunCell : SpecialCell
         }
     }
 
-    private bool wasOpened;
-
-    public override void UpdateItem(BaseItem item)
+    public override void Init()
     {
-        if (placedItem == null)
-        {
-            if (item != null)
-            {
-                item.gameObject.SetActive(true);
-                placedItem = item;
-            }
-        }
-        else
-        {
-            if (item != placedItem)
-            {
-                placedItem.gameObject.SetActive(false);
-                PlaceNullItem();
-                if (item != null)
-                {
-                    placedItem = item;
-                }
-            }
-        }
-        ReDraw();
+        base.Init();
+        magazineSlot.Init();
     }
 
     protected override void PlaceItem(BaseItem item)
@@ -132,5 +131,33 @@ public class SpecialGunCell : SpecialCell
         }
 
         return null;
+    }
+    
+    private void OnModuleChanged(GunModuleType type)
+    {
+        switch (type)
+        {
+            case GunModuleType.Magazine:
+                magazineSlot.CheckNewItem(CurrentGun && CurrentGun.CurrentMagazine ? CurrentGun.CurrentMagazine.GetComponent<BaseItem>() : null);
+                break;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (CurrentGun == null) return;
+        currentGun.OnModulesChanged -= OnModuleChanged;
+    }
+
+    private void OnEnable()
+    {
+        if (CurrentGun == null) return;
+        currentGun.OnModulesChanged += OnModuleChanged;
+        PlaceAllModules();
+    }
+
+    private void PlaceAllModules()
+    {
+        magazineSlot.UpdateItem(CurrentGun && CurrentGun.CurrentMagazine ? CurrentGun.CurrentMagazine.GetComponent<BaseItem>() : null);
     }
 }
