@@ -150,10 +150,8 @@ public class PlayerLayerLogic : MonoBehaviour
         CheckCellAfterWindowOpen(CurrentCharacter.ManBody.Chest.Underwear != null ? CurrentCharacter.ManBody.Chest.Underwear.GetComponent<BaseItem>() : null, underwearCell);
         CheckCellAfterWindowOpen(CurrentCharacter.ManBody.LeftLeg.Boots != null ? CurrentCharacter.ManBody.LeftLeg.Boots.GetComponent<BaseItem>() : null, bootsCell);
         CheckCellAfterWindowOpen(CurrentCharacter.ManBody.Chest.Jacket != null ? CurrentCharacter.ManBody.Chest.Jacket.GetComponent<BaseItem>() : null, jacketCell);
-        if (primaryGunSlot != null)
-            CheckCellAfterWindowOpen(CurrentCharacter.PrimaryGun != null ? CurrentCharacter.PrimaryGun.GetComponent<BaseItem>() : null,primaryGunSlot);
-        if (secondaryGunSlot != null)
-            CheckCellAfterWindowOpen(CurrentCharacter.SecondaryGun != null ? CurrentCharacter.SecondaryGun.GetComponent<BaseItem>() : null,secondaryGunSlot);
+        CheckCellAfterWindowOpen(CurrentCharacter.PrimaryGun != null ? CurrentCharacter.PrimaryGun.GetComponent<BaseItem>() : null, primaryGunSlot);
+        CheckCellAfterWindowOpen(CurrentCharacter.SecondaryGun != null ? CurrentCharacter.SecondaryGun.GetComponent<BaseItem>() : null, secondaryGunSlot);
     }
 
     private void CheckCellAfterWindowOpen(BaseItem item, SpecialCell cell)
