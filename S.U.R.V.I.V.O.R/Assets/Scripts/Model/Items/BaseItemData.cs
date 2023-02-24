@@ -10,16 +10,7 @@ public sealed class BaseItemData : ScriptableObject
     [SerializeField] private Size size;
     [SerializeField] private Sprite icon;
     [SerializeField] private float weight;
-
-    public BaseItemData(string itemName, string description, Size size, Sprite icon, float weight)
-    {
-        this.itemName = itemName;
-        this.description = description;
-        this.size = size;
-        this.icon = icon;
-        this.weight = weight;
-    }
-
+    
     public string ItemName => itemName;
     public Size Size => size;
     public Sprite Icon => icon;

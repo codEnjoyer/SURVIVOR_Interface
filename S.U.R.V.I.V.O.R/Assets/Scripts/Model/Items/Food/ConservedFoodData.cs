@@ -1,4 +1,3 @@
-using Model.Items;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New ConservedFoodData", menuName = "Data/Conserved Food Data", order = 50)]

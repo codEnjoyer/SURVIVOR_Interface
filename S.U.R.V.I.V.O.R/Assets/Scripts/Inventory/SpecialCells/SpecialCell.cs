@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing.Printing;
-using Model.Items;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -31,7 +30,8 @@ public enum GunModuleType
     Shutter,
     Scope,
     Suppressor,
-    Tactical
+    Tactical,
+    Magazine
 }
 
 public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -39,7 +39,12 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
     protected InventoryController InventoryController { get; private set; }
     protected BaseItem placedItem;
     private bool isPointerOverCell;
-    public BaseItem PlacedItem => placedItem;
+    public virtual BaseItem PlacedItem
+    {
+        get => placedItem;
+
+        protected set => placedItem = value;
+    }
 
     public virtual void Init()
     {
@@ -52,25 +57,25 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
         return false;
     }
 
-    public abstract void ReDraw();
-    
-    public void DrawItem()
+    protected abstract void ReDraw();
+
+    protected void DrawItem()
     {
-        if (placedItem == null) return;
-        var rectTransform = placedItem.gameObject.GetComponent<RectTransform>();
-        placedItem.gameObject.SetActive(true);
+        if (PlacedItem == null) return;
+        var rectTransform = PlacedItem.gameObject.GetComponent<RectTransform>();
+        PlacedItem.gameObject.SetActive(true);
         rectTransform.SetParent(GetComponent<RectTransform>());
         rectTransform.anchoredPosition = new Vector2(0,0);
-        placedItem.GetComponent<RectTransform>().sizeDelta = placedItem.OnAwakeRectTransformSize;
-        placedItem.GetComponent<RectTransform>().localScale = placedItem.OnAwakeRectTransformScale;
-        ChangeItemSize(placedItem.gameObject.GetComponent<RectTransform>(),GetComponent<RectTransform>());
+        PlacedItem.GetComponent<RectTransform>().sizeDelta = PlacedItem.OnAwakeRectTransformSize;
+        PlacedItem.GetComponent<RectTransform>().localScale = PlacedItem.OnAwakeRectTransformScale;
+        ChangeItemSize(PlacedItem.gameObject.GetComponent<RectTransform>(),GetComponent<RectTransform>());
     }
     
     public void Update()
     {
         if (Input.GetMouseButtonDown(0) && isPointerOverCell)
         {
-            if (placedItem == null && InventoryController.SelectedItem != null)
+            if (PlacedItem == null && InventoryController.SelectedItem != null)
             {
                 if (CanInsertIntoSlot())
                 {
@@ -84,31 +89,27 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
         }
     }
 
-    public abstract void PlaceItem(BaseItem item);
+    protected abstract void PlaceItem(BaseItem item);
     
     public virtual void UpdateItem(BaseItem item)
     {
-        if (placedItem == null)
+        if (PlacedItem == null)
         {
             if (item != null)
             {
                 item.gameObject.SetActive(true);
-                placedItem = item;
+                PlacedItem = item;
             }
         }
         else
         {
-            if (item != placedItem) //item != null and placeItem != null and placeItem == item
+            if (item != PlacedItem)
             {
-            //    ReDraw();
-            //}
-            //else // item != null and placedItem != null
-            //{
-                placedItem.gameObject.SetActive(false);
+                PlacedItem.gameObject.SetActive(false);
                 PlaceNullItem();
                 if (item != null)
                 {
-                    placedItem = item;
+                    PlacedItem = item;
                 }
             }
         }
@@ -116,30 +117,29 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
     }
 
 
-
-    public void PlaceNullItem()
+    protected virtual void PlaceNullItem()
     {
         placedItem = null;
         ReDraw();
     }
 
-    public abstract void GiveItem();
+    protected abstract void GiveItem();
 
-    protected void ChangeItemSize(RectTransform transform, RectTransform cellTransform)
+    private void ChangeItemSize(RectTransform transform, RectTransform cellTransform)
     {
-        if (placedItem.OnAwakeRectTransformSize.x * placedItem.OnAwakeRectTransformScale.x > cellTransform.sizeDelta.x * cellTransform.localScale.x)
+        if (PlacedItem.OnAwakeRectTransformSize.x * PlacedItem.OnAwakeRectTransformScale.x > cellTransform.sizeDelta.x * cellTransform.localScale.x)
         {
-            transform.sizeDelta = new Vector2(cellTransform.sizeDelta.x * placedItem.OnAwakeRectTransformScale.x,placedItem.OnAwakeRectTransformSize.y * placedItem.OnAwakeRectTransformScale.y/(placedItem.OnAwakeRectTransformSize.x * placedItem.OnAwakeRectTransformScale.x/cellTransform.sizeDelta.x * cellTransform.localScale.x));
+            transform.sizeDelta = new Vector2(cellTransform.sizeDelta.x * PlacedItem.OnAwakeRectTransformScale.x,PlacedItem.OnAwakeRectTransformSize.y * PlacedItem.OnAwakeRectTransformScale.y/(PlacedItem.OnAwakeRectTransformSize.x * PlacedItem.OnAwakeRectTransformScale.x/cellTransform.sizeDelta.x * cellTransform.localScale.x));
             transform.localScale = new Vector3(1, 1, 1);
         }
-        if (placedItem.OnAwakeRectTransformSize.y * placedItem.OnAwakeRectTransformScale.y > cellTransform.sizeDelta.y * cellTransform.localScale.y)
+        if (PlacedItem.OnAwakeRectTransformSize.y * PlacedItem.OnAwakeRectTransformScale.y > cellTransform.sizeDelta.y * cellTransform.localScale.y)
         {
-            transform.sizeDelta = new Vector2(placedItem.OnAwakeRectTransformSize.x * placedItem.OnAwakeRectTransformScale.x/(placedItem.OnAwakeRectTransformSize.y * placedItem.OnAwakeRectTransformScale.y/cellTransform.sizeDelta.y * cellTransform.localScale.y),cellTransform.sizeDelta.y * cellTransform.localScale.y);
+            transform.sizeDelta = new Vector2(PlacedItem.OnAwakeRectTransformSize.x * PlacedItem.OnAwakeRectTransformScale.x/(PlacedItem.OnAwakeRectTransformSize.y * PlacedItem.OnAwakeRectTransformScale.y/cellTransform.sizeDelta.y * cellTransform.localScale.y),cellTransform.sizeDelta.y * cellTransform.localScale.y);
             transform.localScale = new Vector3(1, 1, 1);
         }
     }
 
-    public void CheckNewItem(BaseItem item)
+    public virtual void CheckNewItem(BaseItem item)
     {
         if (item == null || item == PlacedItem)
         {
@@ -147,15 +147,15 @@ public abstract class SpecialCell : MonoBehaviour, IPointerEnterHandler, IPointe
         }
         else if (item != PlacedItem && PlacedItem != null)
         {
-            placedItem.gameObject.SetActive(false);
-            placedItem = item;
+            PlacedItem.gameObject.SetActive(false);
+            PlacedItem = item;
             item.gameObject.SetActive(true);
             ReDraw();
         }
         else if (item != PlacedItem && PlacedItem == null)
         {
-            placedItem = item;
-            placedItem.gameObject.SetActive(true);
+            PlacedItem = item;
+            PlacedItem.gameObject.SetActive(true);
             ReDraw();
         }
     }

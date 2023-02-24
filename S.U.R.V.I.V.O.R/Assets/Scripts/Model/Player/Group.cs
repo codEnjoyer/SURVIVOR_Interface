@@ -5,7 +5,6 @@ using System.Runtime.Serialization;
 using Extension;
 using Graph_and_Map;
 using Model.Entities.Characters;
-using Model.Items;
 using Model.Player.GroupMovement;
 using Model.SaveSystem;
 using Unity.VisualScripting;
@@ -14,7 +13,7 @@ using UnityEngine;
 namespace Model.Player
 {
     [RequireComponent(typeof(GroupMovementLogic))]
-    public class Group : MonoBehaviour, ISaved<GroupSave>
+    public class Group : MonoBehaviour, ISaved<GroupData>
     {
         [SerializeField] private int maxOnGlobalMapGroupEndurance = 10;
         [SerializeField] private int currentOnGlobalMapGroupEndurance = 10;
@@ -132,13 +131,13 @@ namespace Model.Player
             //Вычислить все характеристки при окончании хода
         }
 
-        public GroupSave CreateSave()
+        public GroupData CreateData()
         {
             var resPath = GetComponent<Saved>().ResourcesPath;
             var cgm = CurrentGroupMembers
-                .Select(x => x.CreateSave())
+                .Select(x => x.CreateData())
                 .ToArray();
-            return new GroupSave()
+            return new GroupData()
             {
                 resourcesPath = resPath,
                 maxOnGlobalMapGroupEndurance = MaxOnGlobalMapGroupEndurance,
@@ -150,18 +149,18 @@ namespace Model.Player
             };
         }
         
-        public void Restore(GroupSave save)
+        public void Restore(GroupData data)
         {
-            transform.position = save.position.To3D();
-            MaxOnGlobalMapGroupEndurance = save.maxOnGlobalMapGroupEndurance;
-            CurrentOnGlobalMapGroupEndurance = save.currentOnGlobalMapGroupEndurance;
-            IsLootAllowedOnThisTurn = save.isLootAllowedOnThisTurn;
+            transform.position = data.position.To3D();
+            MaxOnGlobalMapGroupEndurance = data.maxOnGlobalMapGroupEndurance;
+            CurrentOnGlobalMapGroupEndurance = data.currentOnGlobalMapGroupEndurance;
+            IsLootAllowedOnThisTurn = data.isLootAllowedOnThisTurn;
 
             foreach (var groupMember in currentGroupMembers)
                 Destroy(groupMember.gameObject);
             currentGroupMembers.Clear();
 
-            foreach (var characterSave in save.currentGroupMembers)
+            foreach (var characterSave in data.currentGroupMembers)
             {
                 var character = Instantiate(
                     Resources.Load<Character>(characterSave.resourcesPath),
@@ -173,17 +172,17 @@ namespace Model.Player
                 character.Restore(characterSave);
             }
 
-            GroupMovementLogic.CanMove = save.canMove;
+            GroupMovementLogic.CanMove = data.canMove;
         }
     }
 
     [DataContract]
-    public class GroupSave
+    public class GroupData
     {
         [DataMember] public string resourcesPath;
         [DataMember] public int maxOnGlobalMapGroupEndurance;
         [DataMember] public int currentOnGlobalMapGroupEndurance;
-        [DataMember] public CharacterSave[] currentGroupMembers;
+        [DataMember] public CharacterData[] currentGroupMembers;
         [DataMember] public Vector2 position;
         [DataMember] public bool isLootAllowedOnThisTurn;
         [DataMember] public bool canMove;

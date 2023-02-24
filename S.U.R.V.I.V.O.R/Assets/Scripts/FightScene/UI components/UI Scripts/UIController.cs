@@ -17,6 +17,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private new Camera camera;
     private Queue<GameObject> cardsQueue = new Queue<GameObject>();
     private List<GameObject> groupCards = new List<GameObject>();
+    private Vector3 uiScale = Vector3.zero;
 
     //private const int MaxDrawCardsCount = 5;
     
@@ -34,8 +35,8 @@ public class UIController : MonoBehaviour
 
     public void CreateUI()
     {
+        CreateQueueCards();           //Order is important
         CreateGroupCharactersCards();
-        CreateQueueCards();
     }
 
     private void CreateGroupCharactersCards()
@@ -44,11 +45,12 @@ public class UIController : MonoBehaviour
                      .Select(obj => obj.GetComponent<FightCharacter>())
                      .Where(fCharacter => fCharacter.Type == CharacterType.Ally))
         {
+            var card = Instantiate(groupCharacterCardPrefab, Vector3.zero, Quaternion.identity);
             var initPos = groupPanel.transform.position + 
                           new Vector3(0, (1.5f - groupCards.Count) 
-                                         * groupCharacterCardPrefab.GetComponent<RectTransform>().rect.height, 0);
-            var card = Instantiate(groupCharacterCardPrefab, initPos, Quaternion.identity);
-            card.AddComponent<UIGroupCharacterCard>();
+                              * groupCharacterCardPrefab.GetComponent<RectTransform>().rect.height / uiScale.y, 0);
+            card.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f) / uiScale.y;
+            card.transform.position = initPos;
             card.GetComponent<UIGroupCharacterCard>().FightCharacter = fCharacter;
             groupCards.Add(card);
             
@@ -67,13 +69,17 @@ public class UIController : MonoBehaviour
     private void CreateQueueCards()
     {
         foreach (var fightCharacter in FightSceneController.CharactersQueue
-                                       .Select(obj => obj.GetComponent<FightCharacter>()))
+                     .Select(obj => obj.GetComponent<FightCharacter>()))
         {
             var queueCard = Instantiate(queueCardPrefab, queuePanel.transform.position, Quaternion.identity);
-            var cardYOffSet = -queuePanel.GetComponent<RectTransform>().rect.height / 2 
-                              + (0.5 + cardsQueue.Count) * queueCard.GetComponent<RectTransform>().rect.height;
-            queueCard.transform.Translate(new Vector3(0f, (float)cardYOffSet,0f));
             queueCard.transform.parent = queuePanel.transform;
+            if (uiScale == Vector3.zero)
+                uiScale = queueCard.GetComponent<RectTransform>().localScale;
+            queueCard.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
+            var cardYOffSet = -queuePanel.GetComponent<RectTransform>().rect.height / (2 * uiScale.y) 
+                              + (0.5f + cardsQueue.Count) * queueCard.GetComponent<RectTransform>().rect.height 
+                              / uiScale.y;
+            queueCard.transform.Translate(new Vector3(0f, (float)cardYOffSet,0f), Space.World);
             queueCard.GetComponent<Image>().color = (fightCharacter.Type == CharacterType.Ally) 
                                             ? new Color(0,1,0,0.7f) : new Color(1,0,0,0.7f);
 
@@ -99,7 +105,7 @@ public class UIController : MonoBehaviour
         var active = cardsQueue.Dequeue();
         //active.SetActive(cardsQueue.Count < MaxDrawCardsCount);
 
-        var offset = cardsQueue.Count * active.GetComponent<RectTransform>().rect.height;
+        var offset = cardsQueue.Count * active.GetComponent<RectTransform>().rect.height / uiScale.y;
         active.transform.Translate(new Vector3(0, offset, 0));
 
         ShiftCards();
@@ -169,7 +175,7 @@ public class UIController : MonoBehaviour
         {
             if(drawShiftCards >= startShiftIndex)
             {
-                card.transform.Translate(new Vector3(0, -card.GetComponent<RectTransform>().rect.height, 0));
+                card.transform.Translate(new Vector3(0, -card.GetComponent<RectTransform>().rect.height / uiScale.y, 0));
                 //card.SetActive(drawShiftCards + startShiftIndex < MaxDrawCardsCount);
             }
             drawShiftCards++;

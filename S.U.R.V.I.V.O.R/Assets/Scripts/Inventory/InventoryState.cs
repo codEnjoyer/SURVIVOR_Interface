@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Model.Items;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -88,7 +87,7 @@ public class InventoryState
         item.OnGridPositionX = posX;
         item.OnGridPositionY = posY;
         PlaceItemEvent?.Invoke(item);
-        item.Destroy.AddListener(() =>
+        item.destroyEvent.AddListener(() =>
         {
             RemoveGridReference(item);
             inventoryItemSlot[item.OnGridPositionX, item.OnGridPositionY] = null;

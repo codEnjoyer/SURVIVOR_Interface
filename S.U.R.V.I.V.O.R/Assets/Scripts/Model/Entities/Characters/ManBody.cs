@@ -5,7 +5,6 @@ using System.Runtime.Serialization;
 using Model.Entities.Characters.BodyParts;
 using Model.GameEntity;
 using Model.GameEntity.EntityHealth;
-using Model.Items;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -172,7 +171,7 @@ namespace Model.Entities.Characters
 
             if (LocationInventory.Instance.LocationInventoryGrid.InsertItem(itemToPlace))
                 return true;
-            Object.Destroy(itemToPlace);
+            Destroy(itemToPlace);
             return false;
         }
 
@@ -222,10 +221,10 @@ namespace Model.Entities.Characters
         }
 
 
-        public override BodySave CreateSave()
+        public override BodyData CreateData()
         {
-            var baseSave = base.CreateSave(); 
-            return new ManBodySave()
+            var baseSave = base.CreateData(); 
+            return new ManBodyData()
             {
                 healthProperties = baseSave.healthProperties,
                 bodyPartSaves = baseSave.bodyPartSaves,
@@ -240,10 +239,10 @@ namespace Model.Entities.Characters
         }
 
 
-        public override void Restore(BodySave save)
+        public override void Restore(BodyData data)
         {
-            base.Restore(save);
-            if (save is ManBodySave manBodySave)
+            base.Restore(data);
+            if (data is ManBodyData manBodySave)
             {
                 MaxEnergy = manBodySave.maxEnergy;
                 MaxHunger = manBodySave.maxHunger;
@@ -257,7 +256,7 @@ namespace Model.Entities.Characters
     }
 
     [DataContract]
-    public class ManBodySave: BodySave
+    public class ManBodyData: BodyData
     {
         [DataMember] public int energy;
         [DataMember] public int hunger;

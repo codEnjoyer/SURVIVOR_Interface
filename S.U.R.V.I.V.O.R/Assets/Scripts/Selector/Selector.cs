@@ -9,7 +9,6 @@ public class Selector : MonoBehaviour
     
     public static readonly List<Selectable> Units = new ();
     private static List<Selectable> unitSelected;
-    private bool isActivate = true;
 
     [SerializeField] private GUISkin skin;
     
@@ -37,15 +36,7 @@ public class Selector : MonoBehaviour
         unitSelected = new List<Selectable>();
         mainCamera = Camera.main;
     }
-
-    public void Activate() => isActivate = true;
-    public void DeActivate()
-    {
-        draw = false;
-        startPos = endPos = Vector2.zero;
-        isActivate = false;
-    }
-
+    
     private void Select()
     {
         foreach (var unit in unitSelected)
@@ -60,9 +51,6 @@ public class Selector : MonoBehaviour
 
     private void OnGUI()
     {
-        if (!isActivate)
-            return;
-
         GUI.skin = skin;
         GUI.depth = 99;
 
@@ -110,5 +98,12 @@ public class Selector : MonoBehaviour
             if (rect.Contains(tmp))
                 unitSelected.Add(unit);
         }
+    }
+
+
+    private void OnDisable()
+    {
+        draw = false;
+        startPos = endPos = Vector2.zero;
     }
 }

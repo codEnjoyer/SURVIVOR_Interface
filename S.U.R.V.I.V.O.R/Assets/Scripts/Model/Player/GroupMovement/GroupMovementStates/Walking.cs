@@ -1,4 +1,6 @@
-﻿namespace Model.Player.GroupMovement.GroupMovementStates
+﻿using UnityEngine;
+
+namespace Model.Player.GroupMovement.GroupMovementStates
 {
     public class Walking: GmState
     {
@@ -9,6 +11,8 @@
         public override void Enter()
         {
             gml.CreateWay();
+            if (gml.WayLength == 0)
+                stateMachine.ChangeState(gml.Sleeping);
         }
 
         public override void FixedUpdate()

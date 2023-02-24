@@ -34,6 +34,7 @@ namespace Model.Player.GroupMovement
         private float progress;
         private Queue<Node> way = new();
         public bool CanMove { get; set; }
+        public int WayLength => way.Count;
 
         public Node CurrentNode
         {
@@ -227,14 +228,6 @@ namespace Model.Player.GroupMovement
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0) && movementSm.CurrentState == WaitingTarget &&
-                Physics.Raycast(
-                    Camera.main.ScreenPointToRay(Input.mousePosition),
-                    out var hitInfo, 200f))
-            {
-                movementSm.ChangeState(Walking);
-            }
-
             movementSm.CurrentState.Update();
         }
 

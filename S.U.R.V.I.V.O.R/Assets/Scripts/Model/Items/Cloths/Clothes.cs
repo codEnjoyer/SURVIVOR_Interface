@@ -2,29 +2,31 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
-using Model.Items;
 using Model.SaveSystem;
 using UnityEngine;
 
 [RequireComponent(typeof(BaseItem))]
 [RequireComponent(typeof(Wearable))]
-public class Clothes : MonoBehaviour, ISaved<ClothesSave>
+public class Clothes : MonoBehaviour, ISaved<ClothesData>
 {
     [SerializeField] private ClothData data;
     [SerializeField] private InventoryState inventory;
 
     private BaseItem baseItem;
-    public float CurrentArmor { get; private set; }
+
+    private float currentArmor;
+    public float CurrentArmor
+    {
+        get => currentArmor;
+        set => currentArmor = (value > 0)
+                ? Math.Min(value, Data.MaxArmor)
+                : 0;
+    }
 
     public InventoryState Inventory => inventory;
     public ClothData Data => data;
     public float TotalWeight => baseItem.Data.Weight + inventory.GetItems().Sum(item => item.Data.Weight);
-
-    public float CalculateBlockedDamage(DamageInfo damageInfo)
-    {
-        //TODO расчитать колличество заблокированного урона
-        throw new NotImplementedException();
-    }
+    
 
     private void Start()
     {
@@ -34,22 +36,22 @@ public class Clothes : MonoBehaviour, ISaved<ClothesSave>
         baseItem = gameObject.GetComponent<BaseItem>();
     }
     
-    public ClothesSave CreateSave()
+    public ClothesData CreateData()
     {
-        var itemSave = GetComponent<BaseItem>().CreateSave();
-        return itemSave.componentSaves.OfType<ClothesSave>().First();
+        var itemSave = GetComponent<BaseItem>().CreateData();
+        return itemSave.componentSaves.OfType<ClothesData>().First();
     }
 
-    public void Restore(ClothesSave save)
+    public void Restore(ClothesData data)
     {
-        GetComponent<BaseItem>().Restore(save.itemSave);
+        GetComponent<BaseItem>().Restore(data.itemData);
     }
 
-    private void HiddenRestore(ItemSave save)
+    private void HiddenRestore(ItemData data)
     {
-        var clothSave = save.componentSaves.OfType<ClothesSave>().First();
+        var clothSave = data.componentSaves.OfType<ClothesData>().First();
         CurrentArmor = clothSave.currentArmor;
-        inventory = new InventoryState(data.InventorySize);
+        inventory = new InventoryState(this.data.InventorySize);
         foreach (var itemSave in clothSave.inventory)
         {
             var item = Instantiate(Resources.Load<BaseItem>(itemSave.resourcesPath));
@@ -58,19 +60,19 @@ public class Clothes : MonoBehaviour, ISaved<ClothesSave>
             item.gameObject.SetActive(false);
         }
     }
-    private ClothesSave HiddenCreateSave()
+    private ClothesData HiddenCreateSave()
     {
-        return new ClothesSave()
+        return new ClothesData()
         {
             currentArmor = CurrentArmor,
-            inventory = inventory?.GetItems().Select(x => x.CreateSave()).ToArray()
+            inventory = inventory?.GetItems().Select(x => x.CreateData()).ToArray()
         };
     }
 }
 
 [DataContract]
-public class ClothesSave: ComponentSave
+public class ClothesData: ComponentSave
 {
     [DataMember] public float currentArmor;
-    [DataMember] public ItemSave[] inventory;
+    [DataMember] public ItemData[] inventory;
 }

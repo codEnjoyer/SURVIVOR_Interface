@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Model.Items;
 using UnityEngine;
 using Random = System.Random;
 
@@ -57,6 +56,7 @@ public class LocationData : ScriptableObject
     {
         if (rnd.NextDouble() < fightChance)
         {
+            
             var fight = fightChances[rnd.Next(fightChances.Length)];
             fight.Initialization();
             return true;

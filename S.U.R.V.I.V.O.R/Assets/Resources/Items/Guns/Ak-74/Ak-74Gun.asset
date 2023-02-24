@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a69084cb783b4d9f9921af102fe93652, type: 3}
   m_Name: Ak-74Gun
   m_EditorClassIdentifier: 
-  fireRate: 0
-  accuracy: 0
+  fireRate: 1
+  spreadSizeOnOptimalFireDistance: 1
   extraDamage: 0
-  fireDistance: 0
+  optimalFireDistanceBegin: 25
+  optimalFireDistanceEnd: 60
   ergonomics: 0
-  ammoType: {fileID: 0}
   caliber: 0
-  gunCellType: 0
+  gunType: 0
+  availableGunModules: 

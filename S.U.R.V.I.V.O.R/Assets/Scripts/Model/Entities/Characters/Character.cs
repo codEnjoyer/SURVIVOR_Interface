@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using Model.Entities.Characters.CharacterSkills;
 using Model.GameEntity;
-using Model.Items;
 using Model.SaveSystem;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [assembly: ContractNamespace("", ClrNamespace = "Contoso.CRM")]
 namespace Model.Entities.Characters
 {
     [RequireComponent(typeof(Saved))]
-    public class Character : Entity, ISaved<CharacterSave>
+    public class Character : Entity, ISaved<CharacterData>
     {
         [SerializeField] private Sprite sprite;
         [SerializeField] private string firstName;
@@ -21,11 +22,16 @@ namespace Model.Entities.Characters
         private Gun secondaryGun;
         private Skills skills;
         public MeleeWeapon MeleeWeapon { get; set; }
+
+        private IWeapon chosedWeapon;
         public event Action<GunType> OnGunsChanged;
         protected override void Awake()
         {
             base.Awake();
             skills = new Skills(this);
+            var weapon  =  Instantiate(Resources.Load<GameObject>("Items/Guns/Ak-74/Ak-74"), transform);
+            weapon.transform.localPosition = Vector3.zero;
+            chosedWeapon = weapon.GetComponent<IWeapon>();
         }
 
         public ManBody ManBody => (ManBody) Body;
@@ -76,42 +82,68 @@ namespace Model.Entities.Characters
 
         public int Mobility => throw new NotImplementedException(); //Скорость передвижения на глобальной карте
 
-        public CharacterSave CreateSave()
+        public override void Attack(Vector3 targetPoint)
         {
-            return new CharacterSave()
+            chosedWeapon.Attack(targetPoint,skills);
+            
+        }
+
+        public IEnumerable<T> GetItemsFromAllInventoriesByType<T>()
+        where T : MonoBehaviour
+        {
+            var result = new List<T>();
+            
+            foreach (var bodyPart in Body.BodyParts)
+            {
+                if (bodyPart is BodyPathWearableClothes wearBp)
+                {
+                    result.AddRange(wearBp.GetItemsFromInventory()
+                        .Where(x => x.GetComponent<T>())
+                        .Select(x => x.GetComponent<T>()));
+                }
+            }
+
+            return result;
+        }
+
+        public CharacterData CreateData()
+        {
+            return new CharacterData()
             {
                 resourcesPath = GetComponent<Saved>().ResourcesPath,
-                manBody = (ManBodySave) ManBody.CreateSave(),
-                skills = skills.CreateSave(),
-                hat = ManBody.Head.Hat?.CreateSave(),
-                underwear = ManBody.Chest.Underwear?.CreateSave(),
-                jacket = ManBody.Chest.Jacket?.CreateSave(),
-                backpack = ManBody.Chest.Backpack?.CreateSave(),
-                vest = ManBody.Chest.Vest?.CreateSave(),
-                boots = ManBody.LeftLeg.Boots?.CreateSave(),
-                pants = ManBody.LeftLeg.Pants?.CreateSave()
+                manBody = (ManBodyData) ManBody.CreateData(),
+                skills = skills.CreateData(),
+                hat = ManBody.Head.Hat?.CreateData(),
+                underwear = ManBody.Chest.Underwear?.CreateData(),
+                jacket = ManBody.Chest.Jacket?.CreateData(),
+                backpack = ManBody.Chest.Backpack?.CreateData(),
+                vest = ManBody.Chest.Vest?.CreateData(),
+                boots = ManBody.LeftLeg.Boots?.CreateData(),
+                pants = ManBody.LeftLeg.Pants?.CreateData(),
+                localPosition = transform.localPosition
             };
         }
 
-        public void Restore(CharacterSave save)
+        public void Restore(CharacterData data)
         {
-            ManBody.Restore(save.manBody);
-            skills.Restore(save.skills);
+            ManBody.Restore(data.manBody);
+            skills.Restore(data.skills);
             
-            Wear(save.hat);
-            Wear(save.underwear);
-            Wear(save.jacket);
-            Wear(save.backpack);
-            Wear(save.vest);
-            Wear(save.boots);
-            Wear(save.pants);
-            
+            Wear(data.hat);
+            Wear(data.underwear);
+            Wear(data.jacket);
+            Wear(data.backpack);
+            Wear(data.vest);
+            Wear(data.boots);
+            Wear(data.pants);
 
-            void Wear(ClothesSave clothesSave)
+            transform.localPosition = data.localPosition;
+
+            void Wear(ClothesData clothesSave)
             {
                 if (clothesSave == null)
                     return;
-                var clothesPref = Resources.Load<Clothes>(clothesSave.itemSave.resourcesPath);
+                var clothesPref = Resources.Load<Clothes>(clothesSave.itemData.resourcesPath);
                 var clothes = Instantiate(clothesPref);
                 clothes.Restore(clothesSave);
                 ManBody.Wear(clothes);
@@ -120,18 +152,23 @@ namespace Model.Entities.Characters
     }
 
     [DataContract]
-    public class CharacterSave
+    public class CharacterData
     {
         [DataMember] public string resourcesPath;
-        [DataMember] public ManBodySave manBody;
-        [DataMember] public SkillsSave skills;
+        [DataMember] public ManBodyData manBody;
+        [DataMember] public SkillsData skills;
 
-        [DataMember] public ClothesSave hat;
-        [DataMember] public ClothesSave underwear;
-        [DataMember] public ClothesSave jacket;
-        [DataMember] public ClothesSave backpack;
-        [DataMember] public ClothesSave vest;
-        [DataMember] public ClothesSave boots;
-        [DataMember] public ClothesSave pants;
+        [DataMember] public ClothesData hat;
+        [DataMember] public ClothesData underwear;
+        [DataMember] public ClothesData jacket;
+        [DataMember] public ClothesData backpack;
+        [DataMember] public ClothesData vest;
+        [DataMember] public ClothesData boots;
+        [DataMember] public ClothesData pants;
+
+        [DataMember] public Vector3 localPosition;
+
+
+        public Character Prefab => Resources.Load<Character>(resourcesPath);
     }
 }
